@@ -1,4 +1,4 @@
-# Collective News 
+# Collaborative News 
 
 
 ## Team 
@@ -9,3 +9,4 @@
 * Rita Peixoto, up201806257@fe.up.pt
 
 
+GROUP2123, 09/02/2021
