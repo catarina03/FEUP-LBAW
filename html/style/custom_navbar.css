@@ -1,14 +1,21 @@
-.navbar-nav > .nav-item{
-    margin-left: 200px;
+.navbar-nav a{
+    color: #fcf3ee;
+    text-decoration: none;
+    font-size: 18px;
 }
-.navbar-custom{
+
+.navbar-nav a:hover {
+    color: #ffc2ad;
+}
+
+.navbar-custom {
+    background-color: #307371;
+}
+
+.navbar-nav .dropdown-menu a {
     color: #307371;
 }
 
-li > .avatar {
-    margin-right: 0px;
-    vertical-align: middle;
-    width: 50px;
-    height:50px;
-    border-radius: 50%;
+.navbar-nav .dropdown-menu a:hover {
+    background-color: #fcf3ee;;
 }
