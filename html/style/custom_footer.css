@@ -12,6 +12,7 @@ a.footer-link{
 }
 a.footer-link:hover {
     color: #ffc2ad;
+    text-decoration: underline;
 }
 
 div.container\ col-12\ my-5{
