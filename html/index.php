@@ -16,24 +16,21 @@
     </script>
 
     <link rel="stylesheet" href="style/custom_navbar.css">
+    <link rel="stylesheet" href="style/custom_footer.css">
 </head>
 
-<body>
-
+<body class="d-flex flex-column">
     <?php
     include_once('./navbar.php');
     draw_nav_bar();
     echo '<p>Content from PHP.</p>';
-
-  ?>
-    <p>Content from HTML.</p>
-
+    ?>
+    <div class="flex-fill">
+        <p>Content from HTML.</p>
+    </div>
     <?php
-    //include_once('./footer.php');
-    //draw_footer();
-  ?>
-
+    include_once('./footer.php');
+    draw_footer();
+    ?>
 </body>
-
-
 </html>
