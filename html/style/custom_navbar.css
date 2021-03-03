@@ -1,11 +1,12 @@
-.navbar-nav a{
+.nav-link {
     color: #fcf3ee;
     text-decoration: none;
     font-size: 18px;
+    font-weight: 600;
 }
-
 .navbar-nav a:hover {
     color: #ffc2ad;
+    text-decoration: underline;
 }
 
 .navbar-custom {
@@ -19,3 +20,12 @@
 .navbar-nav .dropdown-menu a:hover {
     background-color: #fcf3ee;;
 }
+
+.navbar-custom {
+    border: 0;
+    margin: 0;
+    background-color: #252525;
+    -webkit-transition: all 0.2s linear 0s;
+    transition: all 0.2s linear 0s;
+  }
+
