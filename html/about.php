@@ -14,7 +14,7 @@
                 <li>Do not spam</li>
                 <li>Do not post any fake news</li>
                 <li>Do post any abusive content</li>
-                <li>Do not post any offensive content</li>
+                <li>Do not post any offensive content</li><br>
                 <p> Any violation to the above rules can be reported,analyzed and deleted by the platform's moderators</p>
             </ul>
             <h2 class="text-center">Our Team</h2>
