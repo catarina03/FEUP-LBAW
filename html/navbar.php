@@ -3,7 +3,7 @@
 ?>
 
 <nav class="navbar-custom navbar navbar-expand-lg">
-    <a href="#home" class="navbar-brand"><img src="/images/logo-sem-fundo.svg" style="width: 40%;"></a>
+    <a href="#home" class="navbar-brand"><img src="/images/logo-sem-fundo.svg" style="width: 40%; margin-left:10%;"></a>
     <button aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation"
         class="navbar-toggler collapsed navbar-light bg-light" data-toggle="collapse" style="color: white;">
         <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,7 @@
 
         <ul class="nav navbar-nav w-100 justify-content-end">
             <li class="nav-item mx-2">
-                <a class="nav-link" href="" id="#" role="button" 
+                <a class="nav-link" href="" id="#" role="button"
                     aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                         class="bi bi-plus" viewBox="0 0 16 16">
