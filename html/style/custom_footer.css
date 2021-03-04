@@ -19,3 +19,18 @@ div.container\ col-12\ my-5{
     margin:0;
 }
 
+.padding-0{
+    padding-right:0;
+    padding-left:0;
+}
+
+.about_image{
+    padding-left:28%;
+    padding-right:28%;
+} 
+
+.about-us-card{
+    margin-bottom: 5%;
+    margin-top: 5%;
+    margin-left: 15%;
+} 
