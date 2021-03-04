@@ -2,9 +2,9 @@
     function draw_about(){
 ?>
 
-  <div class="container col-12 py-5 about-us-card">
-        <section class="text-left" style="background-color:rgb(222, 206, 193);">
-            <h1 class="text-center">About Us</h1>
+  <div class="container-md col-md-12 about-us-card">
+        <section class="text-left about-rounded" style="background-color:#8ab5b1;">
+            <h1 class="text-center about-us-title">About Us</h1>
             <p>We provide a community website where people can connect and talk to one another 
                 about their favourite art-related 
                 topics, keeping everything organized and open to everyone.
@@ -24,33 +24,32 @@
                         <figure>
                             <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
                             width="100" height="100">
-                            <figcaption class="text-center">Allan</figcaption>
+                            <figcaption class="text-left">Allan</figcaption>
                         </figure>
                     </div>
                     <div class="col-sm-auto">
                         <figure>
                             <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
                             width="100" height="100">
-                            <figcaption class="text-center">Catarina</figcaption>
+                            <figcaption class="text-left">Catarina</figcaption>
                         </figure>
                     </div>
                     <div class="col-sm-auto">
                         <figure>
                             <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
                             width="100" height="100">
-                            <figcaption class="text-center">Mariana</figcaption>
+                            <figcaption class="text-left">Mariana</figcaption>
                         </figure>
                     </div>
                     <div class="col-sm-auto">
                         <figure>
                             <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
                             width="100" height="100">
-                            <figcaption class="text-center">Rita</figcaption>
+                            <figcaption class="text-left">Rita</figcaption>
                         </figure>
                     </div>
                 </div>
             </div>
-            
         </section>
   </div>
   <!-- End of .container -->

@@ -30,7 +30,17 @@ div.container\ col-12\ my-5{
 } 
 
 .about-us-card{
-    margin-bottom: 5%;
-    margin-top: 5%;
-    margin-left: 15%;
+    margin:auto;
+    padding-top: 5%;
+    font-size: 1.4em;
+} 
+
+.about-us-title{
+    padding-top: 2%;
+    /*padding-bottom: 2%;*/
+    font-size: 1.4em;
+} 
+
+.about-rounded{
+    border-radius: 2%;
 } 
