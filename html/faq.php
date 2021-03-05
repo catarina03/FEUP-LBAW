@@ -2,10 +2,10 @@
     function draw_faq(){
 ?>
 
-  <div class="container-md col-lg-8 faq-card">
+  <div class="container-md col-lg-7 col-sm-10 faq-card">
         <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
         <!--Title-->
-            <h1 class="text-center faq-title">Frequently Asked Questions</h1>
+            <h1 class="text-center faq-title" style="font-weight:bold;">Frequently Asked Questions</h1>
             <div class="faq_questions">
                 <!--Question row-->
                 <div class="row px-5 py-5">
@@ -13,7 +13,7 @@
                     <div class="col-lg-auto question-col">
                         <div class="btn-group question">
                             <details>
-                                <summary>Why do I need an account?</summary>
+                                <summary>Why do I need to make an account?</summary>
                                 <p>Even though you can view all posts without an account, you need and
                                 account in order to be able to comment,like,dislike,follow other users and follow your favorite tags.</p>
                             </details>
@@ -25,7 +25,7 @@
                     <div class="col-lg-auto question-col">
                         <div class="btn-group question">
                             <details>
-                                <summary>How can I report a comment or post?</summary>
+                                <summary>How can I report a  comment  or  post?</summary>
                                 <p>Very nice explanation...</p>
                             </details>    
                         </div>
@@ -36,7 +36,7 @@
                     <div class="col-lg-auto question-col">
                         <div class="btn-group question">
                             <details>
-                                    <summary>Can I recover a deleted post or comment that was deleted?</summary>
+                                    <summary>Can I recover a deleted post or comment?</summary>
                                     <p>Very nice explanation...</p>
                             </details>
                         </div>
@@ -47,7 +47,7 @@
     
                         <div class="btn-group question">
                             <details>
-                                <summary>What happens to a post or comment that gets reported?</summary>
+                                <summary>What happens to a post that gets reported?</summary>
                                 <p>The post will be marked, one of the moderators is going to 
                                 analyze your post and decide if it indeed breaks the rules of the site.</p>
                             </details>

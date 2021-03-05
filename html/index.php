@@ -25,7 +25,7 @@
     draw_nav_bar();
     echo '<p>Content from PHP.</p>';
     ?>
-    <div class="flex-fill">
+    <div>
         <p>Content from HTML.</p>
     </div>
     <?php

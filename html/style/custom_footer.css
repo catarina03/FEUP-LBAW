@@ -36,7 +36,7 @@ div.container\ col-12\ my-5{
 } 
 
 .about-us-title{
-    font-weight: 500;
+    font-weight: bold;
     padding-top: 2%;
     /*padding-bottom: 2%;*/
     font-size: 1.4em;
@@ -45,7 +45,7 @@ div.container\ col-12\ my-5{
 .about-rounded{
     border-radius: 2%;
 } 
-
+/* FAQ */
 .faq-card{
     margin:auto;
     padding-top: 5%;
@@ -57,7 +57,7 @@ div.container\ col-12\ my-5{
 } 
 
 .faq-title{
-    font-weight: 500;
+    font-weight: bold;
     padding-top: 2%;
     /*padding-bottom: 2%;*/
     font-size: 1.4em;
@@ -83,29 +83,38 @@ div.container\ col-12\ my-5{
     width: 100%;
 }
 .question > details{
-    background-color: rgba(0,0,0,0);/*#307371;*/
+    width: 50%;
+    background-color: #fcf3ee;/*#307371;*/
 }
 
 details > p {
     background-color:#fcf3ee;
-    padding: 4px;
+    padding: 1em;
     margin: 0;
     box-shadow: 1px 1px 2px #bbbbbb;
-  }
+}
 
+summary{
+    padding:10px;
+}
 summary:hover{
-    background-color: #307371;
+    background-color: #ffc2ad;;
 }
 .question-button:hover{
-    background-color: #307371;
+    background-color: #ffc2ad;
 }
 
 .question-button:focus{
-    background-color: #307371;
+    background-color:#ffc2ad;
 }
 
 
 /*  SUPPORT*/
+
+.support-title{
+    padding-top: 2%;
+    font-weight: bold;
+}
 
 #support-text{
     background-color: #fcf3ee;

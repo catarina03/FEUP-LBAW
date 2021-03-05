@@ -5,7 +5,7 @@
   <div class="container-md col-lg-8 support-card">
         <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
         <!--Title-->
-            <h1 class="text-center faq-title">Support</h1>
+            <h1 class="text-center support-title">Support</h1>
             <div class="faq_questions">
                 <!--Question row-->
                 <div class="row px-5 py-3">
@@ -72,6 +72,7 @@
                             <label class="form-check-label" for="opt5"></label>
                         </div>
                         <p style="display:inline;"> Very negatively </p>
+                        <br><br><br>
                     </div>
                 </div>
             </div>
