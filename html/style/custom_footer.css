@@ -19,9 +19,8 @@ div.container\ col-12\ my-5{
     margin:0;
 }
 
-.padding-0{
-    padding-right:0;
-    padding-left:0;
+.card-body\ about-us{
+    padding-left: 5%;
 }
 
 .about_image{
@@ -31,7 +30,8 @@ div.container\ col-12\ my-5{
 
 .about-us-card{
     margin:auto;
-    padding-top: 5%;
+    padding-top: 2%;
+    padding-bottom: 1%;
     font-size: 1.4em;
 } 
 
@@ -44,3 +44,48 @@ div.container\ col-12\ my-5{
 .about-rounded{
     border-radius: 2%;
 } 
+
+.faq-card{
+    margin:auto;
+    padding-top: 5%;
+    font-size: 1.4em;
+} 
+
+.faq-rounded{
+    border-radius: 2%;
+} 
+
+.faq-title{
+    font-weight: 500;
+    padding-top: 2%;
+    /*padding-bottom: 2%;*/
+    font-size: 1.4em;
+} 
+
+.faq-questions{
+    padding-left:30%;
+    padding-right:30%;
+    padding-top: 1%;
+} 
+
+.question{
+    width: 100%;
+}
+
+.question-col{
+    width: 100%;
+}
+
+.question-button{
+    background-color: rgba(0,0,0,0);
+    border-style: none;
+    width: 100%;
+}
+
+.question-button:hover{
+    background-color: #307371;
+}
+
+.question-button:focus{
+    background-color: #307371;
+}

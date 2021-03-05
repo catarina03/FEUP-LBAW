@@ -21,7 +21,7 @@
             <!-- Grid column -->
             <div class="col-md-2 mb-3">
               <h6 class="text font-weight-bold">
-                <a class="footer-link" href="#!">FAQ</a>
+                <a class="footer-link" href="faq.php">FAQ</a>
               </h6>
             </div>
             <!-- Grid column -->
