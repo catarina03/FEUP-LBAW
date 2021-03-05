@@ -10,6 +10,7 @@
                 <!--Question row-->
                 <div class="row px-5 py-5">
                     <!--Column with the button needed to make the specified effect in the InVision project-->
+                    <div class="col-lg-auto question-col">
                         <div class="btn-group question">
                             <details>
                                 <summary>Why do I need an account?</summary>
@@ -17,19 +18,22 @@
                                 account in order to be able to comment,like,dislike,follow other users and follow your favorite tags.</p>
                             </details>
                         </div>
+                    </div>    
                 </div>
                 <div class="row px-5 py-5">
                     <!--Column with the button needed to make the specified effect in the InVision project-->
+                    <div class="col-lg-auto question-col">
                         <div class="btn-group question">
                             <details>
                                 <summary>How can I report a comment or post?</summary>
                                 <p>Very nice explanation...</p>
                             </details>    
                         </div>
+                    </div>    
                 </div>
                 <!-- End of question row-->
                 <div class="row px-5 py-5">
-                    <div class="col-sm-auto question-col">
+                    <div class="col-lg-auto question-col">
                         <div class="btn-group question">
                             <details>
                                     <summary>Can I recover a deleted post or comment that was deleted?</summary>
@@ -39,7 +43,7 @@
                     </div>
                 </div>
                 <div class="row px-5 py-5">
-                    <div class="col-sm-auto question-col">
+                    <div class="col-lg-auto question-col">
     
                         <div class="btn-group question">
                             <details>

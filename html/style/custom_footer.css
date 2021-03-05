@@ -36,6 +36,7 @@ div.container\ col-12\ my-5{
 } 
 
 .about-us-title{
+    font-weight: 500;
     padding-top: 2%;
     /*padding-bottom: 2%;*/
     font-size: 1.4em;
@@ -81,6 +82,10 @@ div.container\ col-12\ my-5{
     border-style: none;
     width: 100%;
 }
+.question > details{
+    background-color: rgba(0,0,0,0);/*#307371;*/
+}
+
 details > p {
     background-color:#fcf3ee;
     padding: 4px;
@@ -98,3 +103,47 @@ summary:hover{
 .question-button:focus{
     background-color: #307371;
 }
+
+
+/*  SUPPORT*/
+
+#support-text{
+    background-color: #fcf3ee;
+}
+
+.support-form{
+    width: fit-content;
+    background-color: #fcf3ee;
+}
+
+.support-form{
+    width: auto;
+    background-color: #fcf3ee;
+}
+
+.support-form:focus{
+    background-color: #fcf3ee;
+}
+
+.support-card{
+    margin:auto;
+    padding-top: 5%;
+    font-size: 1.4em;
+} 
+
+.rate-col{
+    width: 100%;
+    padding-left: 25%;
+}
+
+.form-check-input{
+    width: 1.4em;
+    height: 1.4em;
+    background-image: url("../images/sad_1.png");
+}
+
+.form-check-input:focus {
+    box-shadow: none;
+}
+
+

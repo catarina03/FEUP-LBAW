@@ -17,7 +17,7 @@
                         <li>Do not post any fake news</li>
                         <li>Do post any abusive content</li>
                         <li>Do not post any offensive content</li>
-                        <p> Any violation to the above rules can be reported,analyzed and deleted by the platform's moderators</p>
+                        <p> Any violation to the above rules can be reported,analyzed and deleted by the platform's moderators.</p>
                     </ul>
                 </div>
             </div>
