@@ -155,4 +155,36 @@ summary:hover{
     box-shadow: none;
 }
 
+/* ROLE MANAGER */
+
+.search-bar{
+    width: 100%;
+    display: inline;
+    margin: 0 auto;
+
+}
+
+.search-bar input:focus{
+    box-shadow: none;
+    outline:none;
+    border:none;
+}
+.search-bar input{
+    font-size: 100%;
+    text-align: center;
+    box-shadow: none;
+    outline:none;
+    border:none;
+}
+
+.role-manager-detail summary{
+    width: 100%;
+    display:block;
+}
+
+
+.role-manager-detail p:hover{
+    background-color: #ffc2ad;
+}
+
 
