@@ -38,16 +38,16 @@
     font-size:18px;
 }
 .profile-features{
-    width:20%;
+    width:10%;
     background-color:#0c1d1c;
-    margin:0;
+    margin-left:2px;
+    margin-right:2px;
     color:white;
     border-color: #fcf3ee;
 }
 
 
 .social-media{
-    width:20%;
     background-color:#0c1d1c;
     margin-right:1%;
     border-color:white;
@@ -75,7 +75,7 @@
 }
 
 .corner-icons{
-    z-index: 1; 
+    z-index: 2; 
     width:auto; 
     color:#0c1d1c; 
     margin-right:-4%;
@@ -88,4 +88,82 @@
 }
 .corner-icons:hover{
     color: #fcf3ee;
+}
+
+.my-profile-settings{
+    text-decoration:none; 
+    color:black; 
+ 
+    font-size: 18px;
+    height:50px;
+}
+.my-profile-settings svg{
+    margin-top:-2%;
+}
+.my-profile-settings:hover{
+    font-weight:bold;
+    text-decoration: underline;
+    color: black;
+}
+
+/* SETTINGS */
+.settings{
+    padding-bottom: 100px;
+}
+
+hr.solid {
+    border-top: 3px solid #bbb;
+    background-color: #307371;
+    margin-top:0px;
+}
+
+
+button.edit-account{
+    width:220px;
+}
+
+.form-group input{
+    margin-bottom: 0.7em;
+}
+
+.fa{
+    font-size:30px;
+}
+
+.settings button{
+    background-color:#307371;
+}
+.switch:checked{
+    border-color: black;
+    background-color:#ffc2ad ;
+    box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important; 
+}
+
+.switch:focus{
+    box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important; 
+}
+
+.switch:before, .switch:active{
+    box-shadow: 
+                  0 0 0 0rem rgba(0, 0, 0, 0) !important; 
+                  background-color:white;
+}
+
+.settings .tag{
+    height:3em;
+    padding-left:0;
+}
+
+.settings .tag .card-header{
+    height:3em;
+    padding-left:0;
+}
+
+.settings .tag p{
+    margin-right:0.5em;
+}
+
+.cancel-button{
+    font-weight: 500;
+    color:black;
 }
