@@ -18,11 +18,11 @@
                                         placeholder="+  Search for username" aria-label="Search" 
                                         style="background-color:#fcf3ee;display:inline;boder:none;outline:none;box-shadow:none;">
                                     </summary>
-                                    <p>@ana_sousa</p>
-                                    <p>@ana_sousa</p>
-                                    <p>@ana_sousa</p>
-                                    <p>@ana_sousa</p>
-                                    <p>@ana_sousa</p>
+                                    <p>@ana_sousa<button type="button" class="btn btn-primary" style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Confirm</button></p>
+                                    <p>@ana_sousa<button type="button" class="btn btn-primary" style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Remove</button></p>
+                                    <p>@ana_sousa<button type="button" class="btn btn-primary" style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Remove</button></p>
+                                    <p>@ana_sousa<button type="button" class="btn btn-primary" style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Remove</button></p>
+                                    <p>@ana_sousa<button type="button" class="btn btn-primary" style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Remove</button></p>
                                 </details>
                             </form>
                         </div>
