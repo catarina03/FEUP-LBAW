@@ -29,16 +29,18 @@
     transition: all 0.2s linear 0s;
   }
 
+  
+
+  /* PROFILE */
+
 .card-profile{
     background-color: #8ab5b1; 
 }
-
-
 .bio{
     font-size:18px;
 }
 .profile-features{
-    width:10%;
+    width:15%;
     background-color:#0c1d1c;
     margin-left:2px;
     margin-right:2px;
@@ -46,13 +48,22 @@
     border-color: #fcf3ee;
 }
 
+.my-profile-features{
+    color:#0c1d1c;
+    width:10%;
+    font-size:18px;
+    font-weight: 400;
+    text-decoration: none; 
+}
+
 
 .social-media{
     background-color:#0c1d1c;
     margin-right:1%;
     border-color:white;
+    width:20%;
+ 
 }
-
 .statistics-profile{
     font-weight:500; 
     font-size:18px;
@@ -93,8 +104,7 @@
 .my-profile-settings{
     text-decoration:none; 
     color:black; 
- 
-    font-size: 18px;
+    font-size: 21px;
     height:50px;
 }
 .my-profile-settings svg{
@@ -102,7 +112,6 @@
 }
 .my-profile-settings:hover{
     font-weight:bold;
-    text-decoration: underline;
     color: black;
 }
 
@@ -117,10 +126,6 @@ hr.solid {
     margin-top:0px;
 }
 
-
-button.edit-account{
-    width:220px;
-}
 
 .form-group input{
     margin-bottom: 0.7em;
@@ -166,4 +171,55 @@ button.edit-account{
 .cancel-button{
     font-weight: 500;
     color:black;
+}
+
+@media (min-width: 700px) {
+
+    #navbar_search_icon{
+      width:90%
+    }
+  
+  }
+
+
+  /* LOG IN*/
+
+  .or-container {
+    align-items: center;
+    color: #ccc;
+    display: flex;
+}
+
+.line-separator {
+    background-color: #ccc;
+    flex-grow: 5;
+    height: 1px
+}
+
+.or-label {
+    flex-grow: 1;
+    margin: 0 15px;
+    text-align: center
+}
+
+.btn-google {
+    color: #545454;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 1px #ddd;
+    font-size: 14px;
+}
+
+.authentication-buttons{
+    background-color:#307371;
+}
+
+.login{
+    background-color: #0c1d1c;
+}
+
+
+/* General */
+.custom-button{
+    background-color: #307371;
+    color:white;
 }

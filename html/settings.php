@@ -1,18 +1,18 @@
 <?php
     function draw_profile_settings(){
 ?>
-<div class="row justify-content-start settings g-0 mt-4 ms-5">
-    <div class="col-4 d-none d-lg-flex flex-column" style="padding-left:15%;padding-top:5%;">
+<div class="row justify-content-start settings g-0 mt-4 ms-5 me-5" >
+    <div class="col-4 d-none d-lg-flex flex-column" style="padding-left:10%;padding-top:5%;">
             <a href="profile.php" class="my-profile-settings"><i class="bi bi-person-circle fs-4"></i> Profile</a>
             <a href="#" class="my-profile-settings" style="font-weight:bold;"><i class="bi bi-gear fs-4"></i> Settings</a>
     </div>
 
-    <div class="col-lg-5 col-sm-10">
+    <div class="col-lg-7 col-xl-6 " style="padding-left:8em;">
         <form class="row  g-3 mt-5 ">
             <div class="row d-flex mt-2">
                 <h2>Edit Account </h2>
             </div>
-            <hr class="solid">
+            <hr class="solid col-12">
             <div class="mb-3 row">
                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
@@ -34,17 +34,17 @@
                     else.</small>
             </div>
             <div class="mb-3 row justify-content-evenly">
-                <div class="col-sm-6 col-lg-3">
-                    <button type="submit" class="btn btn-secondary btn-sm edit-account">Change Password</button>
+                <div class="col-sm-6 col-lg-6 justify-content-center d-flex">
+                    <button type="submit" class="btn btn-secondary btn-sm edit-account col-lg-8 col-xxl-8 ">Change Password</button>
                 </div>
-                <div class="col-sm-6 col-lg-3">
-                    <button type="submit" class="btn btn-secondary btn-sm edit-account">Delete Account</button>
+                <div class="col-sm-6 col-lg-6 justify-content-center d-flex">
+                    <button type="submit" class="btn btn-secondary btn-sm edit-account col-lg-8 col-xxl-8">Delete Account</button>
                 </div>
             </div>
             <div class="row d-flex mt-2">
                 <h2>Social Networks </h2>
             </div>
-            <hr class="solid">
+            <hr class="solid col-12">
             <div class="mb-3 row justify-content-around">
                 <label for="twitter" class="col-sm-2 col-form-label"><i class="fa fa-twitter"></i></label>
                 <div class="col-sm-10">
@@ -73,7 +73,7 @@
             <div class="row d-flex mt-2">
                 <h2>Preferences </h2>
             </div>
-            <hr class="solid">
+            <hr class="solid col-12">
             <div class="mb-3 row justify-content-around">
                 <div class="form-check form-switch">
                     <input class="form-check-input switch" type="checkbox" id="flexSwitchCheckDefault" />
@@ -101,7 +101,7 @@
             <div class=" row col-12  justify-content-end d-flex">
                 <a class="edit-account col-1 mt-1 me-1 cancel-button">Cancel</a>
                 <div class="col-1 mt-1 me-1"> or</div>
-                <button type="submit" class="btn btn-secondary btn-sm edit-account col-2 ">Save
+                <button type="submit" class="btn btn-secondary btn-sm edit-account col-lg-6 col-xxl-3">Save
                     Changes</button>
             </div>
 

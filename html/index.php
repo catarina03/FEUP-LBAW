@@ -25,8 +25,12 @@
     include_once('./navbar.php');
     include_once('./profile.php');
     include_once('./settings.php');
+    include_once('./login.php');
+    include_once('./confirm.php');
+    include_once('./pagenotfound.php');
+    include_once('./register.php');
     draw_nav_bar();
-    draw_my_profile();
+    confirm_pop_up();
 
 
   ?>
