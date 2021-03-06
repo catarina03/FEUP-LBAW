@@ -1,0 +1,30 @@
+.card-post{
+    background-color: #8ab5b1; 
+}
+
+.post-title{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+}
+
+.post-author-date{
+    font-weight: 500;
+    font-size:large;
+}
+
+.post-author-date a{
+    color: #0C1D1C;
+}
+
+.post-interactions{
+    font-size: medium;
+}
+
+p{
+    font-family: 'Roboto', sans-serif;
+}
+
+.tag-container{
+    outline: white;
+    outline-width: 2;
+}
