@@ -1,6 +1,7 @@
 <?php 
     function draw_support(){
 ?>
+<!--destaque no titulo,reformatar page e diminuir colunas-->
     <script src="js/test.js" defer></script>
   <div class="container-md col-lg-8 support-card">
         <section class="text-left faq-rounded" style="background-color:#8ab5b1;">

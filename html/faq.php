@@ -1,7 +1,7 @@
 <?php 
     function draw_faq(){
 ?>
-
+    <!--titulo, deixar perguntas igual no invision,border radius-->
   <div class="container-md col-lg-7 col-sm-10 faq-card">
         <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
         <!--Title-->

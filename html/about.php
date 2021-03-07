@@ -2,60 +2,65 @@
     function draw_about(){
 ?>
 
-  <div class="container-md col-lg-8 about-us-card">
-        <section class="text-left about-rounded" style="background-color:#8ab5b1;">
-            <h1 class="text-center about-us-title">About Us</h1>
-            <div class="card"  style="background-color:#8ab5b1;border:none;">
-                <div class="card-body about-us">
-                    <p">We provide a community website where people can connect and talk to one another 
-                        about their favourite art-related 
-                        topics, keeping everything organized and open to everyone.
-                    </p>
-                    <ul style="margin-bottom:0;">
-                        <p style="margin:0;">Here are some general rules:</p>
-                        <li>Do not spam</li>
-                        <li>Do not post any fake news</li>
-                        <li>Do post any abusive content</li>
-                        <li>Do not post any offensive content</li>
-                        <p> Any violation to the above rules can be reported,analyzed and deleted by the platform's moderators.</p>
-                    </ul>
-                </div>
-            </div>
-            <h2 class="text-center">Our Team</h2>
-            <div class="about_image">
-                <div class="row py-5 px-auto">
-                    <div class="col-sm-auto">
-                        <figure>
-                            <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
-                            width="100" height="100">
-                            <figcaption class="text-left">Allan</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col-sm-auto">
-                        <figure>
-                            <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
-                            width="100" height="100">
-                            <figcaption class="text-left">Catarina</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col-sm-auto">
-                        <figure>
-                            <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
-                            width="100" height="100">
-                            <figcaption class="text-left">Mariana</figcaption>
-                        </figure>
-                    </div>
-                    <div class="col-sm-auto">
-                        <figure>
-                            <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
-                            width="100" height="100">
-                            <figcaption class="text-left">Rita</figcaption>
-                        </figure>
+<div class="container-md col-lg-8 about-us-card">
+        <div class="row text-left about-rounded justify-content-center" style="background-color:#8ab5b1;border:none;">
+            <div class="col-8">
+                <h1 class="text-center about-us-title">About Us</h1>
+                <div class="card"  style="background-color:#8ab5b1;border:none;">
+                    <div class="card-body about-us">
+                        <p">We provide a community website where people can connect and talk to one another 
+                            about their favourite art-related 
+                            topics, keeping everything organized and open to everyone.
+                        </p>
+                        <ul style="margin-bottom:0;">
+                            <p style="margin:0;">Here are some general rules:</p>
+                            <li>Do not spam</li>
+                            <li>Do not post any fake news</li>
+                            <li>Do post any abusive content</li>
+                            <li>Do not post any offensive content</li>
+                            <p> Any violation to the above rules can be reported,analyzed and deleted by the platform's moderators.</p>
+                        </ul>
                     </div>
                 </div>
+                <h2 class="jusitfy-content-center text-center">Our Team</h2>
+                <div class="row py-5 justify-content-center">
+                
+                    <div class="col-sm-auto">
+                        <figure>
+                            <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
+                            width="100" height="100">
+                            <figcaption class="text-center">Allan</figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-sm-auto">
+                        <figure>
+                            <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
+                            width="100" height="100">
+                            <figcaption class="text-center">Catarina</figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-sm-auto">
+                        <figure>
+                            <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
+                            width="100" height="100">
+                            <figcaption class="text-center">Mariana</figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-sm-auto">
+                        <figure>
+                            <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
+                            width="100" height="100">
+                            <figcaption class="text-center">Rita</figcaption>
+                        </figure>
+                    </div>
             </div>
-        </section>
+            </div>
+        </div>
+            
+        
+
   </div>
+  <!-- End of .container -->
   <!-- End of .container -->
 <?php
 }
@@ -81,16 +86,16 @@
     <link rel="stylesheet" href="style/custom_footer.css">
 </head>
 
-<body class="d-flex flex-column">
+<body>
     <?php
     include_once('./navbar.php');
     draw_nav_bar();
     ?>
-    <div class="flex-fill">
+
     <?php
         draw_about();
     ?>
-    </div>
+
     <?php
     include_once('./footer.php');
     draw_footer();

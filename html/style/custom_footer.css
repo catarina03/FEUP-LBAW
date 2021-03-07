@@ -1,9 +1,4 @@
-html{
-    height: 100%;
-}
-body{
-    height: 100%;
-}
+
 
 a.footer-link{
     color: #fcf3ee;
@@ -36,7 +31,7 @@ div.container\ col-12\ my-5{
 } 
 
 .about-us-title{
-    font-weight: bold;
+    font-weight: bolder;
     padding-top: 2%;
     /*padding-bottom: 2%;*/
     font-size: 1.4em;
@@ -44,7 +39,11 @@ div.container\ col-12\ my-5{
 
 .about-rounded{
     border-radius: 2%;
-} 
+}
+
+
+
+
 /* FAQ */
 .faq-card{
     margin:auto;
@@ -186,5 +185,19 @@ summary:hover{
 .role-manager-detail p:hover{
     background-color: #ffc2ad;
 }
+
+/*POST DASHBOARD*/
+
+
+.pdash-title{
+    font-weight: bold;
+    padding-top: 2%;
+    /*padding-bottom: 2%;*/
+    font-size: 1.4em;
+} 
+.sub-cont{
+    padding-left: 5%;
+}
+
 
 
