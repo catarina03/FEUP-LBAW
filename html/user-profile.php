@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/logo-sem-fundo.svg" type="image/png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
@@ -28,17 +29,17 @@
 ?>
 
     <script src="user-profile.js" defer></script>
-    <div class="container user-profile">
 
-        <div class="row justify-content-center my-3 position-relative d-flex">
-            <div class="col-lg-3 col-sm-4 d-flex justify-content-center ">
+
+        <div class="row justify-content-center my-3 position-relative d-flex user-profile">
+            <div class="col-lg-3 col-sm-4  d-flex justify-content-center ">
                 <img class="rounded-circle profile-avatar"
                     src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" width="200"
                     height="200" alt="avatar">
             </div>
         </div>
-        <div class="row mt-1">
-            <div class="card card-profile" style="border-radius:2%;">
+        <div class="row justify-content-center d-flex mt-1 user-profile">
+            <div class="card card-profile col-lg-8 col-xl-8 col-sm-9" style="border-radius:2%;">
                 <div class="row justify-content-center mt-1">
                     <div class="col-lg-2 col-sm-3 d-flex justify-content-center">
                         <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
@@ -108,10 +109,76 @@
                             </a>
                         </div>
                     </div>
+                    <div class="postsCards row">
+            <div class="col-12 col-md-6 col-xl-4 mt-4">
+                <div class="card">
+                    <img src="https://www.w3schools.com/w3css/img_lights.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
+                            Video </h5>
+                            
+                            <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
+                                Comes
+                                the
+                                Shock" as part of the National Hockey League's outdoor games in Lake Tahoe. The
+                                accompanying
+                                video
+                                features "Punk Rock Aerobics" cofounder Hilken <strong>(read more)</strong></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">by <a id="authorName" href="https://www.google.com/">João Santos</a>, FEBRUARY 28, 2021</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-4 mt-4">
+                <div class="card">
+                    <img src="https://www.w3schools.com/w3css/img_lights.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
+                            Video </h5>
+                            
+                            <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
+                                Comes
+                                the
+                                Shock" as part of the National Hockey League's outdoor games in Lake Tahoe. The
+                                accompanying
+                                video
+                                features "Punk Rock Aerobics" cofounder Hilken <strong>(read more)</strong></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">by <a id="authorName" href="https://www.google.com/">João Santos</a>, FEBRUARY 28, 2021</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-4 mt-4">
+                <div class="card">
+                    <img src="https://www.w3schools.com/w3css/img_lights.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
+                            Video </h5>
+                            
+                            <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
+                                Comes
+                                the
+                                Shock" as part of the National Hockey League's outdoor games in Lake Tahoe. The
+                                accompanying
+                                video
+                                features "Punk Rock Aerobics" cofounder Hilken <strong>(read more)</strong></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">by <a id="authorName" href="https://www.google.com/">João Santos</a>, FEBRUARY 28, 2021</small>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
                 </div>
             </div>
 
-        </div>
+
 
 
         <?php

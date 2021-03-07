@@ -56,7 +56,13 @@
     font-weight: 400;
     text-decoration: none; 
 }
-
+.my-profile-features:hover{
+    font-weight: bold;
+    color:black;
+}
+.my-profile-features.active{
+    font-weight: bold;
+}
 
 .social-media{
     background-color:#0c1d1c;
@@ -96,22 +102,21 @@
 }
 
 .social-media:hover,  .profile-features:hover{
-    background-color: #ffc2ad;
+    background-color: #fcf3ee;
     cursor: pointer;
+    color:black;
 }
 .corner-icons:hover{
-    color: #fcf3ee;
+    color: #ade1e5;
+    cursor:pointer;
 }
 
 .my-profile-settings{
     text-decoration:none; 
     color:black; 
     font-size: 21px;
-    height:50px;
 }
-.my-profile-settings svg{
-    margin-top:-2%;
-}
+
 .my-profile-settings:hover{
     font-weight:bold;
     color: black;

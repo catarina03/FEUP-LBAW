@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/logo-sem-fundo.svg" type="image/png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
@@ -27,15 +28,12 @@
     include_once('./navbar.php');
     draw_nav_bar();
   ?>
-
-
-
     <script src="my-profile.js" defer></script>
 
     <div class="row justify-content-start my-profile g-0 mt-2 ms-5">
         <div class="col-lg-2 d-none d-lg-flex flex-column " style=" padding-left:3%;padding-top:15em; ">
             <nav class="nav flex-lg-column">
-                <a href="#" class="my-profile-settings justify-content-center nav-link active"><i
+                <a class="my-profile-settings justify-content-center nav-link active"><i
                         class="bi bi-person-circle fs-4"></i> Profile</a>
                 <a href="./settings.php" class="my-profile-settings justify-content-center nav-link"><i
                         class="bi bi-gear fs-4"></i>
@@ -69,8 +67,8 @@
 
                     </div>
                     <div class="row mt-1">
-
-                        <div class="card card-profile" style="border-radius:2%;">
+                        <div class="card card-profile  col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5"
+                            style="border-radius:2%;">
                             <div class="row justify-content-center mt-1">
                                 <div class="col-lg-2 col-md-5 col-sm-4 d-flex justify-content-center">
                                     <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
@@ -155,17 +153,100 @@
                                     </div>
                                 </div>
                                 <div class="justify-content-center d-flex ms-4">
-                                    <div class="d-inline p-2 "><a href="#" class="my-profile-features"
-                                            style="font-weight:bold;">My
+                                    <div class="d-inline p-2 "><a href="#" class="my-profile-features active">My
                                             Posts</a></div>
                                     <div class="d-inline p-2">|</div>
-                                    <div class="d-inline p-2"><a href="#" class="my-profile-features">Saved Posts</a>
+                                    <div class="d-inline p-2"><a href="#" class="my-profile-features ">Saved Posts</a>
                                     </div>
 
                                 </div>
                             </div>
+                            <div class="row justify-content-start mt-1">
+                                <div class="col-12 col-md-6 col-xl-4 mt-4">
+                                    <div class="card">
+                                        <img src="https://www.w3schools.com/w3css/img_lights.jpg" class="card-img-top"
+                                            alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here
+                                                Comes the Shock'
+                                                Video </h5>
 
+                                            <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
+                                                new song "Here
+                                                Comes
+                                                the
+                                                Shock" as part of the National Hockey League's outdoor games in Lake
+                                                Tahoe. The
+                                                accompanying
+                                                video
+                                                features "Punk Rock Aerobics" cofounder Hilken <strong>(read
+                                                    more)</strong></p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">by <a id="authorName"
+                                                    href="https://www.google.com/">João Santos</a>, FEBRUARY 28,
+                                                2021</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4 mt-4">
+                                    <div class="card">
+                                        <img src="https://www.w3schools.com/w3css/img_lights.jpg" class="card-img-top"
+                                            alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here
+                                                Comes the Shock'
+                                                Video </h5>
+
+                                            <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
+                                                new song "Here
+                                                Comes
+                                                the
+                                                Shock" as part of the National Hockey League's outdoor games in Lake
+                                                Tahoe. The
+                                                accompanying
+                                                video
+                                                features "Punk Rock Aerobics" cofounder Hilken <strong>(read
+                                                    more)</strong></p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">by <a id="authorName"
+                                                    href="https://www.google.com/">João Santos</a>, FEBRUARY 28,
+                                                2021</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4 mt-4">
+                                    <div class="card">
+                                        <img src="https://www.w3schools.com/w3css/img_lights.jpg" class="card-img-top"
+                                            alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here
+                                                Comes the Shock'
+                                                Video </h5>
+
+                                            <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
+                                                new song "Here
+                                                Comes
+                                                the
+                                                Shock" as part of the National Hockey League's outdoor games in Lake
+                                                Tahoe. The
+                                                accompanying
+                                                video
+                                                features "Punk Rock Aerobics" cofounder Hilken <strong>(read
+                                                    more)</strong></p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">by <a id="authorName"
+                                                    href="https://www.google.com/">João Santos</a>, FEBRUARY 28,
+                                                2021</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
 
 
