@@ -1,85 +1,53 @@
-.homepage-left a{
-    text-decoration: none;
-    color: #252525;
-    padding-bottom:0.8em;
+.homepage-view .nav-link {
+    color:black;
 }
 
-.homepage-left img {
-    padding-right: 0.8em;
+.homepage-view .nav-link {
+    color: rgba(0, 0, 0, 0.534);
 }
 
-.homepage-left a.disable {
-    color:grey;
-}
-
-.homepage-left a.active {
-    font-weight: bold;
-}
-
-#topNews .card {
-    background-color: #fcf3ee;
-    cursor: pointer;
-}
-
-.postsCards .card {
-    border-radius: 2%;
-    background-color: #8ab5b1;
-    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
-    cursor: pointer;
-}
-
-.postsCards .card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-}
-
-.postsCards .card-body {
-    padding: 5px;
-    padding-bottom: 1em;
-}
-
-.postsCards .card-body a.btn {
-    background-color: #fcf3ee;
+.homepage-view .nav-link:hover {
     color: black;
 }
 
-.postsCards p.card-text::after{
-    content: "(read more)";
+.homepage-view .nav-link img {
+    vertical-align: middle;
+    margin-bottom: 0.5em;
+    padding-right: 0.5em;
+}
+
+.homepage-view .nav-link.active {
     font-weight: bold;
+    color: black;
 }
 
-.postsCards .card-body h6 {
-    display: inline;
+.homepage-center #topNews .card {
+    max-height: fit-content;
+    background-color:#fcf3ee;
+    cursor: pointer;
 }
 
-.postsCards .card-body a {
-    color: #307371;
+.homepage #authorName {
+    cursor: pointer;
+    font-weight: bold;
     text-decoration: none;
-    font-weight: bold;
+    color: #307371;
 }
 
-.postsCards .card-body a:hover {
+.homepage #authorName:hover {
     color: #ffc2ad;
 }
 
-.filterBox .container {
-    background-color: #252525;
-    margin: 3em;
-    padding: 2em;
-    height: fit-content;
-    border-radius: 1%;
-    color: white;
-}
 
-.filterBox input.filterButton {
-    background-color: #8ab5b1;
-    border: none;
-    border-radius: 2%;
-    color: black;
-    font-weight: bold;
-}
+@media only screen and (max-width: 1024px) {
+    .homepage-view, .homepage-filter {
+        display: none;
+    } 
+    .homepage {
+        margin: 0;
+        padding: 0;
+    }
 
-.filterBox input.filterButton:hover {
-    color: #307371;
+    
+
 }
