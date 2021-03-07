@@ -1,9 +1,6 @@
 .homepage-view .nav-link {
-    color:black;
-}
-
-.homepage-view .nav-link {
     color: rgba(0, 0, 0, 0.534);
+    max-width: fit-content;
 }
 
 .homepage-view .nav-link:hover {
@@ -27,27 +24,135 @@
     cursor: pointer;
 }
 
-.homepage #authorName {
+.homepage #authorName, .category #authorName {
     cursor: pointer;
     font-weight: bold;
     text-decoration: none;
     color: #307371;
 }
 
-.homepage #authorName:hover {
+.homepage #authorName:hover, .category #authorName:hover {
     color: #ffc2ad;
 }
 
+.postsCards .card {
+    background-color: #8ab5b1;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    cursor: pointer;
+    position: relative;
+    
+}
 
-@media only screen and (max-width: 1024px) {
-    .homepage-view, .homepage-filter {
+.postsCards .card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.postsCards .card .savePost{
+    position: absolute;
+    top: -30px;
+    right: -10px;
+    color: #0c1d1c;
+}
+
+.postsCards .card .savePost:hover {
+    color: #ffc2ad;
+}
+
+.postsCards .card .infoPosts {
+    background-color: #fcf3ee94;
+    max-width: fit-content;
+    position: absolute;
+    top: 10em;
+    right: 16px;
+    padding: .2em;
+}
+
+.postsCards .card .infoPosts i{
+    padding: .2em;
+    color: #000;
+}
+
+.postsCards .card .categoryTag {
+    background-color: rgba(138, 181, 177, 0.555);
+    max-width: fit-content;
+    max-height: fit-content;
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    border-radius: 3%;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.postsCards .card .categoryTag h6 {
+    padding: 0.3em;
+    margin: 0;
+}
+
+.postsCards .card .categoryTag:hover {
+    color: #fcf3ee;
+}
+
+.homepage-filter .container, .category-filter .container {
+    background-color: #0c1d1c;
+    max-width: fit-content;
+    max-height: fit-content;
+    padding: 2em;
+    color: #fcf3ee;
+    border-radius: 1%;
+}
+
+.homepage-filter input.filterButton, .category-filter input.filterButton {
+    background-color: #8ab5b1;
+    border: none;
+    border-radius: 2%;
+    color: #0c1d1c;
+    font-weight: bold;
+}
+
+.homepage-filter input.filterButton:hover, .category-filter input.filterButton:hover {
+    color: #307371;
+}
+
+.homepage-filter .form-check-input, .category-filter .form-check-input{
+    background-color: #8ab5b1;
+    border: none;
+}
+
+.bottomNavbar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fcf3ee;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bottomNavbar p {
+    padding-top: 0.5em;
+}
+
+.bottomNavbar .button-active, .bottomNavbar .selectors button:hover, .bottomNavbar .selectors button:active, .bottomNavbar .selectors button:focus{
+    color: #307371;
+}
+
+.bottomNavbar .button-inactive{
+    color: #000;
+}
+
+.bottomNavbar .selectors, .bottomNavbar .block{
+    height: 100%;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+    .category-filter, .homepage-filter {
         display: none;
     } 
-    .homepage {
-        margin: 0;
-        padding: 0;
-    }
-
-    
-
 }
+
+
+

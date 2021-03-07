@@ -24,8 +24,9 @@
     <?php
     include_once('./navbar.php');
     include_once('./homepage.php');
+    include_once('./category_page.php');
     draw_nav_bar();
-    draw_homepage();
+    draw_categorypage();
   ?>
 
 
