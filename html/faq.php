@@ -1,53 +1,52 @@
 <?php 
     function draw_faq(){
 ?>
-    <!--titulo, deixar perguntas igual no invision,border radius-->
-  <div class="container-md col-lg-7 col-sm-10 faq-card">
+  <div class="container-md col-lg-8 col-sm-10 faq-card">
         <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
         <!--Title-->
             <h1 class="text-center faq-title" style="font-weight:bold;">Frequently Asked Questions</h1>
             <div class="faq_questions">
                 <!--Question row-->
-                <div class="row px-5 py-5">
+                <div class="row py-5">
                     <!--Column with the button needed to make the specified effect in the InVision project-->
-                    <div class="col-lg-auto question-col">
-                        <div class="btn-group question">
+                    <div class="col-lg-6 question-col">
+                        <div class="btn-group question justify-content-center">
                             <details>
-                                <summary>Why do I need to make an account?</summary>
+                                <summary class="text-center">Why do I need to make an account?</summary>
                                 <p>Even though you can view all posts without an account, you need and
                                 account in order to be able to comment,like,dislike,follow other users and follow your favorite tags.</p>
                             </details>
                         </div>
                     </div>    
                 </div>
-                <div class="row px-5 py-5">
+                <div class="row py-5">
                     <!--Column with the button needed to make the specified effect in the InVision project-->
-                    <div class="col-lg-auto question-col">
-                        <div class="btn-group question">
+                    <div class="col-lg-6 question-col">
+                        <div class="btn-group question justify-content-center">
                             <details>
-                                <summary>How can I report a  comment  or  post?</summary>
+                                <summary class="text-center">How can I report a  comment  or  post?</summary>
                                 <p>Very nice explanation...</p>
                             </details>    
                         </div>
                     </div>    
                 </div>
                 <!-- End of question row-->
-                <div class="row px-5 py-5">
-                    <div class="col-lg-auto question-col">
-                        <div class="btn-group question">
+                <div class="row py-5">
+                    <div class="col-lg-6 question-col">
+                        <div class="btn-group question justify-content-center">
                             <details>
-                                    <summary>Can I recover a deleted post or comment?</summary>
+                                    <summary class="text-center">Can I recover a deleted post or comment?</summary>
                                     <p>Very nice explanation...</p>
                             </details>
                         </div>
                     </div>
                 </div>
-                <div class="row px-5 py-5">
-                    <div class="col-lg-auto question-col">
+                <div class="row py-5">
+                    <div class="col-lg-6 question-col">
     
-                        <div class="btn-group question">
+                        <div class="btn-group question justify-content-center">
                             <details>
-                                <summary>What happens to a post that gets reported?</summary>
+                                <summary class="text-center">What happens to a post that gets reported?</summary>
                                 <p>The post will be marked, one of the moderators is going to 
                                 analyze your post and decide if it indeed breaks the rules of the site.</p>
                             </details>
@@ -82,16 +81,14 @@
     <link rel="stylesheet" href="style/custom_footer.css">
 </head>
 
-<body class="d-flex flex-column">
+<body>
     <?php
     include_once('./navbar.php');
     draw_nav_bar();
     ?>
-    <div class="flex-fill">
     <?php
         draw_faq();
     ?>
-    </div>
     <?php
     include_once('./footer.php');
     draw_footer();

@@ -45,9 +45,25 @@ div.container\ col-12\ my-5{
 
 
 /* FAQ */
+summary.text-center{
+    list-style: none;
+}
+summary.text-center::-webkit-details-marker {
+    display: none
+}
+summary.text-center:before {
+    content: ' ►';
+    float: left;
+    margin-right: 10px;
+}
+   
+details[open] summary.text-center:before {
+    content: " ▼";
+}
+
 .faq-card{
     margin:auto;
-    padding-top: 5%;
+    padding-top: 2%;
     font-size: 1.4em;
 } 
 
@@ -57,7 +73,7 @@ div.container\ col-12\ my-5{
 
 .faq-title{
     font-weight: bold;
-    padding-top: 2%;
+    padding-top:2%;
     /*padding-bottom: 2%;*/
     font-size: 1.4em;
 } 
@@ -83,7 +99,8 @@ div.container\ col-12\ my-5{
 }
 .question > details{
     width: 50%;
-    background-color: #fcf3ee;/*#307371;*/
+    /*background-color: #fcf3ee;*//*#307371;*/
+    border-radius: 2%;
 }
 
 details > p {
@@ -94,7 +111,9 @@ details > p {
 }
 
 summary{
+    background-color:#fcf3ee;
     padding:10px;
+    border-radius: 2%;
 }
 summary:hover{
     background-color: #ffc2ad;;
