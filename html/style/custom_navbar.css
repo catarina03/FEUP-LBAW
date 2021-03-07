@@ -39,6 +39,7 @@
 .bio{
     font-size:18px;
 }
+
 .profile-features{
     width:15%;
     background-color:#0c1d1c;
@@ -61,9 +62,10 @@
     background-color:#0c1d1c;
     margin-right:1%;
     border-color:white;
-    width:20%;
+    width:50%;
  
 }
+
 .statistics-profile{
     font-weight:500; 
     font-size:18px;
@@ -210,7 +212,9 @@ hr.solid {
 }
 
 .authentication-buttons{
-    background-color:#307371;
+    background-color:#ade1e5;
+    color:black;
+    font-weight: 500;
 }
 
 .login{
@@ -222,4 +226,24 @@ hr.solid {
 .custom-button{
     background-color: #307371;
     color:white;
+}
+
+
+.nav-link {
+    color: rgba(0, 0, 0, 0.534);
+}
+
+.nav-link:hover {
+    color: black;
+}
+
+.nav-link img {
+    vertical-align: middle;
+    margin-bottom: 0.5em;
+    padding-right: 0.5em;
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: black;
 }

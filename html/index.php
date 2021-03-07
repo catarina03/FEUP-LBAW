@@ -17,6 +17,8 @@
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style/custom_navbar.css">
+     
+       
 </head>
 
 <body>
@@ -30,7 +32,7 @@
     include_once('./pagenotfound.php');
     include_once('./register.php');
     draw_nav_bar();
-    confirm_pop_up();
+    draw_my_profile();
 
 
   ?>

@@ -30,7 +30,7 @@
                         </div>
                         <div class="row mt-3 col-12  justify-content-center d-flex ">
                             <button type="button"
-                                class="btn btn-sm text-uppercase btn-secondary col-5 authentication-buttons">Log
+                                class="btn btn-sm text-uppercase text-center btn-secondary col-5 authentication-buttons">Log
                                 in</button>
                         </div>
                         <div class="or-container ms-1 mt-2 pe-5">

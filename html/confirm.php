@@ -1,10 +1,6 @@
-<?php 
 
-    function confirm_pop_up(){
-?>
-
-<div class="" tabindex="-1"> <!-- add model here-->
-    <div class="modal-dialog">
+<div div class="modal fade" id="confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#307371; color:white;">
                 <h5 class="modal-title ">Confirm</h5>
@@ -13,14 +9,11 @@
             <div class="modal-body ms-3">
                 <p>Are you sure you want to do this?</p>
             </div>
-            <div class="row justify-content-end d-flex me-3 mb-3">
-                <button type="button" class="col-2 btn btn-secondary me-4" data-bs-dismiss="modal">No</button>
-                <button type="button" class="col-2 btn custom-button">Yes</button>
+            <div class="row justify-content-end d-flex me-3 mb-3 ">
+                <button type="submit" class="col-2 btn btn-secondary me-4" data-bs-dismiss="modal">No</button>
+                <button type="submit" class="col-2 btn custom-button" data-bs-dismiss="modal">Yes</button>
             </div>
         </div>
     </div>
 </div>
 
-<?php
-    }
-?>
