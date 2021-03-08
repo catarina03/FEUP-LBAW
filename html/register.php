@@ -7,8 +7,8 @@
                     aria-label="Close"></button>
             </div>
             <div class="row justify-content-center d-flex">
-                <div class="col-lg-3 col-sm-12 d-none d-lg-flex flex-column  justify-content-center px-auto ">
-                    <img src="/images/logo-sem-fundo.svg" class="me-2" style="width:150%;">
+                <div class="col-lg-3 col-sm-12 d-none d-lg-flex flex-column  justify-content-center   mx-auto ">
+                    <img src="/images/logo-sem-fundo.svg"  style="width:150px;">
                 </div>
                 <div class="col-lg-8 col-sm-12">
                     <form class="row mt-4 mb-3 ms-5 g-0 ">
