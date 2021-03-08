@@ -43,6 +43,7 @@
         <link rel="stylesheet" href="style/view_post.css">
         <link rel="stylesheet" href="style/homepage.css">
         <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/custom_footer.css">
     </head>
     
 <body>
@@ -50,17 +51,11 @@
     <?php
     include_once('./navbar.php');
     include_once('./homepage.php');
+    include_once('./footer.php');
     draw_nav_bar();
     draw_homepage();
-  ?>
-
-
-    <?php
-    //include_once('./footer.php');
-    //draw_footer();
+    draw_footer();
   ?>
 
 </body>
-
-
 </html>

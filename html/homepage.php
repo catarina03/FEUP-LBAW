@@ -197,7 +197,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
                             Video </h5>
-                        <small class="text-muted">by <a id="authorName" href="https://www.google.com/">João Santos</a>,
+                        <small class="text-muted">by <a id="authorName" href="user-profile.php">João Santos</a>,
                             FEBRUARY 28, 2021</small>
                         <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
                             Comes
@@ -246,7 +246,8 @@
                     </label>
                 </div>
 
-                <input type="submit" class="filterButton w-100 mt-4 p-1" value="Filter">
+                <!--<input type="submit" class="filterButton w-100 mt-4 p-1" value="Filter">-->
+                <a href="advanced_search.php" class="filterButton w-100 mt-4 p-1">Filter</a>
             </form>
         </div>
     </div>
