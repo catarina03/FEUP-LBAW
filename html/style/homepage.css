@@ -177,3 +177,11 @@
     background-color: #307371;
 }
 
+.advanced_search .form-check-input{
+    border-color:black;
+}
+
+.advanced_search .form-check-input:checked{
+    background-color: black;
+    color:#fcf3ee;
+}
