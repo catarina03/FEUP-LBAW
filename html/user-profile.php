@@ -24,7 +24,6 @@
 
 <body>
 
-
     <script src="js/user-profile.js" defer></script>
 
 

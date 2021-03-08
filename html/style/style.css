@@ -1,58 +1,55 @@
 /* NAV BAR*/
 
-
 .navbar-brand{
-    color:#ade1e5;
+  color:#ade1e5;
 }
 .navbar-brand:hover{
-    color:#ffc2ad;
+  color:#ffc2ad;
 }
 .navbar-nav a{
-    color:grey;
-    font-size:18px;
-    margin:0;
+  color:grey;
+  font-size:18px;
+  margin:0;
 }
 .navbar-nav .active a{
-    color:white;
-    font-size:20px;
+  color:white;
+  font-size:20px;
 }
 
 .navbar-nav a:hover{
-    color:#ffc2ad;
+  color:#ffc2ad;
 }
 
 .navbar-icon{
-    font-size:25px;
+  font-size:25px;
 }
 .navbar-nav .dropdown-menu a {
-    color: #307371;
+  color: #307371;
 }
 
 .navbar-nav .dropdown-menu a:hover {
-    background-color: #fcf3ee;;
+  background-color: #fcf3ee;;
 }
 
 .navbar-custom {
-    border: 0;
-    margin: 0;
-    background-color: #0c1d1c;
-    -webkit-transition: all 0.2s linear 0s;
-    transition: all 0.2s linear 0s;
-    height:50px;
-  }
+  border-radius: 0;
+  background-color: #0c1d1c;
+  -webkit-transition: all 0.2s linear 0s;
+  transition: all 0.2s linear 0s;
+}
 
-  .navbar-toggle{
-      color:white;
-      background-color: white;
-  }
-  .navbar-toggle .icon-bar{
-      background-color: #0c1d1c;
-  }
+.navbar-toggle{
+  color:white;
+  background-color: white;
+}
+.navbar-toggle .icon-bar{
+  background-color: #0c1d1c;
+}
 
-  /* LOGIN AND REGISTER*/
-  .custom-button{
-    background-color: #307371;
-    color:white;
+/* LOGIN AND REGISTER*/
+.custom-button{
+  background-color: #307371;
+  color:white;
 }
 
 
@@ -78,10 +75,10 @@
 
   /* LOG IN*/
 
-  .or-container {
-    align-items: center;
-    color: #ccc;
-    display: flex;
+.or-container {
+  align-items: center;
+  color: #ccc;
+  display: flex;
 }
 
 .line-separator {
@@ -116,175 +113,196 @@
 
 /* PROFILE */
 
-.card-profile{
-    background-color: #ddd; 
-  }
-  
-  .bio{
-    font-size:18px;
-  }
-  
-  .profile-features{
-    background-color:#0c1d1c;
-    margin-left:2px;
-    margin-right:2px;
-    color:white;
-    border-color: #fcf3ee;
-  }
-  
-  .my-profile-features{
-    color:#0c1d1c;
-    width:10%;
-    font-size:18px;
-    font-weight: 400;
-    text-decoration: none; 
-  }
-  .my-profile-features:hover{
-    text-decoration: none;
-    font-weight: bold;
-    color:black;
-  }
-  .my-profile-features.active{
-    font-weight: bold;
-  }
-  
-  .social-media{
-    background-color:#0c1d1c;
-    margin-right:1%;
-    border-color:white;
-    width:50%;
-  
-  }
-  
-  .statistics-profile{
-    font-weight:500; 
-    font-size:18px;
-  }
-  .profile-name{
-    font-weight:500; 
-    font-size:24px;
-  }
-  .profile-username{
-    font-weight:500; 
-    font-size:20px;
-  }
-  
-  .profile-avatar{
-    border:2px solid #307371; 
-    transform: translateY(30%);
-    transform-style: preserve-3d;
-    z-index: 2;
-    position: relative;
-  }
-  
-  .corner-icons{
-    z-index: 2; 
-    width:auto; 
-    color:#0c1d1c; 
-    margin-right:-4%;
-  
-  }
-  
-  .social-media:hover,  .profile-features:hover{
-    background-color: #fcf3ee;
-    cursor: pointer;
-    color:black;
-  }
-  .corner-icons:hover{
-    cursor:pointer;
-    color:#0c1d1c;
-  }
-  
-  .my-profile-settings{
-    text-decoration:none; 
-    color:black; 
-    font-size: 21px;
-  }
-  
-  .my-profile-settings:hover{
-    text-decoration:none; 
-    font-weight:bold;
-    color: black;
-  }
-  
-  /* SETTINGS */
-  .settings{
-    padding-bottom: 100px;
-  }
-  
-  hr.solid {
-    border-top: 3px solid #bbb;
-    background-color: #307371;
-    margin-top:0px;
-  }
-  
-  
-  .form-group input{
-    margin-bottom: 0.7em;
-  }
-  
-  .fa{
-    font-size:30px;
-  }
-  
-  .settings button{
-    background-color:#307371;
-  }
-  .switch:checked{
-    border-color: black;
-    background-color:#ffc2ad ;
-    box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important; 
-  }
-  
-  .switch:focus{
-    box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important; 
-  }
-  
-  .switch:before, .switch:active{
-    box-shadow: 
-                  0 0 0 0rem rgba(0, 0, 0, 0) !important; 
-                  background-color:white;
-  }
-  
-  .settings .tag{
-    height:3em;
-    padding-left:0;
-  }
-  
-  .settings .tag .card-header{
-    height:3em;
-    padding-left:0;
-  }
-  
-  .settings .tag p{
-    margin-right:0.5em;
-  }
-  
-  .cancel-button{
-    font-weight: 500;
-    color:black;
-  }
-  
-  
-  .dots-icon{
-    color:#0c1d1c;
-   
-    font-weight: bold;
-    margin-top:1px;
-  }
-  
-  .dots-icon:hover{
-    color: #fcf3ee;
-    font-weight:bolder;
-    cursor:pointer;
-  }
+.my_profile-view .nav-link {
+  color: rgba(0, 0, 0, 0.534);
+  max-width: fit-content;
+}
 
-  /* POST CARDS*/
-  #authorName,  #authorName {
-    cursor: pointer;
-    font-weight: bold;
-    text-decoration: none;
-    color: #307371;
+.my_profile-view .nav-link:hover {
+  color: black;
+}
+
+.my_profile-view .nav-link img {
+  vertical-align: middle;
+  margin-bottom: 0.5em;
+  padding-right: 0.5em;
+}
+
+.my_profile-view .nav-link.active {
+  font-weight: bold;
+  color: black;
+}
+
+
+.card-profile{
+  background-color: #ddd; 
+}
+
+.bio{
+  font-size:18px;
+}
+
+.profile-features{
+  background-color:#0c1d1c;
+  margin-left:2px;
+  margin-right:2px;
+  color:white;
+  border-color: #fcf3ee;
+}
+
+.my-profile-features{
+  color:#0c1d1c;
+  width:10%;
+  font-size:18px;
+  font-weight: 400;
+  text-decoration: none; 
+}
+.my-profile-features:hover{
+  text-decoration: none;
+  font-weight: bold;
+  color:black;
+}
+.my-profile-features.active{
+  font-weight: bold;
+}
+
+.social-media{
+  background-color:#0c1d1c;
+  margin-right:1%;
+  border-color:white;
+  width:50%;
+
+}
+
+.statistics-profile{
+  font-weight:500; 
+  font-size:18px;
+}
+.profile-name{
+  font-weight:500; 
+  font-size:24px;
+}
+.profile-username{
+  font-weight:500; 
+  font-size:20px;
+}
+
+.profile-avatar{
+  border:2px solid #307371; 
+  transform: translateY(30%);
+  transform-style: preserve-3d;
+  z-index: 2;
+  position: relative;
+}
+
+.corner-icons{
+  z-index: 2; 
+  width:auto; 
+  color:#0c1d1c; 
+  margin-right:-4%;
+
+}
+
+.social-media:hover,  .profile-features:hover{
+  background-color: #fcf3ee;
+  cursor: pointer;
+  color:black;
+}
+.corner-icons:hover{
+  cursor:pointer;
+  color:#0c1d1c;
+}
+
+.my-profile-settings{
+  text-decoration:none; 
+  color:black; 
+  font-size: 21px;
+}
+
+.my-profile-settings:hover{
+  text-decoration:none; 
+  font-weight:bold;
+  color: black;
+}
+
+/* SETTINGS */
+.settings{
+  padding-bottom: 100px;
+}
+
+hr.solid {
+  border-top: 3px solid #bbb;
+  background-color: #307371;
+  margin-top:0px;
+}
+
+
+.form-group input{
+  margin-bottom: 0.7em;
+}
+
+.fa{
+  font-size:30px;
+}
+
+.settings button{
+  background-color:#307371;
+}
+.switch:checked{
+  border-color: black;
+  background-color:#ffc2ad ;
+  box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important; 
+}
+
+.switch:focus{
+  box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important; 
+}
+
+.switch:before, .switch:active{
+  box-shadow: 
+                0 0 0 0rem rgba(0, 0, 0, 0) !important; 
+                background-color:white;
+}
+
+.settings .tag{
+  height:3em;
+  padding-left:0;
+}
+
+.settings .tag .card-header{
+  height:3em;
+  padding-left:0;
+}
+
+.settings .tag p{
+  margin-right:0.5em;
+}
+
+.cancel-button{
+  font-weight: 500;
+  color:black;
+}
+
+
+.dots-icon{
+  color:#0c1d1c;
+  
+  font-weight: bold;
+  margin-top:1px;
+}
+
+.dots-icon:hover{
+  color: #fcf3ee;
+  font-weight:bolder;
+  cursor:pointer;
+}
+
+/* POST CARDS*/
+#authorName,  #authorName {
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  color: #307371;
 }
 
  #authorName:hover,  #authorName:hover {
@@ -330,7 +348,7 @@
     padding: .2em;
 }
 
-.postsCards .card .infoPosts i{
+.postsCards .card .infoPosts i {
     padding: .2em;
     color: #000;
 }
