@@ -2,10 +2,10 @@
     function draw_my_profile() {
 
 ?>
-<div class="container-fluid" style="width:100%">
+<div class="container-fluid my-profile justify-content-center   mx-auto g-0  mt-0" >
     <div class="row justify-content-start settings profile g-0">
-        <div class="col-lg-2 d-none d-lg-flex d-flex-column" style=" padding-left:3%;padding-top:15em; ">
-            <nav class="nav flex-lg-column">
+        <div class="col-3 d-sm-none d-lg-flex d-flex-column justify-content-center " style=" padding-left:3%;padding-top:15em; ">
+            <nav class="nav flex-lg-column my-profile-settings-div ">
                 <a class="my-profile-settings justify-content-center nav-link active"><i
                         class="bi bi-person-circle"></i> Profile</a>
                 <a href="./settings.php" class="my-profile-settings justify-content-center nav-link"><i
@@ -13,10 +13,10 @@
                     Settings</a>
             </nav>
         </div>
-        <div class="col-lg-8 col-12">
-            <div class="row justify-content-center mt-1">
-                <div class="col-12">
-                    <div class="row justify-content-center my-3 position-relative d-flex">
+        <div class="col-xl-7 col-11  my-profile-div">
+            <div class="row justify-content-center">
+                <div class="col-12 d-block">
+                    <div class="row justify-content-center my-3 position-relative ">
                         <div class="col-lg-3 col-md-3 col-sm-4 mb-4 d-flex justify-content-center ">
                             <img class="rounded-circle profile-avatar"
                                 src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
@@ -39,7 +39,7 @@
 
 
                     </div>
-                    <div class="row mt-1">
+                    <div class="row mt-1 ">
                         <div class="card card-profile  col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5"
                             style="border-radius:2%;">
                             <div class="row justify-content-center mt-1">
@@ -98,7 +98,7 @@
                                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                                                     style="resize:none;"></textarea>
                                                 <button type="submit"
-                                                    class="btn btn-secondary btn-sm col-2 profile-features me-2 mt-1 save-form">Save</button>
+                                                    class="btn btn-sm col-2 me-2 mt-1 my-profile-features save-button save-form">Save</button>
                                             </div>
                                         </div>
                                     </form>
@@ -125,7 +125,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="justify-content-center d-flex ms-4">
+                                <div class="justify-content-center d-flex ">
                                     <div class="d-inline p-2 "><a href="#" class="my-profile-features active">My
                                             Posts</a></div>
                                     <div class="d-inline p-2">|</div>
@@ -167,7 +167,7 @@
                                                 the Shock'
                                                 Video </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">João Santos</a>,
+                                                    href="userprofile.php">João Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -216,7 +216,7 @@
                                                 in New Video
                                             </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">Ana Sousa</a>,
+                                                    href="userprofile.php">Ana Sousa</a>,
                                                 FEBRUARY 23, 2021</small>
                                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal
                                                 Alberts
@@ -262,7 +262,7 @@
                                             <h5 class="card-title">Hillary Clinton and Louise Penny to Write Political
                                                 Thriller</h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">Alexandra
+                                                    href="userprofile.php">Alexandra
                                                     Alter</a>,
                                                 FEBRUARY 23, 2021</small>
                                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal
@@ -311,7 +311,7 @@
                                                 the Shock'
                                                 Video </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">João Santos</a>,
+                                                    href="userprofile.php">João Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -360,7 +360,7 @@
                                                 the Shock'
                                                 Video </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">João Santos</a>,
+                                                    href="userprofile.php">João Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -411,7 +411,7 @@
                                                 the Shock'
                                                 Video </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">João Santos</a>,
+                                                    href="userprofile.php">João Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -478,6 +478,7 @@
   
     <link rel="stylesheet" href="style/style.css">
     <script src="js/script.js" defer></script>
+    <script src="js/myprofile.js" defer></script>
 
     </head>
 
