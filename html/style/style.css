@@ -113,6 +113,16 @@
 
 /* PROFILE */
 
+@media(max-width:1200px){
+  .my-profile-settings-div{
+      display: none;
+  }
+  .my-profile-div{
+    justify-content: end;
+    width:100%;
+  }
+}
+
 .my_profile-view .nav-link {
   color: rgba(0, 0, 0, 0.534);
   max-width: fit-content;
@@ -331,7 +341,7 @@ hr.solid {
 }
 
 .my-profile  .postsCards .card .infoPosts{
-  top: 15em;
+  top: 12em;
   right: 0.5em;
 }
 
