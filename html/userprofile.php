@@ -1,39 +1,35 @@
 <!DOCTYPE html>
 <html lang="en-US">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>AltArt</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-        </script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="style/style.css">
-        <script src="js/script.js" defer></script>
-        <script src="js/userprofile.js" defer></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="style/style.css">
+    <script src="js/script.js" defer></script>
+    <script src="js/userprofile.js" defer></script>
+</head>
+
 <body>
 
-<?php
+    <?php
         include_once('./navbar.php');
 
         draw_navbar("authenticated_user");
-    //include_once('./footer.php');
-    //draw_footer();
 ?>
-
-    
-
-
     <div class="row justify-content-center my-3 position-relative d-flex profile userprofile mx-2">
         <div class="col-lg-3 col-sm-4  d-flex justify-content-center ">
             <img class="rounded-circle profile-avatar"
@@ -87,8 +83,10 @@
                     </div>
                 </div>
                 <div class="row justify-content-center mt-3 ">
-                    <button type="button" class="btn btn-secondary col-lg-3 col-sm-6 btn-sm profile-features follow">Follow</button>
-                    <button type="button" class="btn btn-secondary col-lg-3 col-sm-6 btn-sm  profile-features block">Block</button>
+                    <button type="button"
+                        class="btn btn-secondary col-lg-3 col-sm-6 btn-sm profile-features follow">Follow</button>
+                    <button type="button"
+                        class="btn btn-secondary col-lg-3 col-sm-6 btn-sm  profile-features block">Block</button>
                 </div>
                 <div class="row justify-content-center mt-2">
                     <div class="col-lg-2 col-sm-4  d-flex justify-content-center">
@@ -131,7 +129,7 @@
                                 <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes
                                     the Shock'
                                     Video </h5>
-                                <small class="text-muted">by <a id="authorNamenothover" >Ana Sousa</a>,
+                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 28, 2021</small>
                                 <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new
                                     song "Here
@@ -166,7 +164,7 @@
                                 <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall
                                     in New Video
                                 </h5>
-                                <small class="text-muted">by <a id="authorNamenothover" >Ana Sousa</a>,
+                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 23, 2021</small>
                                 <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts
                                     Hall in
@@ -200,7 +198,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Hillary Clinton and Louise Penny to Write Political
                                     Thriller</h5>
-                                <small class="text-muted">by <a id="authorNamenothover" >Ana Sousa</a>,
+                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 23, 2021</small>
                                 <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts
                                     Hall in
@@ -235,7 +233,7 @@
                                 <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes
                                     the Shock'
                                     Video </h5>
-                                <small class="text-muted">by <a id="authorNamenothover" >Ana Sousa</a>,
+                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 28, 2021</small>
                                 <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new
                                     song "Here
@@ -270,7 +268,7 @@
                                 <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes
                                     the Shock'
                                     Video </h5>
-                                <small class="text-muted">by <a id="authorNamenothover" >Ana Sousa</a>,
+                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 28, 2021</small>
                                 <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new
                                     song "Here
@@ -306,7 +304,7 @@
                                 <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes
                                     the Shock'
                                     Video </h5>
-                                <small class="text-muted">by <a id="authorNamenothover" >Ana Sousa</a>,
+                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 28, 2021</small>
                                 <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new
                                     song "Here
@@ -327,6 +325,10 @@
         </div>
 
     </div>
+    <?php
+        include_once('./mobilebar.php');
+        draw_mobilebar();
+    ?>
 
 </body>
 

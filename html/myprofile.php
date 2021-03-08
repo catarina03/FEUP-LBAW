@@ -2,9 +2,10 @@
     function draw_my_profile() {
 
 ?>
-<div class="container-fluid my-profile justify-content-center   mx-auto g-0  mt-0" >
+<div class="container-fluid my-profile justify-content-center mx-auto g-0 mt-0">
     <div class="row justify-content-start settings profile g-0">
-        <div class="col-3 d-sm-none d-lg-flex d-flex-column justify-content-center " style=" padding-left:3%;padding-top:15em; ">
+        <div class="col-3 d-sm-none d-lg-flex d-flex-column justify-content-center "
+            style=" padding-left:3%;padding-top:15em; ">
             <nav class="nav flex-lg-column my-profile-settings-div ">
                 <a class="my-profile-settings justify-content-center nav-link active"><i
                         class="bi bi-person-circle"></i> Profile</a>
@@ -166,8 +167,8 @@
                                                 Comes
                                                 the Shock'
                                                 Video </h5>
-                                            <small class="text-muted">by <a id="authorName"
-                                                    href="userprofile.php">João Santos</a>,
+                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                                                    Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -215,8 +216,8 @@
                                                 Hall
                                                 in New Video
                                             </h5>
-                                            <small class="text-muted">by <a id="authorName"
-                                                    href="userprofile.php">Ana Sousa</a>,
+                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                                                    Sousa</a>,
                                                 FEBRUARY 23, 2021</small>
                                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal
                                                 Alberts
@@ -310,8 +311,8 @@
                                                 Comes
                                                 the Shock'
                                                 Video </h5>
-                                            <small class="text-muted">by <a id="authorName"
-                                                    href="userprofile.php">João Santos</a>,
+                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                                                    Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -359,8 +360,8 @@
                                                 Comes
                                                 the Shock'
                                                 Video </h5>
-                                            <small class="text-muted">by <a id="authorName"
-                                                    href="userprofile.php">João Santos</a>,
+                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                                                    Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -410,8 +411,8 @@
                                                 Comes
                                                 the Shock'
                                                 Video </h5>
-                                            <small class="text-muted">by <a id="authorName"
-                                                    href="userprofile.php">João Santos</a>,
+                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                                                    Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -459,32 +460,33 @@
 <!DOCTYPE html>
 <html lang="en-US">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>AltArt</title>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-        </script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Profile</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
     <link rel="stylesheet" href="style/style.css">
     <script src="js/script.js" defer></script>
     <script src="js/myprofile.js" defer></script>
 
-    </head>
+</head>
 
-    <body>
-
-
+<body>
 
     <?php
             include_once('./navbar.php');
@@ -495,7 +497,7 @@
     ?>
 
 
-    </body>
+</body>
 
 
 </html>
