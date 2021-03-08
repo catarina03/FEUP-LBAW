@@ -224,10 +224,14 @@
 <body>
     <?php
     include_once('./navbar.php');
+    include_once('./footer.php');
     draw_navbar("authenticated_user");
     ?>
     <?php
         draw_pdashboard();
+    ?>
+    <?php
+        draw_footer();
     ?>
 </body>
 
