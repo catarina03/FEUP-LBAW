@@ -3,7 +3,7 @@
 ?>
 
 <nav class="navbar-custom navbar navbar-expand-lg">
-    <a href="#home" class="navbar-brand"><img src="/images/logo-sem-fundo.svg" style="width: 40%;"></a>
+    <a href="#home" class="navbar-brand"><img src="/images/logo-sem-fundo.svg" style="width: 40%; margin-left:10%;"></a>
     <button aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation"
         class="navbar-toggler collapsed navbar-light bg-light" data-toggle="collapse" style="color: white;">
         <span class="navbar-toggler-icon"></span>
