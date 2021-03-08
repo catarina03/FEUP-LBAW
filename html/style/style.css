@@ -878,3 +878,168 @@ summary.role-sum:hover{
 
 
 
+
+
+/*******************************************/
+/*************** POST PAGE *****************/
+/*******************************************/
+
+.post-page-post-card{
+  background-color: #8ab5b1; 
+}
+
+
+.post-page-save-post-bookmark{
+  position: absolute;
+  top: -30px;
+  right: -10px;
+  color: #0c1d1c;
+}
+
+.post-page-save-post-bookmark:hover {
+  color: #307371;
+}
+
+
+.post-page-post-title{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  color: #0C1D1C;
+}
+
+.post-page-post-author-date{
+  font-weight: 500;
+  font-size:large;
+  color: #0C1D1C;
+}
+
+.post-page-post-author-date a{
+  color: #307371;
+  text-decoration: unset;
+}
+.post-page-post-author-date a:hover{
+  color: #307371;
+  text-decoration: underline;
+}
+
+.post-page-post-interactions{
+  font-size: small;
+  color: #0C1D1C;
+}
+
+.post-page-post-text{
+  font-family: 'Roboto', sans-serif;
+  font-size: large;
+}
+
+
+.post-page-post-tag{
+  color: #EFF9FA
+}
+.post-page-post-tag:hover{
+  color: #EFF9FA;
+  text-decoration: underline;
+}
+
+.post-page-tag-container{
+  outline-width: 0;
+  background-color: #0C1D1C;
+}
+.post-page-tag-container .fa-star{
+  color: #EFF9FA;
+}
+
+
+.post-page-post-thumbs-up-button i{
+  color: #0C1D1C;
+  font-size:x-large;
+}
+.post-page-post-thumbs-up-button i:hover{
+  color: #307371;
+  font-size:xx-large;
+}
+
+.post-page-post-thumbs-down-button i{
+  color: #0C1D1C;
+  font-size:x-large;
+}
+.post-page-post-thumbs-down-button i:hover{
+  color: #307371;
+  font-size:xx-large;
+}
+
+.post-page-post-report-button{
+  color: #EFF9FA;
+  background-color: #0C1D1C;
+  font-size:x-large;
+  font-family: 'Roboto', sans-serif;
+}
+.post-page-post-report-button:hover{
+  color: #EFF9FA;
+  background-color: #307371;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.post-page-add-comment-label{
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+  font-size: medium;
+}
+
+
+.post-page-comment-button{
+  background-color: #0C1D1C;
+  color: #EFF9FA;
+  font-family: 'Roboto', sans-serif;
+  font-size: medium;
+}
+.post-page-comment-button:hover{
+  background-color: #307371;
+  color: #EFF9FA;
+  font-family: 'Roboto', sans-serif;
+  font-size: medium;
+}
+
+
+.post-page-comment{
+  background-color: #EFF9FA;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #ADE1E5;
+  border-width: thin;
+}
+
+.post-page-comment-body{
+  font-family: 'Roboto', sans-serif;
+  font-size: medium;
+  color: #0C1D1C;
+}
+
+.post-page-comment-author-date{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  color: #0C1D1C;
+}
+
+.post-page-comment-author-date a{
+  color: #307371;
+  text-decoration: unset;
+}
+.post-page-comment-author-date a:hover{
+  color: #307371;
+  text-decoration: underline;
+}
+
+
+.post-page-comment-reply{
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: thin;
+  border-color: #FCF3EE;
+}
+
+.post-page-comment-reply-editor{
+  background-color: transparent;
+}
