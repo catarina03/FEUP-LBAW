@@ -41,22 +41,3 @@
 
 
 
-
-
-
-
-
-
-
-/* MY POST */
-
-.settings{
-    position: absolute;
-    top: -30px;
-    right: -10px;
-    color: #0c1d1c;
-}
-
-.settings:hover {
-    color: #307371;
-}

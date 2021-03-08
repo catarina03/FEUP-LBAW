@@ -216,8 +216,7 @@
                                         <div class="row pt-2">
                                             <div class="d-flex">
                                                 <h3 class="post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i></h3>
-                                                <h3 class="post-page-post-interactions pe-3 my-0">0 <i class="far fa-thumbs-down"></i>
-                                                </h3>
+                                                <h3 class="post-page-post-interactions pe-3 my-0">0 <i class="far fa-thumbs-down"></i></h3>
                                                 <h3 class="post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i></h3>
                                                 <i title="Report comment" class="fas fa-ban my-0 ms-auto"></i>
                                             </div>

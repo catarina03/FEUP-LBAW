@@ -898,10 +898,6 @@ summary.role-sum:hover{
 
 
 
-
-
-
-
 /*******************************************/
 /*************** POST PAGE *****************/
 /*******************************************/
@@ -1064,4 +1060,131 @@ summary.role-sum:hover{
 
 .post-page-comment-reply-editor{
   background-color: transparent;
+}
+
+
+
+
+/*******************************************/
+/*************** MY POST PAGE **************/
+/*******************************************/
+
+.my-post-page-post-card{
+  background-color: #8ab5b1; 
+}
+
+.my-post-page-settings{
+  position: absolute;
+  top: -30px;
+  right: -10px;
+  color: #0c1d1c;
+}
+
+.my-post-page-settings:hover {
+  color: #307371;
+}
+
+
+.my-post-page-post-title{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  color: #0C1D1C;
+}
+
+.my-post-page-post-author-date{
+  font-weight: 500;
+  font-size:large;
+  color: #0C1D1C;
+}
+
+.my-post-page-post-author-date a{
+  color: #307371;
+  text-decoration: unset;
+}
+.my-post-page-post-author-date a:hover{
+  color: #307371;
+  text-decoration: underline;
+}
+
+.my-post-page-post-interactions{
+  font-size: small;
+  color: #0C1D1C;
+}
+
+.my-post-page-post-text{
+  font-family: 'Roboto', sans-serif;
+  font-size: large;
+}
+
+
+.my-post-page-post-tag{
+  color: #EFF9FA
+}
+.my-post-page-post-tag:hover{
+  color: #EFF9FA;
+  text-decoration: underline;
+}
+
+.my-post-page-tag-container{
+  outline-width: 0;
+  background-color: #0C1D1C;
+}
+.my-post-page-tag-container .fa-star{
+  color: #EFF9FA;
+}
+
+
+.my-post-page-comment{
+  background-color: #EFF9FA;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #ADE1E5;
+  border-width: thin;
+}
+
+.my-post-page-comment-body{
+  font-family: 'Roboto', sans-serif;
+  font-size: medium;
+  color: #0C1D1C;
+}
+
+.my-post-page-comment-author-date{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  color: #0C1D1C;
+}
+
+.my-post-page-comment-author-date a{
+  color: #307371;
+  text-decoration: unset;
+}
+.my-post-page-comment-author-date a:hover{
+  color: #307371;
+  text-decoration: underline;
+}
+
+
+.my-post-page-comment-reply{
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: thin;
+  border-color: #FCF3EE;
+}
+
+.my-post-page-comment-reply-editor{
+  background-color: transparent;
+}
+
+.my-post-page-comment-button{
+  background-color: #0C1D1C;
+  color: #EFF9FA;
+  font-family: 'Roboto', sans-serif;
+  font-size: medium;
+}
+.my-post-page-comment-button:hover{
+  background-color: #307371;
+  color: #EFF9FA;
+  font-family: 'Roboto', sans-serif;
+  font-size: medium;
 }
