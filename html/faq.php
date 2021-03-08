@@ -83,7 +83,7 @@
 
     <script src="js/my-profile.js" defer></script>
     <script src="js/settings.js" defer></script>
-    <script src="js/user-profile.js" defer></script>
+    <script src="js/userprofile.js" defer></script>
     <script src="js/script.js" defer></script>
 
     <link rel="stylesheet" href="style/view_post.css">

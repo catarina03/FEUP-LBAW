@@ -1,7 +1,7 @@
 /* User profile */
 
-let follow = document.querySelector('.user-profile .follow')
-let block = document.querySelector('.user-profile .block')
+let follow = document.querySelector('.userprofile .follow')
+let block = document.querySelector('.userprofile .block')
 
 follow.addEventListener('click', function(e){
     if(e.target.innerText == "Follow")
