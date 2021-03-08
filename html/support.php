@@ -1,6 +1,7 @@
 <?php 
     function draw_support(){
 ?>
+<!--destaque no titulo,reformatar page e diminuir colunas-->
     <script src="js/test.js" defer></script>
   <div class="container-md col-lg-8 support-card">
         <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
@@ -9,7 +10,7 @@
             <div class="faq_questions">
                 <!--Question row-->
                 <div class="row px-5 py-3">
-                    <div class="col-lg-auto question-col">
+                    <div class="col-lg-6 question-col">
                         <!--Column with the button needed to make the specified effect in the InVision project-->
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Please,tell us more about your problem:</label>
@@ -18,7 +19,7 @@
                     </div>        
                 </div>
                 <div class="row px-5 py-3">                
-                    <div class="col-lg-auto question-col">
+                    <div class="col-lg-6 question-col">
                         <div class="form-group">
                             <label for="support-browser">In what browser are you experiencing this problem?</label>
                             <select class="form-control support-form" id="support-browser">
@@ -34,7 +35,7 @@
                 </div>
                 <!-- End of question row-->
                 <div class="row px-5 py-3">
-                    <div class="col-lg-auto question-col">
+                    <div class="col-lg-6 question-col">
                         <div class="form-group">
                             <label for="support-browser">How often do you experience this problem?</label>
                             <select class="form-control support-form" id="support-freq">
@@ -47,8 +48,9 @@
                     </div>
                 </div>
                 <div class="row px-5 py-3">
+
                     <p>How much does this problem impact your experience?</p>
-                    <div class="col-lg-auto rate-col">
+                    <div class="col-lg-6 rate-col">
                         
                         <p style="display:inline;padding-right=5%;"> Not much </p>
                         <div class="form-check form-check-inline" style="padding-left:8%;">
@@ -72,7 +74,7 @@
                             <label class="form-check-label" for="opt5"></label>
                         </div>
                         <p style="display:inline;"> Very negatively </p>
-                        <br><br><br>
+                        <br><br>
                     </div>
                 </div>
             </div>
@@ -130,16 +132,16 @@
         <link rel="stylesheet" href="style/custom_footer.css">
     </head>
 
-<body class="d-flex flex-column">
+<body>
     <?php
     include_once('./navbar.php');
     draw_nav_bar();
     ?>
-    <div class="flex-fill">
+
     <?php
         draw_support();
     ?>
-    </div>
+
     <?php
     include_once('./footer.php');
     draw_footer();

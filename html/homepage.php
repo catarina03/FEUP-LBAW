@@ -35,7 +35,7 @@
                                         Shock" as part of the National Hockey </p>
                                     <strong> (read more)</strong>
                                     <p class="card-text mt-3"><small class="text-muted">by <a
-                                                href="https://www.google.com/" id="authorName">João Santos</a>,
+                                                href="user-profile.php" id="authorName">João Santos</a>,
                                             FEBRUARY 28,
                                             2021</small></p>
                                 </div>
@@ -59,7 +59,7 @@
                                         Shock" as part of the National Hockey </p>
                                     <strong> (read more)</strong>
                                     <p class="card-text mt-3"><small class="text-muted">by <a
-                                                href="https://www.google.com/" id="authorName">João Santos</a>,
+                                                href="user-profile.php" id="authorName">João Santos</a>,
                                             FEBRUARY 28,
                                             2021</small></p>
                                 </div>
@@ -84,7 +84,7 @@
                                         Shock" as part of the National Hockey </p>
                                     <strong> (read more)</strong>
                                     <p class="card-text mt-3"><small class="text-muted">by <a
-                                                href="https://www.google.com/" id="authorName">João Santos</a>,
+                                                href="user-profile.php" id="authorName">João Santos</a>,
                                             FEBRUARY 28,
                                             2021</small></p>
                                 </div>
@@ -112,7 +112,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
                             Video </h5>
-                        <small class="text-muted">by <a id="authorName" href="https://www.google.com/">João Santos</a>,
+                        <small class="text-muted">by <a id="authorName" href="user-profile.php">João Santos</a>,
                             FEBRUARY 28, 2021</small>
                         <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
                             Comes
@@ -141,7 +141,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New Video
                         </h5>
-                        <small class="text-muted">by <a id="authorName" href="https://www.google.com/">Ana Sousa</a>,
+                        <small class="text-muted">by <a id="authorName" href="user-profile.php">Ana Sousa</a>,
                             FEBRUARY 23, 2021</small>
                         <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
                             celebration
@@ -168,7 +168,7 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Hillary Clinton and Louise Penny to Write Political Thriller</h5>
-                        <small class="text-muted">by <a id="authorName" href="https://www.google.com/">Alexandra
+                        <small class="text-muted">by <a id="authorName" href="user-profile.php">Alexandra
                                 Alter</a>,
                             FEBRUARY 23, 2021</small>
                         <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in

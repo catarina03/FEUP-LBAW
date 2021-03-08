@@ -1,9 +1,4 @@
-html{
-    height: 100%;
-}
-body{
-    height: 100%;
-}
+
 
 a.footer-link{
     color: #fcf3ee;
@@ -36,7 +31,7 @@ div.container\ col-12\ my-5{
 } 
 
 .about-us-title{
-    font-weight: bold;
+    font-weight: bolder;
     padding-top: 2%;
     /*padding-bottom: 2%;*/
     font-size: 1.4em;
@@ -44,11 +39,31 @@ div.container\ col-12\ my-5{
 
 .about-rounded{
     border-radius: 2%;
-} 
+}
+
+
+
+
 /* FAQ */
+summary.text-center{
+    list-style: none;
+}
+summary.text-center::-webkit-details-marker {
+    display: none
+}
+summary.text-center:before {
+    content: ' ►';
+    float: left;
+    margin-right: 10px;
+}
+   
+details[open] summary.text-center:before {
+    content: " ▼";
+}
+
 .faq-card{
     margin:auto;
-    padding-top: 5%;
+    padding-top: 2%;
     font-size: 1.4em;
 } 
 
@@ -58,7 +73,7 @@ div.container\ col-12\ my-5{
 
 .faq-title{
     font-weight: bold;
-    padding-top: 2%;
+    padding-top:2%;
     /*padding-bottom: 2%;*/
     font-size: 1.4em;
 } 
@@ -84,7 +99,8 @@ div.container\ col-12\ my-5{
 }
 .question > details{
     width: 50%;
-    background-color: #fcf3ee;/*#307371;*/
+    /*background-color: #fcf3ee;*//*#307371;*/
+    border-radius: 2%;
 }
 
 details > p {
@@ -95,7 +111,9 @@ details > p {
 }
 
 summary{
+    background-color:#fcf3ee;
     padding:10px;
+    border-radius: 2%;
 }
 summary:hover{
     background-color: #ffc2ad;;
@@ -134,9 +152,13 @@ summary:hover{
     background-color: #fcf3ee;
 }
 
+#support-text{
+    height: 30%;
+}
+
 .support-card{
     margin:auto;
-    padding-top: 5%;
+    padding-top: 2%;
     font-size: 1.4em;
 } 
 
@@ -154,5 +176,114 @@ summary:hover{
 .form-check-input:focus {
     box-shadow: none;
 }
+
+/* ROLE MANAGER */
+
+.search-bar{
+    width: 100%;
+    display: inline;
+    margin: 0 auto;
+
+}
+
+.search-bar input:focus{
+    box-shadow: none;
+    outline:none;
+    border:none;
+}
+.search-bar input{
+    font-size: 100%;
+    text-align: center;
+    box-shadow: none;
+    outline:none;
+    border:none;
+}
+
+.role-manager-detail summary{
+    width: 100%;
+    display:block;
+}
+
+
+.role-manager-detail p:hover{
+    background-color: #ffc2ad;
+}
+
+/*POST DASHBOARD*/
+
+
+
+.pdash-form{
+    width: fit-content;
+    background-color: #fcf3ee;
+    color:black;border:none;
+    outline:none;
+    box-shadow: none;
+}
+.pdash-form:focus{
+    background-color: #fcf3ee;
+    color:black;
+    border:none;
+    outline:none;
+    box-shadow: none;
+}
+.pdash-form:hover{
+    background-color: #fcf3ee;
+    color:black;
+    border:none;
+    outline:none;
+    box-shadow: none;
+}
+
+.pdash-post-card{
+    background-color: #fcf3ee;
+}
+
+.pdash-button{
+    color:wheat;
+    border:none;
+    outline:none;
+    box-shadow: none;
+    background-color: #307371;
+}
+.pdash-button:hover{
+    color:wheat;
+    border:none;
+    outline:none;
+    box-shadow: none;
+    background-color: #307371;
+}
+.pdash-button:focus{
+    color:wheat;
+    border:none;
+    outline:none;
+    box-shadow: none;
+    background-color: #307371;;
+}
+
+@media(max-width:768px){
+    .settings-vertical{
+        display: none;
+    }
+    .settings-horizontal{
+        display: flex;
+    }
+}
+
+.pdash-form-card{
+    
+    color:black;
+}
+
+.pdash-form-card option{
+    background-color: #fcf3ee;
+}
+
+.pdash-col{
+    padding-left: 0 auto;
+}
+
+
+
 
 
