@@ -42,7 +42,7 @@
     draw_nav_bar();
     //draw_my_profile();
     //draw_user_profile();
-    draw_edit_post();
+    draw_my_post();
 
 
   ?>
