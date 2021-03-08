@@ -56,16 +56,14 @@
     <link rel="stylesheet" href="style/custom_footer.css">
 </head>
 
-<body class="d-flex flex-column">
+<body>
     <?php
     include_once('./navbar.php');
     draw_nav_bar();
     ?>
-    <div class="flex-fill">
     <?php
         draw_role_manager();
     ?>
-    </div>
     <?php
     include_once('./footer.php');
     draw_footer();

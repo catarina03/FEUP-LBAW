@@ -1,7 +1,7 @@
 <?php 
     function draw_footer(){
 ?>
-  <div class="auto md col-12 my 0">
+  <div class="auto md col-12 my 0" >
     <!-- Footer -->
     <footer class="text-center " style="background-color:#307371;">
       <!-- Grid container -->

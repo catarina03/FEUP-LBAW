@@ -152,9 +152,13 @@ summary:hover{
     background-color: #fcf3ee;
 }
 
+#support-text{
+    height: 30%;
+}
+
 .support-card{
     margin:auto;
-    padding-top: 5%;
+    padding-top: 2%;
     font-size: 1.4em;
 } 
 
@@ -208,15 +212,50 @@ summary:hover{
 /*POST DASHBOARD*/
 
 
-.pdash-title{
-    font-weight: bold;
-    padding-top: 2%;
-    /*padding-bottom: 2%;*/
-    font-size: 1.4em;
-} 
-.sub-cont{
-    padding-left: 5%;
+
+.pdash-form{
+    width: fit-content;
+    background-color: #fcf3ee;
 }
+.pdash-form:focus{
+    background-color: #fcf3ee;
+}
+
+.pdash-post-card{
+    background-color: #fcf3ee;
+}
+
+.pdash-button{
+    color:wheat;
+    border:none;
+    outline:none;
+    box-shadow: none;
+    background-color: #307371;
+}
+.pdash-button:hover{
+    color:wheat;
+    border:none;
+    outline:none;
+    box-shadow: none;
+    background-color: #307371;
+}
+.pdash-button:focus{
+    color:wheat;
+    border:none;
+    outline:none;
+    box-shadow: none;
+    background-color: #307371;;
+}
+
+@media(max-width:768px){
+    .settings-vertical{
+        display: none;
+    }
+    .settings-horizontal{
+        display: flex;
+    }
+}
+
 
 
 
