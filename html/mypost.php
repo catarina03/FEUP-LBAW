@@ -34,16 +34,17 @@
     </head>
 
     <body>
-    <?php
-    function draw_post(){
+
+<?php
+    function draw_my_post(){
 ?>
 <div class="container post">
 
     <div class="row mt-5 mb-5">
         <div class="card card-post justify-content-center pb-5" style="border-radius:5px;">
 
-            <div class="savePost">
-                <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+            <div class="settings">
+                <i class="fas fa-cog" style="font-size:3em;"></i>
             </div>
 
             <div class="container-fluid d-flex justify-content-center">
@@ -217,27 +218,16 @@
 
                                 </div>
                             </div>
-
                         </div>
-
-                        
                     </div>
-                    
                 </div>
-                
-            </div>
-            
+            </div>  
         </div>
     </div>
-
 </div>
-
 <?php
     }
 ?>
-
-
-
 
 
         <?php
@@ -247,7 +237,7 @@
         draw_nav_bar();
         //draw_my_profile();
         //draw_user_profile();
-        draw_post();
+        draw_my_post();
         ?>
 
 
