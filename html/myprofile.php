@@ -98,7 +98,7 @@
                                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                                                     style="resize:none;"></textarea>
                                                 <button type="submit"
-                                                    class="btn btn-secondary btn-sm col-2 my-profile-features me-2 mt-1 save-form">Save</button>
+                                                    class="btn btn-sm col-2 me-2 mt-1 my-profile-features save-button save-form">Save</button>
                                             </div>
                                         </div>
                                     </form>
@@ -167,7 +167,7 @@
                                                 the Shock'
                                                 Video </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">João Santos</a>,
+                                                    href="userprofile.php">João Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -216,7 +216,7 @@
                                                 in New Video
                                             </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">Ana Sousa</a>,
+                                                    href="userprofile.php">Ana Sousa</a>,
                                                 FEBRUARY 23, 2021</small>
                                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal
                                                 Alberts
@@ -262,7 +262,7 @@
                                             <h5 class="card-title">Hillary Clinton and Louise Penny to Write Political
                                                 Thriller</h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">Alexandra
+                                                    href="userprofile.php">Alexandra
                                                     Alter</a>,
                                                 FEBRUARY 23, 2021</small>
                                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal
@@ -311,7 +311,7 @@
                                                 the Shock'
                                                 Video </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">João Santos</a>,
+                                                    href="userprofile.php">João Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -360,7 +360,7 @@
                                                 the Shock'
                                                 Video </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">João Santos</a>,
+                                                    href="userprofile.php">João Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
@@ -411,7 +411,7 @@
                                                 the Shock'
                                                 Video </h5>
                                             <small class="text-muted">by <a id="authorName"
-                                                    href="https://www.google.com/">João Santos</a>,
+                                                    href="userprofile.php">João Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
                                                 new
