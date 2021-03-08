@@ -216,9 +216,23 @@ summary:hover{
 .pdash-form{
     width: fit-content;
     background-color: #fcf3ee;
+    color:black;border:none;
+    outline:none;
+    box-shadow: none;
 }
 .pdash-form:focus{
     background-color: #fcf3ee;
+    color:black;
+    border:none;
+    outline:none;
+    box-shadow: none;
+}
+.pdash-form:hover{
+    background-color: #fcf3ee;
+    color:black;
+    border:none;
+    outline:none;
+    box-shadow: none;
 }
 
 .pdash-post-card{
@@ -255,6 +269,20 @@ summary:hover{
         display: flex;
     }
 }
+
+.pdash-form-card{
+    
+    color:black;
+}
+
+.pdash-form-card option{
+    background-color: #fcf3ee;
+}
+
+.pdash-col{
+    padding-left: 0 auto;
+}
+
 
 
 

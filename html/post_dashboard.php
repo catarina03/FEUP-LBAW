@@ -2,22 +2,22 @@
     function draw_pdashboard(){
 ?>
     <h1 class="text-center mt-3" >Dashboard</h1>
-    <div class="row justify-content-center">
+    <div class="row g-0 justify-content-around">
 
 
-        <div class="col-1 ms-1 d-lg-flex d-md-none d-sm-none d-xs-none settings-vertical">
-            <div style="padding-top:12%;">
-                <img src="images/postIcon.png" width="50" heigth="50"><a style="text-decoration:none;"><p style="font-weight:bold;color:black;display:inline;">Posts</p></a>  
-                <img src="images/commentIcon.png" width="50" heigth="50"><a href="comment_dashboard.php" style="text-decoration:none;color:black;"><p style="display:inline;">Comments</p></a>
+        <div style="padding-left:0;" class="col-lg-1 ms-1 d-lg-flex d-md-none d-sm-none d-xs-none settings-vertical">
+            <div style="padding-left:0;">
+                <i class="bi bi-pencil-square"></i><a style="text-decoration:none;"><p style="font-weight:bold;color:black;">Posts</p></a> <br>
+                <i class="bi bi-chat-dots"></i><a href="comment_dashboard.php" style="text-decoration:none;color:black;"><p>Comments</p></a>
             </div>
         </div>
         <div class="col-12 justify-content-center d-sm-flex d-lg-none d-md-flex settings-horizontal">
             <div class="row justify-content-center">
                 <div class="col-4">
-                    <a style="text-decoration:none;"><p style="font-weight:bold;color:black;">Posts</p></a> 
+                <i class="bi bi-pencil-square"></i><a style="text-decoration:none;"><p style="font-weight:bold;color:black;">Posts</p></a> 
                 </div>
                 <div class="col-4">
-                <a href="comment_dashboard.php" style="text-decoration:none;color:black;"><p>Comments</p></a>
+                <i class="bi bi-chat-dots"></i><a href="comment_dashboard.php" style="text-decoration:none;color:black;"><p>Comments</p></a>
                 </div>
             </div>
         </div>
@@ -30,66 +30,59 @@
 
 
 
-        <div class="col-sm-4 ms-4" >
+        <div class="col-sm-8 col-md-8 col-lg-3 ms-4 mt-5 ml-5 col-offset-5" >
             <h3 class="text-center" style="font-weight:bold" >Unassigned</h3>
             <div class="card"  style="background-color:#8ab5b1;border:none;">
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <div class="col-sm-auto">
-                                <div class="form-group">
-                                    <label for="support-browser"></label>
-                                    <select class="form-control pdash-form" id="support-browser">
-                                        <option selected>Topic</option>
-                                        <option>All</option>
-                                        <option>Music</option>
-                                        <option>Cinema</option>
-                                        <option>TV Show</option>
-                                        <option>Theatre</option>
-                                        <option>Literature</option>
+                            <div class="col-sm-12 col-md-auto col-lg-auto">
+                                <select class="form-select pdash-form" aria-label="Default select example">
+                                    <option selected>Category</option>
+                                        <option value="1">All</option>
+                                        <option value="2">News</option>
+                                        <option value="3">Article</option>
+                                        <option value="3">Review</option>
+                                        <option value="3">Suggestion</option>
                                     </select>
-                                </div> 
+                                </div>
+                            <div class="col-sm-12 col-md-auto col-lg-auto">
+                                <select class="form-select pdash-form" aria-label="Default select example">
+                                    <option selected>Type</option>
+                                    <option value="1">All</option>
+                                    <option value="2">Music</option>
+                                    <option value="3">Tv Show</option>
+                                    <option value="1">Cinema</option>
+                                    <option value="2">Theatre</option>
+                                    <option value="3">Literature</option>
+                                </select>
                             </div>
-                            <div class="col-sm-auto">
-                                <div class="form-group">
-                                    <label for="support-browser"></label>
-                                    <select class="form-control pdash-form" id="support-browser">
-                                        <option selected>Category</option>
-                                        <option>All</option>
-                                        <option>News</option>
-                                        <option>Article</option>
-                                        <option>Review</option>
-                                        <option>Suggestion</option>
-                                    </select>
-                                </div> 
+                            <div class="col-sm-12 col-md-auto col-lg-auto">
+                                <select class="form-select pdash-form" aria-label="Default select example">
+                                    <option selected>Date</option>
+                                </select>
                             </div>
-                            <div class="col-sm-auto">
-                                <div class="form-group">
-                                    <label for="support-browser"></label>
-                                    <select class="form-control pdash-form" id="support-browser">
-                                        <option selected>Date</option>
-                                        <option>Newer</option>
-                                        <option>Older</option>
-                                    </select>
-                                </div> 
-                            </div>
-                            <div class="col-sm-auto" >
-                                <br>
+                            <div class="col-sm-12 col-md-auto col-lg-auto" >
                                 <button class="btn btn-primary pdash-button" type="button">Filter</button>
                             </div>
                         </div>    
+
+
+
                         <!--Post card -->
-                        <div class="card mb-3" style="max-width: 540px;margin: 0 auto;padding-top:5%;background-color:#8ab5b1;border:none;">
-                            <div class="row  g-0">
-                                <div class="col-md-4 col-sm-12">
-                                    <img src="images/abs.jpeg" alt="Post title" width="200px" height="176px">
+                        <div class="card mb-3 mt-3" style="max-width: 540px;background-color:#8ab5b1;margin: 0 auto;border:none;">
+                            <div class="row no-gutters">
+                                <div style="padding-right:0;padding-left:0;" class="col-md-4 col-sm-12 pr-0">
+                                    <img src="images/abs.jpeg" alt="Post title" width="100%" height="100%">
                                 </div>
-                                <div class="col-md-8 col-sm-12">
+                                <div style="padding-left:0;padding-right:0;" class="col-md-8 col-sm-12 pl-0">
                                     <div class="card-body pdash-post-card">
-                                        <!--<h5 class="card-title">Card title</h5>-->
                                         <p class="card-text">Title: Mick Jagger celebrates 150...</p>
                                         <p class="card-text">Author: Ana Sousa</p>
                                         <p class="card-text">Motive: Hate Speech</p>
-                                        <p class="card-text">Reports: 329</p>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item"><p class="card-text">Reports: 329</p></li>
+                                            <li class="list-inline-item" style="padding-left:60%;"><img src="https://static.thenounproject.com/png/1854509-200.png" width="32" height="32"></li>        
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -106,74 +99,77 @@
         </div>
 
         <!-- SECOND DASH COLUMN-->
-        <div class="col-sm-4 ms-4" >
-            <h3 class="text-center" style="font-weight:bold">Assigned to me</h3>
+        <div class="col-sm-8 col-md-8 col-lg-3 ms-4 mt-5 ml-5" >
+            <h3 class="text-center" style="font-weight:bold" >Assigned to me</h3>
             <div class="card"  style="background-color:#8ab5b1;border:none;">
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <div class="col-sm-auto">
-                                <div class="form-group">
-                                    <label for="support-browser"></label>
-                                    <select class="form-control pdash-form" id="support-browser">
-                                        <option selected>Topic</option>
-                                        <option>All</option>
-                                        <option>Music</option>
-                                        <option>Cinema</option>
-                                        <option>TV Show</option>
-                                        <option>Theatre</option>
-                                        <option>Literature</option>
+                            <div class="col-sm-12 col-md-auto col-lg-auto">
+                                <select class="form-select pdash-form" aria-label="Default select example">
+                                    <option selected>Category</option>
+                                        <option value="1">All</option>
+                                        <option value="2">News</option>
+                                        <option value="3">Article</option>
+                                        <option value="3">Review</option>
+                                        <option value="3">Suggestion</option>
                                     </select>
-                                </div> 
+                                </div>
+                            <div class="col-sm-12 col-md-auto col-lg-auto">
+                                <select class="form-select pdash-form" aria-label="Default select example">
+                                    <option selected>Type</option>
+                                    <option value="1">All</option>
+                                    <option value="2">Music</option>
+                                    <option value="3">Tv Show</option>
+                                    <option value="1">Cinema</option>
+                                    <option value="2">Theatre</option>
+                                    <option value="3">Literature</option>
+                                </select>
                             </div>
-                            <div class="col-sm-auto">
-                                <div class="form-group">
-                                    <label for="support-browser"></label>
-                                    <select class="form-control pdash-form" id="support-browser">
-                                        <option selected>Category</option>
-                                        <option>All</option>
-                                        <option>News</option>
-                                        <option>Article</option>
-                                        <option>Review</option>
-                                        <option>Suggestion</option>
-                                    </select>
-                                </div> 
+                            <div class="col-sm-12 col-md-auto col-lg-auto">
+                                <select class="form-select pdash-form" aria-label="Default select example">
+                                    <option selected>Date</option>
+                                </select>
                             </div>
-                            <div class="col-sm-auto">
-                                <div class="form-group">
-                                    <label for="support-browser"></label>
-                                    <select class="form-control pdash-form" id="support-browser">
-                                        <option selected>Date</option>
-                                        <option>Newer</option>
-                                        <option>Older</option>
-                                    </select>
-                                </div> 
-                            </div>
-                            <div class="col-sm-auto">
-                                <br>
+                            <div class="col-sm-12 col-md-auto col-lg-auto" >
                                 <button class="btn btn-primary pdash-button" type="button">Filter</button>
                             </div>
                         </div>    
+
+
+
                         <!--Post card -->
-                        <div class="card mb-3" style="max-width: 540px;margin:0 auto;padding-top:5%;background-color:#8ab5b1;border:none;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="images/abs.jpeg" alt="Post title" width="200px" height="176px">
+                        <div class="card mb-3 mt-3" style="max-width: 540px;background-color:#8ab5b1;margin: 0 auto;border:none;">
+                            <div class="row no-gutters">
+                                <div style="padding-right:0;padding-left:0;" class="col-md-4 col-sm-12 pr-0">
+                                    <img src="images/abs.jpeg" alt="Post title" width="100%" height="100%">
                                 </div>
-                                <div class="col-md-8">
+                                <div style="padding-left:0;padding-right:0;" class="col-md-8 col-sm-12 pl-0">
                                     <div class="card-body pdash-post-card">
-                                        <!--<h5 class="card-title">Card title</h5>-->
                                         <p class="card-text">Title: Hillary Clinton and...</p>
                                         <p class="card-text">Author: Alexandra Alter</p>
                                         <p class="card-text">Motive: Fake News</p>
-                                        <p class="card-text">Reports: 5</p>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item"><p class="card-text">Reports: 5</p></li>
+                                            <li class="list-inline-item" style="padding-left:20%;">
+                                                <select class="form-select pdash-form-card" aria-label="Default select example">
+                                                    <option selected>Action</option>
+                                                    <option value="1">Dismiss Report</option>
+                                                    <option value="2">Delete Post</option>
+                                                </select>
+                                            </li>        
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!--End of Post card -->
+                        
                     </div>
-                
+                    
+                    
                     <br><br><br><br><br><br><br><br><br><br><br>
+
+
             </div>
         </div>
   </div>
@@ -191,6 +187,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alt Art</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" />
