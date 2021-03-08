@@ -1,7 +1,7 @@
 <?php 
     function draw_faq(){
 ?>
-<div class="container-md col-lg-8 col-sm-10 faq-card">
+<div class="container faq-card">
     <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
         <!--Title-->
         <h1 class="text-center faq-title" style="font-weight:bold;">Frequently Asked Questions</h1>
@@ -86,7 +86,6 @@
     <script src="js/user-profile.js" defer></script>
     <script src="js/script.js" defer></script>
 
-    <link rel="stylesheet" href="style/view_post.css">
     <link rel="stylesheet" href="style/style.css">
 
 </head>
