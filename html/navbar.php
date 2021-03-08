@@ -4,34 +4,31 @@
 
 <nav class="navbar navbar-custom fixed-top navbar-expand-lg">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><img src="images/logo-sem-fundo.svg" height="30" alt=""></a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Music</a></li>
-                <li class=""><a href="#">Cinema</a></li>
-                <li class=""><a href="#">Tv Show</a></li>
-                <li class=""><a href="#">Theatre</a></li>
-                <li class=""><a href="#">Literature</a></li>
+        <a href="homepage.php" class="navbar-brand ms-2"><img src="images/logo-sem-fundo.svg" height="30" alt=""></a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar">
+            <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="navbar" navbar>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a href="category_page.php" class="nav-link">Music</a></li>
+                <li class="nav-item"><a href="category_page.php" class="nav-link">Cinema</a></li>
+                <li class="nav-item"><a href="category_page.php" class="nav-link">Tv Show</a></li>
+                <li class="nav-item"><a href="category_page.php" class="nav-link">Theatre</a></li>
+                <li class="nav-item"><a href="category_page.php" class="nav-link">Literature</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="navbar-nav d-flex">
                 <?php
                 if($user == "authenticated_user" || ($user == "moderator")) {
               ?>
-                <li class="nav-item  d-lg-block d-none ms-lg-3"><a class="nav-link" href="" role="button"
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="" role="button"
                         aria-expanded="false">
                         <i class="bi bi-plus navbar-icon"></i>
                     </a></li>
                 <?php
                 if($user == "moderator"){
                 ?>
-                <li class="nav-item  d-lg-block d-none ms-lg-3"><a class="nav-link" href="" role="button"
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="" role="button"
                         aria-expanded="false">
                         <i class="bi bi-list-task navbar-icon"></i>
                     </a></li>
@@ -76,11 +73,11 @@
                 </li>
                 <?php }
                 elseif ($user == "visitor") { ?>
-                <li class="d-lg-none d-block">
+                <li class="nav-item d-lg-none d-block">
                     <hr class="dropdown-divider" style="color: white;">
                 </li>
-                <li><a href="#"><span class="glyphicon glyphicon-user "></span> Sign Up</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li class="nav-item me-3"><a href="#" style="text-decoration:none;"><i class="fa fa-user pe-2" aria-hidden="true"></i>Sign Up</a></li>
+                <li class="nav-item me-3"><a href="#" style="text-decoration:none;"><i class="fa fa-sign-in pe-2" aria-hidden="true"></i>Login</a></li>
                 <?php
               }
               ?>

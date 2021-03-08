@@ -1,33 +1,28 @@
-/* NAV BAR*/
+/****************** NAVBAR ****************/
 
-.navbar-brand{
-  color:#ade1e5;
-}
-.navbar-brand:hover{
-  color:#ffc2ad;
-}
-.navbar-nav a{
+.navbar-custom .navbar-nav a{
   color:grey;
   font-size:18px;
   margin:0;
 }
-.navbar-nav .active a{
+.navbar-custom .navbar-nav .active a{
   color:white;
-  font-size:20px;
+  font-weight: bold;
 }
 
-.navbar-nav a:hover{
+.navbar-custom .navbar-nav a:hover{
   color:#ffc2ad;
 }
 
-.navbar-icon{
+.navbar-custom .navbar-icon{
   font-size:25px;
 }
-.navbar-nav .dropdown-menu a {
+
+.navbar-custom .navbar-nav .dropdown-menu a {
   color: #307371;
 }
 
-.navbar-nav .dropdown-menu a:hover {
+.navbar-custom .navbar-nav .dropdown-menu a:hover {
   background-color: #fcf3ee;;
 }
 
@@ -38,13 +33,13 @@
   transition: all 0.2s linear 0s;
 }
 
-.navbar-toggle{
-  color:white;
-  background-color: white;
+.navbar-custom .navbar-toggler .navbar-toggler-icon{
+  color:#fcf3ee;
+  font-size:28px;
+  padding: 0.3em;
+  margin:0;
 }
-.navbar-toggle .icon-bar{
-  background-color: #0c1d1c;
-}
+
 
 /* LOGIN AND REGISTER*/
 .custom-button{
@@ -378,7 +373,7 @@ hr.solid {
     color: #fcf3ee;
 }
 
-
+/*********************** HOMEPAGE ************************************/
 
 .homepage-view .nav-link {
   color: rgba(0, 0, 0, 0.534);
