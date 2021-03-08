@@ -7,8 +7,8 @@
                     aria-label="Close"></button>
             </div>
             <div class="row justify-content-center d-flex">
-                <div class="col-lg-3 col-sm-12 d-none d-lg-flex flex-column ps-3 pt-5 mt-5 ms-4">
-                    <img src="/images/logo-sem-fundo.svg" class="mt-5" style="width:100%;">
+                <div class="col-lg-3 col-sm-12 d-none d-lg-flex flex-column justify-content-center mx-auto">
+                    <img src="/images/logo-sem-fundo.svg" style="width:150px;">
                 </div>
                 <div class="col-lg-8 col-sm-12">
                     <form class="row mt-4 mb-3 ms-5 g-0 ">
@@ -45,7 +45,7 @@
                         </div>
                         <div class="row g-0 mb-4 mt-1 d-flex justify-content-center">
                             <p class="text-center text-white ">Don't have an account yet? <a href="#"
-                                     style="text-decoration:none; color:white; font-weight:500;">
+                                     style="text-decoration:none; color:white; font-weight:500;" id="register" data-bs-toggle="modal" data-bs-target="#register">
                                      Register.</a></p>
                         </div>
                  
