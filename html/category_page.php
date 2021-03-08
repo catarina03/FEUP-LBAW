@@ -31,7 +31,7 @@
     function draw_category_page(){
 ?>
 
-    <div class="category row g-0 mb-5" style="margin-top: 5em;">
+    <div class="category row g-0" style="margin-top: 5em; margin-bottom: 7em;">
         <div class="category-icon col-12 col-lg-2 pt-lg-5 pt-3 pb-3 text-center">
             <img src="images/music-icon.svg" class="d-lg-block d-none" style="width: 40%;">
             <h2 style="font-weight:bold;color:#307371;">Music</h2>
@@ -304,6 +304,9 @@
 
         draw_navbar("authenticated_user");
         draw_category_page();
+
+        include_once('./mobilebar.php');
+        draw_mobilebar();
         ?>
 
 

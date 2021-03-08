@@ -32,7 +32,7 @@
     function draw_homepage(){
 ?>
 
-    <div class="homepage row g-0 mb-5" style="margin-top: 5em">
+    <div class="homepage row g-0" style="margin-top: 5em;margin-bottom:7em;">
         <div class="homepage-view col-md-2 ps-5 pt-3">
             <nav class="nav flex-lg-column">
                 <a class="nav-link active" href="#"><img src="images/bar-chart.svg" height="25">Top</a>
@@ -66,8 +66,8 @@
                                             Comes the
                                             Shock" as part of the National Hockey </p>
                                         <strong> (read more)</strong>
-                                        <p class="card-text mt-3"><small class="text-muted">by <a
-                                                    href="userprofile.php" id="authorName">João Santos</a>,
+                                        <p class="card-text mt-3"><small class="text-muted">by <a href="userprofile.php"
+                                                    id="authorName">João Santos</a>,
                                                 FEBRUARY 28,
                                                 2021</small></p>
                                     </div>
@@ -92,8 +92,8 @@
                                             Comes the
                                             Shock" as part of the National Hockey </p>
                                         <strong> (read more)</strong>
-                                        <p class="card-text mt-3"><small class="text-muted">by <a
-                                                    href="userprofile.php" id="authorName">João Santos</a>,
+                                        <p class="card-text mt-3"><small class="text-muted">by <a href="userprofile.php"
+                                                    id="authorName">João Santos</a>,
                                                 FEBRUARY 28,
                                                 2021</small></p>
                                     </div>
@@ -119,8 +119,8 @@
                                             Comes the
                                             Shock" as part of the National Hockey </p>
                                         <strong> (read more)</strong>
-                                        <p class="card-text mt-3"><small class="text-muted">by <a
-                                                    href="userprofile.php" id="authorName">João Santos</a>,
+                                        <p class="card-text mt-3"><small class="text-muted">by <a href="userprofile.php"
+                                                    id="authorName">João Santos</a>,
                                                 FEBRUARY 28,
                                                 2021</small></p>
                                     </div>
@@ -256,7 +256,7 @@
         <div class="homepage-filter col-md-3 text-center">
             <div class="container">
                 <h4> Search </h4>
-                <form class="pt-2" action="#" method="post">
+                <form class="pt-2" action="advanced_search.php" method="post">
                     <div class="input-group rounded">
                         <input type="search" class="form-control" placeholder="Search" aria-label="Search"
                             aria-describedby="search-addon" />
@@ -301,6 +301,9 @@
     draw_navbar("authenticated_user");
 
     draw_homepage();
+
+    include_once('./mobilebar.php');
+    draw_mobilebar();
     ?>
 
 

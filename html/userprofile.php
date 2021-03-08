@@ -326,6 +326,7 @@
 
     </div>
     <?php
+    
         include_once('./mobilebar.php');
         draw_mobilebar();
     ?>

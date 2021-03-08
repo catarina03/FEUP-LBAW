@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AltArt</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    
+
     <!--fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
     <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -17,9 +19,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-   
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="style/style.css">
@@ -33,7 +32,7 @@
 ?>
     <div class="container post">
 
-        <div class="row mt-5 mb-5">
+        <div class="row" style="margin-top: 7em; margin-bottom: 7em;">
             <div class="card my-post-page-post-card justify-content-center pb-5" style="border-radius:5px;">
 
                 <div class="my-post-page-settings">
@@ -50,11 +49,13 @@
                 </div>
 
                 <div class="container-fluid d-flex col-10 justify-content-left mt-3">
-                    <h1 class="my-post-page-post-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New Video</h1>
+                    <h1 class="my-post-page-post-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
+                        Video</h1>
                 </div>
 
                 <div class="container-fluid d-flex col-10 justify-content-left mt-1">
-                    <h2 class="my-post-page-post-author-date">by <a href="./myprofile.php">Ana Sousa</a>, FEBRUARY 23, 2021</h2>
+                    <h2 class="my-post-page-post-author-date">by <a href="./myprofile.php">Ana Sousa</a>, FEBRUARY 23,
+                        2021</h2>
                 </div>
 
                 <div class="container-fluid d-flex col-10 justify-content-left mt-1">
@@ -73,7 +74,8 @@
                 </div>
 
                 <div class="container-fluid d-flex col-10 justify-content-left mt-2">
-                    <p class="my-post-page-post-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in celebration
+                    <p class="my-post-page-post-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
+                        celebration
                         of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film includes scenes
                         of the empty venue during the pandemic.
                         <br>“I would like to take this opportunity to wish the Royal Albert Hall a very happy 150th
@@ -125,14 +127,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <h4 class="my-post-page-comment-author-date">by <a href="./user-profile.php">João Santos</a>, FEBRUARY 23,
+                            <h4 class="my-post-page-comment-author-date">by <a href="./userprofile.php">João
+                                    Santos</a>, FEBRUARY 23,
                                 2021</h3>
                         </div>
                         <div class="row pt-2">
                             <div class="d-flex">
-                                <h3 class="my-post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i></h3>
-                                <h3 class="my-post-page-post-interactions pe-3 my-0">0 <i class="far fa-thumbs-down"></i></h3>
-                                <h3 class="my-post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i></h3>
+                                <h3 class="my-post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i>
+                                </h3>
+                                <h3 class="my-post-page-post-interactions pe-3 my-0">0 <i
+                                        class="far fa-thumbs-down"></i></h3>
+                                <h3 class="my-post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i>
+                                </h3>
                                 <i title="Report comment" class="fas fa-ban my-0 ms-auto"></i>
                             </div>
                         </div>
@@ -147,14 +153,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <h4 class="my-post-page-comment-author-date">by <a href="./user-profile.php">Joyce Rodrigues</a>, FEBRUARY 22,
+                            <h4 class="my-post-page-comment-author-date">by <a href="./userprofile.php">Joyce
+                                    Rodrigues</a>, FEBRUARY 22,
                                 2021</h3>
                         </div>
                         <div class="row pt-2">
                             <div class="d-flex">
-                                <h3 class="my-post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i></h3>
-                                <h3 class="my-post-page-post-interactions pe-3 my-0">0 <i class="far fa-thumbs-down"></i></h3>
-                                <h3 class="my-post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i></h3>
+                                <h3 class="my-post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i>
+                                </h3>
+                                <h3 class="my-post-page-post-interactions pe-3 my-0">0 <i
+                                        class="far fa-thumbs-down"></i></h3>
+                                <h3 class="my-post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i>
+                                </h3>
                                 <i title="Report comment" class="fas fa-ban my-0 ms-auto"></i>
                             </div>
                         </div>
@@ -169,14 +179,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <h4 class="my-post-page-comment-author-date">by <a href="./user-profile.php">Beatrice Layne</a>, FEBRUARY 21,
+                            <h4 class="my-post-page-comment-author-date">by <a href="./userprofile.php">Beatrice
+                                    Layne</a>, FEBRUARY 21,
                                 2021</h3>
                         </div>
                         <div class="row pt-2">
                             <div class="d-flex">
-                                <h3 class="my-post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i></h3>
-                                <h3 class="my-post-page-post-interactions pe-3 my-0">0 <i class="far fa-thumbs-down"></i></h3>
-                                <h3 class="my-post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i></h3>
+                                <h3 class="my-post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i>
+                                </h3>
+                                <h3 class="my-post-page-post-interactions pe-3 my-0">0 <i
+                                        class="far fa-thumbs-down"></i></h3>
+                                <h3 class="my-post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i>
+                                </h3>
                                 <i title="Report comment" class="fas fa-ban my-0 ms-auto"></i>
                             </div>
                         </div>
@@ -190,14 +204,18 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <h4 class="my-post-page-comment-author-date">by <a href="./profile.php">John Doe</a>, FEBRUARY
+                                    <h4 class="my-post-page-comment-author-date">by <a href="./profile.php">John
+                                            Doe</a>, FEBRUARY
                                         21, 2021</h3>
                                 </div>
                                 <div class="row pt-2">
                                     <div class="d-flex">
-                                        <h3 class="my-post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i></h3>
-                                        <h3 class="my-post-page-post-interactions pe-3 my-0">0 <i class="far fa-thumbs-down"></i></h3>
-                                        <h3 class="my-post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i></h3>
+                                        <h3 class="my-post-page-post-interactions pe-3 my-0">1 <i
+                                                class="far fa-thumbs-up"></i></h3>
+                                        <h3 class="my-post-page-post-interactions pe-3 my-0">0 <i
+                                                class="far fa-thumbs-down"></i></h3>
+                                        <h3 class="my-post-page-post-interactions pe-3 my-0">2 <i
+                                                class="far fa-comments"></i></h3>
                                         <i title="Report comment" class="fas fa-ban my-0 ms-auto"></i>
                                     </div>
                                 </div>
@@ -226,15 +244,15 @@
     </div>
     <?php
     }
-?>
 
-
-    <?php
         include_once('./navbar.php');
       
         draw_navbar("authenticated_user");
 
         draw_my_post();
+
+        include_once('./mobilebar.php');
+        draw_mobilebar();
         ?>
 
 

@@ -2,10 +2,10 @@
     function draw_my_profile() {
 
 ?>
-<div class="container-fluid my-profile justify-content-center mx-auto g-0 mt-0">
+<div class="container-fluid my-profile justify-content-center mx-auto">
     <div class="row justify-content-start settings profile g-0">
         <div class="col-3 d-sm-none d-lg-flex d-flex-column justify-content-center "
-            style=" padding-left:3%;padding-top:15em; ">
+            style=" padding-left:3%; padding-top:15em; ">
             <nav class="nav flex-lg-column my-profile-settings-div ">
                 <a class="my-profile-settings justify-content-center nav-link active"><i
                         class="bi bi-person-circle"></i> Profile</a>
@@ -14,7 +14,7 @@
                     Settings</a>
             </nav>
         </div>
-        <div class="col-xl-7 col-11  my-profile-div">
+        <div class="col-xl-7 col-11 my-profile-div">
             <div class="row justify-content-center">
                 <div class="col-12 d-block">
                     <div class="row justify-content-center my-3 position-relative ">
@@ -489,11 +489,15 @@
 <body>
 
     <?php
-            include_once('./navbar.php');
-        
-            draw_navbar("authenticated_user");
+        include_once('./navbar.php');
+    
+        draw_navbar("authenticated_user");
 
-            draw_my_profile();
+        draw_my_profile();
+
+        include_once('./mobilebar.php');
+        draw_mobilebar();
+            
     ?>
 
 

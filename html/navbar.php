@@ -21,7 +21,7 @@
                 <?php
                 if($user == "authenticated_user" || ($user == "moderator")) {
               ?>
-                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="" role="button"
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="createpost.php" role="button"
                         aria-expanded="false">
                         <i class="bi bi-plus navbar-icon"></i>
                     </a></li>

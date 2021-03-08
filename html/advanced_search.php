@@ -31,7 +31,7 @@
     function draw_advanced_search(){
 ?>
 
-    <div class="advanced_search row g-0 mb-5" style="margin-top: 5em;">
+    <div class="advanced_search row g-0" style="margin-top: 5em; margin-bottom: 7em;">
         <div class="advancedSearch-icon col-12 col-lg-3 pt-4 ps-5 pe-5 text-center flex-column">
             <i class="bi bi-search d-lg-block d-none" style="font-size:8em;color:#0c1d1c;"></i>
             <h2 style="font-weight:bold;color:#307371;">Advanced Search</h2>
@@ -49,7 +49,7 @@
 
                 <div class="col-md-6 filter d-none">
                     <label for="validationDefault04" class="form-label">Category</label>
-                    <select class="form-select" id="validationDefault04" required>
+                    <select class="form-select" id="validationDefault04">
                         <option selected value="">Select a category</option>
                         <option value="1">Music</option>
                         <option value="2">Cinema</option>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-md-6 filter d-none">
                     <label for="validationDefault04" class="form-label">Type</label>
-                    <select class="form-select" id="validationDefault04" required>
+                    <select class="form-select" id="validationDefault04">
                         <option selected value="">Select a type</option>
                         <option value="1">News</option>
                         <option value="2">Article</option>
@@ -229,35 +229,6 @@
         </div>
     </div>
 
-    <footer class="bottomNavbar d-lg-none">
-        <div id="buttonGroup" class="btn-group selectors" role="group" aria-label="Basic example">
-            <button id="home" type="button" class="btn button-active">
-                <div class="selector-holder">
-                    <i class="bi bi-house fs-2"></i>
-                    <p>Home</p>
-                </div>
-            </button>
-            <button id="feed" type="button" class="btn button-inactive">
-                <div class="selector-holder">
-                    <i class="bi bi-plus fs-2"></i>
-                    <p>Create</p>
-                </div>
-            </button>
-            <button id="create" type="button" class="btn button-inactive">
-                <div class="selector-holder">
-                    <i class="bi bi-bell fs-2"></i>
-                    <p>Notifications</p>
-                </div>
-            </button>
-            <button id="account" type="button" class="btn button-inactive">
-                <div class="selector-holder">
-                    <i class="bi bi-person-circle fs-2"></i>
-                    <p>@ana_sousa</p>
-                </div>
-            </button>
-        </div>
-    </footer>
-
     <?php
 }
 ?>
@@ -265,6 +236,9 @@
         include_once('./navbar.php');
         draw_navbar("authenticated_user");
         draw_advanced_search();
+
+        include_once('./mobilebar.php');
+        draw_mobilebar();
     ?>
 
 
