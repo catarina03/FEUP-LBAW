@@ -1,4 +1,4 @@
-const radios = document.getElementsByClassName("form-check-input");
+const radios = document.getElementsByClassName("form-check-input faq-i");
 console.log(radios);
 
 for(let i = 0;i<radios.length;i++){

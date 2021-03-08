@@ -12,4 +12,4 @@ savePosts.forEach(item =>
             listClass.remove("bi-bookmark-check-fill")
             listClass.add("bi-bookmark-plus-fill")
         }
-    }))
+}))
