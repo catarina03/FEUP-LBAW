@@ -1,10 +1,10 @@
 <?php 
-    function draw_categorypage(){
+    function draw_category_page(){
 ?>
 
 <div class="category row g-0 mt-lg-5 mb-5">
-    <div class="category-icon col-md-2 pt-5 text-center">
-        <img src="/images/cinema3.png" style="width: 40%;">
+    <div class="category-icon col-12 col-lg-2 pt-lg-5 pt-3 pb-3 text-center">
+        <img src="images/music-icon.svg" class="d-lg-block d-none" style="width: 40%;">
         <h2 style="font-weight:bold;color:#307371;">Music</h2>
     </div>
     <div class="category-center col-12 col-lg-7">
@@ -193,8 +193,8 @@
                         <i class="fas fa-search"></i>
                     </span>
                 </div>
-                <select class="form-select mt-4" aria-label="Select a category">
-                    <option selected>Select a category</option>
+                <select class="form-select mt-4" aria-label="Select a type">
+                    <option selected>Select a type</option>
                     <option value="1">News</option>
                     <option value="2">Article</option>
                     <option value="3">Review</option>

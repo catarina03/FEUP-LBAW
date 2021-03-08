@@ -24,14 +24,14 @@
     cursor: pointer;
 }
 
-.homepage #authorName, .category #authorName {
+#authorName {
     cursor: pointer;
     font-weight: bold;
     text-decoration: none;
     color: #307371;
 }
 
-.homepage #authorName:hover, .category #authorName:hover {
+#authorName:hover {
     color: #ffc2ad;
 }
 
@@ -118,8 +118,8 @@
 }
 
 .homepage-filter .form-check-input, .category-filter .form-check-input{
-    background-color: #8ab5b1;
-    border: none;
+    background-color: #0c1d1c;
+    border: 1px solid #307371;
 }
 
 .bottomNavbar {
@@ -155,4 +155,25 @@
 }
 
 
+/********** ADVANCED SEARCH ***********/
+
+.advanced_search-center .rowFilter{
+    background-color: #fcf3ee;
+    max-height: fit-content;
+    padding: 2em;
+    color: #0c1d1c;
+    border-radius: 1%;
+}
+
+.advanced_search-center .filterButton {
+    background-color: #0c1d1c;
+    border:none;
+    color: #fcf3ee;
+    border-radius: 2%;
+
+}
+
+.advanced_search-center .filterButton:hover {
+    background-color: #307371;
+}
 

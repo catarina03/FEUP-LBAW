@@ -17,11 +17,9 @@
             <a href="#" data-rb-event-key="1" class="nav-link mr-5 active">Literature</a>
         </div>
 
-
         <ul class="nav navbar-nav w-100 justify-content-end">
             <li class="nav-item mx-2">
-                <a class="nav-link" href="" id="#" role="button" 
-                    aria-expanded="false">
+                <a class="nav-link" href="" id="#" role="button" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                         class="bi bi-plus" viewBox="0 0 16 16">
                         <path

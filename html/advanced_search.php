@@ -1,100 +1,73 @@
 <?php 
-    function draw_homepage(){
+    function draw_advanced_search(){
 ?>
 
-<div class="homepage row g-0 mt-lg-5 mb-5">
-    <div class="homepage-view col-md-2 ps-5 pt-3">
-        <nav class="nav flex-lg-column">
-            <a class="nav-link active" href="#"><img src="images/bar-chart.svg" height="25">Top</a>
-            <a class="nav-link" href="#"><img src="images/flame.svg" height="25">Hot</a>
-            <a class="nav-link" href="#"><img src="images/calendar.svg" height="25">New</a>
-        </nav>
+<div class="advanced_search row g-0 mt-lg-5 mb-5">
+    <div class="advancedSearch-icon col-12 col-lg-2 pt-4 ps-5 pe-5 text-center">
+        <i class="bi bi-search d-lg-block d-none" style="font-size:8em;color:#0c1d1c;"></i>
+        <h2 style="font-weight:bold;color:#307371;">Advanced Search</h2>
     </div>
-    <div class="homepage-center col-12 col-lg-7">
-        <div id="topNews" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#topNews" data-bs-slide-to="0" class="active" aria-current="true"
-                    aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#topNews" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#topNews" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <div class="advanced_search-center mt-4 col-12 col-lg-7">
+        <form class="rowFilter row g-3">
+            <div class="col-12 input-group rounded">
+                <input type="search" class="form-control" placeholder="Search" aria-label="Search"
+                    aria-describedby="search-addon" />
+                <span class="input-group-text border-0" id="search-addon" style="background-color:black;color:#fcf3ee;">
+                    <i class="fas fa-search"></i>
+                </span>
             </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-7">
-                                <img src="https://static.toiimg.com/photo/72975551.cms" class="w-100" alt="...">
-                            </div>
-                            <div class="col-md-5">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-3">Green Day Offers Up Punk-Inspired Aerobics in ‘Here
-                                        Comes the Shock' Video</h5>
-                                    <p class="card-text d-inline">Green Day is whipping fans into shape with its latest
-                                        music video. On Saturday (Feb. 20), the rock band premiered their new song "Here
-                                        Comes the
-                                        Shock" as part of the National Hockey </p>
-                                    <strong> (read more)</strong>
-                                    <p class="card-text mt-3"><small class="text-muted">by <a
-                                                href="https://www.google.com/" id="authorName">João Santos</a>,
-                                            FEBRUARY 28,
-                                            2021</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-7">
-                                <img src="https://wallpaperaccess.com/full/2587267.jpg" class="w-100" alt="...">
-                            </div>
-                            <div class="col-md-5">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-3">Green Day Offers Up Punk-Inspired Aerobics in ‘Here
-                                        Comes the Shock' Video</h5>
-                                    <p class="card-text d-inline">Green Day is whipping fans into shape with its latest
-                                        music video. On Saturday (Feb. 20), the rock band premiered their new song "Here
-                                        Comes the
-                                        Shock" as part of the National Hockey </p>
-                                    <strong> (read more)</strong>
-                                    <p class="card-text mt-3"><small class="text-muted">by <a
-                                                href="https://www.google.com/" id="authorName">João Santos</a>,
-                                            FEBRUARY 28,
-                                            2021</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-7">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_Kwz7sjcydklqSsq9kf9hBI4eZwsVO7-dZg&usqp=CAU"
-                                    class="w-100" alt="...">
-                            </div>
-                            <div class="col-md-5">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-3">Green Day Offers Up Punk-Inspired Aerobics in ‘Here
-                                        Comes the Shock' Video</h5>
-                                    <p class="card-text d-inline">Green Day is whipping fans into shape with its latest
-                                        music video. On Saturday (Feb. 20), the rock band premiered their new song "Here
-                                        Comes the
-                                        Shock" as part of the National Hockey </p>
-                                    <strong> (read more)</strong>
-                                    <p class="card-text mt-3"><small class="text-muted">by <a
-                                                href="https://www.google.com/" id="authorName">João Santos</a>,
-                                            FEBRUARY 28,
-                                            2021</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-md-6">
+                <label for="validationDefault04" class="form-label">Category</label>
+                <select class="form-select" id="validationDefault04" required>
+                    <option selected value="">Select a category</option>
+                    <option value="1">Music</option>
+                    <option value="2">Cinema</option>
+                    <option value="3">TV Show</option>
+                    <option value="4">Theatre</option>
+                    <option value="5">Literature</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="validationDefault04" class="form-label">Type</label>
+                <select class="form-select" id="validationDefault04" required>
+                    <option selected value="">Select a type</option>
+                    <option value="1">News</option>
+                    <option value="2">Article</option>
+                    <option value="3">Review</option>
+                    <option value="4">Suggestion</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="validationDefault03" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="startDate" aria-label="Start Date">
+            </div>
+            <div class="col-md-6">
+                <label for="validationDefault03" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="startDate" aria-label="End Date">
+            </div>
+            <div class="col-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkPeople">
+                    <label class="form-check-label" for="checkPeople">
+                        Only people I follow
+                    </label>
                 </div>
             </div>
-        </div>
-        <div class="postsCards row">
+            <div class="col-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkTags">
+                    <label class="form-check-label" for="checkTags">
+                        Only tags I follow
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 d-flex justify-content-end fs-5">
+                <button class="filterButton p-5 pt-2 pb-2" type="submit">Search</button>
+            </div>
+        </form>
+        <p class="pt-4 ps-4 fs-4">4 results found!</p>
+        <div class="postsCards row mt-3">
             <div class="col-12 col-md-6 col-xl-4 mb-4">
                 <div class="card h-100">
                     <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="200" class="card-img-top"
@@ -209,45 +182,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="homepage-filter col-md-3 text-center">
-        <div class="container">
-            <h4> Search </h4>
-            <form class="pt-2" action="#" method="post">
-                <div class="input-group rounded">
-                    <input type="search" class="form-control" placeholder="Search" aria-label="Search"
-                        aria-describedby="search-addon" />
-                    <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
-                        <i class="fas fa-search"></i>
-                    </span>
-                </div>
-                <select class="form-select mt-4" aria-label="Select a type">
-                    <option selected>Select a type</option>
-                    <option value="1">News</option>
-                    <option value="2">Article</option>
-                    <option value="3">Review</option>
-                    <option value="4">Suggestion</option>
-                </select>
-                <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date">
-                <a> to </a>
-                <input type="date" class="form-control mt-2" id="endDate" aria-label="End Date">
-
-                <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" value="" id="checkPeople">
-                    <label class="form-check-label" for="checkPeople">
-                        Only people I follow
-                    </label>
-                </div>
-                <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" value="" id="checkTags">
-                    <label class="form-check-label" for="checkTags">
-                        Only tags I follow
-                    </label>
-                </div>
-
-                <input type="submit" class="filterButton w-100 mt-4 p-1" value="Filter">
-            </form>
         </div>
     </div>
 </div>
