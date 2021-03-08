@@ -3,40 +3,35 @@
 
 <head>
 <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AltArt</title>
+    <title>Category Page</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
+    </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-    <script src="js/my-profile.js" defer></script>
-    <script src="js/settings.js" defer></script>
-    <script src="js/userprofile.js" defer></script>
     <script src="js/script.js" defer></script>
-
-    <link rel="stylesheet" href="style/view_post.css">
+    <script src="js/advanced_search.js" defer></script>
     <link rel="stylesheet" href="style/style.css">
 </head>
 
 
 
 <body>
-
-
     <?php 
     function draw_category_page(){
 ?>
 
-    <div class="category row g-0 mt-lg-5 mb-5">
+    <div class="category row g-0 mb-5" style="margin-top: 5em;">
         <div class="category-icon col-12 col-lg-2 pt-lg-5 pt-3 pb-3 text-center">
             <img src="images/music-icon.svg" class="d-lg-block d-none" style="width: 40%;">
             <h2 style="font-weight:bold;color:#307371;">Music</h2>
@@ -233,7 +228,7 @@
         <div class="category-filter col-md-3 text-center">
             <div class="container">
                 <h4> Search </h4>
-                <form class="pt-2" action="#" method="post">
+                <form class="pt-2" action="advanced_search.php" method="post">
                     <div class="input-group rounded">
                         <input type="search" class="form-control" placeholder="Search" aria-label="Search"
                             aria-describedby="search-addon" />
@@ -304,14 +299,10 @@
 }
 ?>
 
-
-
-
     <?php
         include_once('./navbar.php');
-        include_once('./homepage.php');
 
-        draw_navbar("visitor");
+        draw_navbar("authenticated_user");
         draw_category_page();
         ?>
 
