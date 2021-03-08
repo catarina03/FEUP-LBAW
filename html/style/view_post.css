@@ -1,6 +1,14 @@
 .card-post{
-    background-color: #8ab5b1; 
+    /*background-color: #fcf3ee; */
+    /* background-color: #8ab5b1; */
+    /* background-color: #EFF9FA; */
+    background-color: #ADE1E5; 
+    /* background-color: #79C7C5; */
+    /* background-color: #307371; */
+    /* background-color: #FFC2AD; */
 }
+
+
 
 .post-title{
     font-family: 'Montserrat', sans-serif;
@@ -12,19 +20,81 @@
     font-size:large;
 }
 
-.post-author-date a{
-    color: #0C1D1C;
-}
-
 .post-interactions{
-    font-size: medium;
+    font-size: small;
 }
 
 p{
     font-family: 'Roboto', sans-serif;
+    font-size: large;
+}
+
+h1, h2, h3, h4, h5, p{
+    color: #0C1D1C;
+}
+
+a{
+    color: #307371;
+    text-decoration: unset;
+}
+a:hover{
+    color: #307371;
+    text-decoration: underline;
 }
 
 .tag-container{
-    outline: white;
-    outline-width: 2;
+    outline-width: 0;
+    background-color: #0C1D1C;
+}
+
+.post-tag{
+    color: #EFF9FA
+}
+.post-tag:hover{
+    color: #EFF9FA;
+    text-decoration: underline;
+}
+
+.add-comment-label{
+    background-color: transparent;
+}
+
+.comment{
+    /*background-color: #fcf3ee; */
+    background-color: #EFF9FA;
+}
+
+.comment-body{
+    font-family: 'Roboto', sans-serif;
+    font-size: medium;
+}
+
+.comment-author-date{
+    font-family: 'Roboto', sans-serif;
+    font-size: small;
+}
+
+.fa-star{
+    color: #EFF9FA;
+}
+
+.comment-reply{
+    /*background-color: #fcf3ee; */
+    /* background-color: #8ab5b1; */
+    /* background-color: #EFF9FA; */
+    background-color: #FCF3EE; 
+    /* background-color: #79C7C5; */
+    /* background-color: #307371; */
+    /* background-color: #FFC2AD; */
+}
+
+.savePost{
+    position: absolute;
+    top: -30px;
+    right: -10px;
+    color: #0c1d1c;
+}
+
+.savePost:hover {
+    color: #307371;
 }
