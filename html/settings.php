@@ -20,21 +20,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style/custom_navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 </head>
 
 <body>
     <?php
-    include_once('./navbar.php');
     include_once('./confirm.php');
-    draw_nav_bar();
-  ?>
-    <script src="settings.js" defer></script>
-    <div class="row justify-content-start settings g-0 mt-4 ms-5 ">
+    ?>
+
+    <script src="js/settings.js" defer></script>
+    <div class="row justify-content-start profile settings g-0 mt-4 ms-5 ">
         <div class="col-3 col-lg-3 d-none d-lg-flex  flex-column" style="padding-top:5%;">
             <nav class="nav flex-lg-column ">
-                <a href="./myprofile.php" class="my-profile-settings justify-content-center d-flex nav-link  "><i
+                <a href="./myprofile.php" class="my-profile-settings  justify-content-center d-flex nav-link  "><i
                         class="bi bi-person-circle fs-4 me-2"></i>Profile</a>
                 <a class="my-profile-settings justify-content-center d-flex nav-link active ms-3"><i class="bi bi-gear fs-4 me-2"></i>
                     Settings</a>
@@ -74,8 +74,7 @@
                                 class="btn btn-secondary btn-sm edit-account col-lg-9 col-sm-6 col-md-9 col-xxl-8 change-password mt-2">Change
                                 Password</button>
                         </div>
-                        <div
-                            class=" card card-m-0 row justify-content-center d-none mx-auto mt-2 pb-2 col-lg-9 col-sm-6 col-md-9 col-xxl-8 change-password-form">
+                        <div class=" card card-m-0 row justify-content-center d-none mx-auto mt-2 pb-2 col-lg-9 col-sm-6 col-md-9 col-xxl-8 change-password-form">
                             <form class="card-body d-flex">
                                 <div class="form-group">
                                     <label for="currentPassword">Current Password</label>

@@ -61,9 +61,9 @@
                         </div>
                
 
-                        <div class="row g-0 mb-4 mt-1">
-                            <p class="text-center text-white d-flex ms-1">Already have an account yet? <a href="#"
-                                    class="ms-1" style="text-decoration:none; color:white; font-weight:500;">
+                        <div class="row g-0 mb-4 mt-1 d-flex justify-content-center">
+                            <p class="text-center text-white ">Already have an account yet? <a href="#"
+                                     style="text-decoration:none; color:white; font-weight:500;">
                                     Log in.</a></p>
                         </div>
                     </form>

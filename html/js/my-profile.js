@@ -3,6 +3,7 @@
 let pencil = document.querySelector('.my-profile .pencil-icon')
 let save = document.querySelector('.my-profile .save-form')
 
+
 pencil.addEventListener('click', function(){
     let bio = document.querySelector('.my-profile .bio')
     let bio_form = document.querySelector('.my-profile .bio-form')

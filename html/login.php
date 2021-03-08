@@ -43,12 +43,12 @@
                         <div class="row mb-2 justify-content-center text-white">
                             Forgot your password?
                         </div>
-                        <div class="row g-0 mb-2 mt-1 justify-content-center d-flex">
-                            <p class="text-center text-white justify-content-center d-flex  d-flex">Don't have an
-                                account yet? <a href="#" class="ms-1"
-                                    style="text-decoration:none; color:white; font-weight:500;">
-                                    Register</a></p>
+                        <div class="row g-0 mb-4 mt-1 d-flex justify-content-center">
+                            <p class="text-center text-white ">Don't have an account yet? <a href="#"
+                                     style="text-decoration:none; color:white; font-weight:500;">
+                                     Register.</a></p>
                         </div>
+                 
 
                     </form>
                 </div>
