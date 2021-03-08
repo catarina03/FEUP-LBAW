@@ -9,7 +9,7 @@
         <h2 style="font-weight:bold;color:#307371;">Advanced </h2>
         <h2 style="font-weight:bold;color:#307371;"> Search</h2>
     </div>
-    <div class="advanced_search-center mt-4 col-12 col-lg-6">
+    <div class="advanced_search-center mt-4 col-12 col-lg-7">
         <form class="rowFilter row g-3">
             <div class="col-12 input-group rounded">
                 <input type="search" class="form-control" placeholder="Search" aria-label="Search"
