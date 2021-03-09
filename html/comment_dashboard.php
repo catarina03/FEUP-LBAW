@@ -1,11 +1,11 @@
 <?php 
     function draw_cdashboard(){
 ?>
-<h1 class="text-center">Dashboard</h1>
-<div class="row g-0 justify-content-center">
+<h1 class="text-center" style="margin-top:3em;">Dashboard</h1>
+<div class="row g-0 justify-content-center"">
     <div style="padding-left:0;" class="col-lg-1 col-md-1 ms-1 d-lg-flex d-md-none d-sm-none d-xs-none settings-vertical">
         <div style="padding-left:0;">
-            <i class="bi bi-pencil-square"></i><a style="text-decoration:none;">
+            <i class="bi bi-pencil-square"></i><a href="post_dashboard.php" style="text-decoration:none;">
                 <p style="color:black;">Posts</p>
             </a> <br>
             <i class="bi bi-chat-dots"></i><a href="comment_dashboard.php" style="text-decoration:none;color:black;">
@@ -102,7 +102,7 @@
 
     <!-- SECOND DASH COLUMN-->
     <div class="col-sm-10 col-md-8 col-lg-3 ms-md-5 ps-md-5 mt-5 ml-5">
-        <h3 class="text-center" style="font-weight:bold">Unassigned</h3>
+        <h3 class="text-center" style="font-weight:bold"> Assigned to me </h3>
         <div class="card" style="background-color:#8ab5b1;border:none;">
             <div class="card-body">
                 <div class="row justify-content-center mb-4">
@@ -200,14 +200,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
-    <script src="js/my-profile.js" defer></script>
-    <script src="js/settings.js" defer></script>
-    <script src="js/userprofile.js" defer></script>
-    <script src="js/script.js" defer></script>
 
     <link rel="stylesheet" href="style/style.css">
 </head>
@@ -216,9 +210,9 @@
     <?php
     include_once('./navbar.php');
     draw_navbar("authenticated_user");
-    ?>
-    <?php
-        draw_cdashboard();
+    draw_cdashboard();
+    include_once('./mobilebar.php');
+    draw_mobilebar();
     ?>
 </body>
 

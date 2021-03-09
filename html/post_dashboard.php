@@ -1,11 +1,12 @@
 <?php 
     function draw_pdashboard(){
 ?>
-<h1 class="text-center mt-3">Dashboard</h1>
+<h1 class="text-center" style="margin-top:3em;">Dashboard</h1>
 <div class="row g-0 justify-content-center">
 
 
-    <div style="padding-left:0;" class="col-lg-1 col-md-1 ms-1 d-lg-flex d-md-none d-sm-none d-xs-none settings-vertical">
+    <div style="padding-left:0;"
+        class="col-lg-1 col-md-1 ms-1 d-lg-flex d-md-none d-sm-none d-xs-none settings-vertical">
         <div style="padding-left:0;">
             <i class="bi bi-pencil-square"></i><a style="text-decoration:none;">
                 <p style="font-weight:bold;color:black;">Posts</p>
@@ -77,8 +78,7 @@
 
 
                 <!--Post card -->
-                <div class="card"
-                    style="max-width: 540px;background-color:#8ab5b1;border:none;">
+                <div class="card" style="max-width: 540px;background-color:#8ab5b1;border:none;">
                     <div class="row d-flex col-12 mx-auto">
                         <div style="padding-right:0;padding-left:0;" class="col-md-4 col-sm-12 pr-0">
                             <img src="images/abs.jpeg" alt="Post title" width="100%" height="100%">
@@ -113,7 +113,7 @@
 
     <!-- SECOND DASH COLUMN-->
     <div class="col-sm-10 col-md-8 col-lg-3 ms-md-5 ps-md-5 mt-5 ml-5">
-        <h3 class="text-center" style="font-weight:bold">Unassigned</h3>
+        <h3 class="text-center" style="font-weight:bold">Assigned to me</h3>
         <div class="card" style="background-color:#8ab5b1;border:none;">
             <div class="card-body">
                 <div class="row justify-content-center mb-4">
@@ -150,8 +150,7 @@
 
 
                 <!--Post card -->
-                <div class="card"
-                    style="max-width: 540px;background-color:#8ab5b1;border:none;">
+                <div class="card" style="max-width: 540px;background-color:#8ab5b1;border:none;">
                     <div class="row d-flex col-12 mx-auto">
                         <div style="padding-right:0;padding-left:0;" class="col-md-4 col-sm-12 pr-0">
                             <img src="images/abs.jpeg" alt="Post title" width="100%" height="100%">
@@ -209,8 +208,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <script src="js/my-profile.js" defer></script>
@@ -226,12 +224,10 @@
     include_once('./navbar.php');
     include_once('./footer.php');
     draw_navbar("authenticated_user");
-    ?>
-    <?php
-        draw_pdashboard();
-    ?>
-    <?php
-        draw_footer();
+    draw_pdashboard();
+    include_once('./mobilebar.php');
+    draw_mobilebar();
+
     ?>
 </body>
 
