@@ -770,19 +770,21 @@ summary.role-sum:hover{
   font-size: 1.4em;
 } 
 
-.rate-col{
-  width: 100%;
-  padding-left: 25%;
-}
-
-.form-check-input\ faq-i{
+.form-check-input.inner.faq-i{
   width: 1.4em;
   height: 1.4em;
   background-image: url("../images/sad_1.png");
 }
 
-.form-check-input\ faq-i:focus {
+.form-check-input.inner.faq-i:focus {
   box-shadow: none;
+  border:none;
+  outline:none;
+}
+.form-check-input.inner.faq-i::selection {
+  box-shadow: none;
+  border:none;
+  outline:none;
 }
 
 /* ROLE MANAGER */
@@ -889,6 +891,28 @@ summary.role-sum:hover{
 
 .pdash-col{
   padding-left: 0 auto;
+}
+
+@media(max-width:768px){
+  .md-paragraph{
+      display: none;
+  }
+  .sm-paragraph{
+      display: flex;
+  }
+}
+@media(max-width:768px){
+  .md-paragraph-2{
+      display: none;
+  }
+  .sm-paragraph-2{
+      display: flex;
+  }
+}
+@media(max-width:768px){
+  .rate-col-radio{
+      padding-left: 20%;
+  }
 }
 
 
@@ -1190,16 +1214,30 @@ summary.role-sum:hover{
 .create-post-page-post-card{
   background-color: #8ab5b1; 
 }
+.edit-post-page-post-card{
+  background-color: #8ab5b1; 
+}
 
 .create-post-editor-container p{
   font-family: 'Roboto', sans-serif;
   font-size: small;
 }
 
-.create-post-tags-container p{
+.edit-post-tags-container p{
   font-family: 'Roboto', sans-serif;
   font-size: small;
 }
+
+.create-post-editor-container p{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+}
+
+.edit-post-tags-container p{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+}
+
 
 .preview-post{
   background-color: #0c1d1c;

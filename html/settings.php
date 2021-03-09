@@ -4,7 +4,7 @@
         
 ?>
 
-<div class="container-fluid md-g-0 sm-g-0" style="width:100%">
+<div class="container-fluid md-g-0 sm-g-0" style="margin-top:5em;margin-bottom:5em;">
     <div class="row justify-content-start profile settings g-0 mt-4">
         <div class="col-3 col-lg-3 d-none d-lg-flex flex-column" style="padding-top:5%;">
             <nav class="nav flex-lg-column ">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-lg-6 col-12  m-lg-0 mx-auto">
-            <form class="row g-3 mt-5  justify-content-center d-flex">
+            <form href="myprofile.php" class="row g-3 mt-5 justify-content-center d-flex">
                 <div class="row d-flex mt-2">
                     <h2>Edit Account</h2>
                 </div>
@@ -154,8 +154,7 @@
                 </div>
 
                 <div class=" row col-12 justify-content-center d-flex mt-5">
-                    <a
-                        class="edit-account col-sm-2 col-md-3 col-lg-1 col-8 mt-1 mb-1 text-center cancel-button">Cancel</a>
+                    <a href="myprofile.php" style="text-decoration:none;" class="edit-account col-sm-2 col-md-3 col-lg-1 col-8 mt-1 mb-1 text-center cancel-button">Cancel</a>
                     <div class=" col-md-2 col-lg-1 col-8 mt-1 d-md-block d-none"> or</div>
                     <button type="submit"
                         class="btn btn-secondary btn-sm edit-account mt-1 mb-1 col-md-6 col-sm-3 col-lg-3 col-xxl-3 col-6"

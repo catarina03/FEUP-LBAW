@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AltArt</title>
+    <title>Create Post</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
@@ -13,9 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <script src="https://cdn.tiny.cloud/1/08t5y62wss6y2fzascz2trysrq487403jdb54o0kzk3nu9zq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
@@ -25,14 +22,6 @@
         });
     </script>
 
-
-
-    <script src="js/my-profile.js" defer></script>
-    <script src="js/settings.js" defer></script>
-    <script src="js/userprofile.js" defer></script>
-    <script src="js/script.js" defer></script>
-
-    <link rel="stylesheet" href="style/view_post.css">
     <link rel="stylesheet" href="style/style.css">
 </head>
 
@@ -43,7 +32,7 @@
     function draw_create_post(){
 ?>
     <div class="container post">
-        <div class="row mt-5 mb-5">
+        <div class="row" style="margin-top: 7em; margin-bottom:7em;">
             <div class="card create-post-page-post-card justify-content-center pb-5" style="border-radius:5px;">
 
                 <div class="container">
@@ -180,10 +169,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
             </div>
         </div>
 
@@ -199,12 +184,10 @@
 
     <?php
         include_once('./navbar.php');
-        
-      
         draw_navbar("visitor");
-        //draw_my_profile();
-        //draw_user_profile();
         draw_create_post();
+        include_once('./mobilebar.php');
+        draw_mobilebar();
         ?>
 
 
