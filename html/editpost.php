@@ -171,10 +171,10 @@
                                     Preview</button>
                             </div>
                             <div class="col-md-auto col-12">
-                                <button type="button" class="btn cancel-post">Cancel</button>
+                                <a href="mypost.php" type="button" class="btn cancel-post">Cancel</a>
                             </div>
                             <div class="col-md-auto col-12">
-                                <button type="button" class="btn publish-post px-5">Publish</button>
+                                <a href="mypost.php" type="button" class="btn publish-post px-5">Publish</a>
                             </div>
                         </div>
                     </div>
