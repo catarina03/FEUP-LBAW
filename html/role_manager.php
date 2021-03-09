@@ -2,7 +2,7 @@
     function draw_role_manager(){
 ?>
 
-<div class="container faq-card">
+<div class="container faq-card" style="margin-top:5em; margin-bottom: 5em;">
     <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
         <!--Title-->
         <h1 class="text-center faq-title" style="font-weight:bold;">Manage Roles</h1>
@@ -14,8 +14,9 @@
                     <div class="btn-group question">
                         <form class="form-inline mt-2 mt-md-0 search-bar" style="display:inline;">
                             <details class="role-det" class="role-manager-detail" open>
-                                <summary class="role-sum" style="background-color:#fcf3ee;"><input class="form-control mr-sm-2"
-                                        type="text" placeholder="+  Search for username" aria-label="Search"
+                                <summary class="role-sum" style="background-color:#fcf3ee;"><input
+                                        class="form-control mr-sm-2" type="text" placeholder="+  Search for username"
+                                        aria-label="Search"
                                         style="background-color:#fcf3ee;display:inline;boder:none;outline:none;box-shadow:none;">
                                 </summary>
                                 <p>@ana_sousa<button type="button" class="btn btn-primary sum-inner manager-button"
@@ -60,9 +61,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="style/style.css">
@@ -74,13 +73,11 @@
     include_once('./navbar.php');
     include_once('./footer.php');
     draw_navbar("authenticated_user");
-    ?>
-    <?php
-        draw_role_manager();
-    ?>
-    <?php
-        draw_footer();
-    ?>
+    draw_role_manager();
+    draw_footer();
+    include_once('./mobilebar.php');
+    draw_mobilebar();
+?>
 </body>
 
 </html>
