@@ -23,7 +23,7 @@
     <script src="js/userprofile.js" defer></script>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <?php
         include_once('./navbar.php');

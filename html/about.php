@@ -89,7 +89,7 @@
 
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php
         include_once('./navbar.php');
         draw_navbar('authenticated_user');

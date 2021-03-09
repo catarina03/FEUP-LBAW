@@ -601,10 +601,6 @@ a.footer-link:hover {
   color: #ffc2ad;
   text-decoration: underline;
 }
-/*
-div.container\ col-12\ my-5{
-  margin:0;
-}*/
 
 .card-body\ about-us{
   padding-left: 5%;
@@ -633,14 +629,10 @@ div.container\ col-12\ my-5{
   border-radius: 2%;
 }
 
-
-
-
 /* FAQ */
 details > summary{
   display: list-item;
 }
-
 
 summary::-webkit-details-marker {
   font-size: 30px;
