@@ -1183,3 +1183,50 @@ summary.role-sum:hover{
   font-family: 'Roboto', sans-serif;
   font-size: medium;
 }
+
+
+
+/*******************************************/
+/********** CREATE/EDIT POST PAGE **********/
+/*******************************************/
+
+.create-post-page-post-card{
+  background-color: #8ab5b1; 
+}
+
+.create-post-editor-container p{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+}
+
+.create-post-tags-container p{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+}
+
+.preview-post{
+  background-color: #0c1d1c;
+  color: #8ab5b1; 
+}
+.preview-post:hover{
+  background-color:#307371;
+  color: #8ab5b1; 
+}
+
+.cancel-post{
+  color:#0c1d1c;
+  text-decoration: underline;
+}
+.cancel-post:hover{
+  color:#307371;
+  text-decoration: underline;
+}
+
+.publish-post{
+  background-color: #0c1d1c;
+  color: #8ab5b1; 
+}
+.publish-post:hover{
+  background-color:#307371;
+  color: #8ab5b1; 
+}
