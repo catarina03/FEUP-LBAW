@@ -194,7 +194,7 @@
                                                 <i class="fas fa-ellipsis-h fs-4"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Edit Post</a>
+                                                <a class="dropdown-item" href="editpost.php">Edit Post</a>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
@@ -242,7 +242,7 @@
                                                 <i class="fas fa-ellipsis-h fs-4"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Edit Post</a>
+                                                <a class="dropdown-item" href="editpost.php">Edit Post</a>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
@@ -289,7 +289,7 @@
                                                 <i class="fas fa-ellipsis-h fs-4"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Edit Post</a>
+                                                <a class="dropdown-item" href="editpost.php">Edit Post</a>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
@@ -338,7 +338,7 @@
                                                 <i class="fas fa-ellipsis-h fs-4"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Edit Post</a>
+                                                <a class="dropdown-item" href="editpost.php">Edit Post</a>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
@@ -387,7 +387,7 @@
                                                 <i class="fas fa-ellipsis-h fs-4"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">Edit Post</a>
+                                                <a class="dropdown-item" href="editpost.php">Edit Post</a>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
