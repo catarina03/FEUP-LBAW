@@ -184,10 +184,13 @@
 
     <?php
         include_once('./navbar.php');
-        draw_navbar("visitor");
+        draw_navbar("authenticated_user");
         draw_create_post();
         include_once('./mobilebar.php');
         draw_mobilebar();
+
+        include_once('./footer.php');
+        draw_footer();
         ?>
 
 

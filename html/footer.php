@@ -1,9 +1,7 @@
 <?php 
     function draw_footer(){
 ?>
-  <div class="auto md col-12 my 0" >
-    <!-- Footer -->
-    <footer class="text-center " style="background-color:#307371;">
+    <footer class="text-center d-lg-block d-none" style="background-color:#307371;">
       <!-- Grid container -->
       <div class="container">
         <!-- Section: Links -->
@@ -37,15 +35,14 @@
             <!-- Grid column -->
             <div class="col-md-2 mb-3">
               <h6 class="text font-weight-bold">
-                <a class="footer-link" href="#!">© AltArt</a>
+                <a class="footer-link" href="homepage.php">© AltArt</a>
               </h6>
             </div>
           </div>
         </section>
     </footer>
     <!-- Footer -->
-  </div>
-  <!-- End of .container -->
+
 <?php
 }
 ?>

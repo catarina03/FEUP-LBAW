@@ -31,7 +31,7 @@
     function draw_category_page(){
 ?>
 
-    <div class="category row g-0" style="margin-top: 5em; margin-bottom: 7em;">
+    <div class="category row g-0" style="margin-top: 6em; margin-bottom: 7em;">
         <div class="category-icon col-12 col-lg-2 pt-lg-5 pt-3 pb-3 text-center justify-content-center">
             <img src="images/music.png" class="pb-2" style="width: 40%;">
             <h2 style="font-weight:bold;color:#307371;">Music</h2>
@@ -307,7 +307,10 @@
 
         include_once('./mobilebar.php');
         draw_mobilebar();
-        ?>
+    
+        include_once('./footer.php');
+        draw_footer();
+    ?>
 
 
 </body>

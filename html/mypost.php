@@ -253,6 +253,9 @@
 
         include_once('./mobilebar.php');
         draw_mobilebar();
+
+        include_once('./footer.php');
+        draw_footer();
         ?>
 
 

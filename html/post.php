@@ -263,15 +263,17 @@
     </div>
 
     <?php
-            }
+    }
         
-            include_once('./navbar.php');
-            draw_navbar("authenticated_user");
-            draw_post();
+        include_once('./navbar.php');
+        draw_navbar("authenticated_user");
+        draw_post();
 
-            include_once('./mobilebar.php');
-    draw_mobilebar();
-        ?>
+        include_once('./mobilebar.php');
+        draw_mobilebar();
+        include_once('./footer.php');
+        draw_footer();
+    ?>
 
 
 </body>
