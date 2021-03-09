@@ -620,19 +620,22 @@ div.container\ col-12\ my-5{
 
 
 /* FAQ */
-summary.text-center\ faq-sum{
-  list-style: none;
+details > summary{
+  display: list-item;
 }
-summary.text-center\ faq-sum::-webkit-details-marker {
-  display: none
+
+
+summary::-webkit-details-marker {
+  font-size: 30px;
 }
+
 summary.text-center\ faq-sum:before {
   content: ' ►';
   float: left;
   margin-right: 10px;
 }
  
-details[open] summary.text-center\ faq-sum:before {
+details.faq-det[open] summary.text-center\ faq-sum:before {
   content: " ▼";
 }
 

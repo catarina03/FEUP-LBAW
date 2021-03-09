@@ -2,60 +2,54 @@
     function draw_faq(){
 ?>
 <div class="container faq-card">
-    <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
-        <!--Title-->
+    <div class="col-12 text-left faq-rounded" style="background-color:#8ab5b1;">
         <h1 class="text-center faq-title" style="font-weight:bold;">Frequently Asked Questions</h1>
-        <div class="faq_questions">
+        <!--Title-->
+        <div class="row justify-content-center">
+        <div class="faq_questions col-8">
             <!--Question row-->
-            <div class="row py-5">
-                <!--Column with the button needed to make the specified effect in the InVision project-->
-                <div class="col-lg-6 question-col">
-                    <div class="btn-group question justify-content-center">
-                        <details class="faq-det">
-                            <summary class="text-center faq-sum">Why do I need to make an account?</summary>
-                            <p>Even though you can view all posts without an account, you need and
-                                account in order to be able to comment,like,dislike,follow other users and follow your
-                                favorite tags.</p>
-                        </details>
-                    </div>
+                <div class="row py-5 justify-content-center">
+                    <!--Column with the button needed to make the specified effect in the InVision project-->
+                            <details class="faq-det">
+                                <summary class="text-center faq-sum">Why do I need to make an account?</summary>
+                                <p>Even though you can view all posts without an account, you need and
+                                    account in order to be able to comment,like,dislike,follow other users and follow your
+                                    favorite tags.</p>
+                            </details>
+                        
                 </div>
-            </div>
-            <div class="row py-5">
-                <!--Column with the button needed to make the specified effect in the InVision project-->
-                <div class="col-lg-6 question-col">
-                    <div class="btn-group question justify-content-center">
-                        <details class="faq-det">
-                            <summary class="text-center faq-sum">How can I report a comment or post?</summary>
-                            <p>Very nice explanation...</p>
-                        </details>
-                    </div>
-                </div>
-            </div>
-            <!-- End of question row-->
-            <div class="row py-5">
-                <div class="col-lg-6 question-col">
-                    <div class="btn-group question justify-content-center">
-                        <details class="faq-det">
-                            <summary class="text-center faq-sum">Can I recover a deleted post or comment?</summary>
-                            <p>Very nice explanation...</p>
-                        </details>
-                    </div>
-                </div>
-            </div>
-            <div class="row py-5">
-                <div class="col-lg-6 question-col">
+                <div class="row py-5 justify-content-center">
+                    <!--Column with the button needed to make the specified effect in the InVision project-->
 
-                    <div class="btn-group question justify-content-center">
-                        <details class="faq-det">
-                            <summary class="text-center faq-sum">What happens to a post that gets reported?</summary>
-                            <p>The post will be marked, one of the moderators is going to
-                                analyze your post and decide if it indeed breaks the rules of the site.</p>
-                        </details>
-                    </div>
+                        
+                            <details class="faq-det">
+                                <summary class="text-center faq-sum">How can I report a comment or post?</summary>
+                                <p>Very nice explanation...</p>
+                            </details>
+                        
+
                 </div>
-            </div>
+                <!-- End of question row-->
+                <div class="row py-5 justify-content-center">
+                
+                    
+                            <details class="faq-det">
+                                <summary class="text-center faq-sum">Can I recover a deleted post or comment?</summary>
+                                <p>Very nice explanation...</p>
+                            </details>
+                    
+                
+                </div>
+                <div class="row py-5 justify-content-center">
+                            <details class="faq-det">
+                                <summary class="text-center faq-sum">What happens to a post that gets reported?</summary>
+                                <p>The post will be marked, one of the moderators is going to
+                                    analyze your post and decide if it indeed breaks the rules of the site.</p>
+                            </details>
+                </div>
+            </div>    
         </div>
-    </section>
+    </div>
 </div>
 <!-- End of .container -->
 <?php
