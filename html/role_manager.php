@@ -72,10 +72,14 @@
 <body>
     <?php
     include_once('./navbar.php');
+    include_once('./footer.php');
     draw_navbar("authenticated_user");
     ?>
     <?php
         draw_role_manager();
+    ?>
+    <?php
+        draw_footer();
     ?>
 </body>
 
