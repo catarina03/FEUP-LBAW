@@ -40,7 +40,7 @@
 
 
                     </div>
-                    <div class="row mt-1 ">
+                    <div class="row mt-1">
                         <div class="card card-profile  col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5"
                             style="border-radius:2%;">
                             <div class="row justify-content-center mt-1">
@@ -478,7 +478,6 @@
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-
 
     <link rel="stylesheet" href="style/style.css">
     <script src="js/script.js" defer></script>
