@@ -2,9 +2,9 @@
     function draw_about(){
 ?>
 
-<div class="container-md col-lg-8 g-0 about-us-card">
+<div class="container about-us-card">
         <div class="row text-left about-rounded justify-content-center" style="background-color:#8ab5b1;border:none;">
-            <div class="col-8">
+            <div class="col-lg-8 col-md-12 col-sm-8">
                 <h1 class="text-center about-us-title">About Us</h1>
                 <div class="card"  style="background-color:#8ab5b1;border:none;">
                     <div class="card-body about-us">
@@ -24,7 +24,6 @@
                 </div>
                 <h2 class="jusitfy-content-center text-center">Our Team</h2>
                 <div class="row py-5 justify-content-center">
-                
                     <div class="col-sm-auto">
                         <figure>
                             <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg" 
