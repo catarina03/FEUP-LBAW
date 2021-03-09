@@ -2,7 +2,7 @@
     function draw_role_manager(){
 ?>
 
-<div class="container-md col-lg-6 col-sm-10 faq-card">
+<div class="container faq-card">
     <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
         <!--Title-->
         <h1 class="text-center faq-title" style="font-weight:bold;">Manage Roles</h1>
@@ -18,19 +18,19 @@
                                         type="text" placeholder="+  Search for username" aria-label="Search"
                                         style="background-color:#fcf3ee;display:inline;boder:none;outline:none;box-shadow:none;">
                                 </summary>
-                                <p>@ana_sousa<button type="button" class="btn btn-primary"
+                                <p>@ana_sousa<button type="button" class="btn btn-primary sum-inner manager-button"
                                         style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Confirm</button>
                                 </p>
-                                <p>@ana_sousa<button type="button" class="btn btn-primary"
+                                <p>@ana_sousa<button type="button" class="btn btn-primary sum-inner manager-button"
                                         style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Remove</button>
                                 </p>
-                                <p>@ana_sousa<button type="button" class="btn btn-primary"
+                                <p>@ana_sousa<button type="button" class="btn btn-primary sum-inner manager-button"
                                         style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Remove</button>
                                 </p>
-                                <p>@ana_sousa<button type="button" class="btn btn-primary"
+                                <p>@ana_sousa<button type="button" class="btn btn-primary sum-inner manager-button"
                                         style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Remove</button>
                                 </p>
-                                <p>@ana_sousa<button type="button" class="btn btn-primary"
+                                <p>@ana_sousa<button type="button" class="btn btn-primary sum-inner manager-button"
                                         style="background-color:#fcf3ee;color:black;display:inline-block;margin-left:70%;border:none;">Remove</button>
                                 </p>
                             </details>
@@ -72,14 +72,14 @@
 <body>
     <?php
     include_once('./navbar.php');
+    include_once('./footer.php');
     draw_navbar("authenticated_user");
     ?>
     <?php
         draw_role_manager();
     ?>
     <?php
-    include_once('./footer.php');
-    draw_footer();
+        draw_footer();
     ?>
 </body>
 
