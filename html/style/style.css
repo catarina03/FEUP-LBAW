@@ -1190,16 +1190,30 @@ summary.role-sum:hover{
 .create-post-page-post-card{
   background-color: #8ab5b1; 
 }
+.edit-post-page-post-card{
+  background-color: #8ab5b1; 
+}
 
 .create-post-editor-container p{
   font-family: 'Roboto', sans-serif;
   font-size: small;
 }
 
-.create-post-tags-container p{
+.edit-post-tags-container p{
   font-family: 'Roboto', sans-serif;
   font-size: small;
 }
+
+.create-post-editor-container p{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+}
+
+.edit-post-tags-container p{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+}
+
 
 .preview-post{
   background-color: #0c1d1c;
