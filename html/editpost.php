@@ -13,20 +13,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <script src="https://cdn.tiny.cloud/1/08t5y62wss6y2fzascz2trysrq487403jdb54o0kzk3nu9zq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/08t5y62wss6y2fzascz2trysrq487403jdb54o0kzk3nu9zq/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-            selector: '#mytextarea'
+    tinymce.init({
+        selector: '#mytextarea'
 
-        });
+    });
     </script>
-
-    <script src="js/my-profile.js" defer></script>
-    <script src="js/settings.js" defer></script>
-    <script src="js/userprofile.js" defer></script>
-    <script src="js/script.js" defer></script>
 
     <link rel="stylesheet" href="style/style.css">
 </head>
@@ -37,7 +33,7 @@
     function draw_edit_post(){
 ?>
     <div class="container post">
-        <div class="row mt-5 mb-5">
+        <div class="row" style="margin-bottom:7em;margin-top:7em;">
             <div class="card edit-post-page-post-card justify-content-center pb-5" style="border-radius:5px;">
 
                 <div class="container">
@@ -183,10 +179,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
             </div>
         </div>
 
@@ -194,21 +186,15 @@
 
     <?php
     }
-?>
 
-
-
-
-
-
-    <?php
         include_once('./navbar.php');
       
-        draw_navbar("visitor");
-        //draw_my_profile();
-        //draw_user_profile();
+        draw_navbar("authenticated_user");
         draw_edit_post();
-        ?>
+        include_once('./mobilebar.php');
+        draw_mobilebar();
+
+    ?>
 
 
 </body>
