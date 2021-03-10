@@ -831,9 +831,10 @@ summary.role-sum:hover{
 }
 
 #pdash-action{
-  outline-style: dotted;
-  outline-width:initial;
+  text-decoration:underline;
 }
+
+
 /*******************************************/
 /*************** POST PAGE *****************/
 /*******************************************/

@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Category Page</title>
+    <title>Dashboard</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
@@ -34,7 +34,7 @@
     <div class="category row g-0" style="margin-top: 6em; margin-bottom: 7em;">
         <div class="category-icon col-12 col-lg-2 pt-lg-5 pt-3 pb-3 text-center justify-content-center">
             <img src="images/music.png" class="pb-2" style="width: 40%;">
-            <h2 style="font-weight:bold;color:#307371;">Dashboard</h2>
+            <h2 style="font-weight:bold;color:#307371;">Moderator Dashboard</h2>
         </div>
         <div class="category-center col-12 col-lg-7">
 
@@ -63,8 +63,38 @@
                                 <p class="card-text mt-3" id="inline-pdash-p">Author: Jõao Santos</p>
                                 <p class="card-text mt-3" id="inline-pdash-p">Referenced content: Post</p>
                                 <p class="card-text mt-3" id="inline-pdash-p">Motive:  Hate Speech</p>
-                                <p class="card-text" id="inline-pdash-p">Reports:  2</p>
+                                <p class="card-text" id="inline-pdash-p">Reports:  300</p>
                                 <p class="card-text text-center" id="pdash-action">Assign to me</p>
+                                  
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="200" class="card-img-top"
+                            alt="...">
+                        <div class="categoryTag">
+                            <h6>Music</h6>
+                        </div>
+                        
+                        <!--<div class="infoPosts">
+                            <i class="far fa-eye"></i><span>3</span>
+                            <i class="far fa-thumbs-up"></i><span>2</span>
+                        </div>-->
+                        <!--<div class="savePost">
+                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                        </div>-->
+                        <div class="card-body">
+                            <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
+                                Video </h5>
+                            <small class="text-muted"><!--by <a id="authorName" href="userprofile.php">João
+                                    Santos</a>,-->
+                                FEBRUARY 28, 2021</small>
+                                <p class="card-text mt-3" id="inline-pdash-p">Author: Joyce Rodrigues</p>
+                                <p class="card-text mt-3" id="inline-pdash-p">Referenced content: Comment</p>
+                                <p class="card-text mt-3" id="inline-pdash-p">Motive:  Fake news</p>
+                                <p class="card-text" id="inline-pdash-p">Reports:  212</p>
+                                <p class="card-text text-center" id="pdash-action">Actions</p>
                                   
                         </div>
                     </div>
@@ -87,16 +117,12 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
-                                    Sousa</a>,
-                                FEBRUARY 23, 2021</small>
-                            <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
-                                celebration
-                                of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film
-                                includes
-                                scenes
-                                of the empty venue during the pandemic. "I would like to take this <strong>(read
-                                    more)</strong></p>
+                            <small class="text-muted">FEBRUARY 23, 2021</small>
+                                <p class="card-text mt-3" id="inline-pdash-p">Author: Ana Sousa</p>
+                                <p class="card-text mt-3" id="inline-pdash-p">Referenced content: Post</p>
+                                <p class="card-text mt-3" id="inline-pdash-p">Motive:  Fake news</p>
+                                <p class="card-text" id="inline-pdash-p">Reports:  199</p>
+                                <p class="card-text text-center" id="pdash-action">Actions</p>
                         </div>
                     </div>
                 </div>
@@ -118,111 +144,17 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
-                                    Sousa</a>,
-                                FEBRUARY 23, 2021</small>
-                            <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
-                                celebration
-                                of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film
-                                includes
-                                scenes
-                                of the empty venue during the pandemic. "I would like to take this <strong>(read
-                                    more)</strong></p>
+                            <small class="text-muted">FEBRUARY 23, 2021</small>
+                                <p class="card-text mt-3" id="inline-pdash-p">Author: James Dean</p>
+                                <p class="card-text mt-3" id="inline-pdash-p">Referenced content: Comment</p>
+                                <p class="card-text mt-3" id="inline-pdash-p">Motive:  Fake news</p>
+                                <p class="card-text" id="inline-pdash-p">Reports:  13</p>
+                                <p class="card-text text-center" id="pdash-action">Assign to me</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4 mb-4">
-                    <div class="card h-100">
-                        <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"
-                            height="200" class="card-img-top" alt="...">
-                        <div class="categoryTag">
-                            <h6>Music</h6>
-                        </div>
-                        <!--<div class="savePost">
-                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
-                        </div>-->
-                        <!--<div class="infoPosts">
-                            <i class="far fa-eye"></i><span>3</span>
-                            <i class="far fa-thumbs-up"></i><span>2</span>
-                        </div>-->
-                        <div class="card-body">
-                            <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
-                                Video
-                            </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
-                                    Sousa</a>,
-                                FEBRUARY 23, 2021</small>
-                            <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
-                                celebration
-                                of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film
-                                includes
-                                scenes
-                                of the empty venue during the pandemic. "I would like to take this <strong>(read
-                                    more)</strong></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4 mb-4">
-                    <div class="card h-100">
-                        <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"
-                            height="200" class="card-img-top" alt="...">
-                        <div class="categoryTag">
-                            <h6>Music</h6>
-                        </div>
-                        <!--<div class="savePost">
-                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
-                        </div>-->
-                        <!--<div class="infoPosts">
-                            <i class="far fa-eye"></i><span>3</span>
-                            <i class="far fa-thumbs-up"></i><span>2</span>
-                        </div>-->
-                        <div class="card-body">
-                            <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
-                                Video
-                            </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
-                                    Sousa</a>,
-                                FEBRUARY 23, 2021</small>
-                            <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
-                                celebration
-                                of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film
-                                includes
-                                scenes
-                                of the empty venue during the pandemic. "I would like to take this <strong>(read
-                                    more)</strong></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4 mb-4">
-                    <div class="card h-100">
-                        <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="200" class="card-img-top"
-                            alt="...">
-                        <div class="categoryTag">
-                            <h6>Music</h6>
-                        </div>
-                        <!--<div class="infoPosts">
-                            <i class="far fa-eye"></i><span>3</span>
-                            <i class="far fa-thumbs-up"></i><span>2</span>
-                        </div>-->
-                        <!--<div class="savePost">
-                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
-                        </div>-->
-                        <div class="card-body">
-                            <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
-                                Video </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
-                                    Santos</a>,
-                                FEBRUARY 28, 2021</small>
-                            <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
-                                Comes
-                                the
-                                Shock" as part of the National Hockey League's outdoor games in Lake Tahoe. The
-                                accompanying
-                                video
-                                features "Punk Rock Aerobics" cofounder Hilken <strong>(read more)</strong></p>
-                        </div>
-                    </div>
-                </div>
+                
+                
             </div>
         </div>
         <div class="category-filter col-md-3 text-center">
@@ -244,9 +176,18 @@
                         <option value="4">Review</option>
                         <option value="5">Suggestion</option>
                     </select>
-                    <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date">
-                    <a></a>
-                    <input type="date" class="form-control mt-4" id="endDate" aria-label="End Date">
+                    <select class="form-select mt-4" aria-label="Select a type">
+                        <option selected>Select type of content</option>
+                        <option value="1">All</option>
+                        <option value="2">Posts</option>
+                        <option value="3">Comments</option>
+                    </select>
+                    <select class="form-select mt-4" aria-label="Select date order">
+                        <option selected>Select date ordering</option>
+                        <option value="1">Date: Newer</option>
+                        <option value="2">Date: Older</option>
+                        <option value="3">Date: Unordered</option>
+                    </select>
 
                     <div class="form-check mt-4">
                         <input class="form-check-input" type="checkbox" value="" id="checkPeople">
