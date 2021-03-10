@@ -1,236 +1,320 @@
-<?php 
-    function draw_pdashboard(){
-?>
-<h1 class="text-center" style="margin-top:3em;">Dashboard</h1>
-<div class="row g-0 justify-content-center">
-
-
-    <div style="padding-left:0;"
-        class="col-lg-1 col-md-1 ms-1 d-lg-flex d-md-none d-sm-none d-xs-none settings-vertical">
-        <div style="padding-left:0;">
-            <i class="bi bi-pencil-square"></i><a style="text-decoration:none;">
-                <p style="font-weight:bold;color:black;">Posts</p>
-            </a> <br>
-            <i class="bi bi-chat-dots"></i><a href="comment_dashboard.php" style="text-decoration:none;color:black;">
-                <p>Comments</p>
-            </a>
-        </div>
-    </div>
-    <div class="col-12 justify-content-center d-sm-flex d-lg-none d-md-flex settings-horizontal">
-        <div class="row justify-content-center">
-            <div class="col-4 mx-auto">
-                <i class="bi bi-pencil-square"></i><a style="text-decoration:none;">
-                    <p style="font-weight:bold;color:black;">Posts</p>
-                </a>
-            </div>
-            <div class="col-4 mx-auto">
-                <i class="bi bi-chat-dots"></i><a href="comment_dashboard.php"
-                    style="text-decoration:none;color:black;">
-                    <p>Comments</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-    <div class="col-sm-10 col-md-8 col-lg-3 mt-5 ml-5">
-        <h3 class="text-center" style="font-weight:bold">Unassigned</h3>
-        <div class="card" style="background-color:#8ab5b1;border:none;">
-            <div class="card-body">
-                <div class="row justify-content-center mb-4">
-                    <div class="col-sm-12 col-md-auto col-lg-3">
-                        <select class="form-select pdash-form w-100 h-100" aria-label="Default select example">
-                            <option selected>Category</option>
-                            <option value="1">All</option>
-                            <option value="2">News</option>
-                            <option value="3">Article</option>
-                            <option value="3">Review</option>
-                            <option value="3">Suggestion</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-auto col-lg-3">
-                        <select class="form-select pdash-form w-100 h-100" aria-label="Default select example">
-                            <option selected>Type</option>
-                            <option value="1">All</option>
-                            <option value="2">Music</option>
-                            <option value="3">Tv Show</option>
-                            <option value="1">Cinema</option>
-                            <option value="2">Theatre</option>
-                            <option value="3">Literature</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-auto col-lg-3">
-                        <select class="form-select pdash-form w-100 h-100" aria-label="Default select example">
-                            <option selected>Date</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-auto col-lg-3">
-                        <button class="btn btn-primary pdash-button w-100 h-100" type="button">Filter</button>
-                    </div>
-                </div>
-
-
-                <!--Post card -->
-                <div class="card" style="max-width: 540px;background-color:#8ab5b1;border:none;">
-                    <div class="row d-flex col-12 mx-auto">
-                        <div style="padding-right:0;padding-left:0;" class="col-md-4 col-sm-12 pr-0">
-                            <img src="images/abs.jpeg" alt="Post title" width="100%" height="100%">
-                        </div>
-                        <div style="padding-left:0;padding-right:0;" class="col-md-8 col-sm-12 pl-0">
-                            <div class="card-body pdash-post-card">
-                                <p class="card-text">Title: Mick Jagger celebrates 150...</p>
-                                <p class="card-text">Author: Ana Sousa</p>
-                                <p class="card-text">Motive: Hate Speech</p>
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <p class="card-text">Reports: 329</p>
-                                    </li>
-                                    <li class="list-inline-item" style="padding-left:60%;"><img
-                                            src="https://static.thenounproject.com/png/1854509-200.png" width="32"
-                                            height="32"></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--End of Post card -->
-
-            </div>
-
-
-            <br><br><br><br><br><br><br><br><br><br><br>
-
-
-        </div>
-    </div>
-
-    <!-- SECOND DASH COLUMN-->
-    <div class="col-sm-10 col-md-8 col-lg-3 ms-md-5 ps-md-5 mt-5 ml-5">
-        <h3 class="text-center" style="font-weight:bold">Assigned to me</h3>
-        <div class="card" style="background-color:#8ab5b1;border:none;">
-            <div class="card-body">
-                <div class="row justify-content-center mb-4">
-                    <div class="col-sm-12 col-md-auto col-lg-3">
-                        <select class="form-select pdash-form w-100 h-100" aria-label="Default select example">
-                            <option selected>Category</option>
-                            <option value="1">All</option>
-                            <option value="2">News</option>
-                            <option value="3">Article</option>
-                            <option value="3">Review</option>
-                            <option value="3">Suggestion</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-auto col-lg-3">
-                        <select class="form-select pdash-form w-100 h-100" aria-label="Default select example">
-                            <option selected>Type</option>
-                            <option value="1">All</option>
-                            <option value="2">Music</option>
-                            <option value="3">Tv Show</option>
-                            <option value="1">Cinema</option>
-                            <option value="2">Theatre</option>
-                            <option value="3">Literature</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-auto col-lg-3">
-                        <select class="form-select pdash-form w-100 h-100" aria-label="Default select example">
-                            <option selected>Date</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-auto col-lg-3">
-                        <button class="btn btn-primary pdash-button w-100 h-100" type="button">Filter</button>
-                    </div>
-                </div>
-
-
-                <!--Post card -->
-                <div class="card" style="max-width: 540px;background-color:#8ab5b1;border:none;">
-                    <div class="row d-flex col-12 mx-auto">
-                        <div style="padding-right:0;padding-left:0;" class="col-md-4 col-sm-12 pr-0">
-                            <img src="images/abs.jpeg" alt="Post title" width="100%" height="100%">
-                        </div>
-                        <div style="padding-left:0;padding-right:0;" class="col-md-8 col-sm-12 pl-0">
-                            <div class="card-body pdash-post-card">
-                                <p class="card-text">Title: Hillary Clinton and...</p>
-                                <p class="card-text">Author: Alexandra Alter</p>
-                                <p class="card-text">Motive: Fake News</p>
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <p class="card-text">Reports: 5</p>
-                                    </li>
-                                    <li class="list-inline-item" style="padding-left:20%;">
-                                        <select class="form-select pdash-form-card" aria-label="Default select example">
-                                            <option selected>Action</option>
-                                            <option value="1">Dismiss Report</option>
-                                            <option value="2">Delete Post</option>
-                                        </select>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--End of Post card -->
-
-            </div>
-
-
-            <br><br><br><br><br><br><br><br><br><br><br>
-
-
-        </div>
-    </div>
-</div>
-
-
-<!-- End of .container -->
-<?php
-}
-?>
 <!DOCTYPE html>
 <html lang="en-US">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AltArt</title>
+    <title>Category Page</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous">
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
+    </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-    <script src="js/my-profile.js" defer></script>
-    <script src="js/settings.js" defer></script>
-    <script src="js/userprofile.js" defer></script>
     <script src="js/script.js" defer></script>
-
+    <script src="js/advanced_search.js" defer></script>
     <link rel="stylesheet" href="style/style.css">
 </head>
 
-<body>
-    <?php
-    include_once('./navbar.php');
-    include_once('./footer.php');
-    draw_navbar("authenticated_user");
-    draw_pdashboard();
-    include_once('./mobilebar.php');
-    draw_mobilebar();
 
-    include_once('./footer.php');
-    draw_footer();
+
+<body>
+    <?php 
+    function draw_dashboard(){
+?>
+
+    <div class="category row g-0" style="margin-top: 6em; margin-bottom: 7em;">
+        <div class="category-icon col-12 col-lg-2 pt-lg-5 pt-3 pb-3 text-center justify-content-center">
+            <img src="images/music.png" class="pb-2" style="width: 40%;">
+            <h2 style="font-weight:bold;color:#307371;">Dashboard</h2>
+        </div>
+        <div class="category-center col-12 col-lg-7">
+
+            <div class="postsCards row">
+                <div class="col-12 col-md-6 col-xl-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="200" class="card-img-top"
+                            alt="...">
+                        <div class="categoryTag">
+                            <h6>Music</h6>
+                        </div>
+                        
+                        <!--<div class="infoPosts">
+                            <i class="far fa-eye"></i><span>3</span>
+                            <i class="far fa-thumbs-up"></i><span>2</span>
+                        </div>-->
+                        <!--<div class="savePost">
+                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                        </div>-->
+                        <div class="card-body">
+                            <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
+                                Video </h5>
+                            <small class="text-muted"><!--by <a id="authorName" href="userprofile.php">João
+                                    Santos</a>,-->
+                                FEBRUARY 28, 2021</small>
+                                <p class="card-text mt-3" id="inline-pdash-p">Author: Jõao Santos</p>
+                                <p class="card-text mt-3" id="inline-pdash-p">Referenced content: Post</p>
+                                <p class="card-text mt-3" id="inline-pdash-p">Motive:  Hate Speech</p>
+                                <p class="card-text" id="inline-pdash-p">Reports:  2</p>
+                                <p class="card-text text-center" id="pdash-action">Assign to me</p>
+                                  
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"
+                            height="200" class="card-img-top" alt="...">
+                        <div class="categoryTag">
+                            <h6>Music</h6>
+                        </div>
+                        <!--<div class="savePost">
+                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                        </div>-->
+                        <!--<div class="infoPosts">
+                            <i class="far fa-eye"></i><span>3</span>
+                            <i class="far fa-thumbs-up"></i><span>2</span>
+                        </div>-->
+                        <div class="card-body">
+                            <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
+                                Video
+                            </h5>
+                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                                    Sousa</a>,
+                                FEBRUARY 23, 2021</small>
+                            <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
+                                celebration
+                                of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film
+                                includes
+                                scenes
+                                of the empty venue during the pandemic. "I would like to take this <strong>(read
+                                    more)</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"
+                            height="200" class="card-img-top" alt="...">
+                        <div class="categoryTag">
+                            <h6>Music</h6>
+                        </div>
+                        <!--<div class="savePost">
+                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                        </div>-->
+                        <!--<div class="infoPosts">
+                            <i class="far fa-eye"></i><span>3</span>
+                            <i class="far fa-thumbs-up"></i><span>2</span>
+                        </div>-->
+                        <div class="card-body">
+                            <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
+                                Video
+                            </h5>
+                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                                    Sousa</a>,
+                                FEBRUARY 23, 2021</small>
+                            <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
+                                celebration
+                                of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film
+                                includes
+                                scenes
+                                of the empty venue during the pandemic. "I would like to take this <strong>(read
+                                    more)</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"
+                            height="200" class="card-img-top" alt="...">
+                        <div class="categoryTag">
+                            <h6>Music</h6>
+                        </div>
+                        <!--<div class="savePost">
+                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                        </div>-->
+                        <!--<div class="infoPosts">
+                            <i class="far fa-eye"></i><span>3</span>
+                            <i class="far fa-thumbs-up"></i><span>2</span>
+                        </div>-->
+                        <div class="card-body">
+                            <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
+                                Video
+                            </h5>
+                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                                    Sousa</a>,
+                                FEBRUARY 23, 2021</small>
+                            <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
+                                celebration
+                                of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film
+                                includes
+                                scenes
+                                of the empty venue during the pandemic. "I would like to take this <strong>(read
+                                    more)</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"
+                            height="200" class="card-img-top" alt="...">
+                        <div class="categoryTag">
+                            <h6>Music</h6>
+                        </div>
+                        <!--<div class="savePost">
+                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                        </div>-->
+                        <!--<div class="infoPosts">
+                            <i class="far fa-eye"></i><span>3</span>
+                            <i class="far fa-thumbs-up"></i><span>2</span>
+                        </div>-->
+                        <div class="card-body">
+                            <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
+                                Video
+                            </h5>
+                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                                    Sousa</a>,
+                                FEBRUARY 23, 2021</small>
+                            <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
+                                celebration
+                                of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film
+                                includes
+                                scenes
+                                of the empty venue during the pandemic. "I would like to take this <strong>(read
+                                    more)</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://www.w3schools.com/w3css/img_lights.jpg" height="200" class="card-img-top"
+                            alt="...">
+                        <div class="categoryTag">
+                            <h6>Music</h6>
+                        </div>
+                        <!--<div class="infoPosts">
+                            <i class="far fa-eye"></i><span>3</span>
+                            <i class="far fa-thumbs-up"></i><span>2</span>
+                        </div>-->
+                        <!--<div class="savePost">
+                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                        </div>-->
+                        <div class="card-body">
+                            <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
+                                Video </h5>
+                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                                    Santos</a>,
+                                FEBRUARY 28, 2021</small>
+                            <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
+                                Comes
+                                the
+                                Shock" as part of the National Hockey League's outdoor games in Lake Tahoe. The
+                                accompanying
+                                video
+                                features "Punk Rock Aerobics" cofounder Hilken <strong>(read more)</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="category-filter col-md-3 text-center">
+            <div class="container">
+                <h4> Search </h4>
+                <form class="pt-2" action="post_dashboard.php" method="post">
+                    <div class="input-group rounded">
+                        <!--<input type="search" class="form-control" placeholder="Search" aria-label="Search"
+                            aria-describedby="search-addon" />
+                        <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
+                            <i class="fas fa-search"></i>
+                        </span>-->
+                    </div>
+                    <select class="form-select mt-4" aria-label="Select a type">
+                        <option selected>Select a type</option>
+                        <option value="1">All</option>
+                        <option value="2">News</option>
+                        <option value="3">Article</option>
+                        <option value="4">Review</option>
+                        <option value="5">Suggestion</option>
+                    </select>
+                    <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date">
+                    <a></a>
+                    <input type="date" class="form-control mt-4" id="endDate" aria-label="End Date">
+
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="checkbox" value="" id="checkPeople">
+                        <label class="form-check-label" for="checkPeople">
+                            Assigned to me
+                        </label>
+                    </div>
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="checkbox" value="" id="checkTags">
+                        <label class="form-check-label" for="checkTags">
+                            Unassigned
+                        </label>
+                    </div>
+
+                    <input type="submit" class="filterButton w-100 mt-4 p-1" value="Filter">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bottomNavbar d-lg-none">
+        <div id="buttonGroup" class="btn-group selectors" role="group" aria-label="Mobile Navbar">
+            <button id="home" type="button" class="btn button-active">
+                <div class="selector-holder">
+                    <i class="bi bi-house fs-2"></i>
+                    <p>Home</p>
+                </div>
+            </button>
+            <button id="feed" type="button" class="btn button-inactive">
+                <div class="selector-holder">
+                    <i class="bi bi-plus fs-2"></i>
+                    <p>Create</p>
+                </div>
+            </button>
+            <button id="create" type="button" class="btn button-inactive">
+                <div class="selector-holder">
+                    <i class="bi bi-bell fs-2"></i>
+                    <p>Notifications</p>
+                </div>
+            </button>
+            <button id="account" type="button" class="btn button-inactive">
+                <div class="selector-holder">
+                    <i class="bi bi-person-circle fs-2"></i>
+                    <p>@ana_sousa</p>
+                </div>
+            </button>
+        </div>
+    </footer>
+
+    <?php
+}
+?>
+
+    <?php
+        include_once('./navbar.php');
+
+        draw_navbar("authenticated_user");
+        draw_dashboard();
+
+        include_once('./mobilebar.php');
+        draw_mobilebar();
+    
+        include_once('./footer.php');
+        draw_footer();
     ?>
+
+
 </body>
+
 
 </html>
