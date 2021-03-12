@@ -391,12 +391,12 @@ hr.solid {
 /*********************** HOMEPAGE ************************************/
 
 .homepage-view .nav-link {
-  color: rgba(0, 0, 0, 0.534);
+  color: black;
   max-width: fit-content;
 }
 
 .homepage-view .nav-link:hover {
-  color: black;
+  font-weight: bold;
 }
 
 .homepage-view .nav-link img {
