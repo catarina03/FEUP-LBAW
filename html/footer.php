@@ -35,7 +35,7 @@
                 <!-- Grid column -->
                 <div class="col-md-2 mb-3">
                     <h6 class="text font-weight-bold">
-                        <a class="footer-link" href="homepage.php">© AltArt</a>
+                        <p class="footer-link" >© AltArt</p>
                     </h6>
                 </div>
             </div>

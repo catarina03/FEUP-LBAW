@@ -1,13 +1,13 @@
 /****************** NAVBAR ****************/
 
 .navbar-custom .navbar-nav a{
-  color:grey;
+  color:white;
+  font-weight: bold;
   font-size:18px;
   margin:0;
 }
 .navbar-custom .navbar-nav .active a{
-  color:white;
-  font-weight: bold;
+  color: #ffc2ad;
 }
 
 .navbar-custom .navbar-nav a:hover{
@@ -300,7 +300,6 @@ hr.solid {
   color:black;
 }
 
-
 .dots-icon{
   color:#0c1d1c;
   
@@ -319,7 +318,7 @@ hr.solid {
   cursor: pointer;
   font-weight: bold;
   text-decoration: none;
-  color: #307371;
+
 }
 
  #authorName:hover,  #authorName:hover {
@@ -427,7 +426,7 @@ hr.solid {
   cursor: pointer;
   font-weight: bold;
   text-decoration: none;
-  color: #307371;
+  color: black;
 }
 
 #authorName:hover {
@@ -591,8 +590,7 @@ hr.solid {
 /* FOOTER*/
 
 
-
-a.footer-link{
+a.footer-link, p.footer-link{
   color: #fcf3ee;
   text-decoration: none;
   font-size: 18px;
@@ -621,7 +619,6 @@ a.footer-link:hover {
 .about-us-title{
   font-weight: bolder;
   padding-top: 2%;
-  /*padding-bottom: 2%;*/
   font-size: 1.5em;
 } 
 
@@ -661,14 +658,12 @@ details.faq-det[open] summary.text-center\ faq-sum:before {
 .faq-title{
   font-weight: bold;
   padding-top:2%;
-  /*padding-bottom: 2%;*/
   font-size: 1.4em;
 } 
 
 .faq-questions{
   padding-left:30%;
   padding-right:30%;
-  /*padding-top: 1%;*/
 } 
 
 .question{
@@ -686,7 +681,6 @@ details.faq-det[open] summary.text-center\ faq-sum:before {
 }
 .question > details.faq-det{
   width: 50%;
-  /*background-color: #fcf3ee;*//*#307371;*/
   border-radius: 2%;
 }
 
@@ -815,8 +809,6 @@ summary.role-sum:hover{
 }
 
 /*POST DASHBOARD*/
-
-
 
 .pdash-form{
   width: fit-content;
