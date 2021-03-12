@@ -628,101 +628,25 @@ a.footer-link:hover {
 }
 
 /* FAQ */
-details > summary {
-  display: list-item;
-}
-
-summary::-webkit-details-marker {
-  font-size: 30px;
-}
-
-summary.text-center\ faq-sum:before {
-  content: " ►";
-  float: left;
-  margin-right: 10px;
-}
-
-details.faq-det[open] summary.text-center\ faq-sum:before {
-  content: " ▼";
-}
 
 .faq-card {
   margin: auto;
   padding-top: 2%;
+  padding-bottom: 1%;
   font-size: 1.4em;
-}
-
-.faq-rounded {
-  border-radius: 2%;
 }
 
 .faq-title {
-  font-weight: bold;
+  font-weight: bolder;
   padding-top: 2%;
-  font-size: 1.4em;
+  font-size: 1.5em;
 }
 
-.faq-questions {
-  padding-left: 30%;
-  padding-right: 30%;
-}
-
-.question {
-  width: 100%;
-}
-
-.question-col {
-  width: 100%;
-}
-
-.question-button {
-  background-color: rgba(0, 0, 0, 0);
-  border-style: none;
-  width: 100%;
-}
-.question > details.faq-det {
-  width: 50%;
+.faq-card .question-text {
+  background-color: rgba(252, 243, 238, 0.74);
   border-radius: 2%;
 }
 
-details.faq-det > p {
-  background-color: #fcf3ee;
-  padding: 1em;
-  margin: 0;
-  box-shadow: 1px 1px 2px #bbbbbb;
-}
-
-summary.faq-sum {
-  background-color: #fcf3ee;
-  padding: 10px;
-  border-radius: 2%;
-}
-summary.faq-sum:hover {
-  background-color: #ffc2ad;
-}
-
-details.role-det > p {
-  background-color: #fcf3ee;
-  padding: 1em;
-  margin: 0;
-  box-shadow: 1px 1px 2px #bbbbbb;
-}
-
-summary.role-sum {
-  background-color: #fcf3ee;
-  padding: 10px;
-  border-radius: 2%;
-}
-summary.role-sum:hover {
-  background-color: #ffc2ad;
-}
-.question-button:hover {
-  background-color: #ffc2ad;
-}
-
-.question-button:focus {
-  background-color: #ffc2ad;
-}
 
 /*  SUPPORT*/
 

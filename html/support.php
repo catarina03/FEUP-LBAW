@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 rate-col">
-                        <p class="sm-paragraph-2 d-md-none d-lg-none" style="text-center;padding-left:30%;"> Very
+                        <p class="sm-paragraph-2 d-md-none d-lg-none"> Very
                             Negatively
                         </p>
                         <p class="md-paragraph-2"> Very Negatively </p>

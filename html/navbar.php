@@ -13,7 +13,7 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a href="category_page.php" class="nav-link">Music</a></li>
                 <li class="nav-item"><a href="category_page.php" class="nav-link">Cinema</a></li>
-                <li class="nav-item"><a href="category_page.php" class="nav-link">Tv Show</a></li>
+                <li class="nav-item"><a href="category_page.php" class="nav-link">TV Show</a></li>
                 <li class="nav-item"><a href="category_page.php" class="nav-link">Theatre</a></li>
                 <li class="nav-item"><a href="category_page.php" class="nav-link">Literature</a></li>
             </ul>
