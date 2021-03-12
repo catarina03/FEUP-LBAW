@@ -2,7 +2,7 @@
     function draw_about(){
 ?>
 
-<div class="container about-us-card" style="margin-bottom: 5em;margin-top:4em;">
+<div class="container about-us-card" style="margin-bottom: 5em;margin-top:5em;">
     <div class="row text-left about-rounded justify-content-center pb-0" style="background-color:#8ab5b1;border:none;">
         <div class="col-lg-9 col-11">
             <h1 class="text-center about-us-title mt-1">About Us</h1>
@@ -14,13 +14,14 @@
                     </p>
                     <p style="margin:0;">Here are some general rules:</p>
                     <ul style="margin-bottom:0;">
-                        <li>Do not spam</li>
-                        <li>Do not post any fake news</li>
-                        <li>Do post any abusive content</li>
-                        <li>Do not post any offensive content</li>
-                        <p> Any violation to the above rules can be reported,analyzed and deleted by the platform's
-                            moderators.</p>
+                        <li>Do not spam;</li>
+                        <li>Do not post any fake news;</li>
+                        <li>Do not post any abusive content;</li>
+                        <li>Do not post any offensive content;</li>
                     </ul>
+                    <p style="margin-top:0.5em;"> Any violation to the above rules can be reported, analyzed and deleted
+                        by the platform's
+                        moderators.</p>
                 </div>
             </div>
             <h2 class="jusitfy-content-center text-center">Our Team</h2>
