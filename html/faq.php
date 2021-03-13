@@ -1,8 +1,8 @@
 <?php 
     function draw_faq(){
 ?>
-<div class="container faq-card" style="margin-top:5em;margin-bottom:7em;">
-    <div class="col-12 text-left faq-rounded" style="background-color:#8ab5b1;border-radius:5%;">
+<div class="container faq-card col-lg-8 col-sm-12" >
+    <div class="col-12 text-left " style="background-color:#8ab5b1;border-radius:2%;">
         <h1 class="text-center faq-title">Frequently Asked Questions</h1>
         <!--Title-->
         <div class="row justify-content-center pt-4 pb-4">

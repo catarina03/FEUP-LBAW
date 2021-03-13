@@ -630,10 +630,14 @@ a.footer-link:hover {
 /* FAQ */
 
 .faq-card {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top:5em;
+  margin-bottom:7em;
   padding-top: 2%;
   padding-bottom: 1%;
   font-size: 1.4em;
+ 
 }
 
 .faq-title {
@@ -647,7 +651,10 @@ a.footer-link:hover {
   border-radius: 2%;
 }
 
-
+.faq-card .answer {
+  background-color: #fcf3ee;
+  border-radius: 0%;
+}
 /*  SUPPORT*/
 
 .support-title {
