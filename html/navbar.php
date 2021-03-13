@@ -24,7 +24,7 @@
 
                 <li class="nav-item d-lg-block d-none ms-lg-3">
                     <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post" href="createpost.php" role="button" aria-expanded="false">
-                        <i class="bi bi-plus navbar-icon"></i>
+                        <i class="bi bi-plus-square-dotted navbar-icon"></i>
                     </a>
                 </li>
                 <?php

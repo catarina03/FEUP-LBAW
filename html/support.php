@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <label for="support-browser">In what browser are you experiencing this problem?</label>
                             <select class="form-select support-form mt-2" id="support-browser">
-                                <option selected>Choose your browser</option>
+                                <option disabled selected hidden>Choose your browser</option>
                                 <option>Google Chrome</option>
                                 <option>Firefox Web</option>
                                 <option>Safari</option>
@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label for="support-browser">How often do you experience this problem?</label>
                             <select class="form-select support-form mt-2" id="support-freq">
-                                <option selected>Select an option</option>
+                                <option disabled selected hidden>Select an option</option>
                                 <option value="1">Rarely</option>
                                 <option value="2">Often</option>
                                 <option value="3"> Very Often</option>

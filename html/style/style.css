@@ -1114,29 +1114,20 @@ a.footer-link:hover {
   font-size: small;
 }
 
-.preview-post {
-  background-color: #0c1d1c;
-  color: #8ab5b1;
-}
-.preview-post:hover {
-  background-color: #307371;
-  color: #8ab5b1;
-}
-
 .cancel-post {
   color: #0c1d1c;
   text-decoration: underline;
 }
 .cancel-post:hover {
-  color: #307371;
-  text-decoration: underline;
+  font-weight: bold;
 }
 
-.publish-post {
+.publish-post, .preview-post {
   background-color: #0c1d1c;
   color: #8ab5b1;
+  font-weight: bold;
 }
-.publish-post:hover {
+.publish-post:hover, .preview-post:hover {
   background-color: #307371;
-  color: #8ab5b1;
+  color: #0c1d1c;
 }

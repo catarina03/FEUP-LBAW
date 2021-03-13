@@ -141,14 +141,13 @@
                 <div class="mb-3 row justify-content-start ms-4">
                     <label for="tags" class="col-sm-3 col-form-label">Tags I follow</label>
                     <div class="col-sm-9 w-60">
-                        <div class="bg-white rounded border  form-control" id="tags" style="height:4em;">
+                        <div class="bg-white rounded border form-control" id="tags" style="height:4em;">
                             <div class="d-flex justify-content-start tags">
                                 <a class="btn btn-secondary btn-sm d-flex justify-content-center m-2">Music <i
                                         class="bi bi-x ms-1"></i></a>
                                 <a class="btn btn-secondary btn-sm  d-flex justify-content-center m-2">News <i
                                         class="bi bi-x ms-1"></i></a>
                             </div>
-
                         </div>
                     </div>
                 </div>
