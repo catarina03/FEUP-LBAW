@@ -1,4 +1,6 @@
 <?php
+    include_once("./login.php");
+    include_once("./register.php");
     function draw_navbar($user) {
 ?>
 
@@ -23,8 +25,9 @@
               ?>
 
                 <li class="nav-item d-lg-block d-none ms-lg-3">
-                    <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post" href="createpost.php" role="button" aria-expanded="false">
-                        <i class="bi bi-plus-square-dotted navbar-icon"></i>
+                    <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post"
+                        href="createpost.php" role="button" aria-expanded="false">
+                        <i class="bi bi-plus navbar-icon"></i>
                     </a>
                 </li>
                 <?php
@@ -81,9 +84,9 @@
                 <li class="nav-item d-lg-none d-block">
                     <hr class="dropdown-divider" style="color: white;">
                 </li>
-                <li class="nav-item me-3"><a href="#" style="text-decoration:none;"><i class="fa fa-user pe-2"
-                            aria-hidden="true"></i>Sign Up</a></li>
-                <li class="nav-item me-3"><a href="#" style="text-decoration:none;"><i class="fa fa-sign-in pe-2"
+                <li class="nav-item me-3" data-bs-toggle="modal" data-bs-target="#register"><a style="text-decoration:none;"><i class="fa fa-user pe-2"
+                            aria-hidden="true"></i>Sign Up</li>
+                <li class="nav-item me-3" data-bs-toggle="modal" data-bs-target="#login"><a style="text-decoration:none;"><i class="fa fa-sign-in pe-2"
                             aria-hidden="true"></i>Login</a></li>
                 <?php
               }

@@ -189,7 +189,7 @@
                     </div>
                 </div>
                 <div class="col-12 row">
-                    <div class="col-lg-5 col-12 justify-content-lg-start justify-content-center d-flex">
+                    <div class="col-lg-5 col-12 w-100justify-content-lg-start justify-content-center d-flex">
                         <button type="button"
                             class="btn btn-secondary btn-sm edit-account col-lg-9 col-sm-6 col-md-9 col-xl-8 col-xxl-8 pe-5 ps-5"
                             id="delete-account" data-bs-toggle="modal" data-bs-target="#confirm"
@@ -253,10 +253,9 @@
 
     <?php
         include_once('./navbar.php');
-        include_once('./login.php');
         include_once('./confirm.php');
     
-        draw_navbar("authenticated_user");
+        draw_navbar("visitor");
 
         draw_settings();
 

@@ -1,8 +1,8 @@
 <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-dialog modal-dialog-centered justify-content-center d-flex" style="width=fit-content;">
         <div class="modal-content login">
-            <div class="row justify-content-end  me-1 mt-1 g-0">
+            <div class="row justify-content-end me-1 mt-1 g-0">
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>

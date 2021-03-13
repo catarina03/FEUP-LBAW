@@ -4,8 +4,8 @@
 ?>
 <div class="container-fluid my-profile justify-content-center mx-auto">
     <div class="row justify-content-start profile my-profile g-0">
-        <div class="col-3 d-none d-lg-flex d-flex-column justify-content-center "
-            style=" padding-left:3%; padding-top:15em; ">
+        <div class="col-2 d-none d-xl-flex d-flex-column justify-content-center "
+            style=" padding-left:1%; padding-top:10em; ">
             <nav class="nav flex-lg-column ">
                 <a class="my-profile-settings justify-content-center d-flex nav-link active"><i
                         class="bi bi-person-circle me-2"></i>Profile</a>
@@ -14,7 +14,7 @@
                     Settings</a>
             </nav>
         </div>
-        <div class="col-xl-7 col-12 my-profile-div">
+        <div class="col-xl-8 col-12 my-profile-div">
             <div class="row justify-content-center">
                 <div class="col-12 d-block">
                     <div class="row justify-content-center d-flex my-3 position-relative ">
@@ -46,7 +46,8 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-2 col-10 d-flex justify-content-center text-center">
                                     <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
-                                    <a href="./settings.php" class="position-absolute d-inline corner-icons d-lg-none" style="transform:translate(-4em, -1em);"><i class="bi bi-gear-fill pe-2" style="font-size:2em;"></i></a>
+                                    <a href="./settings.php" class="position-absolute d-inline corner-icons d-xl-none" data-toggle="tooltip" data-placement="bottom"
+                                title="Settings" style="transform:translate(-4em, -1em);"><i class="bi bi-gear-fill pe-2" style="font-size:2.2em;"></i></a>
                                 </div>
                             </div>
                             <div class="row justify-content-center">
