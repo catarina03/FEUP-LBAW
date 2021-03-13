@@ -21,10 +21,12 @@
                 <?php
                 if($user == "authenticated_user" || ($user == "moderator")) {
               ?>
-                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="createpost.php" role="button"
-                        aria-expanded="false">
+
+                <li class="nav-item d-lg-block d-none ms-lg-3">
+                    <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post" href="createpost.php" role="button" aria-expanded="false">
                         <i class="bi bi-plus navbar-icon"></i>
-                    </a></li>
+                    </a>
+                </li>
                 <?php
                 if($user == "moderator"){
                 ?>
@@ -61,9 +63,12 @@
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="myprofile.php"><i class="bi bi-person me-2"></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="myprofile.php#"><i class="bi bi-bookmark me-2"></i> Saved Posts</a></li>
-                        <li><a class="dropdown-item" href="settings.php"><i class="bi bi-gear me-2"></i> Settings</a></li>
+                        <li><a class="dropdown-item" href="myprofile.php"><i class="bi bi-person me-2"></i> Profile</a>
+                        </li>
+                        <li><a class="dropdown-item" href="myprofile.php#"><i class="bi bi-bookmark me-2"></i> Saved
+                                Posts</a></li>
+                        <li><a class="dropdown-item" href="settings.php"><i class="bi bi-gear me-2"></i> Settings</a>
+                        </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -76,8 +81,10 @@
                 <li class="nav-item d-lg-none d-block">
                     <hr class="dropdown-divider" style="color: white;">
                 </li>
-                <li class="nav-item me-3"><a href="#" style="text-decoration:none;"><i class="fa fa-user pe-2" aria-hidden="true"></i>Sign Up</a></li>
-                <li class="nav-item me-3"><a href="#" style="text-decoration:none;"><i class="fa fa-sign-in pe-2" aria-hidden="true"></i>Login</a></li>
+                <li class="nav-item me-3"><a href="#" style="text-decoration:none;"><i class="fa fa-user pe-2"
+                            aria-hidden="true"></i>Sign Up</a></li>
+                <li class="nav-item me-3"><a href="#" style="text-decoration:none;"><i class="fa fa-sign-in pe-2"
+                            aria-hidden="true"></i>Login</a></li>
                 <?php
               }
               ?>

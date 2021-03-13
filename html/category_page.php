@@ -50,7 +50,7 @@
                             <i class="far fa-eye"></i><span>3</span>
                             <i class="far fa-thumbs-up"></i><span>2</span>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="card-body">
@@ -76,7 +76,7 @@
                         <div class="categoryTag">
                             <h6>Music</h6>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="infoPosts">
@@ -107,7 +107,7 @@
                         <div class="categoryTag">
                             <h6>Music</h6>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="infoPosts">
@@ -138,7 +138,7 @@
                         <div class="categoryTag">
                             <h6>Music</h6>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="infoPosts">
@@ -169,7 +169,7 @@
                         <div class="categoryTag">
                             <h6>Music</h6>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="infoPosts">
@@ -204,7 +204,7 @@
                             <i class="far fa-eye"></i><span>3</span>
                             <i class="far fa-thumbs-up"></i><span>2</span>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="card-body">

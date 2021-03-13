@@ -117,7 +117,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -152,7 +153,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -187,7 +189,8 @@
                             <div class="categoryTag">
                                 <h6>Literature</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -221,7 +224,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -256,7 +260,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -291,7 +296,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
