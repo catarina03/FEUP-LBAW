@@ -55,7 +55,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
                                 Video </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                            <small>by <a id="authorName" href="userprofile.php">João
                                     Santos</a>,
                                 FEBRUARY 28, 2021</small>
                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
@@ -86,7 +86,7 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                            <small>by <a id="authorName" href="userprofile.php">Ana
                                     Sousa</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -117,7 +117,7 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                            <small>by <a id="authorName" href="userprofile.php">Ana
                                     Sousa</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -148,7 +148,7 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                            <small>by <a id="authorName" href="userprofile.php">Ana
                                     Sousa</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -179,7 +179,7 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                            <small>by <a id="authorName" href="userprofile.php">Ana
                                     Sousa</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -209,7 +209,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
                                 Video </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                            <small>by <a id="authorName" href="userprofile.php">João
                                     Santos</a>,
                                 FEBRUARY 28, 2021</small>
                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
