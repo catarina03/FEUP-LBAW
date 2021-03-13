@@ -2,7 +2,7 @@
     function draw_about(){
 ?>
 
-<div class="container about-us-card" style="margin-bottom: 5em;margin-top:5em;">
+<div class="container about-us-card" style="margin-bottom: 5em;margin-top:4em;">
     <div class="row text-left about-rounded justify-content-center pb-0" style="background-color:#8ab5b1;border:none;">
         <div class="col-lg-9 col-11">
             <h1 class="text-center about-us-title mt-1">About Us</h1>

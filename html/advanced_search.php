@@ -31,7 +31,7 @@
     function draw_advanced_search(){
 ?>
 
-    <div class="advanced_search row g-0" style="margin-top: 5em; margin-bottom: 7em;">
+    <div class="advanced_search row g-0" style="margin-top: 4em; margin-bottom: 7em;">
         <div class="advancedSearch-icon col-12 col-lg-3 pt-4 ps-5 pe-5 text-center flex-column">
             <i class="bi bi-search d-lg-block d-none" style="font-size:8em;color:#0c1d1c;"></i>
             <h2 style="font-weight:bold;color:#307371;">Advanced Search</h2>

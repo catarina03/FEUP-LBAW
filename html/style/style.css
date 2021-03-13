@@ -632,12 +632,11 @@ a.footer-link:hover {
 .faq-card {
   margin-left: auto;
   margin-right: auto;
-  margin-top:5em;
-  margin-bottom:7em;
+  margin-top: 5em;
+  margin-bottom: 7em;
   padding-top: 2%;
   padding-bottom: 1%;
   font-size: 1.4em;
- 
 }
 
 .faq-title {

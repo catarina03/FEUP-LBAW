@@ -2,8 +2,8 @@
     function draw_support(){
 ?>
 <!--destaque no titulo,reformatar page e diminuir colunas-->
-<div class="container support-card" style="margin-bottom: 5em; margin-top: 5em;">
-    <section class="text-left" style="background-color:#8ab5b1;">
+<div class="container support-card" style="margin-bottom: 5em; margin-top: 4em;">
+    <section class="text-left" style="background-color:#8ab5b1;border-radius:2%;">
         <!--Title-->
         <h1 class="text-center support-title">Support</h1>
         <div class="row faq_questions justify-content-center">
@@ -14,8 +14,8 @@
                         <!--Column with the button needed to make the specified effect in the InVision project-->
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Please, tell us more about your problem:</label>
-                            <textarea class="form-control mt-2" id="support-text" rows="3" placeholder="Briefly describe your problem here"
-                                style="resize:none;"></textarea>
+                            <textarea class="form-control mt-2" id="support-text" rows="3"
+                                placeholder="Briefly describe your problem here" style="resize:none;"></textarea>
                         </div>
                     </div>
                 </div>
