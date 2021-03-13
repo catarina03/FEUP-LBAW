@@ -10,7 +10,7 @@
             <div class="col-lg-9 col-11 mb-4">
                 <!--Question row-->
                 <div class="row pb-4">
-                    <div class="col-lg-6 question-col">
+                    <div class="w-100 question-col">
                         <!--Column with the button needed to make the specified effect in the InVision project-->
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Please, tell us more about your problem:</label>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="row pb-4">
-                    <div class="col-lg-6 question-col">
+                    <div class="question-col">
                         <div class="form-group">
                             <label for="support-browser">In what browser are you experiencing this problem?</label>
                             <select class="form-select support-form mt-2" id="support-browser">
@@ -35,7 +35,7 @@
                 </div>
                 <!-- End of question row-->
                 <div class="row pb-4">
-                    <div class="col-lg-6 question-col">
+                    <div class="question-col">
                         <div class="form-group">
                             <label for="support-browser">How often do you experience this problem?</label>
                             <select class="form-select support-form mt-2" id="support-freq">

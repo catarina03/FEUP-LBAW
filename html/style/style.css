@@ -715,6 +715,11 @@ a.footer-link:hover {
   background-color: #307371;
   width: fit-content;
   padding: 1em 2em 1em 2em;
+  font-weight: bold;
+}
+
+.support-button:hover {
+  color: #ffc2ad;
 }
 
 /* ROLE MANAGER */
