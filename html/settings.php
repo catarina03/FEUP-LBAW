@@ -255,7 +255,7 @@
         include_once('./navbar.php');
         include_once('./confirm.php');
     
-        draw_navbar("visitor");
+        draw_navbar("authenticated_user");
 
         draw_settings();
 

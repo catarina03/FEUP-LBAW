@@ -21,26 +21,35 @@
             </ul>
             <ul class="navbar-nav d-flex">
                 <?php
-                if($user == "authenticated_user" || ($user == "moderator")) {
+                if($user != "visitor") {
               ?>
 
                 <li class="nav-item d-lg-block d-none ms-lg-3">
                     <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post"
                         href="createpost.php" role="button" aria-expanded="false">
-                        <i class="bi bi-plus navbar-icon"></i>
+                        <i class="bi bi-plus-square-dotted navbar-icon"></i>
                     </a>
                 </li>
                 <?php
-                if($user == "moderator"){
+                if($user == "moderator" || ($user == "system_manager")){
                 ?>
                 <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="" role="button"
-                        aria-expanded="false">
+                        data-togle="tooltip" data-placement="bottom" title="Manage Reports" aria-expanded="false">
                         <i class="bi bi-list-task navbar-icon"></i>
-                    </a></li>
+                    </a>
+                </li>
+                <?php } 
+                if($user == "system_manager") { ?>
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./role_manager.php" role="button"
+                        data-togle="tooltip" data-placement="bottom" title="Manage Moderators" aria-expanded="false">
+                        <i class="bi bi-people-fill navbar-icon"></i>
+                    </a>
+                </li>
+
                 <?php } ?>
                 <li class="nav-item  d-lg-block d-none dropdown ms-lg-3">
                     <a class="nav-link" href="" id="notificationsDropdown" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                        data-toggle="tooltip" data-placement="bottom" title="Notifications" aria-expanded="false">
                         <i class="bi bi-bell navbar-icon"></i>
                     </a>
 
@@ -79,15 +88,15 @@
                         </li>
                     </ul>
                 </li>
-                <?php }
-                elseif ($user == "visitor") { ?>
+                <?php } elseif ($user=="visitor" ) { ?>
                 <li class="nav-item d-lg-none d-block">
                     <hr class="dropdown-divider" style="color: white;">
                 </li>
-                <li class="nav-item me-3" data-bs-toggle="modal" data-bs-target="#register"><a style="text-decoration:none;"><i class="fa fa-user pe-2"
-                            aria-hidden="true"></i>Sign Up</li>
-                <li class="nav-item me-3" data-bs-toggle="modal" data-bs-target="#login"><a style="text-decoration:none;"><i class="fa fa-sign-in pe-2"
-                            aria-hidden="true"></i>Login</a></li>
+                <li class="nav-item me-3" data-bs-toggle="modal" data-bs-target="#register"><a
+                        style="text-decoration:none;"><i class="fa fa-user pe-2" aria-hidden="true"></i>Sign Up</li>
+                <li class="nav-item me-3" data-bs-toggle="modal" data-bs-target="#login"><a
+                        style="text-decoration:none;"><i class="fa fa-sign-in pe-2" aria-hidden="true"></i>Login</a>
+                </li>
                 <?php
               }
               ?>

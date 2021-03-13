@@ -301,7 +301,7 @@
 }
     include_once('./navbar.php');
     
-    draw_navbar("authenticated_user");
+    draw_navbar("system_manager");
 
     draw_homepage();
 
