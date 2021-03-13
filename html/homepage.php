@@ -33,7 +33,7 @@
 ?>
 
     <div class="homepage row g-0" style="margin-top: 5em; margin-bottom:7em;">
-        <div class="homepage-view col-md-2 pt-5" style="padding-left: 5em;">
+        <div class="homepage-view col-lg-2 col-12 pt-5" style="padding-left: 5em;">
             <nav class="nav flex-lg-column">
                 <a class="nav-link active fs-5" href="#"><img src="images/bar-chart.svg" height="25">Top</a>
                 <a class="nav-link fs-5" href="#"><img src="images/flame.svg" height="25">Hot</a>

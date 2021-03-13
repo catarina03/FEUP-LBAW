@@ -37,7 +37,7 @@
                 height="200" alt="avatar">
         </div>
     </div>
-    <div class="row justify-content-center d-flex mt-5 mb-5 userprofile mx-2">
+    <div class="row justify-content-center d-flex mb-5 userprofile mx-2">
         <div class="card card-profile col-lg-7 col-xl-9 col-sm-9" style="border-radius:2%;">
             <div class="row justify-content-center mt-1">
                 <div class="col-lg-2 col-sm-3 d-flex justify-content-center">

@@ -3,14 +3,14 @@
 
 ?>
 <div class="container-fluid my-profile justify-content-center mx-auto">
-    <div class="row justify-content-start settings profile g-0">
+    <div class="row justify-content-start profile my-profile g-0">
         <div class="col-3 d-sm-none d-lg-flex d-flex-column justify-content-center "
             style=" padding-left:3%; padding-top:15em; ">
-            <nav class="nav flex-lg-column my-profile-settings-div ">
-                <a class="my-profile-settings justify-content-center nav-link active"><i
-                        class="bi bi-person-circle"></i> Profile</a>
-                <a href="./settings.php" class="my-profile-settings justify-content-center nav-link"><i
-                        class="bi bi-gear"></i>
+            <nav class="nav flex-lg-column ">
+                <a class="my-profile-settings justify-content-center d-flex nav-link active"><i
+                        class="bi bi-person-circle me-2"></i>Profile</a>
+                <a href="./settings.php" class="my-profile-settings justify-content-center d-flex nav-link ms-3"><i
+                        class="bi bi-gear me-2"></i>
                     Settings</a>
             </nav>
         </div>
@@ -18,14 +18,15 @@
             <div class="row justify-content-center">
                 <div class="col-12 d-block">
                     <div class="row justify-content-center my-3 position-relative ">
-                        <div class="col-lg-3 col-md-3 col-sm-4 mb-4 d-flex justify-content-center ">
+                        <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center ">
                             <img class="rounded-circle profile-avatar"
                                 src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
                                 width="200" height="200" alt="avatar">
-                            <form action="#" method="post">
+                            <form action="#" method="post" data-toggle="tooltip" data-placement="bottom"
+                                title="Update Profile Photo">
                                 <div class="form-group">
                                     <label for="avatar" class="position-absolute d-inline corner-icons"
-                                        style="transform:translate(-3em, 15em);"><svg xmlns="http://www.w3.org/2000/svg"
+                                        style="transform:translate(-3em, 14em);"><svg xmlns="http://www.w3.org/2000/svg"
                                             width="40" height="40" fill="currentColor" class="bi bi-camera-fill"
                                             viewBox="0 0 16 16">
                                             <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
@@ -41,9 +42,8 @@
 
                     </div>
                     <div class="row mt-1">
-                        <div class="card card-profile  col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5"
-                            style="border-radius:2%;">
-                            <div class="row justify-content-center mt-1">
+                        <div class="card card-profile col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5" style="border-radius:2%;">
+                            <div class="row justify-content-center">
                                 <div class="col-lg-2 col-md-5 col-sm-4 d-flex justify-content-center">
                                     <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
                                 </div>
@@ -74,7 +74,8 @@
                                 </div>
                                 <div class="row justify-content-center">
                                     <div class="card col-lg-6 col-sm-12 d-flex justify-content-center bio">
-                                        <div class="row position-relative">
+                                        <div class="row position-relative" data-toggle="tooltip" data-placement="bottom"
+                                            title="Edit Bio">
                                             <a
                                                 class="position-absolute top-0 end-0 translate-middle-y d-inline corner-icons pencil-icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -262,8 +263,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Hillary Clinton and Louise Penny to Write Political
                                                 Thriller</h5>
-                                            <small>by <a id="authorName"
-                                                    href="userprofile.php">Alexandra
+                                            <small>by <a id="authorName" href="userprofile.php">Alexandra
                                                     Alter</a>,
                                                 FEBRUARY 23, 2021</small>
                                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal

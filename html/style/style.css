@@ -47,11 +47,11 @@
 }
 
 .profile .nav-link {
-  color: rgba(0, 0, 0, 0.534);
+  color: black;
 }
 
 .profile .nav-link:hover {
-  color: black;
+  font-weight: bold;
 }
 
 .profile .nav-link img {
@@ -62,7 +62,6 @@
 
 .profile .nav-link.active {
   font-weight: bold;
-  color: black;
 }
 
 /* LOG IN*/
@@ -149,11 +148,13 @@
   color: white;
   border-color: #fcf3ee;
 }
+
 .my-profile-features.save-button {
   color: white;
   background-color: #0c1d1c;
   width: 25%;
 }
+
 .my-profile-features.save-button:hover {
   text-decoration: none;
   font-weight: bold;
@@ -342,8 +343,9 @@ hr.solid {
 }
 
 .my-profile .postsCards .card .infoPosts {
-  top: 12em;
+  top: 10em;
   right: 0.5em;
+  position: absolute;
 }
 
 .postsCards .card .savePost:hover {
@@ -363,9 +365,7 @@ hr.solid {
   padding: 0.2em;
   color: #000;
 }
-.my-profile .infoPosts {
-  top: 30em;
-}
+
 .postsCards .card .categoryTag {
   background-color: rgba(138, 181, 177, 0.555);
   max-width: fit-content;
@@ -512,7 +512,7 @@ hr.solid {
   color: #307371;
 }
 
-.custom-filterBox .form-check-input{
+.custom-filterBox .form-check-input {
   background-color: #0c1d1c;
   border: 1px solid #307371;
 }
@@ -546,9 +546,6 @@ hr.solid {
   height: 100%;
   width: 100%;
 }
-
-
-
 
 /* FOOTER*/
 
@@ -1122,12 +1119,14 @@ a.footer-link:hover {
   font-weight: bold;
 }
 
-.publish-post, .preview-post {
+.publish-post,
+.preview-post {
   background-color: #0c1d1c;
   color: #8ab5b1;
   font-weight: bold;
 }
-.publish-post:hover, .preview-post:hover {
+.publish-post:hover,
+.preview-post:hover {
   background-color: #307371;
   color: #0c1d1c;
 }
