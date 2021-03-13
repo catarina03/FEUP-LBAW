@@ -4,7 +4,7 @@
 ?>
 <div class="container-fluid my-profile justify-content-center mx-auto">
     <div class="row justify-content-start profile my-profile g-0">
-        <div class="col-3 d-sm-none d-lg-flex d-flex-column justify-content-center "
+        <div class="col-3 d-none d-lg-flex d-flex-column justify-content-center "
             style=" padding-left:3%; padding-top:15em; ">
             <nav class="nav flex-lg-column ">
                 <a class="my-profile-settings justify-content-center d-flex nav-link active"><i
@@ -14,10 +14,10 @@
                     Settings</a>
             </nav>
         </div>
-        <div class="col-xl-7 col-11 my-profile-div">
+        <div class="col-xl-7 col-12 my-profile-div">
             <div class="row justify-content-center">
                 <div class="col-12 d-block">
-                    <div class="row justify-content-center my-3 position-relative ">
+                    <div class="row justify-content-center d-flex my-3 position-relative ">
                         <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center ">
                             <img class="rounded-circle profile-avatar"
                                 src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
@@ -41,15 +41,16 @@
 
 
                     </div>
-                    <div class="row mt-1">
+                    <div class="row mt-1 d-flex justify-content-center">
                         <div class="card card-profile col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5" style="border-radius:2%;">
                             <div class="row justify-content-center">
-                                <div class="col-lg-2 col-md-5 col-sm-4 d-flex justify-content-center">
+                                <div class="col-lg-2 col-10 d-flex justify-content-center text-center">
                                     <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
+                                    <a href="./settings.php" class="position-absolute d-inline corner-icons d-lg-none" style="transform:translate(-4em, -1em);"><i class="bi bi-gear-fill pe-2" style="font-size:2em;"></i></a>
                                 </div>
                             </div>
                             <div class="row justify-content-center">
-                                <div class="col-2 col-md-3 d-flex justify-content-center">
+                                <div class="col-lg-2 col-10 d-flex justify-content-center">
                                     <p class="profile-username">@ana_sousa</p>
                                 </div>
                             </div>
@@ -59,13 +60,13 @@
                                 <div class="row justify-content-center ">
                                     <div class="col-lg-6 col-sm-12">
                                         <div class="row justify-content-around statistics-profile">
-                                            <div class="col-4 d-flex justify-content-center ">
+                                            <div class="col-4 d-flex justify-content-center text-center">
                                                 <p>800 Followers</p>
                                             </div>
-                                            <div class="col-4 d-flex justify-content-center">
+                                            <div class="col-4 d-flex justify-content-center text-center">
                                                 <p>500 Following</p>
                                             </div>
-                                            <div class="col-4 d-flex justify-content-center">
+                                            <div class="col-4 d-flex justify-content-center text-center">
                                                 <p>900 Likes</p>
                                             </div>
                                         </div>
@@ -431,8 +432,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
                     </div>

@@ -19,7 +19,14 @@
         <div class="col-lg-6 col-12 m-lg-0 mx-auto">
 
             <div class="row d-flex mt-2">
-                <h2>Edit Account</h2>
+                <div class="col-lg-12 col-8 pt-2">
+                    <h2>Edit Account</h2>
+                </div>
+                <div class="d-lg-none col-4 pt-2">
+                    <a href="./myprofile.php" class="my-profile-settings go-profile"><i class="bi bi-person-circle fs-3 pe-2"></i>Profile</a>
+                </div>
+
+                
             </div>
             <hr class="solid col-12">
             <form action="#">
@@ -197,7 +204,7 @@
                         <button type="button"
                             class="btn btn-secondary btn-sm edit-account col-lg-9 col-sm-6 col-md-9 col-xl-8 col-xxl-8 pe-5 ps-5"
                             id="save-preferences" data-bs-toggle="modal" data-bs-target="#confirm"
-                            style="width:fit-content;">Change Password
+                            style="width:fit-content;">Save Changes
                         </button>
                     </div>
                 </div>
