@@ -3,7 +3,7 @@
 ?>
 <!--destaque no titulo,reformatar page e diminuir colunas-->
 <div class="container support-card" style="margin-bottom: 5em; margin-top: 5em;">
-    <section class="text-left faq-rounded" style="background-color:#8ab5b1;">
+    <section class="text-left" style="background-color:#8ab5b1;">
         <!--Title-->
         <h1 class="text-center support-title">Support</h1>
         <div class="row faq_questions justify-content-center">
@@ -14,7 +14,8 @@
                         <!--Column with the button needed to make the specified effect in the InVision project-->
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Please, tell us more about your problem:</label>
-                            <textarea class="form-control mt-2" id="support-text" rows="3" style="resize:none;"></textarea>
+                            <textarea class="form-control mt-2" id="support-text" rows="3" placeholder="Briefly describe your problem here"
+                                style="resize:none;"></textarea>
                         </div>
                     </div>
                 </div>
@@ -86,9 +87,17 @@
                         <p class="md-paragraph-2"> Very Negatively </p>
                     </div>
                 </div>
+                <div class="row pb-4">
+                    <div class="w-100 question-col">
+                        <div class="form-group">
+                            <label for="contactSupport">How can we contact you?</label>
+                            <input class="form-control mt-2" type="email" id="email" name="email"
+                                placeholder="example@example.com">
+                        </div>
+                    </div>
+                </div>
                 <div class="row justify-content-center">
-                    <a href="homepage.php" class="btn support-button"
-                        type="button">Submit</a>
+                    <a href="homepage.php" class="btn support-button" type="button">Submit</a>
                 </div>
             </div>
         </div>
