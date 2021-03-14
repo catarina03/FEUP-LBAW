@@ -76,7 +76,7 @@
     draw_role_manager();
     draw_footer();
     include_once('./mobilebar.php');
-    draw_mobilebar();
+    draw_mobilebar('authenticated_user');
 ?>
 </body>
 

@@ -1,7 +1,7 @@
 <?php 
     function draw_faq(){
 ?>
-<div class="container faq-card col-lg-8 col-sm-12" >
+<div class="container faq-card col-lg-8 col-sm-12">
     <div class="col-12 text-left " style="background-color:#8ab5b1;border-radius:2%;">
         <h1 class="text-center faq-title">Frequently Asked Questions</h1>
         <!--Title-->
@@ -13,7 +13,8 @@
                         <h4> Why do I need to create an account? </h4>
                     </div>
                     <div class="answer fs-4">
-                        <p> Even though you can view all posts without an account, you need one in order to be able to comment, like, dislike, follow other users and follow your
+                        <p> Even though you can view all posts without an account, you need one in order to be able to
+                            comment, like, dislike, follow other users and follow your
                             favorite tags. </p>
                     </div>
                 </div>
@@ -73,7 +74,7 @@
     draw_navbar("authenticated_user");
     draw_faq();
     include_once('./mobilebar.php');
-    draw_mobilebar();
+    draw_mobilebar('authenticated_user');
 
     include_once('./footer.php');
     draw_footer();

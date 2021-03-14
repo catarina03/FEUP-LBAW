@@ -172,7 +172,7 @@
         draw_navbar("authenticated_user");
         draw_create_post();
         include_once('./mobilebar.php');
-        draw_mobilebar();
+        draw_mobilebar('authenticated_user');
 
         include_once('./footer.php');
         draw_footer();

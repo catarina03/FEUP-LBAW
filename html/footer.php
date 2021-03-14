@@ -1,7 +1,7 @@
 <?php 
     function draw_footer(){
 ?>
-<footer class="text-center mt-auto" style="background-color:#307371;">
+<footer class="text-center d-none d-lg-block mt-auto" style="background-color:#307371;">
     <!-- Grid container -->
     <div class="container">
         <!-- Section: Links -->

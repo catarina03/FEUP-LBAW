@@ -301,12 +301,12 @@
 }
     include_once('./navbar.php');
     
-    draw_navbar("system_manager");
+    draw_navbar("visitor");
 
     draw_homepage();
 
     include_once('./mobilebar.php');
-    draw_mobilebar();
+    draw_mobilebar("visitor");
 
     include_once('./footer.php');
     draw_footer();
