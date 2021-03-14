@@ -13,7 +13,7 @@
         <?php
         if($user == "moderator" || ($user == "system_manager")){
                 ?>
-        <a id="dashboard" type="button" class="btn button-inactive" href="dashboard.php">
+        <a id="dashboard" type="button" class="btn button-inactive" href="moderator_dashboard.php">
             <div class="selector-holder">
                 <i class="bi bi-list-task fs-1"></i>
             </div>

@@ -411,7 +411,7 @@ hr.solid {
   float: left;
   padding: 8px 16px;
   text-decoration: none;
-  transition: background-color .3s;
+  transition: background-color 0.3s;
   border: 1px solid #0c1d1c;
   margin: 0 4px;
 }
@@ -422,7 +422,9 @@ hr.solid {
   border: 1px solid #0c1d1c;
 }
 
-.pagination a:hover:not(.active) {background-color: #ddd;}
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
 
 /*********************** HOMEPAGE ************************************/
 
@@ -719,8 +721,8 @@ a.footer-link:hover {
 /* ROLE MANAGER */
 
 .remove-role:hover {
-  cursor:pointer;
-  font-weight: bold;;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .manage_moderators-card {
@@ -741,14 +743,13 @@ a.footer-link:hover {
 
 /*POST DASHBOARD*/
 
-#inline-pdash-p{
-  font-weight: 500;
+.moderator-center .assign-button:hover {
+  color: #fcf3ee;
 }
 
-#pdash-action{
-  text-decoration:underline;
+#pdash-action {
+  text-decoration: underline;
 }
-
 
 /*******************************************/
 /*************** POST PAGE *****************/

@@ -47,7 +47,7 @@
                 <?php
                 if($user == "moderator" || ($user == "system_manager")){
                 ?>
-                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="" role="button"
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./moderator_dashboard.php" role="button"
                         data-togle="tooltip" data-placement="bottom" title="Manage Reports" aria-expanded="false">
                         <i class="bi bi-list-task navbar-icon"></i>
                     </a>
