@@ -310,7 +310,7 @@
 }
     include_once('./navbar.php');
     
-    draw_navbar("system_manager", True);
+    draw_navbar("system_manager", 1);
 
     draw_homepage();
 

@@ -2,7 +2,8 @@
     include_once("./register.php");
     include_once("./login.php");
     
-    function draw_navbar($user, $needsFilter=False) {
+    //needsFilter: 0 if not, 1 if filter posts, 2 if filter reports
+    function draw_navbar($user, $needsFilter=0) {
 ?>
 
 <nav class="navbar navbar-custom fixed-top navbar-expand-lg">
@@ -12,7 +13,7 @@
         </button>
         <a href="homepage.php" class="navbar-brand ms-2"><img src="images/logo-sem-fundo.svg" height="30"
                 alt="AltArt Logo"></a>
-        <?php if($needsFilter) {?>
+        <?php if($needsFilter != 0) {?>
         <button class="navbar-toggler m-0 pt-3" data-bs-toggle="collapse" data-bs-target="#navbar-filter">
             <span class="navbar-toggler-icon m-0 p-0"><i class="bi bi-search"></i></span>
         </button>
@@ -47,8 +48,9 @@
                 <?php
                 if($user == "moderator" || ($user == "system_manager")){
                 ?>
-                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./moderator_dashboard.php" role="button"
-                        data-togle="tooltip" data-placement="bottom" title="Manage Reports" aria-expanded="false">
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./moderator_dashboard.php"
+                        role="button" data-togle="tooltip" data-placement="bottom" title="Manage Reports"
+                        aria-expanded="false">
                         <i class="bi bi-list-task navbar-icon"></i>
                     </a>
                 </li>
@@ -105,16 +107,18 @@
                 </li>
                 <?php } elseif ($user=="visitor" ) { ?>
                 <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#register"><a
-                        style="text-decoration:none;cursor:pointer;"><i class="fa fa-user pe-2" aria-hidden="true"></i>Sign Up</li>
+                        style="text-decoration:none;cursor:pointer;"><i class="fa fa-user pe-2"
+                            aria-hidden="true"></i>Sign Up</li>
                 <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#login"><a
-                        style="text-decoration:none;cursor:pointer;"><i class="fa fa-sign-in pe-2" aria-hidden="true"></i>Login</a>
+                        style="text-decoration:none;cursor:pointer;"><i class="fa fa-sign-in pe-2"
+                            aria-hidden="true"></i>Login</a>
                 </li>
                 <?php
               }
               ?>
             </ul>
         </div>
-        <?php if($needsFilter) { ?>
+        <?php if($needsFilter == 1) { ?>
         <div class="navbar-collapse collapse" id="navbar-filter" navbar>
             <ul class="navbar-nav custom-filterBox">
                 <li class="nav-item d-lg-none container text-center w-100">
@@ -160,7 +164,62 @@
                 </li>
             </ul>
         </div>
-        <?php } ?>
+        <?php } elseif ($needsFilter == 2) { ?>
+        <div class="navbar-collapse collapse" id="navbar-filter" navbar>
+            <ul class="navbar-nav custom-filterBox">
+                <li class="nav-item d-lg-none container text-center w-100">
+                    <form class="pt-2 " action="#" method="post">
+                        <div class="input-group rounded">
+                            <input type="search" class="form-control" placeholder="Search" aria-label="Search"
+                                aria-describedby="search-addon" />
+                            <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                        <select class="form-select mt-4" aria-label="Select a type" style="cursor:pointer;">
+                            <option selected>Select a type</option>
+                            <option value="1">News</option>
+                            <option value="2">Article</option>
+                            <option value="3">Review</option>
+                            <option value="4">Suggestion</option>
+                        </select>
+                        <select class="form-select mt-4" aria-label="Select a category" style="cursor:pointer;">
+                            <option selected>Select a category</option>
+                            <option value="1">Music</option>
+                            <option value="2">Cinema</option>
+                            <option value="3">TV Show</option>
+                            <option value="4">Theatre</option>
+                            <option value="5">Literature</option>
+                        </select>
+                        <select class="form-select mt-4" aria-label="Select date order" style="cursor:pointer;">
+                            <option selected>Select date ordering</option>
+                            <option value="1">Date: Newer</option>
+                            <option value="2">Date: Older</option>
+                            <option value="3">Date: Unordered</option>
+                        </select>
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" value="" id="checkAssigned"
+                                style="cursor:pointer;">
+                            <label class="form-check-label" for="checkAssigned">
+                                Assign to me
+                            </label>
+                        </div>
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="checkbox" value="" id="checkNotAssigned"
+                                style="cursor:pointer;">
+                            <label class="form-check-label" for="checkNotAssigned">
+                                Unassigned
+                            </label>
+                        </div>
+
+                        <input type="submit" class="filterButton w-100 mt-4 p-1" value="Filter">
+                    </form>
+
+                </li>
+            </ul>
+        </div>
+        <?php 
+    } ?>
     </div>
 </nav>
 

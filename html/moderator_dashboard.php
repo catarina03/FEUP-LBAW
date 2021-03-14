@@ -196,7 +196,7 @@
                 </div>
             </div>
         </div>
-        <div class="custom-filterBox col-md-3 text-center">
+        <div class="custom-filterBox col-md-3 text-center d-lg-block d-none ">
             <div class="container">
                 <h4> Filter </h4>
                 <form class="pt-2" action="#" method="post">
@@ -256,7 +256,7 @@
         include_once('./navbar.php');
         include_once('./confirm.php');
 
-        draw_navbar("authenticated_user");
+        draw_navbar("authenticated_user", 2);
         draw_dashboard();
 
         include_once('./mobilebar.php');
