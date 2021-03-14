@@ -45,7 +45,7 @@
                                 <option value="2">Often</option>
                                 <option value="3"> Very Often</option>
                             </select>
-                            <label class="mt-5" for="support-browser">How much does this problem impact your
+                            <label class="mt-4" for="support-browser">How much does this problem impact your
                                 experience?</label>
                         </div>
                     </div>
