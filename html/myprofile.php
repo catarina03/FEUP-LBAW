@@ -46,8 +46,10 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-2 col-10 d-flex justify-content-center text-center">
                                     <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
-                                    <a href="./settings.php" class="position-absolute d-inline corner-icons d-xl-none" data-toggle="tooltip" data-placement="bottom"
-                                title="Settings" style="transform:translate(-4em, -1em);"><i class="bi bi-gear-fill pe-2" style="font-size:2.2em;"></i></a>
+                                    <a href="./settings.php" class="position-absolute d-inline corner-icons d-xl-none"
+                                        data-toggle="tooltip" data-placement="bottom" title="Settings"
+                                        style="transform:translate(-4em, -1em);"><i class="bi bi-gear-fill pe-2"
+                                            style="font-size:2.2em;"></i></a>
                                 </div>
                             </div>
                             <div class="row justify-content-center">
@@ -495,7 +497,7 @@
         draw_my_profile();
 
         include_once('./mobilebar.php');
-        draw_mobilebar();
+        draw_mobilebar('authenticated_user');
         
         include_once('./footer.php');
         draw_footer();

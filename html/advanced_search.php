@@ -169,7 +169,7 @@
                         <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
                             <i class="fas fa-search"></i>
                         </span>
-                    </div>  
+                    </div>
                     <select class="form-select mt-4" aria-label="Select a category" style="cursor:pointer;">
                         <option selected>Select a category</option>
                         <option value="1">Music</option>
@@ -221,7 +221,7 @@
         draw_advanced_search();
 
         include_once('./mobilebar.php');
-        draw_mobilebar();
+        draw_mobilebar('authenticated_user');
 
         include_once('./footer.php');
         draw_footer();

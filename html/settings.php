@@ -23,10 +23,11 @@
                     <h2>Edit Account</h2>
                 </div>
                 <div class="d-lg-none col-4 pt-2">
-                    <a href="./myprofile.php" class="my-profile-settings go-profile"><i class="bi bi-person-circle fs-3 pe-2"></i>Profile</a>
+                    <a href="./myprofile.php" class="my-profile-settings go-profile"><i
+                            class="bi bi-person-circle fs-3 pe-2"></i>Profile</a>
                 </div>
 
-                
+
             </div>
             <hr class="solid col-12">
             <form action="#">
@@ -255,12 +256,12 @@
         include_once('./navbar.php');
         include_once('./confirm.php');
     
-        draw_navbar("visitor");
+        draw_navbar("authenticated_user");
 
         draw_settings();
 
         include_once('./mobilebar.php');
-        draw_mobilebar();
+        draw_mobilebar('authenticated_user');
 
         include_once('./footer.php');
         draw_footer();

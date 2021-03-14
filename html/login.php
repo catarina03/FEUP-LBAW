@@ -45,10 +45,11 @@
                         </div>
                         <div class="row g-0 mb-4 mt-1 d-flex justify-content-center">
                             <p class="text-center text-white ">Don't have an account yet? <a href="#"
-                                     style="text-decoration:none; color:white; font-weight:500;" id="register" data-bs-toggle="modal" data-bs-target="#register">
-                                     Register.</a></p>
+                                    style="text-decoration:none; color:white; font-weight:500;" id="register"
+                                    data-bs-toggle="modal" data-bs-target="#register">
+                                    Register.</a></p>
                         </div>
-                 
+
 
                     </form>
                 </div>
