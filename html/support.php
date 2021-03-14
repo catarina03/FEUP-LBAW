@@ -1,7 +1,7 @@
 <?php 
     function draw_support(){
 ?>
-<!--destaque no titulo,reformatar page e diminuir colunas-->
+
 <div class="container support-card" style="margin-bottom: 5em; margin-top: 4em;">
     <section class="text-left" style="background-color:#8ab5b1;border-radius:2%;">
         <!--Title-->

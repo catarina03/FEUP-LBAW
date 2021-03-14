@@ -20,7 +20,7 @@
         </a>
         <?php } 
         if($user == "system_manager") { ?>
-        <a id="roles_manager" type="button" class="btn button-inactive" href="role_manager.php">
+        <a id="roles_manager" type="button" class="btn button-inactive" href="./manage_moderators.php">
             <div class="selector-holder">
                 <i class="bi bi-people-fill fs-1"></i>
             </div>

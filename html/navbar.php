@@ -54,7 +54,7 @@
                 </li>
                 <?php } 
                 if($user == "system_manager") { ?>
-                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./role_manager.php"
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./manage_moderators.php"
                         role="button" data-togle="tooltip" data-placement="bottom" title="Manage Moderators"
                         aria-expanded="false">
                         <i class="bi bi-people-fill navbar-icon"></i>
