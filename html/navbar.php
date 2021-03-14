@@ -28,9 +28,9 @@
                 <li>
                     <hr class="dropdown-divider" style="color:white;">
                 </li>
-                <li class="nav-item d-lg-none"><a href="category_page.php" class="nav-link">About Us</a></li>
-                <li class="nav-item d-lg-none"><a href="category_page.php" class="nav-link">FAQ</a></li>
-                <li class="nav-item d-lg-none"><a href="category_page.php" class="nav-link">Support</a></li>
+                <li class="nav-item d-lg-none"><a href="./about.php" class="nav-link">About Us</a></li>
+                <li class="nav-item d-lg-none"><a href="./faq.php" class="nav-link">FAQ</a></li>
+                <li class="nav-item d-lg-none"><a href="./support.php" class="nav-link">Support</a></li>
             </ul>
             <ul class="navbar-nav d-flex">
                 <?php
