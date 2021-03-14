@@ -162,21 +162,21 @@
             </div>
             <hr class="solid col-12">
             <form action="#">
-                <div class="mb-3 row justify-content-around ms-5">
+                <div class="mb-3 row justify-content-start ms-lg-5 ms-4">
                     <div class="form-check form-switch">
                         <input class="form-check-input switch" type="checkbox" id="flexSwitchCheckDefault" />
                         <label class="form-check-label" for="flexSwitchCheckDefault">Only show posts from people I
                             follow by default</label>
                     </div>
                 </div>
-                <div class="mb-3 row justify-content-around ms-5">
+                <div class="mb-3 row justify-content-start ms-lg-5 ms-4">
                     <div class="form-check form-switch">
                         <input class="form-check-input switch" type="checkbox" id="flexSwitchCheckDefault" />
                         <label class="form-check-label" for="flexSwitchCheckDefault">Only show posts with tags I follow
                             by default</label>
                     </div>
                 </div>
-                <div class="mb-3 row justify-content-start ms-4">
+                <div class="mb-3 row justify-content-start ms-lg-4 ms-0">
                     <label for="tags" class="col-sm-3 col-form-label">Tags I follow</label>
                     <div class="col-sm-8 w-60">
                         <div class="bg-white rounded border form-control" id="tags" style="height:4em;">
@@ -189,27 +189,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 row">
-                    <div class="col-lg-5 col-12 w-100justify-content-lg-start justify-content-center d-flex">
+                <div class="col-12">
+                    <div class="row justify-content-lg-end justify-content-center d-flex me-lg-4">
+                        <a href="myprofile.php" style="text-decoration:none;"
+                            class="edit-account col-sm-2 col-md-3 col-lg-1 col-8 mt-1 mb-1 text-center cancel-button">Cancel</a>
+                        <div class=" col-md-2 col-lg-1 col-8 mt-1 d-md-block d-none">or</div>
                         <button type="button"
                             class="btn btn-secondary btn-sm edit-account col-lg-9 col-sm-6 col-md-9 col-xl-8 col-xxl-8 pe-5 ps-5"
-                            id="delete-account" data-bs-toggle="modal" data-bs-target="#confirm"
-                            style="width:fit-content;">Delete Account
-                        </button>
-                    </div>
-
-                    <div class="col-lg-7 col-12 justify-content-lg-end justify-content-center d-flex">
-                        <a href="myprofile.php" style="text-decoration:none;margin-right:2em;"
-                            class="edit-account col-sm-2 col-md-3 col-lg-1 col-8 mb-1 mt-1 text-center cancel-button">Cancel</a>
-                        <div class=" col-md-2 col-lg-1 col-8 mt-1 mb-1 ms-lg-0 ms-1 d-md-block d-none">or</div>
-                        <button type="button"
-                            class="btn btn-secondary btn-sm edit-account col-lg-9 col-sm-6 col-md-9 col-xl-8 col-xxl-8 pe-5 ps-5"
-                            id="save-preferences" data-bs-toggle="modal" data-bs-target="#confirm"
+                            id="change-social-networks" data-bs-toggle="modal" data-bs-target="#confirm"
                             style="width:fit-content;">Save Changes
                         </button>
                     </div>
                 </div>
             </form>
+            <div class="row d-flex mt-3">
+                <h2>Delete Account</h2>
+            </div>
+            <hr class="solid col-12">
+
+            <div class="row mb-3 justify-content-start ms-lg-5 justify-content-center">
+                <a class="btn btn-danger btn-sm edit-account ps-5 pe-5" style="width:fit-content;" data-bs-toggle="modal" data-bs-target="#confirm">Delete Account</a>
+                <span class="col-lg-8 col-12 delete-account-text align-middle text-center ms-2 p-1">
+                    Once you delete your account, there is no going back. Please be certain.
+                </span>
+            </div>
+
         </div>
 
     </div>
