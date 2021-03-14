@@ -35,7 +35,7 @@
                             <div class="line-separator"></div>
                         </div>
                         <div class="row mt-3 mb-2 justify-content-center ">
-                            <div class="col-8"> <a
+                            <div class="col-10"> <a
                                     class="btn btn-sm btn-google btn-block btn-outline justify-content-center d-flex"
                                     href="#"><img src="https://img.icons8.com/color/16/000000/google-logo.png"
                                         class="me-2 " style="width:10%; height:8%;"> Log in with Google</a> </div>

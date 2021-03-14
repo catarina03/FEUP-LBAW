@@ -313,7 +313,7 @@
 }
     include_once('./navbar.php');
     
-    draw_navbar("authenticated_user", True);
+    draw_navbar("visitor", True);
 
     draw_homepage();
 
