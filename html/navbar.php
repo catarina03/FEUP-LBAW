@@ -104,9 +104,9 @@
                 </li>
                 <?php } elseif ($user=="visitor" ) { ?>
                 <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#register"><a
-                        style="text-decoration:none;"><i class="fa fa-user pe-2" aria-hidden="true"></i>Sign Up</li>
+                        style="text-decoration:none;cursor:pointer;"><i class="fa fa-user pe-2" aria-hidden="true"></i>Sign Up</li>
                 <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#login"><a
-                        style="text-decoration:none;"><i class="fa fa-sign-in pe-2" aria-hidden="true"></i>Login</a>
+                        style="text-decoration:none;cursor:pointer;"><i class="fa fa-sign-in pe-2" aria-hidden="true"></i>Login</a>
                 </li>
                 <?php
               }

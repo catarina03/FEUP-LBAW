@@ -80,7 +80,7 @@
 <body class="d-flex flex-column min-vh-100">
     <?php
     include_once('./navbar.php');
-    draw_navbar("visitor");
+    draw_navbar("authenticated_user");
     draw_faq();
     include_once('./mobilebar.php');
     draw_mobilebar('authenticated_user');
