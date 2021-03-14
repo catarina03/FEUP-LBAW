@@ -34,7 +34,7 @@
             <i class="bi bi-search d-lg-block d-none" style="font-size:8em;color:#0c1d1c;"></i>
             <h2 style="font-weight:bold;color:#307371;">Advanced Search</h2>
         </div>
-        <div class="advanced_search-center col-12 col-lg-7 order-2 order-lg-1">
+        <div class="advanced_search-center  col-12 col-lg-7 order-2 order-lg-1">
             <p class="pt-4 ps-4 fs-4">4 results found!</p>
             <div class="postsCards row mt-3">
                 <div class="col-12 col-md-6 col-xl-4 mb-4">
@@ -164,9 +164,6 @@
                     <a href="#" class="active">1</a>
                     <a href="#">2</a>
                     <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#">6</a>
                     <a href="#">&raquo;</a>
                 </div>
             </div>
