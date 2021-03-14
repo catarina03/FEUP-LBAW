@@ -395,6 +395,35 @@ hr.solid {
   color: #fcf3ee;
 }
 
+/*********************** NAVIGATION ************************************/
+
+.center {
+  text-align: center;
+}
+
+.pagination {
+  display: inline-block;
+  margin-top: 1em;
+}
+
+.pagination a {
+  color: #0c1d1c;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #0c1d1c;
+  margin: 0 4px;
+}
+
+.pagination a.active {
+  background-color: #0c1d1c;
+  color: white;
+  border: 1px solid #0c1d1c;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
 /*********************** HOMEPAGE ************************************/
 
 .homepage-view .nav-link {

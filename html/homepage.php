@@ -251,6 +251,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-center">
+                    <div class="pagination">
+                        <a href="#">&laquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#">6</a>
+                        <a href="#">&raquo;</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="custom-filterBox d-lg-block d-none col-md-3 text-center">
@@ -301,12 +313,12 @@
 }
     include_once('./navbar.php');
     
-    draw_navbar("visitor");
+    draw_navbar("authenticated_user", True);
 
     draw_homepage();
 
     include_once('./mobilebar.php');
-    draw_mobilebar("visitor");
+    draw_mobilebar("authenticated_user");
 
     include_once('./footer.php');
     draw_footer();

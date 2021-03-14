@@ -92,7 +92,7 @@
                         <div class="form-group">
                             <label for="contactSupport">How can we contact you?</label>
                             <input class="form-control mt-2" type="email" id="email" name="email"
-                                placeholder="example@example.com">
+                                placeholder="example@example.com" style="background-color:#fcf3ee;">
                         </div>
                     </div>
                 </div>
