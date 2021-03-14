@@ -301,12 +301,12 @@
 }
     include_once('./navbar.php');
     
-    draw_navbar("visitor");
+    draw_navbar("authenticated_user", True);
 
     draw_homepage();
 
     include_once('./mobilebar.php');
-    draw_mobilebar("visitor");
+    draw_mobilebar("authenticated_user");
 
     include_once('./footer.php');
     draw_footer();
