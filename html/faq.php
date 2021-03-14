@@ -1,14 +1,14 @@
 <?php 
     function draw_faq(){
 ?>
-<div class="container faq-card col-lg-8 col-sm-12" >
-    <div class="col-12 text-left " style="background-color:#8ab5b1;border-radius:2%;">
-        <h1 class="text-center faq-title">Frequently Asked Questions</h1>
+<div class="container faq-card col-lg-8 col-sm-12"style="" >
+    <div class="col-12 text-left " style="background-color:#8ab5b1;border-radius:2%;min-height:800px;">
+        <h1 class="text-center faq-title ">Frequently Asked Questions</h1>
         <!--Title-->
         <div class="row justify-content-center pt-4 pb-4">
             <div class="faq_questions col-lg-9 col-11">
                 <!--Question row-->
-                <div class="question">
+                <div class="question mt-5">
                     <div class="question-text p-1">
                         <h4> Why do I need to create an account? </h4>
                     </div>
@@ -17,7 +17,7 @@
                             favorite tags. </p>
                     </div>
                 </div>
-                <div class="question">
+                <div class="question  mt-5">
                     <div class="question-text p-1">
                         <h4> How can I report a comment or post? </h4>
                     </div>
@@ -26,13 +26,22 @@
                     </div>
                 </div>
 
-                <div class="question">
+                <div class="question  mt-5">
                     <div class="question-text p-1">
                         <h4> What happens to a post that gets reported? </h4>
                     </div>
                     <div class="answer fs-4">
                         <p> The post will be marked, one of the moderators is going to
                             analyze it and decide if it indeed breaks the rules of the site.
+                        </p>
+                    </div>
+                </div>
+                <div class="question  mt-5">
+                    <div class="question-text p-1">
+                        <h4> Where can I change my preferences? </h4>
+                    </div>
+                    <div class="answer fs-4">
+                        <p> On users' profile, in settings 
                         </p>
                     </div>
                 </div>
@@ -70,7 +79,7 @@
 <body class="d-flex flex-column min-vh-100">
     <?php
     include_once('./navbar.php');
-    draw_navbar("authenticated_user");
+    draw_navbar("visitor");
     draw_faq();
     include_once('./mobilebar.php');
     draw_mobilebar();
