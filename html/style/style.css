@@ -741,97 +741,14 @@ a.footer-link:hover {
 
 /*POST DASHBOARD*/
 
-.pdash-form {
-  width: fit-content;
-  background-color: #fcf3ee;
-  color: black;
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-.pdash-form:focus {
-  background-color: #fcf3ee;
-  color: black;
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-.pdash-form:hover {
-  background-color: #fcf3ee;
-  color: black;
-  border: none;
-  outline: none;
-  box-shadow: none;
+#inline-pdash-p{
+  font-weight: 500;
 }
 
-.pdash-post-card {
-  background-color: #fcf3ee;
+#pdash-action{
+  text-decoration:underline;
 }
 
-.pdash-button {
-  color: wheat;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background-color: #307371;
-}
-.pdash-button:hover {
-  color: wheat;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background-color: #307371;
-}
-.pdash-button:focus {
-  color: wheat;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background-color: #307371;
-}
-
-@media (max-width: 768px) {
-  .settings-vertical {
-    display: none;
-  }
-  .settings-horizontal {
-    display: flex;
-  }
-}
-
-.pdash-form-card {
-  color: black;
-}
-
-.pdash-form-card option {
-  background-color: #fcf3ee;
-}
-
-.pdash-col {
-  padding-left: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .md-paragraph {
-    display: none;
-  }
-  .sm-paragraph {
-    display: flex;
-  }
-}
-@media (max-width: 768px) {
-  .md-paragraph-2 {
-    display: none;
-  }
-  .sm-paragraph-2 {
-    display: flex;
-  }
-}
-@media (max-width: 768px) {
-  .rate-col-radio {
-    padding-left: 20%;
-  }
-}
 
 /*******************************************/
 /*************** POST PAGE *****************/
