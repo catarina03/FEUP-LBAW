@@ -28,8 +28,8 @@
             <div class="row py-5 justify-content-center">
                 <div class="col-sm-auto d-flex justify-content-center">
                     <div class="card" style="width: 10rem;background-color:transparent;border:none;">
-                        <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
-                            class="card-img-top" alt="...">
+                        <img src="./images/allan.jpg"
+                            class="card-img-top" alt="Allan Sousa Photo" height="170">
                         <div class="card-body text-center">
                             <p class="card-text mb-0 pb-0">Allan</p>
                             <p class="card-text m-0 p-0"> Sousa</p>
@@ -38,8 +38,8 @@
                 </div>
                 <div class="col-sm-auto d-flex justify-content-center">
                     <div class="card" style="width: 10rem;background-color:transparent;border:none;">
-                        <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
-                            class="card-img-top" alt="...">
+                        <img src="./images/catarina.jpg"
+                            class="card-img-top" alt="Catarina Fernandes Photo" height="170">
                         <div class="card-body text-center">
                             <p class="card-text mb-0 pb-0">Catarina</p>
                             <p class="card-text m-0 p-0">Fernandes</p>
@@ -48,8 +48,8 @@
                 </div>
                 <div class="col-sm-auto d-flex justify-content-center">
                     <div class="card" style="width: 10rem;background-color:transparent;border:none;">
-                        <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
-                            class="card-img-top" alt="...">
+                        <img src="./images/mariana.jpg"
+                            class="card-img-top" alt="Mariana Truta Photo" height="170">
                         <div class="card-body text-center">
                             <p class="card-text mb-0 pb-0">Mariana</p>
                             <p class="card-text m-0 p-0"> Truta</p>
@@ -58,8 +58,8 @@
                 </div>
                 <div class="col-sm-auto d-flex justify-content-center">
                     <div class="card" style="width: 10rem;background-color:transparent;border:none;">
-                        <img src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
-                            class="card-img-top" alt="...">
+                        <img src="./images/rita.jfif"
+                            class="card-img-top" alt="Rita Peixoto Photo" height="170">
                         <div class="card-body text-center">
                             <p class="card-text mb-0 pb-0">Rita</p>
                             <p class="card-text m-0 p-0"> Peixoto</p>
