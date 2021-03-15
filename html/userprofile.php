@@ -23,7 +23,7 @@
     <script src="js/userprofile.js" defer></script>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <?php
         include_once('./navbar.php');
@@ -37,7 +37,7 @@
                 height="200" alt="avatar">
         </div>
     </div>
-    <div class="row justify-content-center d-flex mt-5 mb-5 userprofile mx-2">
+    <div class="row justify-content-center d-flex mb-5 userprofile mx-2">
         <div class="card card-profile col-lg-7 col-xl-9 col-sm-9" style="border-radius:2%;">
             <div class="row justify-content-center mt-1">
                 <div class="col-lg-2 col-sm-3 d-flex justify-content-center">
@@ -117,7 +117,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -129,7 +130,7 @@
                                 <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes
                                     the Shock'
                                     Video </h5>
-                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
+                                <small>by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 28, 2021</small>
                                 <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new
                                     song "Here
@@ -152,7 +153,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -164,7 +166,7 @@
                                 <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall
                                     in New Video
                                 </h5>
-                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
+                                <small>by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 23, 2021</small>
                                 <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts
                                     Hall in
@@ -187,7 +189,8 @@
                             <div class="categoryTag">
                                 <h6>Literature</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -198,7 +201,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Hillary Clinton and Louise Penny to Write Political
                                     Thriller</h5>
-                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
+                                <small>by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 23, 2021</small>
                                 <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts
                                     Hall in
@@ -221,7 +224,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -233,7 +237,7 @@
                                 <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes
                                     the Shock'
                                     Video </h5>
-                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
+                                <small>by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 28, 2021</small>
                                 <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new
                                     song "Here
@@ -256,7 +260,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -268,7 +273,7 @@
                                 <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes
                                     the Shock'
                                     Video </h5>
-                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
+                                <small>by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 28, 2021</small>
                                 <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new
                                     song "Here
@@ -291,7 +296,8 @@
                             <div class="categoryTag">
                                 <h6>Music</h6>
                             </div>
-                            <div class="savePost">
+                            <div class="savePost" data-toggle="tooltip" data-placement="bottom"
+                                title="Save/Unsave Post">
                                 <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                             </div>
 
@@ -304,7 +310,7 @@
                                 <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes
                                     the Shock'
                                     Video </h5>
-                                <small class="text-muted">by <a id="authorNamenothover">Ana Sousa</a>,
+                                <small>by <a id="authorNamenothover">Ana Sousa</a>,
                                     FEBRUARY 28, 2021</small>
                                 <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new
                                     song "Here
@@ -320,7 +326,15 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="d-flex justify-content-center">
+                    <div class="pagination">
+                        <a href="#">&laquo;</a>
+                        <a href="#"  class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">&raquo;</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -328,7 +342,7 @@
     <?php
     
         include_once('./mobilebar.php');
-        draw_mobilebar();
+        draw_mobilebar('authenticated_user');
         include_once('./footer.php');
         draw_footer();
     ?>

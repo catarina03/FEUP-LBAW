@@ -20,24 +20,24 @@
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-    <script src="script.js" defer></script>
+    <script src="js/script.js" defer></script>
 
     <link rel="stylesheet" href="style/style.css">
 </head>
 
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <?php 
     function draw_homepage(){
 ?>
 
-    <div class="homepage row g-0" style="margin-top: 5em;margin-bottom:7em;">
-        <div class="homepage-view col-md-2 ps-5 pt-3">
+    <div class="homepage row g-0" style="margin-top: 5em; margin-bottom:7em;">
+        <div class="homepage-view col-lg-2 col-12 pt-5" style="padding-left: 5em;">
             <nav class="nav flex-lg-column">
-                <a class="nav-link active" href="#"><img src="images/bar-chart.svg" height="25">Top</a>
-                <a class="nav-link" href="#"><img src="images/flame.svg" height="25">Hot</a>
-                <a class="nav-link" href="#"><img src="images/calendar.svg" height="25">New</a>
+                <a class="nav-link active fs-5" href="#"><img src="images/bar-chart.svg" height="25">Top</a>
+                <a class="nav-link fs-5" href="#"><img src="images/flame.svg" height="25">Hot</a>
+                <a class="nav-link fs-5" href="#"><img src="images/calendar.svg" height="25">New</a>
             </nav>
         </div>
         <div class="homepage-center col-12 col-lg-7">
@@ -66,7 +66,7 @@
                                             Comes the
                                             Shock" as part of the National Hockey </p>
                                         <strong> (read more)</strong>
-                                        <p class="card-text mt-3"><small class="text-muted">by <a href="userprofile.php"
+                                        <p class="card-text mt-3"><small>by <a href="userprofile.php"
                                                     id="authorName">João Santos</a>,
                                                 FEBRUARY 28,
                                                 2021</small></p>
@@ -92,7 +92,7 @@
                                             Comes the
                                             Shock" as part of the National Hockey </p>
                                         <strong> (read more)</strong>
-                                        <p class="card-text mt-3"><small class="text-muted">by <a href="userprofile.php"
+                                        <p class="card-text mt-3"><small>by <a href="userprofile.php"
                                                     id="authorName">João Santos</a>,
                                                 FEBRUARY 28,
                                                 2021</small></p>
@@ -119,7 +119,7 @@
                                             Comes the
                                             Shock" as part of the National Hockey </p>
                                         <strong> (read more)</strong>
-                                        <p class="card-text mt-3"><small class="text-muted">by <a href="userprofile.php"
+                                        <p class="card-text mt-3"><small>by <a href="userprofile.php"
                                                     id="authorName">João Santos</a>,
                                                 FEBRUARY 28,
                                                 2021</small></p>
@@ -142,13 +142,13 @@
                             <i class="far fa-eye"></i><span>3</span>
                             <i class="far fa-thumbs-up"></i><span>2</span>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
                                 Video </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                            <small>by <a id="authorName" href="userprofile.php">João
                                     Santos</a>,
                                 FEBRUARY 28, 2021</small>
                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
@@ -168,7 +168,7 @@
                         <div class="categoryTag">
                             <h6>Music</h6>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="infoPosts">
@@ -179,7 +179,7 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                            <small>by <a id="authorName" href="userprofile.php">Ana
                                     Sousa</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -203,12 +203,12 @@
                             <i class="far fa-eye"></i><span>3</span>
                             <i class="far fa-thumbs-up"></i><span>2</span>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Hillary Clinton and Louise Penny to Write Political Thriller</h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Alexandra
+                            <small>by <a id="authorName" href="userprofile.php">Alexandra
                                     Alter</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -232,13 +232,13 @@
                             <i class="far fa-eye"></i><span>3</span>
                             <i class="far fa-thumbs-up"></i><span>2</span>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
                                 Video </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                            <small>by <a id="authorName" href="userprofile.php">João
                                     Santos</a>,
                                 FEBRUARY 28, 2021</small>
                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
@@ -251,9 +251,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-center">
+                    <div class="pagination">
+                        <a href="#">&laquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">&raquo;</a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="homepage-filter col-md-3 text-center">
+        <div class="custom-filterBox d-lg-block d-none col-md-3 text-center">
             <div class="container">
                 <h4> Search </h4>
                 <form class="pt-2" action="advanced_search.php" method="post">
@@ -264,25 +273,28 @@
                             <i class="fas fa-search"></i>
                         </span>
                     </div>
-                    <select class="form-select mt-4" aria-label="Select a type">
+                    <select class="form-select mt-4" aria-label="Select a type" style="cursor:pointer;">
                         <option selected>Select a type</option>
                         <option value="1">News</option>
                         <option value="2">Article</option>
                         <option value="3">Review</option>
                         <option value="4">Suggestion</option>
                     </select>
-                    <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date">
+                    <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date"
+                        style="cursor:pointer;">
                     <a> to </a>
-                    <input type="date" class="form-control mt-2" id="endDate" aria-label="End Date">
+                    <input type="date" class="form-control mt-2" id="endDate" aria-label="End Date"
+                        style="cursor:pointer;">
 
                     <div class="form-check mt-4">
-                        <input class="form-check-input" type="checkbox" value="" id="checkPeople">
+                        <input class="form-check-input" type="checkbox" value="" id="checkPeople"
+                            style="cursor:pointer;">
                         <label class="form-check-label" for="checkPeople">
                             Only people I follow
                         </label>
                     </div>
                     <div class="form-check mt-4">
-                        <input class="form-check-input" type="checkbox" value="" id="checkTags">
+                        <input class="form-check-input" type="checkbox" value="" id="checkTags" style="cursor:pointer;">
                         <label class="form-check-label" for="checkTags">
                             Only tags I follow
                         </label>
@@ -298,12 +310,12 @@
 }
     include_once('./navbar.php');
     
-    draw_navbar("authenticated_user");
+    draw_navbar("system_manager", 1);
 
     draw_homepage();
 
     include_once('./mobilebar.php');
-    draw_mobilebar();
+    draw_mobilebar("authenticated_user");
 
     include_once('./footer.php');
     draw_footer();

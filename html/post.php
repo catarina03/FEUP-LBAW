@@ -26,7 +26,7 @@
 </head>
 
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php 
             function draw_post(){ 
         ?>
@@ -325,7 +325,7 @@
         draw_post();
 
         include_once('./mobilebar.php');
-        draw_mobilebar();
+        draw_mobilebar('authenticated_user');
         include_once('./footer.php');
         draw_footer();
     ?>

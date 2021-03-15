@@ -1,8 +1,8 @@
 <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-dialog modal-dialog-centered justify-content-center d-flex" style="width=fit-content;">
         <div class="modal-content login">
-            <div class="row justify-content-end  me-1 mt-1 g-0">
+            <div class="row justify-content-end me-1 mt-1 g-0">
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -35,7 +35,7 @@
                             <div class="line-separator"></div>
                         </div>
                         <div class="row mt-3 mb-2 justify-content-center ">
-                            <div class="col-8"> <a
+                            <div class="col-10"> <a
                                     class="btn btn-sm btn-google btn-block btn-outline justify-content-center d-flex"
                                     href="#"><img src="https://img.icons8.com/color/16/000000/google-logo.png"
                                         class="me-2 " style="width:10%; height:8%;"> Log in with Google</a> </div>
@@ -45,10 +45,11 @@
                         </div>
                         <div class="row g-0 mb-4 mt-1 d-flex justify-content-center">
                             <p class="text-center text-white ">Don't have an account yet? <a href="#"
-                                     style="text-decoration:none; color:white; font-weight:500;" id="register" data-bs-toggle="modal" data-bs-target="#register">
-                                     Register.</a></p>
+                                    style="text-decoration:none; color:white; font-weight:500;" id="register"
+                                    data-bs-toggle="modal" data-bs-target="#register">
+                                    Register.</a></p>
                         </div>
-                 
+
 
                     </form>
                 </div>

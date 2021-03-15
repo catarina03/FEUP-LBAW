@@ -2,8 +2,8 @@
 <html lang="en-US">
 
 <head>
-<meta charset="UTF-8">
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Category Page</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -20,13 +20,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <script src="js/script.js" defer></script>
-    <script src="js/advanced_search.js" defer></script>
     <link rel="stylesheet" href="style/style.css">
 </head>
 
 
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php 
     function draw_category_page(){
 ?>
@@ -50,13 +49,13 @@
                             <i class="far fa-eye"></i><span>3</span>
                             <i class="far fa-thumbs-up"></i><span>2</span>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
                                 Video </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                            <small>by <a id="authorName" href="userprofile.php">João
                                     Santos</a>,
                                 FEBRUARY 28, 2021</small>
                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
@@ -76,7 +75,7 @@
                         <div class="categoryTag">
                             <h6>Music</h6>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="infoPosts">
@@ -87,7 +86,7 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                            <small>by <a id="authorName" href="userprofile.php">Ana
                                     Sousa</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -107,7 +106,7 @@
                         <div class="categoryTag">
                             <h6>Music</h6>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="infoPosts">
@@ -118,7 +117,7 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                            <small>by <a id="authorName" href="userprofile.php">Ana
                                     Sousa</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -138,7 +137,7 @@
                         <div class="categoryTag">
                             <h6>Music</h6>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="infoPosts">
@@ -149,7 +148,7 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                            <small>by <a id="authorName" href="userprofile.php">Ana
                                     Sousa</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -169,7 +168,7 @@
                         <div class="categoryTag">
                             <h6>Music</h6>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="infoPosts">
@@ -180,7 +179,7 @@
                             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                                 Video
                             </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                            <small>by <a id="authorName" href="userprofile.php">Ana
                                     Sousa</a>,
                                 FEBRUARY 23, 2021</small>
                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
@@ -204,13 +203,13 @@
                             <i class="far fa-eye"></i><span>3</span>
                             <i class="far fa-thumbs-up"></i><span>2</span>
                         </div>
-                        <div class="savePost">
+                        <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Green Day Offers Up Punk-Inspired Aerobics in ‘Here Comes the Shock'
                                 Video </h5>
-                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                            <small>by <a id="authorName" href="userprofile.php">João
                                     Santos</a>,
                                 FEBRUARY 28, 2021</small>
                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their new song "Here
@@ -224,8 +223,17 @@
                     </div>
                 </div>
             </div>
+            <div class="d-flex justify-content-center">
+                <div class="pagination">
+                    <a href="#">&laquo;</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">&raquo;</a>
+                </div>
+            </div>
         </div>
-        <div class="category-filter col-md-3 text-center">
+        <div class="custom-filterBox col-md-3 d-lg-block d-none text-center">
             <div class="container">
                 <h4> Search </h4>
                 <form class="pt-2" action="advanced_search.php" method="post">
@@ -236,25 +244,28 @@
                             <i class="fas fa-search"></i>
                         </span>
                     </div>
-                    <select class="form-select mt-4" aria-label="Select a type">
+                    <select class="form-select mt-4" aria-label="Select a type" style="cursor:pointer;">
                         <option selected>Select a type</option>
                         <option value="1">News</option>
                         <option value="2">Article</option>
                         <option value="3">Review</option>
                         <option value="4">Suggestion</option>
                     </select>
-                    <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date">
+                    <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date"
+                        style="cursor:pointer;">
                     <a> to </a>
-                    <input type="date" class="form-control mt-2" id="endDate" aria-label="End Date">
+                    <input type="date" class="form-control mt-2" id="endDate" aria-label="End Date"
+                        style="cursor:pointer;">
 
                     <div class="form-check mt-4">
-                        <input class="form-check-input" type="checkbox" value="" id="checkPeople">
+                        <input class="form-check-input" type="checkbox" value="" id="checkPeople"
+                            style="cursor:pointer;">
                         <label class="form-check-label" for="checkPeople">
                             Only people I follow
                         </label>
                     </div>
                     <div class="form-check mt-4">
-                        <input class="form-check-input" type="checkbox" value="" id="checkTags">
+                        <input class="form-check-input" type="checkbox" value="" id="checkTags" style="cursor:pointer;">
                         <label class="form-check-label" for="checkTags">
                             Only tags I follow
                         </label>
@@ -266,34 +277,7 @@
         </div>
     </div>
 
-    <footer class="bottomNavbar d-lg-none">
-        <div id="buttonGroup" class="btn-group selectors" role="group" aria-label="Mobile Navbar">
-            <button id="home" type="button" class="btn button-active">
-                <div class="selector-holder">
-                    <i class="bi bi-house fs-2"></i>
-                    <p>Home</p>
-                </div>
-            </button>
-            <button id="feed" type="button" class="btn button-inactive">
-                <div class="selector-holder">
-                    <i class="bi bi-plus fs-2"></i>
-                    <p>Create</p>
-                </div>
-            </button>
-            <button id="create" type="button" class="btn button-inactive">
-                <div class="selector-holder">
-                    <i class="bi bi-bell fs-2"></i>
-                    <p>Notifications</p>
-                </div>
-            </button>
-            <button id="account" type="button" class="btn button-inactive">
-                <div class="selector-holder">
-                    <i class="bi bi-person-circle fs-2"></i>
-                    <p>@ana_sousa</p>
-                </div>
-            </button>
-        </div>
-    </footer>
+
 
     <?php
 }
@@ -302,11 +286,11 @@
     <?php
         include_once('./navbar.php');
 
-        draw_navbar("authenticated_user");
+        draw_navbar("authenticated_user", 1);
         draw_category_page();
 
         include_once('./mobilebar.php');
-        draw_mobilebar();
+        draw_mobilebar('authenticated_user');
     
         include_once('./footer.php');
         draw_footer();

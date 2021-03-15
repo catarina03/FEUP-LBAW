@@ -3,29 +3,30 @@
 
 ?>
 <div class="container-fluid my-profile justify-content-center mx-auto">
-    <div class="row justify-content-start settings profile g-0">
-        <div class="col-3 d-sm-none d-lg-flex d-flex-column justify-content-center "
-            style=" padding-left:3%; padding-top:15em; ">
-            <nav class="nav flex-lg-column my-profile-settings-div ">
-                <a class="my-profile-settings justify-content-center nav-link active"><i
-                        class="bi bi-person-circle"></i> Profile</a>
-                <a href="./settings.php" class="my-profile-settings justify-content-center nav-link"><i
-                        class="bi bi-gear"></i>
+    <div class="row justify-content-start profile my-profile g-0">
+        <div class="col-2 d-none d-xl-flex d-flex-column justify-content-center "
+            style=" padding-left:1%; padding-top:10em; ">
+            <nav class="nav flex-lg-column ">
+                <a class="my-profile-settings justify-content-center d-flex nav-link active"><i
+                        class="bi bi-person-circle me-2"></i>Profile</a>
+                <a href="./settings.php" class="my-profile-settings justify-content-center d-flex nav-link ms-3"><i
+                        class="bi bi-gear me-2"></i>
                     Settings</a>
             </nav>
         </div>
-        <div class="col-xl-7 col-11 my-profile-div">
+        <div class="col-xl-8 col-12 my-profile-div">
             <div class="row justify-content-center">
                 <div class="col-12 d-block">
-                    <div class="row justify-content-center my-3 position-relative ">
-                        <div class="col-lg-3 col-md-3 col-sm-4 mb-4 d-flex justify-content-center ">
+                    <div class="row justify-content-center d-flex my-3 position-relative ">
+                        <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center ">
                             <img class="rounded-circle profile-avatar"
                                 src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
                                 width="200" height="200" alt="avatar">
-                            <form action="#" method="post">
+                            <form action="#" method="post" data-toggle="tooltip" data-placement="bottom"
+                                title="Update Profile Photo">
                                 <div class="form-group">
                                     <label for="avatar" class="position-absolute d-inline corner-icons"
-                                        style="transform:translate(-3em, 15em);"><svg xmlns="http://www.w3.org/2000/svg"
+                                        style="transform:translate(-3em, 14em);"><svg xmlns="http://www.w3.org/2000/svg"
                                             width="40" height="40" fill="currentColor" class="bi bi-camera-fill"
                                             viewBox="0 0 16 16">
                                             <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
@@ -40,16 +41,19 @@
 
 
                     </div>
-                    <div class="row mt-1">
-                        <div class="card card-profile  col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5"
-                            style="border-radius:2%;">
-                            <div class="row justify-content-center mt-1">
-                                <div class="col-lg-2 col-md-5 col-sm-4 d-flex justify-content-center">
+                    <div class="row mt-1 d-flex justify-content-center">
+                        <div class="card card-profile col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5" style="border-radius:2%;">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-2 col-10 d-flex justify-content-center text-center">
                                     <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
+                                    <a href="./settings.php" class="position-absolute d-inline corner-icons d-xl-none"
+                                        data-toggle="tooltip" data-placement="bottom" title="Settings"
+                                        style="transform:translate(-4em, -1em);"><i class="bi bi-gear-fill pe-2"
+                                            style="font-size:2.2em;"></i></a>
                                 </div>
                             </div>
                             <div class="row justify-content-center">
-                                <div class="col-2 col-md-3 d-flex justify-content-center">
+                                <div class="col-lg-2 col-10 d-flex justify-content-center">
                                     <p class="profile-username">@ana_sousa</p>
                                 </div>
                             </div>
@@ -59,13 +63,13 @@
                                 <div class="row justify-content-center ">
                                     <div class="col-lg-6 col-sm-12">
                                         <div class="row justify-content-around statistics-profile">
-                                            <div class="col-4 d-flex justify-content-center ">
+                                            <div class="col-4 d-flex justify-content-center text-center">
                                                 <p>800 Followers</p>
                                             </div>
-                                            <div class="col-4 d-flex justify-content-center">
+                                            <div class="col-4 d-flex justify-content-center text-center">
                                                 <p>500 Following</p>
                                             </div>
-                                            <div class="col-4 d-flex justify-content-center">
+                                            <div class="col-4 d-flex justify-content-center text-center">
                                                 <p>900 Likes</p>
                                             </div>
                                         </div>
@@ -74,7 +78,8 @@
                                 </div>
                                 <div class="row justify-content-center">
                                     <div class="card col-lg-6 col-sm-12 d-flex justify-content-center bio">
-                                        <div class="row position-relative">
+                                        <div class="row position-relative" data-toggle="tooltip" data-placement="bottom"
+                                            title="Edit Bio">
                                             <a
                                                 class="position-absolute top-0 end-0 translate-middle-y d-inline corner-icons pencil-icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -167,7 +172,7 @@
                                                 Comes
                                                 the Shock'
                                                 Video </h5>
-                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                                            <small>by <a id="authorName" href="userprofile.php">João
                                                     Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
@@ -216,7 +221,7 @@
                                                 Hall
                                                 in New Video
                                             </h5>
-                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">Ana
+                                            <small>by <a id="authorName" href="userprofile.php">Ana
                                                     Sousa</a>,
                                                 FEBRUARY 23, 2021</small>
                                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal
@@ -262,8 +267,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Hillary Clinton and Louise Penny to Write Political
                                                 Thriller</h5>
-                                            <small class="text-muted">by <a id="authorName"
-                                                    href="userprofile.php">Alexandra
+                                            <small>by <a id="authorName" href="userprofile.php">Alexandra
                                                     Alter</a>,
                                                 FEBRUARY 23, 2021</small>
                                             <p class="card-text">Mick Jagger narrates a new film on London’s Royal
@@ -311,7 +315,7 @@
                                                 Comes
                                                 the Shock'
                                                 Video </h5>
-                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                                            <small>by <a id="authorName" href="userprofile.php">João
                                                     Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
@@ -360,7 +364,7 @@
                                                 Comes
                                                 the Shock'
                                                 Video </h5>
-                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                                            <small>by <a id="authorName" href="userprofile.php">João
                                                     Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
@@ -411,7 +415,7 @@
                                                 Comes
                                                 the Shock'
                                                 Video </h5>
-                                            <small class="text-muted">by <a id="authorName" href="userprofile.php">João
+                                            <small>by <a id="authorName" href="userprofile.php">João
                                                     Santos</a>,
                                                 FEBRUARY 28, 2021</small>
                                             <p class="card-text">On Saturday (Feb. 20), the rock band premiered their
@@ -431,8 +435,15 @@
                                     </div>
                                 </div>
                             </div>
-
-
+                            <div class="d-flex justify-content-center">
+                                <div class="pagination">
+                                    <a href="#">&laquo;</a>
+                                    <a href="#" class="active">1</a>
+                                    <a href="#">2</a>
+                                    <a href="#">3</a>
+                                    <a href="#">&raquo;</a>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -485,7 +496,7 @@
 
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <?php
         include_once('./navbar.php');
@@ -495,7 +506,7 @@
         draw_my_profile();
 
         include_once('./mobilebar.php');
-        draw_mobilebar();
+        draw_mobilebar('authenticated_user');
         
         include_once('./footer.php');
         draw_footer();
