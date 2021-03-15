@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
     <!--fonts-->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
@@ -36,8 +36,8 @@
         <div class="row" style="margin-top: 7em; margin-bottom: 7em;">
             <div class="card post-page-post-card justify-content-center pb-5" style="border-radius:5px;">
 
-                <div class="post-page-save-post-bookmark">
-                    <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                <div class="post-page-save-post-bookmark savePost">
+                    <i class="bi bi-bookmark-plus-fill" title="Save/unsave post" style="font-size:3em;"></i>
                 </div>
 
                 <div class="container-fluid d-flex justify-content-center">
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="container-fluid d-flex col-10 justify-content-left mt-2">
-                    <p class="post-page-post-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
+                    <p class="post-page-post-text mb-0">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
                         celebration
                         of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film includes scenes
                         of the empty venue during the pandemic.
@@ -98,166 +98,221 @@
                         to when we can be together again.”
                     </p>
                 </div>
-
-                <div class="row justify-content-center px-0 mx-0 mt-3">
+                
+                <div class="row justify-content-center mt-3 mb-3 px-4 mx-1">
                     <div class="col-10">
-                        <div class="row justify-content-center px-0 mx-0">
-                            <div class="col-auto post-page-tag-container p-2 m-1 rounded-3">
-                                <a class="post-page-post-tag p-2" href=".">Music</a>
-                                <i class="far fa-star"></i>
+                        <div class="row justify-content-start align-items-center">
+                            <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Tags: </h2>
+                            <div class="col-auto post-page-tag-container px-2 m-1">
+                                <a class="post-page-post-tag" href="advanced_search.php">Music</a>
                             </div>
-                            <div class="col-auto post-page-tag-container p-2 m-1 rounded-3">
-                                <a class="post-page-post-tag p-2" href=".">News</a>
-                                <i class="far fa-star"></i>
+                            <div class="col-auto post-page-tag-container px-2 m-1">
+                                <a class="post-page-post-tag" href="advanced_search.php">News</a>
                             </div>
-                            <div class="col-auto post-page-tag-container p-2 m-1 rounded-3">
-                                <a class="post-page-post-tag p-2" href=".">Band</a>
-                                <i class="far fa-star"></i>
+                            <div class="col-auto post-page-tag-container px-2 m-1">
+                                <a class="post-page-post-tag" href="advanced_search.php">Band</a>
                             </div>
-                            <div class="col-auto post-page-tag-container p-2 m-1 rounded-3">
-                                <a class="post-page-post-tag p-2" href=".">Performance</a>
-                                <i class="far fa-star"></i>
+                            <div class="col-auto post-page-tag-container px-2 m-1">
+                                <a class="post-page-post-tag" href="advanced_search.php">Performance</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+
+                <div class="row justify-content-center mt-3 px-4 mx-1">
+                    <div class="col-10 mx-0 px-0">
+                        <div class="row justify-content-start align-items-center px-0 mx-0">
+                            <div class="col-auto px-0 mx-0">
+                                <button class="post-page-post-thumbs-up-button btn ms-0 me-4 px-0"><i title="Like post" class="far fa-thumbs-up m-0"></i></button>
+                            </div>
+                            <div class="col-auto px-0 mx-0">
+                                <button class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0"><i title="Dislike post" class="far fa-thumbs-down m-0"></i></button>
+                            </div>
+                            <div class="col-auto px-0 mx-0 ms-auto">
+                                <button class="post-page-post-report-button btn ms-0 me-0 py-0 px-0"><i title="Report post" class="fas fa-ban m-0"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row justify-content-center mt-4 px-4 mx-1">
+                    <div class="col-10 post-comment-indicator">
+                        <div class="row justify-content-between align-items-center comment-indicator-row mb-3">
+                            <div class="col-auto m-0 p-0">
+                                <h3 class="mt-0 py-0 mb-1">Comments</h3>
+                            </div>
+                            <div class="col-auto p-0 m-0">
+                                <div class="dropdown p-0 m-0">
+                                    <button class="btn btn-secondary dropdown-toggle comment-sort-by-button p-0 m-0" type="button" id="comments-sort-by" data-bs-toggle="dropdown" aria-expanded="false">Sort by</button>
+                                    <ul class="dropdown-menu comments-sort-by" aria-labelledby="comments-sort-by">
+                                    <li><a class="dropdown-item">Most popular</a></li>
+                                    <li><a class="dropdown-item">Newest</a></li>
+                                    <li><a class="dropdown-item">Oldest</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="container-fluid d-flex col-10 justify-content-center mt-3">
-                    <button class="post-page-post-thumbs-up-button btn m-2"><i
-                            class="far fa-thumbs-up m-0"></i></button>
-                    <button class="post-page-post-thumbs-down-button btn m-2"><i class="far fa-thumbs-down m-0"></i>
-                    </button>
-                    <button class="post-page-post-report-button btn m-2">Report</button>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-10" style="border-radius:5px;">
-                        <div class="form-group post-comment-input mb-4">
-                            <label class="post-page-add-comment-label" for="add-comment">Add comment...</label>
-                            <textarea class="container form-control w-100" id="add-comment" rows="3"></textarea>
-                            <button class="post-page-comment-button btn mt-2">Comment</button>
+                <div class="row justify-content-center px-4 mx-1">
+                    <div class="col-10 mx-0 px-0" style="border-radius:5px;">
+                        <div class="row m-0 p-0">
+                            <div class="d-flex mx-0 px-0">
+                                <!--<label class="post-page-add-comment-label" for="add-comment">Add comment...</label>-->
+                                <textarea class="container form-control w-100" id="add-comment" rows="2" placeholder="Join the discussion"></textarea>
+                            </div>
+                        </div>
+                        <div class="row px-0 mx-0 justify-content-end">
+                            <div class="col-auto px-0">
+                                <button class="post-page-comment-button btn mt-1 mb-2">Comment</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-10 post-page-comment py-3 px-3 mt-1">
-                        <div class="row">
-                            <div class="d-flex">
-                                <h3 class="post-page-comment-body m-1">Really good article!</h3>
+         
+                
+                <div class="row justify-content-center px-4 mx-1">
+                    <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
+                        <div class="row px-2 py-0">
+                            <div class="col-auto p-0 m-0">
+                                <h3 class="post-page-comment-body m-0">Really good article!</h3>
+                            </div>
+                            <div class="col-auto p-0 m-0 ms-auto">
                                 <i class="fas fa-chevron-down ms-auto"></i>
                             </div>
                         </div>
-                        <div class="row">
-                            <h4 class="post-page-comment-author-date">by <a href="./userprofile.php">João Santos</a>,
-                                FEBRUARY 23,
-                                2021</h3>
-                        </div>
-                        <div class="row pt-2">
-                            <div class="d-flex">
-                                <h3 class="post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i>
-                                </h3>
-                                <h3 class="post-page-post-interactions pe-3 my-0">0 <i class="far fa-thumbs-down"></i>
-                                </h3>
-                                <h3 class="post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i></h3>
-                                <i title="Report comment" class="fas fa-ban my-0 ms-auto"></i>
+                        <div class="row align-items-end px-2 py-1">
+                            <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end">
+                                <h3 class="post-page-comment-author-date p-0 m-0">by <a href="./userprofile.php">João Santos</a>, FEBRUARY 23, 2021</h3>
+                            </div>
+                            <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
+                                <div class="row">
+                                    <div class="d-flex">
+                                        <h3 class="post-page-comment-interactions pe-3 my-0">1 <i title="Like comment" class="far fa-thumbs-up"></i></h3>
+                                        <h3 class="post-page-comment-interactions pe-3 my-0">0 <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
+                                        <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
+                                        <h3 class="post-page-comment-interactions my-0">2 <i class="far fa-comments"></i></h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-10 post-page-comment py-3 px-3 mt-1">
-                        <div class="row">
-                            <div class="d-flex">
-                                <h3 class="post-page-comment-body  m-1">Really good article!</h3>
+                <div class="row justify-content-center px-4 mx-1">
+                    <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
+                        <div class="row px-2 py-0">
+                            <div class="col-auto p-0 m-0">
+                                <h3 class="post-page-comment-body m-0">Really good article!</h3>
+                            </div>
+                            <div class="col-auto p-0 m-0 ms-auto">
                                 <i class="fas fa-chevron-down ms-auto"></i>
                             </div>
                         </div>
-                        <div class="row">
-                            <h4 class="post-page-comment-author-date">by <a href="./userprofile.php">Joyce
-                                    Rodrigues</a>, FEBRUARY 22,
-                                2021</h3>
-                        </div>
-                        <div class="row pt-2">
-                            <div class="d-flex">
-                                <h3 class="post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i>
-                                </h3>
-                                <h3 class="post-page-post-interactions pe-3 my-0">0 <i class="far fa-thumbs-down"></i>
-                                </h3>
-                                <h3 class="post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i></h3>
-                                <i title="Report comment" class="fas fa-ban my-0 ms-auto"></i>
+                        <div class="row align-items-end px-2 py-1">
+                            <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end">
+                                <h3 class="post-page-comment-author-date p-0 m-0">by <a href="./userprofile.php">Joyce Rodrigues</a>, FEBRUARY 22, 2021</h3>
+                            </div>
+                            <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
+                                <div class="row">
+                                    <div class="d-flex">
+                                        <h3 class="post-page-comment-interactions pe-3 my-0">1 <i title="Like comment" class="far fa-thumbs-up"></i></h3>
+                                        <h3 class="post-page-comment-interactions pe-3 my-0">0 <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
+                                        <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
+                                        <h3 class="post-page-comment-interactions my-0">2 <i class="far fa-comments"></i></h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-10 post-page-comment py-3 px-3 mt-1">
-                        <div class="row">
-                            <div class="d-flex">
-                                <h3 class="post-page-comment-body  m-1">Really good article!</h3>
-                                <i class="fas fa-chevron-up ms-auto"></i>
+                <div class="row justify-content-center px-4 mx-1">
+                    <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
+                        <div class="row px-2 py-0">
+                            <div class="col-auto p-0 m-0">
+                                <h3 class="post-page-comment-body m-0">Really good article!</h3>
+                            </div>
+                            <div class="col-auto p-0 m-0 ms-auto">
+                                <i class="fas fa-chevron-down ms-auto"></i>
                             </div>
                         </div>
-                        <div class="row">
-                            <h4 class="post-page-comment-author-date">by <a href="./userprofile.php">Beatrice
-                                    Layne</a>, FEBRUARY 21,
-                                2021</h3>
-                        </div>
-                        <div class="row pt-2">
-                            <div class="d-flex">
-                                <h3 class="post-page-post-interactions pe-3 my-0">1 <i class="far fa-thumbs-up"></i>
-                                </h3>
-                                <h3 class="post-page-post-interactions pe-3 my-0">0 <i class="far fa-thumbs-down"></i>
-                                </h3>
-                                <h3 class="post-page-post-interactions pe-3 my-0">2 <i class="far fa-comments"></i></h3>
-                                <i title="Report comment" class="fas fa-ban my-0 ms-auto"></i>
+                        <div class="row align-items-end px-2 py-1">
+                            <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end">
+                                <h3 class="post-page-comment-author-date p-0 m-0">by <a href="./userprofile.php">Beatrice Layne</a>, FEBRUARY 21, 2021</h3>
+                            </div>
+                            <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
+                                <div class="row">
+                                    <div class="d-flex">
+                                        <h3 class="post-page-comment-interactions pe-3 my-0">1 <i title="Like comment" class="far fa-thumbs-up"></i></h3>
+                                        <h3 class="post-page-comment-interactions pe-3 my-0">0 <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
+                                        <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
+                                        <h3 class="post-page-comment-interactions my-0">2 <i class="far fa-comments"></i></h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-10 mx-0 px-0">
                         <div class="row justify-content-end comment-replies mx-0 px-0">
-                            <div class="col-12 post-page-comment-reply reply py-3 px-3">
-                                <div class="row">
-                                    <div class="d-flex">
-                                        <h3 class="post-page-comment-body  m-1">Agreed!</h3>
+                            <div class="col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1">
+                                <div class="row px-2 py-0">
+                                    <div class="col-auto p-0 m-0">
+                                        <h3 class="post-page-comment-reply-body m-0">Agreed!</h3>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <h4 class="post-page-comment-author-date">by <a href="./userprofile.php">John
-                                            Doe</a>, FEBRUARY
-                                        21, 2021</h3>
-                                </div>
-                                <div class="row pt-2">
-                                    <div class="d-flex">
-                                        <h3 class="post-page-post-interactions pe-3 my-0">1 <i
-                                                class="far fa-thumbs-up"></i></h3>
-                                        <h3 class="post-page-post-interactions pe-3 my-0">0 <i
-                                                class="far fa-thumbs-down"></i></h3>
-                                        <h3 class="post-page-post-interactions pe-3 my-0">2 <i
-                                                class="far fa-comments"></i></h3>
-                                        <i title="Report comment" class="fas fa-ban my-0 ms-auto"></i>
+                                <div class="row align-items-end px-2 py-0">
+                                    <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end">
+                                        <h3 class="post-page-comment-reply-author-date p-0 m-0">by <a href="./userprofile.php">John Doe</a>, FEBRUARY 21, 2021</h3>
+                                    </div>
+                                    <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
+                                        <div class="row">
+                                            <div class="d-flex">
+                                                <h3 class="post-page-comment-interactions pe-3 my-0">1 <i title="Like comment" class="far fa-thumbs-up"></i></h3>
+                                                <h3 class="post-page-comment-interactions pe-3 my-0">0 <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
+                                                <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-
-                            <div class="col-12 post-page-comment-reply-editor px-0 mx-0">
+                            <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
                                 <div class="row px-0 mx-0">
                                     <div class="d-flex mx-0 px-0">
-                                        <textarea class="container form-control w-100" id="add-comment" rows="3"
-                                            placeholder="Answer in thread"></textarea>
+                                        <textarea class="container form-control w-100" id="add-comment" rows="1"
+                                        placeholder="Answer in thread"></textarea>
                                     </div>
                                 </div>
-                                <div class="row px-0 mx-0">
+                                <div class="row px-0 mx-0 justify-content-end">
                                     <div class="col-auto px-0">
-                                        <button class="post-page-comment-button btn m-0">Comment</button>
-
+                                        <button class="post-page-comment-button btn m-0 mt-1">Comment</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+
+                <div class="row justify-content-center px-4 mx-1">
+                    <div class="row justify-content-center mt-4 mb-2 mx-0 p-0">
+                        <div class="col-10">
+                            <div class="row">
+                                <button class="post-page-load-comments-button btn m-0 mt-1">Load more 2 comments</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                
+                
+                
+                
+                
             </div>
         </div>
     </div>
