@@ -5,7 +5,7 @@
     <div class="col-12 text-left" style="background-color:#8ab5b1;border-radius:2%;min-height:800px;">
         <h1 class="text-center faq-title ">Frequently Asked Questions</h1>
         <!--Title-->
-        <div class="row justify-content-center pt-4 pb-4">
+        <div class="row justify-content-center d-flex pt-4 pb-4">
             <div class="faq_questions col-lg-9 col-11">
                 <!--Question row-->
                 <div class="question mt-5">
@@ -18,7 +18,7 @@
                             favorite tags. </p>
                     </div>
                 </div>
-                <div class="question  mt-5">
+                <div class="question mt-5">
                     <div class="question-text p-1">
                         <h4> How can I report a comment or post? </h4>
                     </div>

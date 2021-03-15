@@ -45,7 +45,7 @@
             <h2 style="font-weight:bold;color:#307371;">Create Post</h2>
         </div>
         <div class="createPost-center col-12 col-lg-7">
-            <div class="card create-post-page-post-card justify-content-center pt-5 pb-5" style="border-radius:5px;">
+            <div class="card create-post-page-post-card d-flex justify-content-center pt-5 pb-5" style="border-radius:5px;">
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <div class="form-group post-comment-input mb-4">
@@ -64,7 +64,7 @@
                                 <input type="file" class="form-control" id="postImage" />
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1">
-                                <select class="form-select" id="category-dropdown">
+                                <select class="form-select" id="category-dropdown" style="cursor:pointer;">
                                     <option disabled selected hidden>Category</otion>
                                     <option>Music</option>
                                     <option>Cinema</option>
@@ -74,7 +74,7 @@
                                 </select>
                             </div>
                             <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-3 pt-lg-3 p-1">
-                                <select class="form-select" id="topic-dropdown">
+                                <select class="form-select" id="topic-dropdown" style="cursor:pointer;">
                                     <option disabled selected hidden>Type</otion>
                                     <option>News</option>
                                     <option>Article</option>
@@ -145,14 +145,14 @@
                 <div class="row justify-content-center mt-5">
                     <div class="col-10">
                         <div class="row d-flex flex-row">
-                            <div class="col-md-auto col-12 me-auto">
+                            <div class="col-md-auto col-12 me-auto text-center">
                                 <button type="button" class="btn preview-post"><i class="far fa-eye"></i>
                                     Preview</button>
                             </div>
-                            <div class="col-md-auto col-12">
+                            <div class="col-md-auto col-12 text-center">
                                 <button type="button" class="btn cancel-post">Cancel</button>
                             </div>
-                            <div class="col-md-auto col-12">
+                            <div class="col-md-auto col-12 text-center">
                                 <button type="button" class="btn publish-post px-5">Publish</button>
                             </div>
                         </div>

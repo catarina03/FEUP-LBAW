@@ -44,7 +44,7 @@
             <h2 style="font-weight:bold;color:#307371;">Edit Post</h2>
         </div>
         <div class="createPost-center col-12 col-lg-7">
-            <div class="card create-post-page-post-card justify-content-center pt-5 pb-5" style="border-radius:5px;">
+            <div class="card create-post-page-post-card justify-content-center d-flex pt-5 pb-5" style="border-radius:5px;">
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <div class="form-group post-comment-input mb-4">
@@ -154,14 +154,14 @@
                 <div class="row justify-content-center mt-5">
                     <div class="col-10">
                         <div class="row d-flex flex-row">
-                            <div class="col-md-auto col-12 me-auto">
+                            <div class="col-md-auto col-12 me-auto text-center">
                                 <button type="button" class="btn preview-post"><i class="far fa-eye"></i>
                                     Preview</button>
                             </div>
-                            <div class="col-md-auto col-12">
+                            <div class="col-md-auto col-12 text-center">
                                 <button type="button" class="btn cancel-post">Cancel</button>
                             </div>
-                            <div class="col-md-auto col-12">
+                            <div class="col-md-auto col-12 text-center">
                                 <button type="button" class="btn publish-post px-5">Save Changes</button>
                             </div>
                         </div>

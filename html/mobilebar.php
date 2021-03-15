@@ -32,14 +32,45 @@
                 <i class="bi bi-plus-square-dotted fs-1"></i>
             </div>
         </a>
-        <a id="create" type="button" class="btn button-inactive">
-            <div class="selector-holder">
-                <i class="bi bi-bell fs-1"></i>
+        <a id="notifications" type="button" class="btn button-inactive">
+
+            <div class="selector-holder dropup">
+                <i data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-bell fs-1"></i>
+
+                <ul class="dropdown-menu">
+                    <li class="p-1">Someone liked your post.</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1">Someone liked your post.</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1">Someone liked your post.</li>
+                </ul>
             </div>
         </a>
-        <a id="account" type="button" class="btn button-inactive" href="myprofile.php">
-            <div class="selector-holder">
-                <i class="bi bi-person-circle fs-1"></i>
+        <a id="account" type="button" class="btn button-inactive">
+            <div class="selector-holder dropup">
+                <i class="bi bi-person-circle fs-1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <ul class="dropdown-menu">
+                    <li class="p-1 ps-3 fs-4" onClick="location.href='myprofile.php'">Profile</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1 ps-3  fs-4" onClick="location.href='myprofile.php'">Saved Posts</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1 ps-3  fs-4" onClick="location.href='settings.php'">Settings</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1 ps-3  fs-4">Sign out</li>
+                </ul>
             </div>
         </a>
         <?php }

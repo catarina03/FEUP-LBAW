@@ -208,7 +208,7 @@
             <hr class="solid col-12">
 
             <div class="row mb-3 justify-content-start ms-lg-5 justify-content-center">
-                <a class="btn btn-danger btn-sm edit-account ps-5 pe-5" style="width:fit-content;" data-bs-toggle="modal" data-bs-target="#confirm">Delete Account</a>
+                <a class="btn btn-danger btn-sm edit-account ps-5 pe-5" style="width:fit-content;height:fit-content;" data-bs-toggle="modal" data-bs-target="#confirm">Delete Account</a>
                 <span class="col-lg-8 col-12 delete-account-text align-middle text-center ms-2 p-1">
                     Once you delete your account, there is no going back. Please be certain.
                 </span>

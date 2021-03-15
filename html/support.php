@@ -23,7 +23,7 @@
                     <div class="question-col">
                         <div class="form-group">
                             <label for="support-browser">In what browser are you experiencing this problem?</label>
-                            <select class="form-select support-form mt-2" id="support-browser">
+                            <select class="form-select support-form mt-2" id="support-browser" style="cursor:pointer;">
                                 <option disabled selected hidden>Choose your browser</option>
                                 <option>Google Chrome</option>
                                 <option>Firefox Web</option>
@@ -39,7 +39,7 @@
                     <div class="question-col">
                         <div class="form-group">
                             <label for="support-browser">How often do you experience this problem?</label>
-                            <select class="form-select support-form mt-2" id="support-freq">
+                            <select class="form-select support-form mt-2" id="support-freq" style="cursor:pointer;">
                                 <option disabled selected hidden>Select an option</option>
                                 <option value="1">Rarely</option>
                                 <option value="2">Often</option>
@@ -61,22 +61,22 @@
                     <div class="col-lg-4 col-sm-12 rate-col-radio">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input inner faq-i" type="radio" name="inlineRadioOptions" id="opt1"
-                                value="1">
+                                value="1" style="cursor:pointer;">
                             <label class="form-check-label" for="opt1"></label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input inner faq-i" type="radio" name="inlineRadioOptions" id="opt2"
-                                value="2">
+                                value="2" style="cursor:pointer;">
                             <label class="form-check-label" for="opt2"></label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input inner faq-i" type="radio" name="inlineRadioOptions" id="opt3"
-                                value="3">
+                                value="3" style="cursor:pointer;">
                             <label class="form-check-label" for="opt3"></label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input inner faq-i" type="radio" name="inlineRadioOptions" id="opt4"
-                                value="4">
+                                value="4" style="cursor:pointer;">
                             <label class="form-check-label" for="opt4"></label>
                         </div>
                     </div>
