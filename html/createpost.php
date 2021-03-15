@@ -17,8 +17,8 @@
     <script src="https://cdn.tiny.cloud/1/08t5y62wss6y2fzascz2trysrq487403jdb54o0kzk3nu9zq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '#mytextarea'
-
+            selector: '#mytextarea',
+            plugins: 'image link media lists wordcount'
         });
     </script>
 
