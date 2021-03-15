@@ -256,11 +256,11 @@
         include_once('./navbar.php');
         include_once('./confirm.php');
 
-        draw_navbar("authenticated_user", 2);
+        draw_navbar("moderator", 2);
         draw_dashboard();
 
         include_once('./mobilebar.php');
-        draw_mobilebar("authenticated_user");
+        draw_mobilebar("moderator");
     
         include_once('./footer.php');
         draw_footer();
