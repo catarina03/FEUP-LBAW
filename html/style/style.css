@@ -1155,17 +1155,18 @@ h3.post-page-comment-reply-interactions{
   text-decoration: underline;
 }
 .cancel-post:hover {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .publish-post,
 .preview-post {
   background-color: #0c1d1c;
-  color: #8ab5b1;
-  font-weight: bold;
+  color: #EFF9FA;
+  font-weight: 400;
 }
 .publish-post:hover,
 .preview-post:hover {
-  background-color: #307371;
+  background-color: #ffc2ad;
   color: #0c1d1c;
+  font-weight: 400;
 }
