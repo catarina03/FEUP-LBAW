@@ -786,12 +786,14 @@ a.footer-link:hover {
 }
 
 .post-page-post-author-date a {
-  color: #307371;
-  text-decoration: unset;
+  color: #0C1D1C;
+  font-weight: 600;
+  text-decoration: none;
 }
 .post-page-post-author-date a:hover {
-  color: #307371;
-  text-decoration: underline;
+  color: #ffc2ad;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .post-page-post-interactions {
@@ -804,23 +806,6 @@ a.footer-link:hover {
   font-size: large;
 }
 
-.post-page-post-tags a{
-  color: #0C1D1C;
-  font-family: 'Roboto', sans-serif;
-  font-size: large;
-  font-weight: normal;
-  text-decoration-style: dashed;
-  text-decoration-color: #0C1D1C;
-}
-.post-page-post-tags a:hover{
-  color: #307371;
-  font-family: 'Roboto', sans-serif;
-  font-size: large;
-  font-weight: normal;
-  text-decoration-style: dashed;
-  text-decoration-color: #307371;
-}
-
 .post-page-post-tags-indicator{
   color: #0C1D1C;
   font-family: 'Roboto', sans-serif;
@@ -830,28 +815,28 @@ a.footer-link:hover {
 
 
 .post-page-post-tag{
-  color: #EFF9FA;
-  background-color: transparent;
-  font-family: 'Roboto', sans-serif;
-  font-size: small;
-  font-weight:400;
-  text-decoration: none;
-  
-}
-.post-page-post-tag:hover{
-  color: #EFF9FA;
+  color: inherit;
   background-color: transparent;
   font-family: 'Roboto', sans-serif;
   font-size: small;
   font-weight:400;
   text-decoration: none;
 }
-
 .post-page-tag-container{
   background-color: #0C1D1C;
+  color: #EFF9FA;
+}
+.post-page-post-tag:hover{
+  color: inherit;
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  font-weight:400;
+  text-decoration: none;
 }
 .post-page-tag-container:hover{
-  background-color: #307371;
+  background-color: #ffc2ad;
+  color: #0C1D1C;
 }
 
 .post-page-post-tags-indicator{
@@ -867,6 +852,8 @@ a.footer-link:hover {
 
 .post-page-post-thumbs-up-button i:hover {
   color: #307371;
+  color: #ffc2ad;
+  color: #fcf3ee;
   font-size: xx-large;
 }
 
@@ -913,9 +900,10 @@ a.footer-link:hover {
 .comment-sort-by-button:hover{
   background-color: transparent;
   border-style: none;
-  color: #307371;
+  color: #0C1D1C;
   font-family: 'Roboto', sans-serif;
   font-size: larger;
+  font-weight: 600;
   box-shadow: none;
 }
 .comment-sort-by-button:focus{
@@ -925,6 +913,10 @@ a.footer-link:hover {
   font-family: 'Roboto', sans-serif;
   font-size: larger;
   box-shadow: none;
+}
+
+.post-page-add-comment{
+  resize: none;
 }
 
 .post-page-comment{
@@ -1049,8 +1041,9 @@ h3.post-page-comment-reply-interactions{
   background-color: transparent;
 }
 
-.post-page-comment-reply-editor .form-control{
+.post-page-comment-reply-editor .post-page-add-comment-reply{
   border-radius: 0px;
+  resize: none;
 }
 
 .post-page-comment-button{
@@ -1060,8 +1053,8 @@ h3.post-page-comment-reply-interactions{
   font-size: medium;
 }
 .post-page-comment-button:hover{
-  background-color: #307371;
-  color: #EFF9FA;
+  background-color: #ffc2ad;
+  color: #0C1D1C;
   font-family: 'Roboto', sans-serif;
   font-size: medium;
 }
@@ -1073,8 +1066,8 @@ h3.post-page-comment-reply-interactions{
   font-size: medium;
 }
 .post-page-load-comments-button:hover{
-  background-color: #307371;
-  color: #EFF9FA;
+  background-color: #ffc2ad;
+  color: #0C1D1C;
   font-family: 'Roboto', sans-serif;
   font-size: medium;
 }
@@ -1093,7 +1086,11 @@ h3.post-page-comment-reply-interactions{
 }
 
 .my-post-page-settings a:hover{
-  color: #307371;
+  color: #ffc2ad;
+}
+
+.my-post-page-settings .dropdown-item:hover{
+  color: #0C1D1C;
 }
 
 .my-post-page-settings .dropdown-item:active{

@@ -163,7 +163,7 @@
                         <div class="row m-0 p-0">
                             <div class="d-flex mx-0 px-0">
                                 <!--<label class="post-page-add-comment-label" for="add-comment">Add comment...</label>-->
-                                <textarea class="container form-control w-100" id="add-comment" rows="2" placeholder="Join the discussion"></textarea>
+                                <textarea class="container form-control post-page-add-comment w-100" id="add-comment" rows="2" placeholder="Join the discussion"></textarea>
                             </div>
                         </div>
                         <div class="row px-0 mx-0 justify-content-end">
@@ -281,7 +281,7 @@
                             <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
                                 <div class="row px-0 mx-0">
                                     <div class="d-flex mx-0 px-0">
-                                        <textarea class="container form-control w-100" id="add-comment" rows="1"
+                                        <textarea class="container form-control post-page-add-comment-reply w-100" id="add-comment" rows="1"
                                         placeholder="Answer in thread"></textarea>
                                     </div>
                                 </div>

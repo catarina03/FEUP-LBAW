@@ -71,14 +71,14 @@
                             </div>
                             <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-3 pt-lg-3 p-1">
                                 <select class="form-select" id="topic-dropdown">
-                                    <option disabled>Topic</otion>
+                                    <option disabled>Type</otion>
                                     <option selected>News</option>
                                     <option>Article</option>
                                     <option>Review</option>
                                     <option>Suggestion</option>
                                 </select>
                             </div>
-                            <div class="col-lg-4 col-12 form-group spoiler-checkbox p-1 mt-1 mb-0 pb-0 align-self-end">
+                            <div class="col-lg-7 col-12 form-group spoiler-checkbox p-1 mt-1 mb-0 pb-0 align-self-end">
                                 <input type="checkbox" id="spoiler" name="spoiler-checkbox" value="spoiler">
                                 <label for="spoiler">This post contains spoilers</label>
                             </div>
