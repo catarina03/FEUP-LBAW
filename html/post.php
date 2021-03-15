@@ -37,7 +37,7 @@
             <div class="card post-page-post-card justify-content-center pb-5" style="border-radius:5px;">
 
                 <div class="post-page-save-post-bookmark savePost">
-                    <i class="bi bi-bookmark-plus-fill" title="Save/unsave post" style="font-size:3em;"></i>
+                    <i class="bi bi-bookmark-plus-fill" title="Save/unsave post" style="font-size:3em; cursor:pointer;"></i>
                 </div>
 
                 <div class="container-fluid d-flex justify-content-center">
