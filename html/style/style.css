@@ -1,7 +1,7 @@
 /****************** NAVBAR ****************/
 
 .navbar-custom .navbar-nav a{
-  color:grey;
+  color:#808080;
   font-size:18px;
   margin:0;
 }
@@ -948,7 +948,8 @@ summary.role-sum:hover{
 }
 
 .post-page-post-author-date{
-  font-weight: 500;
+  font-weight: 400;
+  font-family: 'Roboto', sans-serif;
   font-size:large;
   color: #0C1D1C;
 }
@@ -972,21 +973,60 @@ summary.role-sum:hover{
   font-size: large;
 }
 
+.post-page-post-tags a{
+  color: #0C1D1C;
+  font-family: 'Roboto', sans-serif;
+  font-size: large;
+  font-weight: normal;
+  text-decoration-style: dashed;
+  text-decoration-color: #0C1D1C;
+}
+.post-page-post-tags a:hover{
+  color: #307371;
+  font-family: 'Roboto', sans-serif;
+  font-size: large;
+  font-weight: normal;
+  text-decoration-style: dashed;
+  text-decoration-color: #307371;
+}
+
+.post-page-post-tags-indicator{
+  color: #0C1D1C;
+  font-family: 'Roboto', sans-serif;
+  font-size: large;
+  font-weight:700;
+}
+
 
 .post-page-post-tag{
-  color: #EFF9FA
+  color: #EFF9FA;
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  font-weight:400;
+  text-decoration: none;
+  
 }
 .post-page-post-tag:hover{
   color: #EFF9FA;
-  text-decoration: underline;
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  font-weight:400;
+  text-decoration: none;
 }
 
 .post-page-tag-container{
-  outline-width: 0;
   background-color: #0C1D1C;
 }
-.post-page-tag-container .fa-star{
-  color: #EFF9FA;
+.post-page-tag-container:hover{
+  background-color: #307371;
+}
+
+.post-page-post-tags-indicator{
+  font-family: 'Roboto', sans-serif;
+  font-size: medium;
+  font-weight:400;
 }
 
 
@@ -1009,24 +1049,176 @@ summary.role-sum:hover{
 }
 
 .post-page-post-report-button{
-  color: #EFF9FA;
-  background-color: #0C1D1C;
+  color: #0C1D1C;
+  background-color: transparent;
   font-size:x-large;
-  font-family: 'Roboto', sans-serif;
 }
 .post-page-post-report-button:hover{
-  color: #EFF9FA;
-  background-color: #307371;
-  font-family: 'Roboto', sans-serif;
+  color: #307371;
+  background-color: transparent;
+  font-size:xx-large;
 }
 
 
-.post-page-add-comment-label{
+.comment-indicator-row{
+  border-bottom: medium solid #0C1D1C;
+}
+
+.post-comment-indicator h3{
+  color: #0C1D1C;
+  font-family: 'Roboto', sans-serif;
+  font-size: larger;
+  font-weight: 400;
+}
+
+.comment-sort-by-button{
   background-color: transparent;
+  border-style: none;
+  color: #0C1D1C;
+  font-family: 'Roboto', sans-serif;
+  font-size: larger;
+  box-shadow: none;
+}
+.comment-sort-by-button:hover{
+  background-color: transparent;
+  border-style: none;
+  color: #307371;
+  font-family: 'Roboto', sans-serif;
+  font-size: larger;
+  box-shadow: none;
+}
+.comment-sort-by-button:focus{
+  background-color: transparent;
+  border-style: none;
+  color: #0C1D1C;
+  font-family: 'Roboto', sans-serif;
+  font-size: larger;
+  box-shadow: none;
+}
+
+.post-page-comment{
+  background-color: #EFF9FA;
+  /*border-radius: 5px;*/
+  border-left: thick solid #0C1D1C;
+}
+
+.post-page-comment-body{
   font-family: 'Roboto', sans-serif;
   font-size: medium;
+  font-weight: 400;
+  color: #0C1D1C;
 }
 
+.post-page-comment-author-date{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  font-weight: 400;
+  color: #0C1D1C;
+}
+
+.post-page-comment-author-date a{
+  color: #307371;
+  text-decoration: unset;
+}
+.post-page-comment-author-date a:hover{
+  color: #307371;
+  text-decoration: underline;
+}
+
+.post-page-comment-interactions{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  font-weight: 400;
+  color: gray;
+}
+
+.post-page-comment-interactions i{
+  font-size: small;
+  color: #0C1D1C;
+}
+.post-page-comment-interactions i:hover{
+  font-size: large;
+  color: #307371;
+}
+
+.post-page-comment-interactions i.fa-comments{
+  font-size: small;
+  color: gray;
+}
+.post-page-comment-interactions i.fa-comments:hover{
+  font-size: small;
+  color: gray;
+}
+
+.post-page-report-comment{
+  font-size: small;
+  color: #0C1D1C;
+}
+.post-page-report-comment:hover{
+  font-size: large;
+  color: #307371;
+}
+
+.post-page-comment-reply{
+  background-color: #FFFFFF;
+  border-left: thick solid #307371;
+}
+
+.post-page-comment-reply-body{
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  font-weight: 400;
+  color: #0C1D1C;
+}
+
+h3.post-page-comment-reply-interactions{
+  font-family: 'Roboto', sans-serif;
+  font-size:smaller;
+  font-weight: 400;
+  color: gray;
+}
+
+.post-page-comment-reply-interactions i{
+  font-size: small;
+  color: #0C1D1C;
+}
+.post-page-comment-reply-interactions i:hover{
+  font-size:large;
+  color: #307371;
+}
+
+.post-page-comment-reply-interactions i.fa-comments{
+  font-size: small;
+  color: gray;
+}
+.post-page-comment-reply-interactions i.fa-comments:hover{
+  font-size: small;
+  color: gray;
+}
+
+.post-page-comment-reply-author-date{
+  font-family: 'Roboto', sans-serif;
+  font-size:smaller;
+  font-weight: 400;
+  color: #0C1D1C;
+}
+
+.post-page-comment-reply-author-date a{
+  color: #307371;
+  text-decoration: unset;
+}
+.post-page-comment-reply-author-date a:hover{
+  color: #307371;
+  text-decoration: underline;
+}
+
+.post-page-comment-reply-editor{
+  background-color: transparent;
+}
+
+.post-page-comment-reply-editor .form-control{
+  border-radius: 0px;
+}
 
 .post-page-comment-button{
   background-color: #0C1D1C;
@@ -1041,59 +1233,24 @@ summary.role-sum:hover{
   font-size: medium;
 }
 
-
-.post-page-comment{
-  background-color: #EFF9FA;
-  border-radius: 5px;
-  border-style: solid;
-  border-color: #ADE1E5;
-  border-width: thin;
-}
-
-.post-page-comment-body{
+.post-page-load-comments-button{
+  background-color: #0C1D1C;
+  color: #EFF9FA;
   font-family: 'Roboto', sans-serif;
   font-size: medium;
-  color: #0C1D1C;
 }
-
-.post-page-comment-author-date{
+.post-page-load-comments-button:hover{
+  background-color: #307371;
+  color: #EFF9FA;
   font-family: 'Roboto', sans-serif;
-  font-size: small;
-  color: #0C1D1C;
+  font-size: medium;
 }
-
-.post-page-comment-author-date a{
-  color: #307371;
-  text-decoration: unset;
-}
-.post-page-comment-author-date a:hover{
-  color: #307371;
-  text-decoration: underline;
-}
-
-
-.post-page-comment-reply{
-  background-color: #FFFFFF;
-  border-radius: 5px;
-  border-style: solid;
-  border-width: thin;
-  border-color: #FCF3EE;
-}
-
-.post-page-comment-reply-editor{
-  background-color: transparent;
-}
-
 
 
 
 /*******************************************/
 /*************** MY POST PAGE **************/
 /*******************************************/
-
-.my-post-page-post-card{
-  background-color: #8ab5b1; 
-}
 
 .my-post-page-settings{
   position: absolute;
@@ -1102,41 +1259,16 @@ summary.role-sum:hover{
   color: #0c1d1c;
 }
 
-.my-post-page-settings:hover {
+.my-post-page-settings a:hover{
   color: #307371;
 }
 
-
-.my-post-page-post-title{
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  color: #0C1D1C;
+.my-post-page-settings .dropdown-item:active{
+  background-color: #307371;
+  color: white;
 }
 
-.my-post-page-post-author-date{
-  font-weight: 500;
-  font-size:large;
-  color: #0C1D1C;
-}
 
-.my-post-page-post-author-date a{
-  color: #307371;
-  text-decoration: unset;
-}
-.my-post-page-post-author-date a:hover{
-  color: #307371;
-  text-decoration: underline;
-}
-
-.my-post-page-post-interactions{
-  font-size: small;
-  color: #0C1D1C;
-}
-
-.my-post-page-post-text{
-  font-family: 'Roboto', sans-serif;
-  font-size: large;
-}
 
 .my-post-page-post-tag{
   color: #EFF9FA
@@ -1154,61 +1286,6 @@ summary.role-sum:hover{
   color: #EFF9FA;
 }
 
-.my-post-page-comment{
-  background-color: #EFF9FA;
-  border-radius: 5px;
-  border-style: solid;
-  border-color: #ADE1E5;
-  border-width: thin;
-}
-
-.my-post-page-comment-body{
-  font-family: 'Roboto', sans-serif;
-  font-size: medium;
-  color: #0C1D1C;
-}
-
-.my-post-page-comment-author-date{
-  font-family: 'Roboto', sans-serif;
-  font-size: small;
-  color: #0C1D1C;
-}
-
-.my-post-page-comment-author-date a{
-  color: #307371;
-  text-decoration: unset;
-}
-.my-post-page-comment-author-date a:hover{
-  color: #307371;
-  text-decoration: underline;
-}
-
-.my-post-page-comment-reply{
-  background-color: #FFFFFF;
-  border-radius: 5px;
-  border-style: solid;
-  border-width: thin;
-  border-color: #FCF3EE;
-}
-
-.my-post-page-comment-reply-editor{
-  background-color: transparent;
-}
-
-.my-post-page-comment-button{
-  background-color: #0C1D1C;
-  color: #EFF9FA;
-  font-family: 'Roboto', sans-serif;
-  font-size: medium;
-}
-.my-post-page-comment-button:hover{
-  background-color: #307371;
-  color: #EFF9FA;
-  font-family: 'Roboto', sans-serif;
-  font-size: medium;
-}
-
-
 
 /*******************************************/
 /********** CREATE/EDIT POST PAGE **********/
@@ -1219,6 +1296,10 @@ summary.role-sum:hover{
 }
 .edit-post-page-post-card{
   background-color: #8ab5b1; 
+}
+
+.post-page-save-post-bookmark i:hover{
+  color: #ffc2ad;
 }
 
 .create-post-editor-container p{
