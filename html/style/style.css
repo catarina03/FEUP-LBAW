@@ -847,34 +847,28 @@ a.footer-link:hover {
 
 .post-page-post-thumbs-up-button i {
   color: #0c1d1c;
-  font-size: x-large;
-}
-
-.post-page-post-thumbs-up-button i:hover {
-  color: #307371;
-  color: #ffc2ad;
-  color: #fcf3ee;
   font-size: xx-large;
+}
+.post-page-post-thumbs-up-button i:hover {
+  color: green;
 }
 
 .post-page-post-thumbs-down-button i {
   color: #0c1d1c;
-  font-size: x-large;
+  font-size: xx-large;
 }
 .post-page-post-thumbs-down-button i:hover {
-  color: #307371;
-  font-size: xx-large;
+  color: darkred;
 }
 
 .post-page-post-report-button{
   color: #0C1D1C;
   background-color: transparent;
-  font-size:x-large;
+  font-size:xx-large;
 }
 .post-page-post-report-button:hover{
-  color: #307371;
+  color: red;
   background-color: transparent;
-  font-size:xx-large;
 }
 
 
@@ -955,31 +949,40 @@ a.footer-link:hover {
   color: gray;
 }
 
-.post-page-comment-interactions i{
-  font-size: small;
+.post-page-comment-interactions .fa-thumbs-up{
+  font-size: medium;
   color: #0C1D1C;
 }
-.post-page-comment-interactions i:hover{
-  font-size: large;
-  color: #307371;
+.post-page-comment-interactions .fa-thumbs-up:hover{
+  font-size: medium;
+  color: green;
+}
+
+.post-page-comment-interactions .fa-thumbs-down{
+  font-size: medium;
+  color: #0C1D1C;
+}
+.post-page-comment-interactions .fa-thumbs-down:hover{
+  font-size: medium;
+  color: darkred;
 }
 
 .post-page-comment-interactions i.fa-comments{
-  font-size: small;
+  font-size: medium;
   color: gray;
 }
 .post-page-comment-interactions i.fa-comments:hover{
-  font-size: small;
+  font-size: medium;
   color: gray;
 }
 
 .post-page-report-comment{
-  font-size: small;
+  font-size: medium;
   color: #0C1D1C;
 }
 .post-page-report-comment:hover{
-  font-size: large;
-  color: #307371;
+  font-size: medium;
+  color: red;
 }
 
 .post-page-comment-reply{
