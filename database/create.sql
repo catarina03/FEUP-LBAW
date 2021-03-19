@@ -131,28 +131,28 @@ CREATE TABLE report_motive(
 );
 
 CREATE TABLE post_tag(
-    id_post REFERENCES post(id) ON DELETE CASCADE,
-    id_tag REFERENCES tag(id) ON DELETE CASCADE
+    id_post NOT NULL REFERENCES post(id) ON DELETE CASCADE,
+    id_tag NOT NULL REFERENCES tag(id) ON DELETE CASCADE
 );
 
 CREATE TABLE authors(
-    id_user REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    id_post REFERENCES post(id) ON DELETE CASCADE
+    id_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_post NOT NULL REFERENCES post(id) ON DELETE CASCADE
 );
 
 CREATE TABLE saves(
-    id_user REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    id_post REFERENCES post(id) ON DELETE CASCADE
+    id_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_post NOT NULL REFERENCES post(id) ON DELETE CASCADE
 );
 
 CREATE TABLE block_user(
-    blocking_user REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    blocked_user REFERENCES authenticated_user(id) ON DELETE CASCADE
+    blocking_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    blocked_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE follow_user(
-    following_user REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    followed_user REFERENCES authenticated_user(id)ON DELETE CASCADE
+    following_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    followed_user NOT NULL REFERENCES authenticated_user(id)ON DELETE CASCADE
 );
 
 CREATE TABLE assign_report (
