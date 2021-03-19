@@ -29,17 +29,14 @@ DROP TABLE IF EXISTS vote_notification;
 DROP TABLE IF EXISTS comment_notification;
 DROP TABLE IF EXISTS post_report_notification;
 DROP TABLE IF EXISTS comment_report_notification;
-
-
-
--- Drop types
 DROP TYPE IF EXISTS category_types;
 DROP TYPE IF EXISTS post_types;
-
+DROP TYPE IF EXISTS report_motives;
 
 -- Types
 CREATE TYPE category_types AS ENUM ('music', 'tv show', 'cinema', 'theatre', 'literature');
 CREATE TYPE post_types AS ENUM ('news', 'article','review');
+CREATE TYPE report_motives AS ENUM ('Fake news', 'Innapropriate content', 'Abusive content', 'Hate speech', 'Other');
 
 CREATE TABLE post(
     id integer PRIMARY KEY,
@@ -124,82 +121,80 @@ CREATE TABLE faq(
 
 CREATE TABLE report_motive(
     id integer PRIMARY KEY,
-    question text NOT NULL,
-    answer text NOT NULL
+    motive report_motives NOT NULL
 );
 
 CREATE TABLE post_tag(
-    id_post INTEGER,
-    id_tag INTEGER,
-    PRIMARY KEY(id_post,id_tag) REFERENCES(post,tag) ON DELETE CASCADE
-    
+    id_post integer REFERENCES post(id) ON DELETE CASCADE,
+    id_tag integer REFERENCES tag(id) ON DELETE CASCADE,
+    CONSTRAINT pk_post_tag PRIMARY KEY (id_post, id_tag)
 );
 
 CREATE TABLE authors(
-    id_user INTEGER,
-    id_post INTEGER,
-    PRIMARY KEY(id_user,id_post) REFERENCES(authenticated_user,post) ON DELETE CASCADE
+    id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_post integer REFERENCES post(id) ON DELETE CASCADE,
+    CONSTRAINT pk_user_post PRIMARY KEY (id_user, id_post)
 );
 
 CREATE TABLE saves(
-    id_user INTEGER,
-    id_post INTEGER,
-    PRIMARY KEY(id_user,id_post) REFERENCES(authenticated_user,post) ON DELETE CASCADE
+    id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_post integer REFERENCES post(id) ON DELETE CASCADE,
+    CONSTRAINT pk_user_post PRIMARY KEY (id_user, id_post)
 );
 
 CREATE TABLE block_user(
-    blocking_user INTEGER,
-    blocked_user INTEGER,
-    PRIMARY KEY(blocking_user,blocked_user) REFERENCES(authenticated_user,authenticated_user) ON DELETE CASCADE
+    blocking_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    blocked_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    CONSTRAINT pk_blocking_blocked PRIMARY KEY (blocking_user, blocked_user)
 );
 
 CREATE TABLE follow_user(
-    following_user INTEGER,
-    followed_user INTEGER,
-    PRIMARY KEY(following_user,followed_user) REFERENCES(authenticated_user,authenticated_user) ON DELETE CASCADE
+    following_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    followed_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    CONSTRAINT pk_following_followed PRIMARY KEY (following_user, followed_user)
 );
 
 CREATE TABLE assign_report (
     id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
     id_report integer REFERENCES report(id) ON DELETE CASCADE,
-    CONSTRAINT pk_user_report PRIMARY KEY (id_user, id_report))
+    CONSTRAINT pk_user_report PRIMARY KEY (id_user, id_report)
 );
 
 CREATE TABLE vote_post (
     id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
     id_post integer REFERENCES post(id) ON DELETE CASCADE,
     like boolean NOT NULL,
-    CONSTRAINT pk_user_post PRIMARY KEY (id_user, id_post))
+    CONSTRAINT pk_user_post PRIMARY KEY (id_user, id_post)
 );
 
 CREATE TABLE follow_category (
     id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
     id_category integer REFERENCES category(id) ON DELETE CASCADE,
-    CONSTRAINT pk_user_category PRIMARY KEY (id_user, id_category))
+    CONSTRAINT pk_user_category PRIMARY KEY (id_user, id_category)
 );
 
 CREATE TABLE follow_tag (
     id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
     id_tag integer REFERENCES tag(id) ON DELETE CASCADE,
-    CONSTRAINT pk_user_tag PRIMARY KEY (id_user, id_tag))
+    CONSTRAINT pk_user_tag PRIMARY KEY (id_user, id_tag)
 );
 
 CREATE TABLE follow_type (
     id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
     id_type integer REFERENCES type(id) ON DELETE CASCADE,
-    CONSTRAINT pk_user_type PRIMARY KEY (id_user, id_type))
+    CONSTRAINT pk_user_type PRIMARY KEY (id_user, id_type)
 );
 
 CREATE TABLE thread_comment (
-    id_comment integer REFERENCES comment(id) PRIMARY KEY ON DELETE CASCADE,
-    id_initial_comment integer REFERENCES comment(id) NOT NULL ON DELETE CASCADE
+    id_comment integer PRIMARY KEY REFERENCES comment(id) ON DELETE CASCADE,
+    id_initial_comment integer NOT NULL REFERENCES comment(id) ON DELETE CASCADE
 );
 
 CREATE TABLE vote_comment (
     id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
     id_comment integer REFERENCES comment(id) ON DELETE CASCADE,
     like boolean NOT NULL,
-    CONSTRAINT pk_user_comment PRIMARY KEY (id_user, id_comment))
+    CONSTRAINT pk_user_comment PRIMARY KEY (id_user, id_comment)
 );
 
 CREATE TABLE post_report(
