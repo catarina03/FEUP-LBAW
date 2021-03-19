@@ -131,23 +131,33 @@ CREATE TABLE report_motive(
 );
 
 CREATE TABLE post_tag(
+    id_post INTEGER,
+    id_tag INTEGER,
     PRIMARY KEY(id_post,id_tag) REFERENCES(post,tag) ON DELETE CASCADE
     
 );
 
 CREATE TABLE authors(
+    id_user INTEGER,
+    id_post INTEGER,
     PRIMARY KEY(id_user,id_post) REFERENCES(authenticated_user,post) ON DELETE CASCADE
 );
 
 CREATE TABLE saves(
+    id_user INTEGER,
+    id_post INTEGER,
     PRIMARY KEY(id_user,id_post) REFERENCES(authenticated_user,post) ON DELETE CASCADE
 );
 
 CREATE TABLE block_user(
+    blocking_user INTEGER,
+    blocked_user INTEGER,
     PRIMARY KEY(blocking_user,blocked_user) REFERENCES(authenticated_user,authenticated_user) ON DELETE CASCADE
 );
 
 CREATE TABLE follow_user(
+    following_user INTEGER,
+    followed_user INTEGER,
     PRIMARY KEY(following_user,followed_user) REFERENCES(authenticated_user,authenticated_user) ON DELETE CASCADE
 );
 
