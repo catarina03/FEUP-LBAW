@@ -131,28 +131,24 @@ CREATE TABLE report_motive(
 );
 
 CREATE TABLE post_tag(
-    id_post NOT NULL REFERENCES post(id) ON DELETE CASCADE,
-    id_tag NOT NULL REFERENCES tag(id) ON DELETE CASCADE
+    PRIMARY KEY(id_post,id_tag) REFERENCES(post,tag) ON DELETE CASCADE
+    
 );
 
 CREATE TABLE authors(
-    id_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    id_post NOT NULL REFERENCES post(id) ON DELETE CASCADE
+    PRIMARY KEY(id_user,id_post) REFERENCES(authenticated_user,post) ON DELETE CASCADE
 );
 
 CREATE TABLE saves(
-    id_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    id_post NOT NULL REFERENCES post(id) ON DELETE CASCADE
+    PRIMARY KEY(id_user,id_post) REFERENCES(authenticated_user,post) ON DELETE CASCADE
 );
 
 CREATE TABLE block_user(
-    blocking_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    blocked_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE
+    PRIMARY KEY(blocking_user,blocked_user) REFERENCES(authenticated_user,authenticated_user) ON DELETE CASCADE
 );
 
 CREATE TABLE follow_user(
-    following_user NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    followed_user NOT NULL REFERENCES authenticated_user(id)ON DELETE CASCADE
+    PRIMARY KEY(following_user,followed_user) REFERENCES(authenticated_user,authenticated_user) ON DELETE CASCADE
 );
 
 CREATE TABLE assign_report (
