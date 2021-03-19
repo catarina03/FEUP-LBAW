@@ -7,6 +7,13 @@ DROP TABLE IF EXISTS photo;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS support;
+DROP TABLE IF EXISTS faq;
+DROP TABLE IF EXISTS report_motive;
+DROP TABLE IF EXISTS post_tag;
+DROP TABLE IF EXISTS authors;
+DROP TABLE IF EXISTS saves;
+DROP TABLE IF EXISTS block_user;
+DROP TABLE IF EXISTS follow_user;
 DROP TABLE IF EXISTS assign_report;
 DROP TABLE IF EXISTS vote_post;
 DROP TABLE IF EXISTS follow_category;
@@ -107,6 +114,49 @@ CREATE TABLE support(
     frequency text NOT NULL,
     impact integer NOT NULL,
     contact text NOT NULL
+);
+
+CREATE TABLE faq(
+    id integer PRIMARY KEY,
+    question text NOT NULL,
+    answer text NOT NULL
+);
+
+CREATE TABLE report_motive(
+    id integer PRIMARY KEY,
+    question text NOT NULL,
+    answer text NOT NULL
+);
+
+CREATE TABLE post_tag(
+    id_post INTEGER,
+    id_tag INTEGER,
+    PRIMARY KEY(id_post,id_tag) REFERENCES(post,tag) ON DELETE CASCADE
+    
+);
+
+CREATE TABLE authors(
+    id_user INTEGER,
+    id_post INTEGER,
+    PRIMARY KEY(id_user,id_post) REFERENCES(authenticated_user,post) ON DELETE CASCADE
+);
+
+CREATE TABLE saves(
+    id_user INTEGER,
+    id_post INTEGER,
+    PRIMARY KEY(id_user,id_post) REFERENCES(authenticated_user,post) ON DELETE CASCADE
+);
+
+CREATE TABLE block_user(
+    blocking_user INTEGER,
+    blocked_user INTEGER,
+    PRIMARY KEY(blocking_user,blocked_user) REFERENCES(authenticated_user,authenticated_user) ON DELETE CASCADE
+);
+
+CREATE TABLE follow_user(
+    following_user INTEGER,
+    followed_user INTEGER,
+    PRIMARY KEY(following_user,followed_user) REFERENCES(authenticated_user,authenticated_user) ON DELETE CASCADE
 );
 
 CREATE TABLE assign_report (
