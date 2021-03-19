@@ -29,11 +29,12 @@ DROP TABLE IF EXISTS vote_notification;
 DROP TABLE IF EXISTS comment_notification;
 DROP TABLE IF EXISTS post_report_notification;
 DROP TABLE IF EXISTS comment_report_notification;
+
+-- Types
 DROP TYPE IF EXISTS category_types;
 DROP TYPE IF EXISTS post_types;
 DROP TYPE IF EXISTS report_motives;
 
--- Types
 CREATE TYPE category_types AS ENUM ('music', 'tv show', 'cinema', 'theatre', 'literature');
 CREATE TYPE post_types AS ENUM ('news', 'article','review');
 CREATE TYPE report_motives AS ENUM ('Fake news', 'Innapropriate content', 'Abusive content', 'Hate speech', 'Other');
