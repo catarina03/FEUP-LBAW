@@ -7,8 +7,13 @@ DROP TABLE IF EXISTS photo;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS support;
-
-
+DROP TABLE IF EXISTS assign_report;
+DROP TABLE IF EXISTS vote_post;
+DROP TABLE IF EXISTS follow_category;
+DROP TABLE IF EXISTS follow_tag;
+DROP TABLE IF EXISTS follow_type;
+DROP TABLE IF EXISTS thread_comment;
+DROP TABLE IF EXISTS vote_comment;
 
 -- Drop types
 DROP TYPE IF EXISTS category_types;
@@ -30,9 +35,6 @@ CREATE TABLE post(
     id_type integer NOT NULL REFERENCES type(id) ON DELETE CASCADE,
     id_category integer NOT NULL REFERENCES category(id) ON DELETE CASCADE,
 );
-
-
-
 
 CREATE TABLE authenticated_user (
     id integer PRIMARY KEY,
@@ -95,4 +97,47 @@ CREATE TABLE support(
     frequency text NOT NULL,
     impact integer NOT NULL,
     contact text NOT NULL
+);
+
+CREATE TABLE assign_report (
+    id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_report integer REFERENCES report(id) ON DELETE CASCADE,
+    CONSTRAINT pk_user_report PRIMARY KEY (id_user, id_report))
+);
+
+CREATE TABLE vote_post (
+    id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_post integer REFERENCES post(id) ON DELETE CASCADE,
+    like boolean NOT NULL,
+    CONSTRAINT pk_user_post PRIMARY KEY (id_user, id_post))
+);
+
+CREATE TABLE follow_category (
+    id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_category integer REFERENCES category(id) ON DELETE CASCADE,
+    CONSTRAINT pk_user_category PRIMARY KEY (id_user, id_category))
+);
+
+CREATE TABLE follow_tag (
+    id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_tag integer REFERENCES tag(id) ON DELETE CASCADE,
+    CONSTRAINT pk_user_tag PRIMARY KEY (id_user, id_tag))
+);
+
+CREATE TABLE follow_type (
+    id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_type integer REFERENCES type(id) ON DELETE CASCADE,
+    CONSTRAINT pk_user_type PRIMARY KEY (id_user, id_type))
+);
+
+CREATE TABLE thread_comment (
+    id_comment integer REFERENCES comment(id) PRIMARY KEY ON DELETE CASCADE,
+    id_initial_comment integer REFERENCES comment(id) NOT NULL ON DELETE CASCADE
+);
+
+CREATE TABLE vote_comment (
+    id_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    id_comment integer REFERENCES comment(id) ON DELETE CASCADE,
+    like boolean NOT NULL,
+    CONSTRAINT pk_user_comment PRIMARY KEY (id_user, id_comment))
 );
