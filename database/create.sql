@@ -15,6 +15,18 @@ DROP TABLE IF EXISTS follow_type;
 DROP TABLE IF EXISTS thread_comment;
 DROP TABLE IF EXISTS vote_comment;
 
+-- 24 - 31
+DROP TABLE IF EXISTS post_report;
+DROP TABLE IF EXISTS comment_report;
+DROP TABLE IF EXISTS publish_notification;
+DROP TABLE IF EXISTS follow_notification;
+DROP TABLE IF EXISTS vote_notification;
+DROP TABLE IF EXISTS comment_notification;
+DROP TABLE IF EXISTS post_report_notification;
+DROP TABLE IF EXISTS comment_report_notification;
+
+
+
 -- Drop types
 DROP TYPE IF EXISTS category_types;
 DROP TYPE IF EXISTS post_types;
@@ -140,4 +152,64 @@ CREATE TABLE vote_comment (
     id_comment integer REFERENCES comment(id) ON DELETE CASCADE,
     like boolean NOT NULL,
     CONSTRAINT pk_user_comment PRIMARY KEY (id_user, id_comment))
+);
+
+
+-- 24 - 31
+CREATE TABLE post_report(
+    id integer PRIMARY KEY,
+    reported_date DATE NOT NULL,
+    id_motive text NOT NULL REFERENCES motive(id) ON DELETE CASCADE,
+    closed BOOLEAN NOT NULL,
+    closed_date DATE,
+    id_post INTEGER NOT NULL REFERENCES post(id) ON DELETE CASCADE,
+);
+
+CREATE TABLE post_report(
+    id integer PRIMARY KEY,
+    reported_date DATE NOT NULL,
+    id_motive text NOT NULL REFERENCES motive(id) ON DELETE CASCADE,
+    closed BOOLEAN NOT NULL,
+    closed_date DATE,
+    id_comment INTEGER NOT NULL REFERENCES comment(id) ON DELETE CASCADE,
+);
+
+CREATE TABLE publish_notification(
+    id integer PRIMARY KEY,
+    id_user INTEGER NOT NULL REFERENCES authenticated_user(id),
+    message TEXT NOT NULL,
+    received_date DATE NOT NULL,
+    id_post INTEGER NOT NULL REFERENCES post(id) ON DELETE CASCADE,
+);
+
+CREATE TABLE follow_notification(
+    id integer PRIMARY KEY,
+    id_receiver INTEGER NOT NULL REFERENCES authenticated_user(id),
+    message TEXT NOT NULL,
+    received_date DATE NOT NULL,
+    id_follower INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+);
+
+CREATE TABLE vote_notification(
+    id integer PRIMARY KEY,
+    id_user INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    message TEXT NOT NULL,
+    received_date DATE NOT NULL,
+    id_post INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+);
+
+CREATE TABLE comment_notification(
+    id integer PRIMARY KEY,
+    id_user INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    message TEXT NOT NULL,
+    received_date DATE NOT NULL,
+    id_post_report INTEGER NOT NULL REFERENCES post_report(id) ON DELETE CASCADE,
+);
+
+CREATE TABLE post_report_notification(
+    id integer PRIMARY KEY,
+    id_user INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    message TEXT NOT NULL,
+    received_date DATE NOT NULL,
+    id_comment_report INTEGER NOT NULL REFERENCES comment_report(id) ON DELETE CASCADE,
 );
