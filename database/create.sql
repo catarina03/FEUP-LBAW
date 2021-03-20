@@ -40,7 +40,7 @@ CREATE TYPE post_types AS ENUM ('news', 'article','review');
 CREATE TYPE report_motives AS ENUM ('Fake news', 'Innapropriate content', 'Abusive content', 'Hate speech', 'Other');
 
 CREATE TABLE post(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     title text NOT NULL,
     thumbnail text NOT NULL,
     content text NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE post(
 );
 
 CREATE TABLE authenticated_user (
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     username text UNIQUE NOT NULL,
     name text NOT NULL,
     email text UNIQUE NOT NULL ,
@@ -72,41 +72,41 @@ CREATE TABLE authenticated_user (
 );
 
 CREATE TABLE category(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name category_types UNIQUE NOT NULL
 );
 
 CREATE TABLE type(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name post_types UNIQUE NOT NULL
 );
 
 CREATE TABLE tag(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name text UNIQUE NOT NULL
 );
 
 CREATE TABLE photo(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     path text NOT NULL,
     id_post integer NOT NULL REFERENCES photo(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comment(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     content text NOT NULL,
     comment_date DATE NOT NULL,
     id_post integer NOT NULL REFERENCES post(id) ON DELETE CASCADE
 );
 
 CREATE TABLE notification(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     message_text text NOT NULL,
     received_date DATE NOT NULL
 );
 
 CREATE TABLE support(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     problem text NOT NULL,
     browser text NOT NULL,
     frequency text NOT NULL,
@@ -115,13 +115,13 @@ CREATE TABLE support(
 );
 
 CREATE TABLE faq(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     question text NOT NULL,
     answer text NOT NULL
 );
 
 CREATE TABLE report_motive(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     motive report_motives NOT NULL
 );
 
@@ -199,7 +199,7 @@ CREATE TABLE vote_comment (
 );
 
 CREATE TABLE post_report(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     reported_date DATE NOT NULL,
     id_motive text NOT NULL REFERENCES motive(id) ON DELETE CASCADE,
     closed boolean NOT NULL,
@@ -208,7 +208,7 @@ CREATE TABLE post_report(
 );
 
 CREATE TABLE comment_report(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     reported_date DATE NOT NULL,
     id_motive text NOT NULL REFERENCES motive(id) ON DELETE CASCADE,
     closed BOOLEAN NOT NULL,
@@ -217,7 +217,7 @@ CREATE TABLE comment_report(
 );
 
 CREATE TABLE publish_notification(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     id_user integer NOT NULL REFERENCES authenticated_user(id),
     message text NOT NULL,
     received_date DATE NOT NULL,
@@ -225,7 +225,7 @@ CREATE TABLE publish_notification(
 );
 
 CREATE TABLE follow_notification(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     id_user integer NOT NULL REFERENCES authenticated_user(id),
     message text NOT NULL,
     received_date date NOT NULL,
@@ -233,7 +233,7 @@ CREATE TABLE follow_notification(
 );
 
 CREATE TABLE vote_notification(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     id_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
     message text NOT NULL,
     received_date date NOT NULL,
@@ -241,7 +241,7 @@ CREATE TABLE vote_notification(
 );
 
 CREATE TABLE comment_notification(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     id_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
     message text NOT NULL,
     received_date date NOT NULL,
@@ -249,7 +249,7 @@ CREATE TABLE comment_notification(
 );
 
 CREATE TABLE post_report_notification(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     id_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
     message text NOT NULL,
     received_date date NOT NULL,
@@ -257,7 +257,7 @@ CREATE TABLE post_report_notification(
 );
 
 CREATE TABLE comment_report_notification(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     id_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
     message text NOT NULL,
     received_date date NOT NULL,
