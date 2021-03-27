@@ -41,17 +41,17 @@ CREATE TABLE tag(
 
 CREATE TABLE photo(
     id SERIAL PRIMARY KEY,
-    path text NOT NULL,
+    photo BYTEA NOT NULL,
     post_id integer NOT NULL REFERENCES photo(id) ON DELETE CASCADE
 );
 
 CREATE TABLE post(
     id SERIAL PRIMARY KEY,
     title text NOT NULL,
-    thumbnail text NOT NULL,
+    thumbnail BYTEA NOT NULL,
     content text NOT NULL,
     is_spoiler boolean DEFAULT FALSE,
-    created_at DATE DEFAULT NOW() NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
     n_views integer NOT NULL DEFAULT 0,
     type post_types NOT NULL,
     category category_types NOT NULL,
@@ -65,14 +65,15 @@ CREATE TABLE authenticated_user (
     email text UNIQUE NOT NULL ,
     password text NOT NULL,
     birthdate DATE NOT NULL,
+    bio TEXT NOT NULL DEFAULT 'Welcome to my profile',
     instagram text,
     twitter text,
     facebook text,
     linkedin text,
     show_people_i_follow boolean DEFAULT FALSE NOT NULL,
     show_tags_i_follow boolean DEFAULT FALSE NOT NULL,
-    authenticated_user_type user_types NOT NULL,
-    profile_photo_path text,
+    authenticated_user_type user_types NOT NULL DEFAULT 'Regular',
+    profile_photo BYTEA,
     CONSTRAINT min_age CHECK (birthdate <= (CURRENT_DATE - interval '13' year ))
 );
 
@@ -85,7 +86,7 @@ CREATE TABLE post_tag(
 CREATE TABLE comment(
     id SERIAL PRIMARY KEY,
     content text NOT NULL,
-    comment_date DATE DEFAULT NOW() NOT NULL,
+    comment_date TIMESTAMP DEFAULT NOW() NOT NULL,
     post_id integer NOT NULL REFERENCES post(id) ON DELETE CASCADE,
     comment_id integer  REFERENCES comment(id) ON DELETE CASCADE
 );
@@ -157,8 +158,8 @@ CREATE TABLE report(
     closed BOOLEAN NOT NULL DEFAULT false,
     closed_date DATE,
     motive report_motives NOT NULL,
-    user_reporting integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    user_assigned integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    user_reporting integer REFERENCES authenticated_user(id),
+    user_assigned integer REFERENCES authenticated_user(id),
     comment_reported integer REFERENCES comment(id) ON DELETE CASCADE,
     post_reported integer  REFERENCES post(id) ON DELETE CASCADE,
     CHECK(user_reporting IS DISTINCT FROM user_assigned), 
@@ -168,7 +169,7 @@ CREATE TABLE report(
 
 CREATE TABLE notification(
     id SERIAL PRIMARY KEY,
-    created_date DATE DEFAULT NOW() NOT NULL,
+    created_date TIMESTAMP DEFAULT NOW() NOT NULL,
     user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE
 );
 
