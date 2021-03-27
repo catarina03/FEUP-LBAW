@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS authenticated_user CASCADE;
 DROP TABLE IF EXISTS tag CASCADE;
 DROP TABLE IF EXISTS post_tag CASCADE;
 DROP TABLE IF EXISTS photo CASCADE;
-DROP TABLE IF EXISTS comment CASCADE;
+DROP TABLE IF EXISTS "comment" CASCADE;
 DROP TABLE IF EXISTS user_comment CASCADE;
 DROP TABLE IF EXISTS saves CASCADE;
 DROP TABLE IF EXISTS support CASCADE;
@@ -39,25 +39,6 @@ CREATE TABLE tag(
     name text UNIQUE NOT NULL
 );
 
-CREATE TABLE photo(
-    id SERIAL PRIMARY KEY,
-    photo BYTEA NOT NULL,
-    post_id integer NOT NULL REFERENCES photo(id) ON DELETE CASCADE
-);
-
-CREATE TABLE post(
-    id SERIAL PRIMARY KEY,
-    title text NOT NULL,
-    thumbnail BYTEA NOT NULL,
-    content text NOT NULL,
-    is_spoiler boolean DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
-    n_views integer NOT NULL DEFAULT 0,
-    type post_types NOT NULL,
-    category category_types NOT NULL,
-    user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE
-);
-
 CREATE TABLE authenticated_user (
     id SERIAL PRIMARY KEY,
     username text UNIQUE NOT NULL,
@@ -77,24 +58,43 @@ CREATE TABLE authenticated_user (
     CONSTRAINT min_age CHECK (birthdate <= (CURRENT_DATE - interval '13' year ))
 );
 
+CREATE TABLE post(
+    id SERIAL PRIMARY KEY,
+    title text NOT NULL,
+    thumbnail BYTEA NOT NULL,
+    content text NOT NULL,
+    is_spoiler boolean DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    n_views integer NOT NULL DEFAULT 0,
+    type post_types NOT NULL,
+    category category_types NOT NULL,
+    user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE
+);
+
+CREATE TABLE photo(
+    id SERIAL PRIMARY KEY,
+    photo BYTEA NOT NULL,
+    post_id integer NOT NULL REFERENCES post(id) ON DELETE CASCADE
+);
+
 CREATE TABLE post_tag(
     post_id integer REFERENCES post(id) ON DELETE CASCADE,
     tag_id integer REFERENCES tag(id) ON DELETE CASCADE,
     CONSTRAINT pk_post_tag PRIMARY KEY (post_id, tag_id)
 );
 
-CREATE TABLE comment(
+CREATE TABLE "comment"(
     id SERIAL PRIMARY KEY,
     content text NOT NULL,
     comment_date TIMESTAMP DEFAULT NOW() NOT NULL,
     post_id integer NOT NULL REFERENCES post(id) ON DELETE CASCADE,
-    comment_id integer  REFERENCES comment(id) ON DELETE CASCADE
+    comment_id integer  REFERENCES "comment"(id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_comment(  
-    comment_id integer REFERENCES comment(id) ON DELETE CASCADE,
+    comment_id integer REFERENCES "comment"(id) ON DELETE CASCADE,
     user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    CONSTRAINT pk_post_tag PRIMARY KEY (comment_id, user_id)
+    CONSTRAINT pk_user_comment PRIMARY KEY (comment_id, user_id)
 );
 
 CREATE TABLE saves(
@@ -133,9 +133,9 @@ CREATE TABLE vote_post (
 
 CREATE TABLE vote_comment (
     user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    comment_id integer REFERENCES comment(id) ON DELETE CASCADE,
+    comment_id integer REFERENCES "comment"(id) ON DELETE CASCADE,
     "like" boolean NOT NULL,
-    CONSTRAINT pk_user_comment PRIMARY KEY (user_id, comment_id)
+    CONSTRAINT pk_vote_comment PRIMARY KEY (user_id, comment_id)
 );
 
 CREATE TABLE block_user(
@@ -153,14 +153,14 @@ CREATE TABLE follow_user(
 );
 
 CREATE TABLE report(
-    report_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     reported_date DATE NOT NULL DEFAULT NOW(),
     closed BOOLEAN NOT NULL DEFAULT false,
     closed_date DATE,
     motive report_motives NOT NULL,
     user_reporting integer REFERENCES authenticated_user(id),
     user_assigned integer REFERENCES authenticated_user(id),
-    comment_reported integer REFERENCES comment(id) ON DELETE CASCADE,
+    comment_reported integer REFERENCES "comment"(id) ON DELETE CASCADE,
     post_reported integer  REFERENCES post(id) ON DELETE CASCADE,
     CHECK(user_reporting IS DISTINCT FROM user_assigned), 
     CHECK((comment_reported IS NULL AND post_reported IS NOT NULL) OR (comment_reported IS NOT NULL AND post_reported IS NULL)),
@@ -189,15 +189,18 @@ CREATE TABLE follow_notification(
 CREATE TABLE vote_notification(
     id SERIAL PRIMARY KEY,
     notification_id integer NOT NULL REFERENCES notification(id) ON DELETE CASCADE,
-    comment_vote_id integer NOT NULL REFERENCES vote_comment(id) ON DELETE CASCADE,
-    post_vote_id integer NOT NULL REFERENCES vote_post(id) ON DELETE CASCADE
-    CHECK((comment_vote_id IS NULL AND post_vote_id IS NOT NULL) OR (comment_vote_id IS NOT NULL AND post_vote_id IS NULL))
+    comment_id integer NOT NULL,
+	user_id integer NOT NULL,
+	post_id integer NOT NULL,
+    CONSTRAINT pk_vote_post_not FOREIGN KEY (user_id, post_id) REFERENCES vote_post(user_id, post_id) ON DELETE CASCADE,
+	CONSTRAINT pk_vote_comment_not FOREIGN KEY (user_id, comment_id) REFERENCES vote_comment(user_id, comment_id) ON DELETE CASCADE,
+    CHECK((comment_id IS NULL AND post_id IS NOT NULL) OR (comment_id IS NOT NULL AND post_id IS NULL))
 );
 
 CREATE TABLE comment_notification(
     id SERIAL PRIMARY KEY,
     notification_id integer NOT NULL REFERENCES notification(id) ON DELETE CASCADE,
-    comment_id integer NOT NULL REFERENCES comment(id) ON DELETE CASCADE
+    comment_id integer NOT NULL REFERENCES "comment"(id) ON DELETE CASCADE
 );
 
 CREATE TABLE report_notification(
