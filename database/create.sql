@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS report_notification CASCADE;
 DROP TYPE IF EXISTS category_types;
 DROP TYPE IF EXISTS post_types;
 DROP TYPE IF EXISTS report_motives;
-DROP TYPE IF EXISTS user_type;
-DROP TYPE IF EXISTS frequency;
+DROP TYPE IF EXISTS user_types;
+DROP TYPE IF EXISTS frequency_types;
 
 CREATE TYPE category_types AS ENUM ('music', 'tv show', 'cinema', 'theatre', 'literature');
 CREATE TYPE post_types AS ENUM ('news', 'article','review');
@@ -189,9 +189,9 @@ CREATE TABLE follow_notification(
 CREATE TABLE vote_notification(
     id SERIAL PRIMARY KEY,
     notification_id integer NOT NULL REFERENCES notification(id) ON DELETE CASCADE,
-    comment_id integer NOT NULL,
+    comment_id integer,
 	user_id integer NOT NULL,
-	post_id integer NOT NULL,
+	post_id integer,
     CONSTRAINT pk_vote_post_not FOREIGN KEY (user_id, post_id) REFERENCES vote_post(user_id, post_id) ON DELETE CASCADE,
 	CONSTRAINT pk_vote_comment_not FOREIGN KEY (user_id, comment_id) REFERENCES vote_comment(user_id, comment_id) ON DELETE CASCADE,
     CHECK((comment_id IS NULL AND post_id IS NOT NULL) OR (comment_id IS NOT NULL AND post_id IS NULL))
