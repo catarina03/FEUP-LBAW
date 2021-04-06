@@ -4902,3 +4902,4 @@ insert into report (reported_date, accepted, closed_date, motive, user_reporting
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2021-01-23', false, '2021-03-24', 'Hate speech', 83, 88, NULL, 93);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-02-24', false, NULL, 'Other', 98, NULL, 156, NULL);
 
+-- notifications are generated automatically using triggers
