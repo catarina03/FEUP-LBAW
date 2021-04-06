@@ -1955,7 +1955,7 @@ insert into comment (content, comment_date, user_id, post_id, comment_id) values
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('This made me laugh!', TIMESTAMP '2020-09-20 10:12:19', 82, null, 1);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('I don''t agree.', TIMESTAMP '2020-11-23 19:10:11', 43, null, 2);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('I doubt that.', TIMESTAMP '2020-04-12 14:10:12', 89, 14, null);
-insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Great post!', TIMESTAMP '2020-07-23 10:00:15', 9, 13, 7);
+insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Great post!', TIMESTAMP '2020-07-23 10:00:15', 9, null, 7);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Interesting take.', TIMESTAMP '2020-06-19 20:20:20', 24, 8, null);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('I had no idea.', TIMESTAMP '2020-06-16 23:14:30', 96, 2, null);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Good point!', TIMESTAMP '2020-11-21 01:10:22', 74, 9, null);
@@ -1967,7 +1967,7 @@ insert into comment (content, comment_date, user_id, post_id, comment_id) values
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Interesting take.', TIMESTAMP '2021-02-01 00:10:50', 59, 11, null);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('I had no idea.', TIMESTAMP '2020-08-25 19:19:19', 32, 21, null);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Wow!', TIMESTAMP '2020-09-29 22:12:10', 46, null, 1);
-insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Great post!', TIMESTAMP '2020-10-27 15:10:22', 51, 3, 7);
+insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Great post!', TIMESTAMP '2020-10-27 15:10:22', 51, null, 7);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Never thought of that!', TIMESTAMP '2020-01-25 13:22:10', 37, 29, null);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Good point!', TIMESTAMP '2020-12-01 15:10:55', 82, 30, null);
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('I don''t agree.', TIMESTAMP '2020-02-25 23:11:10', 54, null, 7);
