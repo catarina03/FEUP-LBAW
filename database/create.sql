@@ -88,7 +88,7 @@ CREATE TABLE "comment"(
     content text NOT NULL,
     user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
     comment_date TIMESTAMP DEFAULT NOW() NOT NULL,
-    post_id integer NOT NULL REFERENCES post(id) ON DELETE CASCADE,
+    post_id integer REFERENCES post(id) ON DELETE CASCADE,
     comment_id integer REFERENCES "comment"(id) ON DELETE CASCADE,
     CHECK ((post_id is not null and comment_id is null) or (comment_id is not null and post_id is null))
 );
