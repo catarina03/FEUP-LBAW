@@ -224,6 +224,7 @@ DROP FUNCTION IF EXISTS generate_report_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_thread_comment_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_vote_comment_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_vote_post_notification() CASCADE;
+DROP FUNCTION IF EXISTS delete_unused_tag() CASCADE; 
 
 -- BLOCK USER
 CREATE FUNCTION block_user() RETURNS TRIGGER AS 
@@ -688,3 +689,28 @@ CREATE TRIGGER generate_publish_notification
    EXECUTE PROCEDURE generate_publish_notification();
   
 
+
+-- CHECKS IF TAG IS USED, IF NOT DELETES IT
+CREATE FUNCTION delete_unused_tag() RETURNS TRIGGER AS 
+$BODY$ 
+DECLARE
+    post_tag_count integer;
+BEGIN 
+    SELECT COUNT(*) INTO post_tag_count
+    FROM tag INNER JOIN post_tag ON tag.id = post_tag.tag_id
+    WHERE OLD.tag_id = tag.id;
+    
+    IF (post_tag_count = 0) THEN
+        DELETE FROM tag
+        WHERE tag.id = OLD.tag_id;
+    END IF;
+    
+    RETURN NULL; 
+END 
+$BODY$ 
+LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_unused_tag
+    AFTER DELETE ON post_tag 
+    FOR EACH ROW 
+    EXECUTE PROCEDURE delete_unused_tag();
