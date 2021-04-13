@@ -220,7 +220,7 @@ WHERE post.id = likes_post.post_id AND post.id = dislikes_post.post_id AND post.
 ---> Search by username
 SELECT id, username, authenticated_user_type
 FROM authenticated_user
-WHERE username ILIKE '%username%';
+WHERE username ILIKE '_username%';
 
 
 --------------------------> INSERT QUERIES
