@@ -1,6 +1,6 @@
 --------------------------> CREATE QUERIES
 
----> Posts order by publication date (visitor)
+---> Posts order by publication date as a visitor
 SELECT title, thumbnail, content, is_spoiler, created_at, n_views, category, post.user_id, n_likes
 FROM post, (SELECT post_id, COUNT(user_id) AS n_likes
 FROM vote_post
@@ -13,19 +13,6 @@ WHERE not exists (SELECT DISTINCT post_id from vote_post WHERE vote_post.like = 
 WHERE likes_post.post_id = post.id
 ORDER BY created_at DESC; 
 
----> Posts order by number of views (visitor)
-SELECT title, thumbnail, content, is_spoiler, created_at, n_views, category, post.user_id, n_likes
-FROM post, (SELECT post_id, COUNT(user_id) AS n_likes
-FROM vote_post
-WHERE vote_post.like
-GROUP BY post_id
-union
-SELECT id AS post_id, 0 AS n_likes
-FROM post
-WHERE not exists (SELECT DISTINCT post_id from vote_post WHERE vote_post.like = true AND vote_post.post_id = post.id)) AS likes_post
-WHERE likes_post.post_id = post.id
-ORDER BY n_views DESC; 
-
 ---> Posts order by number of likes (user is authenticated)
 SELECT DISTINCT title, thumbnail, content, is_spoiler, created_at, n_views, category, post.user_id, n_likes
 FROM post, block_user, (SELECT post_id, COUNT(user_id) AS n_likes
@@ -33,8 +20,8 @@ FROM vote_post WHERE vote_post.like GROUP BY post_id
 union
 SELECT id AS post_id, 0 AS n_likes
 FROM post WHERE not exists (SELECT DISTINCT post_id from vote_post WHERE vote_post.like = true AND vote_post.post_id = post.id)) AS likes_post
-WHERE likes_post.post_id = post.id AND post.user_id NOT IN (SELECT blocked_user FROM block_user WHERE blocking_user = $user_id) AND post.user_id NOT IN (SELECT blocking_user FROM block_user WHERE blocked_user = $user_id)
-ORDER BY n_likes DESC; 
+WHERE likes_post.post_id = post.id AND post.user_id NOT IN (SELECT blocked_user FROM block_user WHERE blocking_user = 3) AND post.user_id NOT IN (SELECT blocking_user FROM block_user WHERE blocked_user = 3)
+ORDER BY created_at DESC; 
 
 ---> Category's posts 
 SELECT title, thumbnail, content, is_spoiler, created_at, n_views, category, post.user_id, n_likes
@@ -79,7 +66,7 @@ SELECT username, name, instagram, twitter, facebook, linkedin, profile_photo
 FROM authenticated_user
 WHERE id = $id;
 
----> All user's info 
+---> All user's info for settings page 
 SELECT *
 FROM authenticated_user
 WHERE id = $id;
@@ -230,6 +217,12 @@ WHERE NOT EXISTS (SELECT * from comment WHERE post.id = comment.post_id)
 ) AS t2) AS comments_post
 WHERE post.id = likes_post.post_id AND post.id = dislikes_post.post_id AND post.id = comments_post.post_id  AND post.id = $post_id;
 
+---> Search by username
+SELECT id, username, authenticated_user_type
+FROM authenticated_user
+WHERE username ILIKE '%username%';
+
+
 --------------------------> INSERT QUERIES
 
 ---> New user registered
@@ -268,7 +261,7 @@ VALUES ($name);
 INSERT INTO block_user(blocking_user, blocked_user)
 VALUES ($bloking, $blocked);
 
----> New follow use
+---> New follow user
 INSERT INTO follow_user(following_user, followed_user)
 VALUES ($following_user, $followed_user);
 
