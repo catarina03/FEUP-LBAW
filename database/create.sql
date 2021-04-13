@@ -226,6 +226,26 @@ DROP FUNCTION IF EXISTS generate_vote_comment_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_vote_post_notification() CASCADE;
 DROP FUNCTION IF EXISTS delete_unused_tag() CASCADE; 
 
+DROP TRIGGER IF EXISTS block_user ON block_user;
+DROP TRIGGER IF EXISTS check_vote_post ON vote_post;
+DROP TRIGGER IF EXISTS check_vote_comment ON vote_comment;
+DROP TRIGGER IF EXISTS check_post_comment_author ON comment;
+DROP TRIGGER IF EXISTS check_comment_date ON comment;
+DROP TRIGGER IF EXISTS check_thread_comment_date ON comment;
+DROP TRIGGER IF EXISTS check_thread_comment ON comment;
+DROP TRIGGER IF EXISTS check_post_report_author ON report;
+DROP TRIGGER IF EXISTS check_comment_report_author ON report;
+DROP TRIGGER IF EXISTS check_post_report_assignment ON report;
+DROP TRIGGER IF EXISTS check_comment_report_assignment ON report;
+DROP TRIGGER IF EXISTS generate_follow_notification ON follow_user;
+DROP TRIGGER IF EXISTS generate_vote_post_notification ON vote_post;
+DROP TRIGGER IF EXISTS generate_vote_comment_notification ON vote_comment;
+DROP TRIGGER IF EXISTS generate_report_notification ON report;
+DROP TRIGGER IF EXISTS generate_comment_notification ON comment;
+DROP TRIGGER IF EXISTS generate_thread_comment_notification ON comment;
+DROP TRIGGER IF EXISTS generate_publish_notification ON post;
+DROP TRIGGER IF EXISTS delete_unused_tag ON post_tag;
+
 -- BLOCK USER
 CREATE FUNCTION block_user() RETURNS TRIGGER AS 
 $BODY$ 
