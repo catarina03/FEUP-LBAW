@@ -378,7 +378,7 @@ BEGIN
 			WHERE NEW.comment_id = id AND NEW.comment_date::timestamp < comment_date::timestamp
         )
 		THEN
-			RAISE EXCEPTION 'The thread comment has to be made more recently than the main comment.';
+			RAISE EXCEPTION 'The thread comment % has to be made more recently than the main comment % .', NEW.id, NEW.comment_id;
 	END IF;
 	
 	RETURN NEW;
