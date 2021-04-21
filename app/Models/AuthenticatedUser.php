@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class AuthenticatedUser extends Authenticatable
 {
     use Notifiable;
 
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
+
+    protected $table = 'authenticated_user';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'id','username', 'name', 'email', 'password', 'birthdate', 'bio', 'instagram', 'twitter', 'facebook', 'linkedin', 'show_people_i_follow', 'show_tags_i_follow','authenticated_user_type', 'profile_photo'
     ];
 
     /**
@@ -33,7 +35,9 @@ class User extends Authenticatable
     /**
      * The cards this user owns.
      */
-     public function cards() {
-      return $this->hasMany('App\Models\Card');
+     public function posts() {
+      return $this->hasMany('App\Models\Post');
     }
+
+    //association with Post, Followtag, FollowUser,BlockUser, Report, Vote Comment, VotePost, Comment       
 }
