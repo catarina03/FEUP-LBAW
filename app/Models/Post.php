@@ -21,7 +21,7 @@ class Post extends Model
 
 
     public function user(){
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo('App\Models\User','user_id');
     }
 
     public function postTag(){
@@ -30,4 +30,12 @@ class Post extends Model
 
     //association with Tag, Vote, user, Notifciation, Report, Comment, Photo, Saves
 
+
+    public function votedBy(){
+        return $this->belongsToMany(AuthenticatedUser::class,"vote_post","user_id","post_id")->withPivot("like");
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class,"post_id");
+    }
 }
