@@ -11,7 +11,15 @@ class Photo extends Model
 
     protected $table = 'photo';
 
-    protected $fillable = ['id', 'photo','post_id'];
+    protected $fillable = ['photo','post_id'];
 
-    //association with post
+    /**
+     * Get the post associated with the Photo
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function post(): HasOne
+    {
+        return $this->hasOne(Post::class, 'post_id');
+    }
 }

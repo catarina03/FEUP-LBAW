@@ -20,7 +20,7 @@ class AuthenticatedUser extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id','username', 'name', 'email', 'password', 'birthdate', 'bio', 'instagram', 'twitter', 'facebook', 'linkedin', 'show_people_i_follow', 'show_tags_i_follow','authenticated_user_type', 'profile_photo'
+        'username', 'name', 'email', 'password', 'birthdate', 'bio', 'instagram', 'twitter', 'facebook', 'linkedin', 'show_people_i_follow', 'show_tags_i_follow','authenticated_user_type', 'profile_photo'
     ];
 
     /**
@@ -32,41 +32,47 @@ class AuthenticatedUser extends Authenticatable
         'password', 'remember_token',
     ];
 
+
+
+
+
+    /**                              Associations                           */
+
+
+
+
+
     /**
      * The cards this user owns.
      */
-     public function posts() {
-      return $this->hasMany('App\Models\Post');
+     public function authored_posts() {
+      return $this->hasMany(Post::class, 'user_id');
     }
 
     /**
      * The reports made by the user
      */
     public function reports(){
-        return $this->hasMany('App\Models\Report',"user_reporting");
+        return $this->hasMany(Report::class,"user_reporting");
     }
 
     /**
      * Comments made by the user
     */
     public function comments(){
-        return $this->hasMany('App\Models\Comment',"user_id");
+        return $this->hasMany(Comment::class, "authenticatedUser_id");
     }
-
-
-    /**                              Associations                           */
 
     /** 
     * Reports assigned to the user
     */
     public function assigned_reports(){
-        return $this->hasMany('App\Models\Report',"user_assigned");
+        return $this->hasMany(Report::class,"user_assigned");
     }
 
     public function following_tags(){
-        return $this->belongsToMany(Tag::class,"follow_tag","tag_id","user_id");
+        return $this->belongsToMany(Tag::class,"follow_tag","tag_id","authenticatedUser_id");
     }
-
 
     public function followers(){
         return $this->belongsToMany(AuthenticatedUser::class,"follow_user","followed_user","following_user");
@@ -85,12 +91,18 @@ class AuthenticatedUser extends Authenticatable
     }
 
     public function voted_comments(){
-        return $this->belongsToMany(Comment::class,"vote_comment","comment_id","user_id")->withPivot("like");
+        return $this->belongsToMany(Comment::class,"vote_comment","comment_id","authenticatedUser_id")->withPivot("like");
     }
 
     public function voted_posts(){
-        return $this->belongsToMany(Post::class,"vote_post","post_id","user_id")->withPivot("like");
+        return $this->belongsToMany(Post::class,"vote_post","post_id","authenticatedUser_id")->withPivot("like");
     }
 
-    //association with Post, Followtag, FollowUser,BlockUser, Report, Vote Comment, VotePost, Comment       
+    public function saved_posts()
+    {
+        return $this->belongsToMany(Post::class, 'saves', 'authenticatedUser_id', 'post_id');
+    }
+
+    //notification on follow and vote?
+   
 }

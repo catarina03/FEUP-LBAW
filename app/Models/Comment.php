@@ -7,13 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
 
-    //dont know if we want timestamps
-
     protected $table = 'comment';
 
-    protected $fillable = ['id', 'content','user_id', 'comment_date', 'post_id', 'comment_id'];
+    protected $fillable = ['content','user_id', 'comment_date', 'post_id', 'comment_id'];
 
     //associations with comment, post, user, voteComment, Report, Notification
+
+    /**
+     * Get the post associated with the Comment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function post(): HasOne
+    {
+        return $this->belongsTo(Post::class, 'post_id');
+    }
+
+    /**
+     * Get the user associated with the Comment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user(): HasOne
+    {
+        return $this->belongsTo(AuthenticatedUser::class, 'user_id');
+    }
     
     public function voted_by(){
         return $this->belongsToMany(AuthenticatedUser::class,"vote_comment","user_id","comment_id")->withPivot("like");
@@ -30,4 +48,6 @@ class Comment extends Model
     public function parent_comment(){
         return $this->hasOne(Comment::class,"comment_id");
     }
+
+    //notification on comment
 }

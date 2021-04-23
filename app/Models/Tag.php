@@ -11,17 +11,28 @@ class Tag extends Model
 
     protected $table = 'tag';
 
-    protected $fillable = ['id', 'name'];
+    protected $fillable = ['name'];
 
-
-    public function postTag(){
-        return $this->belongsTo('App\Models\PostTag');
+    /**
+     * Get all of the posts for the Tag
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts(): HasMany
+    {
+        return $this->belongsToMany(Post::class, 'post_tag', 'post_id', 'tag_id');
     }
 
-    public function owners(){
+
+    /**
+     * Get all of the tag_followers for the Tag
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tag_followers(): HasMany
+    {
         return $this->belongsToMany(AuthenticatedUser::class,'follow_tag','user_id','tag_id');
     }
-
     
 
 
