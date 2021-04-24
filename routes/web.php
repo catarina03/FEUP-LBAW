@@ -11,18 +11,18 @@
 |
 */
 // Home
+
 Route::get('/', 'Auth\LoginController@home');
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
 
 // API
-Route::put('api/cards', 'CardController@create');
-Route::delete('api/cards/{card_id}', 'CardController@delete');
-Route::put('api/cards/{card_id}/', 'ItemController@create');
-Route::post('api/item/{id}', 'ItemController@update');
-Route::delete('api/item/{id}', 'ItemController@delete');
+Route::get('api/home/{homepageFilters}', 'PostController@filerHomePage');
+Route::post('api/post/{id}/save', 'PostController@addSave');
+Route::delete('api/post/{id}/save', 'PostController@deleteSave');
+Route::post('api/post/{id}/vote', 'PostController@addVote');
+Route::put('api/post/{id}/vote', 'PostController@editVote');
+Route::delete('api/post/{id}/vote', 'PostController@deleteVote');
+
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -30,3 +30,19 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
+
+
+
+
+//Post
+Route::get('addpost', 'PostController@create')->name('addPost');
+Route::post('addoist', 'PostController@store');
+Route::get('post/{id}', 'PostController@show');
+Route::delete('post/{id}', 'PostController@destroy');
+Route::get('editpost', 'PostController@edit')->name('editPost');
+Route::put('editpost', 'PostController@update');
+Route::post('post/{id}/report', 'PostControllert@report');
+
+
+
+

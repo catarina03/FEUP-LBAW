@@ -82,4 +82,15 @@ class PostController extends Controller
     {
         //
     }
+
+    /**
+     * Reports the post
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function report(Request $request, Post $post){
+        //
+    }
 }
