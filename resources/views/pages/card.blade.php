@@ -3,5 +3,5 @@
 @section('title', $card->name)
 
 @section('content')
-  @include('partials.card', ['card' => $card])
+  @include('pages.resources.views.partials.card-test', ['card' => $card])
 @endsection
