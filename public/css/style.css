@@ -757,7 +757,7 @@ a.footer-link:hover {
 /*************** POST PAGE *****************/
 /*******************************************/
 
-.post-page-post-card {
+.card.post-page-post-card {
   background-color: #8ab5b1;
 }
 
@@ -883,7 +883,7 @@ a.footer-link:hover {
   font-weight: 400;
 }
 
-.comment-sort-by-button{
+.btn.comment-sort-by-button{
   background-color: transparent;
   border-style: none;
   color: #0C1D1C;
@@ -891,7 +891,7 @@ a.footer-link:hover {
   font-size: larger;
   box-shadow: none;
 }
-.comment-sort-by-button:hover{
+.btn.comment-sort-by-button:hover{
   background-color: transparent;
   border-style: none;
   color: #0C1D1C;
@@ -900,7 +900,7 @@ a.footer-link:hover {
   font-weight: 600;
   box-shadow: none;
 }
-.comment-sort-by-button:focus{
+.btn.comment-sort-by-button:focus{
   background-color: transparent;
   border-style: none;
   color: #0C1D1C;
@@ -1049,26 +1049,26 @@ h3.post-page-comment-reply-interactions{
   resize: none;
 }
 
-.post-page-comment-button{
+.btn.post-page-comment-button{
   background-color: #0C1D1C;
   color: #EFF9FA;
   font-family: 'Roboto', sans-serif;
   font-size: medium;
 }
-.post-page-comment-button:hover{
+.btn.post-page-comment-button:hover{
   background-color: #ffc2ad;
   color: #0C1D1C;
   font-family: 'Roboto', sans-serif;
   font-size: medium;
 }
 
-.post-page-load-comments-button{
+.btn.post-page-load-comments-button{
   background-color: #0C1D1C;
   color: #EFF9FA;
   font-family: 'Roboto', sans-serif;
   font-size: medium;
 }
-.post-page-load-comments-button:hover{
+.btn.post-page-load-comments-button:hover{
   background-color: #ffc2ad;
   color: #0C1D1C;
   font-family: 'Roboto', sans-serif;
@@ -1081,7 +1081,7 @@ h3.post-page-comment-reply-interactions{
 /*************** MY POST PAGE **************/
 /*******************************************/
 
-.my-post-page-settings{
+.my-post-page-settings.dropdown{
   position: absolute;
   top: -30px;
   right: -10px;
