@@ -10,5 +10,6 @@
       </header>
     @yield('content')
     </main>
+    @include('layouts.mobilebar')
   </body>
 </html>
