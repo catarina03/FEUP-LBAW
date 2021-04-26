@@ -31,20 +31,20 @@
                 <div class="mb-3 row">
                     <label for="name" class="justify-content-center d-flex col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="name" placeholder="Ana Sousa">
+                        <input type="text" class="form-control" id="name" value="Ana Sousa">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="username"
                            class=" justify-content-center d-flex col-sm-2 col-form-label">Username</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="username" placeholder="@ana_sousa">
+                        <input type="text" class="form-control" id="username" value="ana_sousa">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="email" class="justify-content-center d-flex col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-9">
-                        <input type="email" class="form-control" id="email" placeholder="ana_sousa@gmail.com">
+                        <input type="email" class="form-control" id="email" value="ana_sousa@gmail.com">
                     </div>
                     <small id="emailHelp" class="form-text text-muted ps-5">We'll never share your email with anyone
                         else.</small>

@@ -32,8 +32,6 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 
-
-
 //Post
 Route::get('addpost', 'PostController@create')->name('addPost');
 Route::post('addoist', 'PostController@store');
@@ -44,5 +42,8 @@ Route::put('editpost', 'PostController@update');
 Route::post('post/{id}/report', 'PostControllert@report');
 
 
+Route::get('/', function() {
+    return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0]);
+});
 
 
