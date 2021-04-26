@@ -28,13 +28,13 @@
             </ul>
             <ul class="navbar-nav d-flex">
                 @if($user != "visitor")
-
                 <li class="nav-item d-lg-block d-none ms-lg-3">
                     <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post"
                         href="createpost.php" role="button" aria-expanded="false">
                         <i class="bi bi-plus-square-dotted navbar-icon"></i>
                     </a>
                 </li>
+                @endif
 
                 @if($user == "moderator" || ($user == "system_manager"))
                 <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./moderator_dashboard.php"
@@ -52,6 +52,7 @@
                         <i class="bi bi-people-fill navbar-icon"></i>
                     </a>
                 </li>
+                @endif
 
                 <li class="nav-item d-lg-block d-none dropdown ms-lg-3">
                     <a class="nav-link" href="" id="notificationsDropdown" role="button" data-bs-toggle="dropdown"
@@ -94,8 +95,8 @@
                         </li>
                     </ul>
                 </li>
-                @endif
-                @else
+
+                @if($user === 'visitor')
                 <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#register"><a
                         style="text-decoration:none;cursor:pointer;"><i class="fa fa-user pe-2"
                             aria-hidden="true"></i>Sign Up</li>
