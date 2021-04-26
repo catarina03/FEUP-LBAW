@@ -18,21 +18,23 @@
     <!-- Styles -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script type="text/javascript">
-        // Fix for Firefox autofocus CSS bug
-        // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
+    // Fix for Firefox autofocus CSS bug
+    // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
     </script>
     <script type="text/javascript" src={{ asset('js/app.js') }} defer></script>
-
+    
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/45528450c3.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
         integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous">
@@ -41,14 +43,14 @@
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous">
     </script>
     <script src="https://cdn.tiny.cloud/1/08t5y62wss6y2fzascz2trysrq487403jdb54o0kzk3nu9zq/tinymce/5/tinymce.min.js"
-            referrerpolicy="origin"></script>
+        referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-            selector: '#mytextarea',
-            plugins: ["advlist autolink lists link image charmap print preview anchor"],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-            resize: false
-        });
+    tinymce.init({
+        selector: '#mytextarea',
+        plugins: ["advlist autolink lists link image charmap print preview anchor"],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        resize: false
+    });
     </script>
 
     <script src="js/script.js" defer></script>
@@ -71,7 +73,7 @@
             <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
         </button>
         <a href="homepage.php" class="navbar-brand ms-2"><img src="images/logo-sem-fundo.svg" height="30"
-                                                              alt="AltArt Logo"></a>
+                alt="AltArt Logo"></a>
 
         <?php if($needsFilter != 0) {?>
         <button class="navbar-toggler m-0 pt-3" data-bs-toggle="collapse" data-bs-target="#navbar-filter">
@@ -102,7 +104,7 @@
 
                 <li class="nav-item d-lg-block d-none ms-lg-3">
                     <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post"
-                       href="createpost.php" role="button" aria-expanded="false">
+                        href="createpost.php" role="button" aria-expanded="false">
                         <i class="bi bi-plus-square-dotted navbar-icon"></i>
                     </a>
                 </li>
@@ -110,16 +112,16 @@
                 if($user == "moderator" || ($user == "system_manager")){
                 ?>
                 <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./moderator_dashboard.php"
-                                                                  role="button" data-togle="tooltip" data-placement="bottom" title="Manage Reports"
-                                                                  aria-expanded="false">
+                        role="button" data-togle="tooltip" data-placement="bottom" title="Manage Reports"
+                        aria-expanded="false">
                         <i class="bi bi-list-task navbar-icon"></i>
                     </a>
                 </li>
                 <?php }
                 if($user == "system_manager") { ?>
                 <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./manage_moderators.php"
-                                                                  role="button" data-togle="tooltip" data-placement="bottom" title="Manage Moderators"
-                                                                  aria-expanded="false">
+                        role="button" data-togle="tooltip" data-placement="bottom" title="Manage Moderators"
+                        aria-expanded="false">
                         <i class="bi bi-people-fill navbar-icon"></i>
                     </a>
                 </li>
@@ -127,7 +129,7 @@
                 <?php } ?>
                 <li class="nav-item d-lg-block d-none dropdown ms-lg-3">
                     <a class="nav-link" href="" id="notificationsDropdown" role="button" data-bs-toggle="dropdown"
-                       data-toggle="tooltip" data-placement="bottom" title="Notifications" aria-expanded="false">
+                        data-toggle="tooltip" data-placement="bottom" title="Notifications" aria-expanded="false">
                         <i class="bi bi-bell navbar-icon"></i>
                     </a>
 
@@ -148,7 +150,7 @@
                 </li>
                 <li class="nav-item d-lg-block d-none dropdown mx-2 ms-lg-3">
                     <a class="nav-link" href="" id="profileDropdown" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
+                        aria-expanded="false">
                         <i class="bi bi-person-circle navbar-icon"></i>
                     </a>
 
@@ -169,10 +171,10 @@
                 <?php } elseif ($user=="visitor" ) { ?>
                 <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#register"><a
                         style="text-decoration:none;cursor:pointer;"><i class="fa fa-user pe-2"
-                                                                        aria-hidden="true"></i>Sign Up</a></li>
+                            aria-hidden="true"></i>Sign Up</a></li>
                 <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#login"><a
                         style="text-decoration:none;cursor:pointer;"><i class="fa fa-sign-in pe-2"
-                                                                        aria-hidden="true"></i>Login</a>
+                            aria-hidden="true"></i>Login</a>
                 </li>
                 <?php
                 }
@@ -186,7 +188,7 @@
                     <form class="pt-2 " action="advanced_search.php" method="post">
                         <div class="input-group rounded">
                             <input type="search" class="form-control" placeholder="Search" aria-label="Search"
-                                   aria-describedby="search-addon" />
+                                aria-describedby="search-addon" />
                             <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
                                 <i class="fas fa-search"></i>
                             </span>
@@ -199,21 +201,21 @@
                             <option value="4">Suggestion</option>
                         </select>
                         <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date"
-                               style="cursor:pointer;">
+                            style="cursor:pointer;">
                         <a> to </a>
                         <input type="date" class="form-control mt-2" id="endDate" aria-label="End Date"
-                               style="cursor:pointer;">
+                            style="cursor:pointer;">
 
                         <div class="form-check mt-4">
                             <input class="form-check-input" type="checkbox" value="" id="checkPeople"
-                                   style="cursor:pointer;">
+                                style="cursor:pointer;">
                             <label class="form-check-label" for="checkPeople">
                                 Only people I follow
                             </label>
                         </div>
                         <div class="form-check mt-4">
                             <input class="form-check-input" type="checkbox" value="" id="checkTags"
-                                   style="cursor:pointer;">
+                                style="cursor:pointer;">
                             <label class="form-check-label" for="checkTags">
                                 Only tags I follow
                             </label>
@@ -232,7 +234,7 @@
                     <form class="pt-2 " action="#" method="post">
                         <div class="input-group rounded">
                             <input type="search" class="form-control" placeholder="Search" aria-label="Search"
-                                   aria-describedby="search-addon" />
+                                aria-describedby="search-addon" />
                             <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
                                 <i class="fas fa-search"></i>
                             </span>
@@ -260,14 +262,14 @@
                         </select>
                         <div class="form-check mt-4">
                             <input class="form-check-input" type="checkbox" value="" id="checkAssigned"
-                                   style="cursor:pointer;">
+                                style="cursor:pointer;">
                             <label class="form-check-label" for="checkAssigned">
                                 Assign to me
                             </label>
                         </div>
                         <div class="form-check mt-4">
                             <input class="form-check-input" type="checkbox" value="" id="checkNotAssigned"
-                                   style="cursor:pointer;">
+                                style="cursor:pointer;">
                             <label class="form-check-label" for="checkNotAssigned">
                                 Unassigned
                             </label>
@@ -279,8 +281,6 @@
                 </li>
             </ul>
         </div>
-        <?php
-        } ?>
     </div>
 </nav>
 @show
@@ -288,135 +288,131 @@
 @yield('content')
 
 @section('mobilebar')
-    <footer class="bottomNavbar d-lg-none">
-        <div id="buttonGroup" class="btn-group selectors" role="group" aria-label="Mobile bottom navbar">
+<footer class="bottomNavbar d-lg-none">
+    <div id="buttonGroup" class="btn-group selectors" role="group" aria-label="Mobile bottom navbar">
 
-            <a id="home" type="button" class="btn button-active" href="homepage.php">
-                <div class="selector-holder pb-1">
-                    <i class="bi bi-house fs-1"></i>
-                </div>
-            </a>
-            <?php
+        <a id="home" type="button" class="btn button-active" href="homepage.php">
+            <div class="selector-holder pb-1">
+                <i class="bi bi-house fs-1"></i>
+            </div>
+        </a>
+        <?php
             if($user == "moderator" || ($user == "system_manager")){
             ?>
-            <a id="dashboard" type="button" class="btn button-inactive" href="moderator_dashboard.php">
-                <div class="selector-holder">
-                    <i class="bi bi-list-task fs-1"></i>
-                </div>
-            </a>
-            <?php }
+        <a id="dashboard" type="button" class="btn button-inactive" href="moderator_dashboard.php">
+            <div class="selector-holder">
+                <i class="bi bi-list-task fs-1"></i>
+            </div>
+        </a>
+        <?php }
             if($user == "system_manager") { ?>
-            <a id="roles_manager" type="button" class="btn button-inactive" href="./manage_moderators.php">
-                <div class="selector-holder">
-                    <i class="bi bi-people-fill fs-1"></i>
-                </div>
-            </a>
-            <?php } ?>
-            <?php if($user != "visitor") { ?>
-            <a id="feed" type="button" class="btn button-inactive" href="createpost.php">
-                <div class="selector-holder">
-                    <i class="bi bi-plus-square-dotted fs-1"></i>
-                </div>
-            </a>
-            <a id="notifications" type="button" class="btn button-inactive">
+        <a id="roles_manager" type="button" class="btn button-inactive" href="./manage_moderators.php">
+            <div class="selector-holder">
+                <i class="bi bi-people-fill fs-1"></i>
+            </div>
+        </a>
+        <?php } ?>
+        <?php if($user != "visitor") { ?>
+        <a id="feed" type="button" class="btn button-inactive" href="createpost.php">
+            <div class="selector-holder">
+                <i class="bi bi-plus-square-dotted fs-1"></i>
+            </div>
+        </a>
+        <a id="notifications" type="button" class="btn button-inactive">
 
-                <div class="selector-holder dropup">
-                    <i data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-bell fs-1"></i>
+            <div class="selector-holder dropup">
+                <i data-bs-toggle="dropdown" aria-expanded="false" class="bi bi-bell fs-1"></i>
 
-                    <ul class="dropdown-menu">
-                        <li class="p-1">Someone liked your post.</li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="p-1">Someone liked your post.</li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="p-1">Someone liked your post.</li>
-                    </ul>
-                </div>
-            </a>
-            <a id="account" type="button" class="btn button-inactive">
-                <div class="selector-holder dropup">
-                    <i class="bi bi-person-circle fs-1" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                    <ul class="dropdown-menu">
-                        <li class="p-1 ps-3 fs-4" onClick="location.href='myprofile.php'">Profile</li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="p-1 ps-3  fs-4" onClick="location.href='myprofile.php'">Saved Posts</li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="p-1 ps-3  fs-4" onClick="location.href='settings.php'">Settings</li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="p-1 ps-3  fs-4">Sign out</li>
-                    </ul>
-                </div>
-            </a>
-            <?php }
+                <ul class="dropdown-menu">
+                    <li class="p-1">Someone liked your post.</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1">Someone liked your post.</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1">Someone liked your post.</li>
+                </ul>
+            </div>
+        </a>
+        <a id="account" type="button" class="btn button-inactive">
+            <div class="selector-holder dropup">
+                <i class="bi bi-person-circle fs-1" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <ul class="dropdown-menu">
+                    <li class="p-1 ps-3 fs-4" onClick="location.href='myprofile.php'">Profile</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1 ps-3  fs-4" onClick="location.href='myprofile.php'">Saved Posts</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1 ps-3  fs-4" onClick="location.href='settings.php'">Settings</li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="p-1 ps-3  fs-4">Sign out</li>
+                </ul>
+            </div>
+        </a>
+        <?php }
             else {?>
-            <a id="login" type="button" class="btn button-inactive">
-                <div class="selector-holder p-2" data-bs-toggle="modal" data-bs-target="#login">
-                    <img src="./images/enter.svg" height="27px">
-                </div>
-            </a>
-            <?php } ?>
-        </div>
-    </footer>
+        <a id="login" type="button" class="btn button-inactive">
+            <div class="selector-holder p-2" data-bs-toggle="modal" data-bs-target="#login">
+                <img src="./images/enter.svg" height="27px">
+            </div>
+        </a>
+        <?php } ?>
+    </div>
+</footer>
 @show
 
 
 @section('footer')
-    {{-- @include(app_path().'/views/layouts/footer.blade.php'); --}}
-    <footer class="text-center d-none d-lg-block mt-auto" style="background-color:#307371;">
-        <!-- Grid container -->
-        <div class="container">
-            <!-- Section: Links -->
-            <section class="mt-3 md-3">
-                <!-- Grid row-->
-                <div class="row text-center d-flex justify-content-center pt-4">
-                    <!-- Grid column -->
-                    <div class="col-md-2 mb-3">
-                        <h6 class="text font-weight-bold">
-                            <a class="footer-link" href="about.php">About us</a>
-                        </h6>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-2 mb-3">
-                        <h6 class="text font-weight-bold">
-                            <a class="footer-link" href="faq.php">FAQ</a>
-                        </h6>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-2 mb-3">
-                        <h6 class="text font-weight-bold">
-                            <a class="footer-link" href="support.php">Support</a>
-                        </h6>
-                    </div>
-                    <!-- Grid column -->
-
-                    <!-- Grid column -->
-                    <div class="col-md-2 mb-3">
-                        <h6 class="text font-weight-bold">
-                            <p class="footer-link">© AltArt</p>
-                        </h6>
-                    </div>
+{{-- @include(app_path().'/views/layouts/footer.blade.php'); --}}
+<footer class="text-center d-none d-lg-block mt-auto" style="background-color:#307371;">
+    <!-- Grid container -->
+    <div class="container">
+        <!-- Section: Links -->
+        <section class="mt-3 md-3">
+            <!-- Grid row-->
+            <div class="row text-center d-flex justify-content-center pt-4">
+                <!-- Grid column -->
+                <div class="col-md-2 mb-3">
+                    <h6 class="text font-weight-bold">
+                        <a class="footer-link" href="about.php">About us</a>
+                    </h6>
                 </div>
-            </section>
-        </div>
-    </footer>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-2 mb-3">
+                    <h6 class="text font-weight-bold">
+                        <a class="footer-link" href="faq.php">FAQ</a>
+                    </h6>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-2 mb-3">
+                    <h6 class="text font-weight-bold">
+                        <a class="footer-link" href="support.php">Support</a>
+                    </h6>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-2 mb-3">
+                    <h6 class="text font-weight-bold">
+                        <p class="footer-link">© AltArt</p>
+                    </h6>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
 @show
-
-
-
-
