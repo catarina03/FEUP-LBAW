@@ -41,8 +41,9 @@ Route::get('editpost', 'PostController@edit')->name('editPost');
 Route::put('editpost', 'PostController@update');
 Route::post('post/{id}/report', 'PostControllert@report');
 
+
 Route::get('/', function() {
-    return view('pages.myprofile', ['user' => 'system_manager', 'needsFilter' => 0]);
+    return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0]);
 });
 
 

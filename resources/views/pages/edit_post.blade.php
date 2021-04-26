@@ -96,24 +96,7 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="container mx-0 px-0 mt-3">
-                <div class="row justify-content-center">
-                    <div class="col-10">
-                        <label for="tags" class="col-auto ">Add co-authors</label>
-                        <div class="bg-white rounded border justify-content-center form-control" id="tags"
-                            style="height:4em;">
-                            <div class="d-flex justify-content-start tags">
-                                <a class="btn btn-secondary btn-sm  d-flex justify-content-center m-2">Jane Doe <i
-                                        class="bi bi-x ms-1"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+            
             <div class="row justify-content-center mt-5">
                 <div class="col-10">
                     <div class="row d-flex flex-row">
