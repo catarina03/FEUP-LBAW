@@ -1,6 +1,6 @@
 /****************** NAVBAR ****************/
 
-.navbar-custom .navbar-nav a {
+.navbar-custom .navbar-nav li a {
   color: white;
   font-weight: bold;
   font-size: 18px;
@@ -10,7 +10,7 @@
   color: #ffc2ad;
 }
 
-.navbar-custom .navbar-nav a:hover {
+.navbar-custom .navbar-nav li a:hover {
   color: #ffc2ad;
 }
 
@@ -84,20 +84,20 @@
   text-align: center;
 }
 
-.btn-google {
+.btn.btn-google {
   color: #545454;
   background-color: #ffffff;
   box-shadow: 0 1px 2px 1px #ddd;
   font-size: 14px;
 }
 
-.authentication-buttons {
+.btn.authentication-buttons {
   background-color: #ade1e5;
   color: black;
   font-weight: 500;
 }
 
-.login {
+.modal-content.login {
   background-color: #0c1d1c;
 }
 
