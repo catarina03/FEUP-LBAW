@@ -43,7 +43,7 @@ Route::post('post/{id}/report', 'PostControllert@report');
 
 
 Route::get('/', function() {
-    return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0]);
+    return view('auth.register', ['user' => 'visitor', 'needsFilter' => 0]);
 });
 
 

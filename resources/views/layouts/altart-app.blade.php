@@ -4,12 +4,11 @@
    @include('layouts.head')
   </head>
   <body class="d-flex flex-column min-vh-100">
-    <main>
       <header>
         @include('layouts.navbar')
       </header>
-    @yield('content')
-    </main>
-    @include('layouts.mobilebar')
+      @yield('content')
+      @include('layouts.footer')
+      @include('layouts.navbar_mobile')
   </body>
 </html>

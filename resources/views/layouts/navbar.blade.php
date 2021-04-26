@@ -54,6 +54,7 @@
                 </li>
                 @endif
 
+                @if($user !== 'visitor')
                 <li class="nav-item d-lg-block d-none dropdown ms-lg-3">
                     <a class="nav-link" href="" id="notificationsDropdown" role="button" data-bs-toggle="dropdown"
                         data-toggle="tooltip" data-placement="bottom" title="Notifications" aria-expanded="false">
@@ -95,8 +96,7 @@
                         </li>
                     </ul>
                 </li>
-
-                @if($user === 'visitor')
+                @else
                 <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#register"><a
                         style="text-decoration:none;cursor:pointer;"><i class="fa fa-user pe-2"
                             aria-hidden="true"></i>Sign Up</li>
