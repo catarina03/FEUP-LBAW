@@ -45,4 +45,5 @@ class Post extends Model
     }
 
     //notification on publish and vote?
+
 }

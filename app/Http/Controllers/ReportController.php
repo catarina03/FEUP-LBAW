@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
@@ -35,7 +36,7 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -80,6 +81,37 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        //
+        $report->delete();
+    }
+
+
+    public function close(Request $request,$report_id){
+        $validatedData = $request->validate([
+            'moderator_id' => 'required|numeric'
+        ]);
+        $date = Carbon::now();
+        $closed_date = $date->toDateString();
+        DB::table('report')->where('id',$report_id)->where('user_assigned',$validatedData->moderator_id)->update(["closed_date" => $closed_date]);
+
+    }
+
+    public function assign(Request $request,$report_id){
+        $validatedData = $request->validate([
+            'moderator_id' => 'required|numeric'
+        ]);
+        DB::table('report')->where('id',$report_id)->update('user_assigned',$validatedData->moderator_id);
+
+    }
+
+    public function process(Request $request,$report_id){//update?
+        $validatedData = $request->validate([
+            'moderator_id' => 'required|numeric',
+            'action' => 'required'
+        ]);
+        $action = $validatedData->action=="DELETE"? true : false;
+        DB::table('report')->where('id',$report_id)->where('user_assigned',$validatedData->moderator_id)->update(["accepted" => $action]);
+        $date = Carbon::now();
+        $closed_date = $date->toDateString();
+        DB::table('report')->where('id',$report_id)->where('user_assigned',$validatedData->moderator_id)->update(["closed_date" => $closed_date]);
     }
 }

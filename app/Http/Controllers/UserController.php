@@ -82,4 +82,15 @@ class UserController extends Controller
     {
         //
     }
+
+    public function roles(Request $request){
+        DB::table("authenticated_user")->select("id","username","authenticated_user_type")->get();
+    }
+
+    public function editRole(Request $request,$user_id){
+        $validatedData = $request->validate([
+            'new_role' => 'required'
+        ]);
+        DB::table("authenticated_user")->where("id",$user_id)->update(["authenticated_user_type" => $validatedData["new_role"]]);
+    }
 }
