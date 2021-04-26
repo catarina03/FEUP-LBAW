@@ -1125,7 +1125,7 @@ h3.post-page-comment-reply-interactions{
 /********** CREATE/EDIT POST PAGE **********/
 /*******************************************/
 
-.create-post-page-post-card {
+.createPost-center .create-post-page-post-card {
   background-color: #8ab5b1;
 }
 .edit-post-page-post-card {
@@ -1133,7 +1133,7 @@ h3.post-page-comment-reply-interactions{
 }
 
 
-.create-post-editor-container p{
+.create-post-page-post-card .create-post-editor-container p{
   font-family: 'Roboto', sans-serif;
   font-size: small;
 }
@@ -1143,32 +1143,22 @@ h3.post-page-comment-reply-interactions{
   font-size: small;
 }
 
-.create-post-editor-container p {
-  font-family: "Roboto", sans-serif;
-  font-size: small;
-}
-
-.edit-post-tags-container p {
-  font-family: "Roboto", sans-serif;
-  font-size: small;
-}
-
-.cancel-post {
+.create-post-page-post-card .cancel-post {
   color: #0c1d1c;
   text-decoration: underline;
 }
-.cancel-post:hover {
+.create-post-page-post-card .cancel-post:hover {
   font-weight: 600;
 }
 
-.publish-post,
-.preview-post {
+.create-post-page-post-card .publish-post,
+.create-post-page-post-card .preview-post {
   background-color: #0c1d1c;
   color: #EFF9FA;
   font-weight: 400;
 }
-.publish-post:hover,
-.preview-post:hover {
+.create-post-page-post-card .publish-post:hover,
+.create-post-page-post-card .preview-post:hover {
   background-color: #ffc2ad;
   color: #0c1d1c;
   font-weight: 400;
