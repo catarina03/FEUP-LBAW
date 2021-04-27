@@ -1,4 +1,4 @@
-@extends('layouts.altart-app')
+@extends('layouts.app')
 
 @section('content')
 <div class="modal fade" id="confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

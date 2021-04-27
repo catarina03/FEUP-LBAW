@@ -1,4 +1,4 @@
-@extends('layouts.altart-app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container-fluid md-g-0 sm-g-0" style="margin-top:4em;margin-bottom:5em;">

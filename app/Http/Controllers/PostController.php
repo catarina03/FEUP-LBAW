@@ -27,7 +27,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        // ver se está autenticado 
+
+        return view('pages.createpost', ['user' => 'visitor', 'needsFilter' => 0]);
     }
 
     /**
@@ -42,24 +44,32 @@ class PostController extends Controller
         $validator = Validator::make($request->all(),
         [
             'title' => ['required', 'string', 'max:120'],
-            'thumbnail' => ['required',''],
+            'thumbnail' => ['required', 'string'],
             'content' => ['required', 'string', 'max:5000'],
-            'is_spoiler' => ['boolean', 'required'],
+            'is_spoiler' => ['boolean'],
             'type' => ['required', 'string'], 
             'category' => ['required', 'string'], 
             'user_id' => ['required', 'int'],
             'photos' => ['array'],
-            'tags' => ['array'],
+            'tags' => ['array', "min:2", "max:10"],
         ],
         [
             'title.required' => 'Title can not be empty',
+            'title.string' => 'Title must be a string',
             'title.max' => 'Title is too big, max of 120 characters',
             'thumbnail.required' => 'A thumbnail must be uploaded',
             'content.required' => 'Content can not be empty',
-            'is_spoiler' => 'Must be filled',
-            'type' => 'Type must be filled',
-            'category' => 'Category must be filled',
-            'tag' => 'Must add at least one tag'
+            'content.string' => 'Content must be a string',
+            'content.max' => 'Content is too big, max of 5000 characters',
+            'is_spoiler.boolean' => 'is_spoiler must be a boolean',
+            'type.required' => 'Type must be filled',
+            'type.string' => 'Type must be a string',
+            'category.required' => 'Category must be filled',
+            'category.string' => 'Category must be string',
+            'user_id.required' => 'User ID is required',
+            'user_id.int' => 'User ID must be an integer',
+            'tag.min' => 'Must add at least 2 tags',
+            'tag.max' => 'Must add at maximum 10 tags',
         ]);
          if ($validator->fails()) {
             return Redirect::back()->withErrors($validator->errors())->withInput();
@@ -109,10 +119,11 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
-
-        //checkar se está autenticado
+        //$post = Post::find($id); -- ver se o post existe 
+        
+        //checkar se está autenticado e se é o dono
         //se o post existir vai buscar o necessario para mostrar o post e chama a sua view
+        return view('pages.post', ['user' => 'visitor', 'needsFilter' => 0] ); //['post'=> $post]
     }
 
     /**
@@ -123,9 +134,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
-        $post = Post::find($id);
+        //$post = Post::find($id);
         //chamar a view do edit post com esta informaçao
+        return view('pages.editpost', ['user' => 'visitor', 'needsFilter' => 0] ); //['post'=> $post]
     }
 
     /**

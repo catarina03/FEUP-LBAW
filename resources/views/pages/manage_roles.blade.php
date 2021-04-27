@@ -1,4 +1,4 @@
-@extends('layouts.altart-app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container manage_moderators-card">

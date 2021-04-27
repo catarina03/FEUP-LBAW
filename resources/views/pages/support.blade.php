@@ -1,4 +1,4 @@
-@extends('layouts.altart-app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container support-card" style="margin-bottom: 5em; margin-top: 4em;">

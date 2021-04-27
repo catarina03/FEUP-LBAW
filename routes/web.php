@@ -12,10 +12,19 @@
 */
 // Home
 
-Route::get('/', 'Auth\LoginController@home');
+//Route::get('/', 'Auth\LoginController@home');
+
+//Pages
+Route::get('/', 'PagesController@home');
+Route::get('/about', 'PagesController@about');
+Route::get('/faq', 'PagesController@faq');
+Route::get('/support', 'PagesController@support');
+Route::post('/support', 'PagesController@supportRequest');
+Route::get('/category/{category}', 'PagesController@category');
+Route::get('api/home/{homepageFilters}', 'PagesController@filterHomePage');
 
 
-
+//Admin 
 Route::put('api/administration/roles/{user_id}/edit_role','UserController@editRole');//DONE
 Route::get('api/post_filter','PostController@postFilter');  //queries
 Route::get('api/report_filter','ReportController@reportFilter'); //?
@@ -44,8 +53,8 @@ Route::post('register', 'Auth\RegisterController@register');
 //Authenticated User
 Route::get('user/{id}', 'UserController@show');
 Route::delete('user/{id}', 'UserController@destroy');
-Route::get('user/{id}/edit_bio', 'UserController@show_edit_bio');
-Route::get('user/{id}/edit_bio', 'UserController@edit_bio');
+Route::get('api/user/{id}/edit_bio', 'UserController@show_edit_bio');
+Route::put('api/user/{id}/edit_bio', 'UserController@edit_bio');
 
 
 Route::get('user/{id}/settings', 'UserController@edit');
@@ -61,15 +70,14 @@ Route::delete('/api/user/{id}/block', 'UserController@unblock');
 Route::put('/api/user/{id}/edit_photo', 'UserController@update_photo');
 
 //Post
-Route::get('addpost', 'PostController@create')->name('addPost');
-Route::post('addoist', 'PostController@store');
+Route::get('addpost', 'PostController@create');
+Route::post('addpost', 'PostController@store');
 Route::get('post/{id}', 'PostController@show');
 Route::delete('post/{id}', 'PostController@destroy');
-Route::get('editpost', 'PostController@edit')->name('editPost');
-Route::put('editpost', 'PostController@update');
+Route::get('editpost/{id}', 'PostController@edit');
+Route::put('editpost/{id}', 'PostController@update');
 Route::post('post/{id}/report', 'PostControllert@report');
 
-Route::get('api/home/{homepageFilters}', 'PostController@filerHomePage');
 Route::post('api/post/{id}/save', 'PostController@addSave');
 Route::delete('api/post/{id}/save', 'PostController@deleteSave');
 Route::post('api/post/{id}/vote', 'PostController@addVote');
@@ -82,15 +90,11 @@ Route::delete('api/post/{id}/vote', 'PostController@deleteVote');
 Route::put('reports/{report_id}/close','ReportController@close'); //Done
 Route::put('reports/{report_id}/assign_report','ReportController@assign');//Done
 Route::put('reports/{report_id}/process','ReportController@process'); //Done
+
 //Administration
 Route::get('administration/roles','UserController@roles');//DONE
 
 //Comment
 Route::put('comment/{comment_id}/report','CommentController@reportComment'); //DONE
-
-
-Route::get('/', function() {
-    return view('auth.register', ['user' => 'visitor', 'needsFilter' => 0]);
-});
 
 

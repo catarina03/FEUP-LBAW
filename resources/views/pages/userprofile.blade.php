@@ -1,4 +1,4 @@
-@extends('layouts.altart-app')
+@extends('layouts.app')
 
 @section('content')
 <div class="row justify-content-center my-3 position-relative d-flex profile userprofile mx-2">

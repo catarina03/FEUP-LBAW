@@ -18,6 +18,7 @@ if (pencil != null) {
     }
   });
 }
+
 if (save != null) {
   save.addEventListener("submit", function () {
     let bio = document.querySelector(".my-profile .bio");

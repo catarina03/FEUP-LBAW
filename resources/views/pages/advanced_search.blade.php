@@ -1,4 +1,4 @@
-@extends('layouts.altart-app')
+@extends('layouts.app')
 
 @section('content')
 <div class="advanced_search row g-0" style="margin-top: 6em; margin-bottom: 7em;">

@@ -8,7 +8,7 @@
                 <!-- Grid column -->
                 <div class="col-md-2 mb-3">
                     <h6 class="text font-weight-bold">
-                        <a class="footer-link" href="about.php">About us</a>
+                        <a class="footer-link" href="{{url('/about')}}">About us</a>
                     </h6>
                 </div>
                 <!-- Grid column -->
@@ -16,7 +16,7 @@
                 <!-- Grid column -->
                 <div class="col-md-2 mb-3">
                     <h6 class="text font-weight-bold">
-                        <a class="footer-link" href="faq.php">FAQ</a>
+                        <a class="footer-link" href="{{url('/faq')}}">FAQ</a>
                     </h6>
                 </div>
                 <!-- Grid column -->
@@ -24,7 +24,7 @@
                 <!-- Grid column -->
                 <div class="col-md-2 mb-3">
                     <h6 class="text font-weight-bold">
-                        <a class="footer-link" href="support.php">Support</a>
+                        <a class="footer-link" href="{{url('/support')}}">Support</a>
                     </h6>
                 </div>
                 <!-- Grid column -->

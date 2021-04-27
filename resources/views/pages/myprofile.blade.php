@@ -1,4 +1,4 @@
-@extends('layouts.altart-app')
+@extends('layouts.app')
 
 @section('content')
 <script type="text/javascript" src="{{ URL::asset('js/myprofile.js') }}" defer></script>

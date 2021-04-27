@@ -1,4 +1,4 @@
-@extends('layouts.altart-app')
+@extends('layouts.app')
 
 @section('content')
 <div class="homepage row g-0" style="margin-top: 5em; margin-bottom:7em;">

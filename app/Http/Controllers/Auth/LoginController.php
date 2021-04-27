@@ -49,4 +49,8 @@ class LoginController extends Controller
         return url()->previous();
     }
 
+    public function showLoginForm(){
+        return view('auth.login', ['user' => 'visitor', 'needsFilter' => 0]);
+    }
+
 }

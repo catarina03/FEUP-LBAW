@@ -51,6 +51,8 @@ class UserController extends Controller
     public function show(AuthenticatedUser $authenticatedUser)
     {
         //view do profile
+        //verifica se é o dono do perfil se sim -> my profile, se nao userprofile
+        return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0] ); 
     }
 
     /**
@@ -62,6 +64,7 @@ class UserController extends Controller
     public function edit(AuthenticatedUser $authenticatedUser)
     {
         //view de settings
+        return view('pages.settings', ['user' => 'visitor', 'needsFilter' => 0] );
     }
 
     /**

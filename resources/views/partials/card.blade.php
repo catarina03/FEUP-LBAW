@@ -1,8 +1,8 @@
 @section('card')
 <div class="col-12 col-md-6 col-xl-4 mb-4">
-    <div class="card h-100">
+    <div class="card h-100" onclick="window.location='{{url('/post/1')}}'">
         <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"
-             height="200" class="card-img-top" alt="...">
+            height="200" class="card-img-top" alt="...">
         <div class="categoryTag">
             <h6>Music</h6>
         </div>
@@ -17,7 +17,7 @@
             <h5 class="card-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New
                 Video
             </h5>
-            <small>by <a id="authorName" href="userprofile.php">Ana
+            <small>by <a id="authorName" href="{{url('/user/1')}}">Ana
                     Sousa</a>,
                 FEBRUARY 23, 2021</small>
             <p class="card-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in

@@ -3,7 +3,7 @@
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar">
             <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
         </button>
-        <a href="homepage.php" class="navbar-brand ms-2"><img src="images/logo-sem-fundo.svg" height="30"
+        <a href="{{url('/')}}" class="navbar-brand ms-2"><img src="/images/logo-sem-fundo.svg" height="30"
                 alt="AltArt Logo"></a>
 
         @if($needsFilter != 0)
@@ -14,30 +14,30 @@
 
         <div class="navbar-collapse collapse w-100" id="navbar" navbar>
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a href="category_page.php" class="nav-link">Music</a></li>
-                <li class="nav-item"><a href="category_page.php" class="nav-link">Cinema</a></li>
-                <li class="nav-item"><a href="category_page.php" class="nav-link">TV Show</a></li>
-                <li class="nav-item"><a href="category_page.php" class="nav-link">Theatre</a></li>
-                <li class="nav-item"><a href="category_page.php" class="nav-link">Literature</a></li>
+                <li class="nav-item"><a href="{{url('/category/Music')}}" class="nav-link">Music</a></li>
+                <li class="nav-item"><a href="{{url('/category/Cinema')}}" class="nav-link">Cinema</a></li>
+                <li class="nav-item"><a href="{{url('/category/TVShow')}}" class="nav-link">TV Show</a></li>
+                <li class="nav-item"><a href="{{url('/category/Theatre')}}" class="nav-link">Theatre</a></li>
+                <li class="nav-item"><a href="{{url('/category/Literature')}}" class="nav-link">Literature</a></li>
                 <li>
                     <hr class="dropdown-divider" style="color:white;">
                 </li>
-                <li class="nav-item d-lg-none"><a href="./about.php" class="nav-link">About Us</a></li>
-                <li class="nav-item d-lg-none"><a href="./faq.php" class="nav-link">FAQ</a></li>
-                <li class="nav-item d-lg-none"><a href="./support.php" class="nav-link">Support</a></li>
+                <li class="nav-item d-lg-none"><a href="{{url('/about')}}" class="nav-link">About Us</a></li>
+                <li class="nav-item d-lg-none"><a href="{{url('/faq')}}" class="nav-link">FAQ</a></li>
+                <li class="nav-item d-lg-none"><a href="{{url('/support')}}" class="nav-link">Support</a></li>
             </ul>
             <ul class="navbar-nav d-flex">
                 @if($user != "visitor")
                 <li class="nav-item d-lg-block d-none ms-lg-3">
                     <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post"
-                        href="createpost.php" role="button" aria-expanded="false">
+                        href="{{url('/addpost')}}" role="button" aria-expanded="false">
                         <i class="bi bi-plus-square-dotted navbar-icon"></i>
                     </a>
                 </li>
                 @endif
 
                 @if($user == "moderator" || ($user == "system_manager"))
-                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./moderator_dashboard.php"
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="{{url('/moderatordashboard')}}"
                         role="button" data-togle="tooltip" data-placement="bottom" title="Manage Reports"
                         aria-expanded="false">
                         <i class="bi bi-list-task navbar-icon"></i>
@@ -46,7 +46,7 @@
                 @endif
 
                 @if($user == "system_manager")
-                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="./manage_moderators.php"
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="{{url('/manageroles')}}"
                         role="button" data-togle="tooltip" data-placement="bottom" title="Manage Moderators"
                         aria-expanded="false">
                         <i class="bi bi-people-fill navbar-icon"></i>
@@ -97,16 +97,17 @@
                     </ul>
                 </li>
                 @else
-                <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#register"><a
+                <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-attr="{{url('/register')}}" data-bs-target="#register"><a
                         style="text-decoration:none;cursor:pointer;"><i class="fa fa-user pe-2"
                             aria-hidden="true"></i>Sign Up</li>
-                <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#login"><a
+                <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-attr="{{url('/login')}}" data-bs-target="#login"><a
                         style="text-decoration:none;cursor:pointer;"><i class="fa fa-sign-in pe-2"
                             aria-hidden="true"></i>Login</a>
                 </li>
                 @endif
             </ul>
         </div>
+
         @if($needsFilter == 1)
         <div class="navbar-collapse collapse" id="navbar-filter" navbar>
             <ul class="navbar-nav custom-filterBox">
