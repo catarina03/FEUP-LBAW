@@ -89,5 +89,8 @@ Route::get('administration/roles','UserController@roles');//DONE
 Route::put('comment/{comment_id}/report','CommentController@reportComment'); //DONE
 
 
+Route::get('/', function() {
+    return view('auth.register', ['user' => 'visitor', 'needsFilter' => 0]);
+});
 
 

@@ -1,3 +1,4 @@
+{{--
 @extends('layouts.app')
 
 @section('title', 'Cards')
@@ -14,3 +15,4 @@
 </section>
 
 @endsection
+--}}
