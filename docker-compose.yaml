@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pg!lol!2021
     ports:
-      - "5432:5432"
+      - "4444:4444"
 
   pgadmin:
     image: dpage/pgadmin4:5.1
