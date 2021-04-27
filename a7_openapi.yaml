@@ -1,0 +1,2423 @@
+openapi: 3.0.0
+ 
+info:
+  version: 1.0.0
+  title: 'LBAW AltArt Web API'
+  description: 'Web Resources Specification (A7) for AltArt'
+ 
+servers:
+- url: http://lbaw2123.lbaw-prod.fe.up.pt/
+  description: Production server
+ 
+externalDocs:
+  description: Find more info here.
+  url: https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/eap
+ 
+tags:
+  - name: 'M01: Authentication and Individual Profile'
+  - name: 'M02: Post'
+  - name: 'M03: Comment'
+  - name: 'M04: Notification'
+  - name: 'M05: Search'
+  - name: 'M06: Static pages'
+  - name: 'M07: Administration'
+ 
+ 
+paths:
+  /login:
+      get:
+        operationId: R101
+        summary: 'R101: Login Form'
+        description: 'Provide login form. Access: PUB'
+        tags:
+          - 'M01: Authentication and Individual Profile'
+        responses:
+          '200':
+            description: 'Ok. Show [UI09](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui09-login)'
+ 
+      post:
+        operationId: R102
+        summary: 'R102: Login Action'
+        description : 'Processes the login form submission. Access: PUB'
+        tags:
+          - 'M01: Authentication and Individual Profile'
+ 
+        requestBody:
+          required: true
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  password:
+                    type: string
+                required:
+                  - username
+                  - password
+ 
+        responses:
+          '302':
+            description: 'Redirect after processing the login credentials.'
+            headers:
+              Location:
+                schema:
+                  type: string
+                examples:
+                  302Error:
+                    description: 'Failed authentication. Redirect to login form.'
+                    value: '/login'
+ 
+  /logout:
+    post:
+      operationId: R103
+      summary: 'R103: Logout Action'
+      description: 'Logout the current authenticated used. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '302':
+          description: 'Redirect after processing logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to homepage.'
+                  value: '/'
+ 
+  /register:
+    get:
+      operationId: R104
+      summary: 'R104: Register Form'
+      description: 'Provide new user registration form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok. Show [UI10](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui10-register)'
+ 
+    post:
+      operationId: R105
+      summary: 'R105: Register Action'
+      description: 'Processes the new user registration form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+ 
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+                name:
+                  type: string
+                birthdate:
+                  type: string
+                password:
+                  type: string
+ 
+              required:
+                - email
+                - username
+                - name
+                - birthdate
+                - password
+ 
+      responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect to user profile.'
+                  value: '/users/{id}'
+                302Failure:
+                  description: 'Failed authentication. Redirect to register form.'
+                  value: '/register'
+ 
+  /user/{id}:
+    get:
+      operationId: R106
+      summary: 'R106: View User Profile'
+      description: 'Provide user profile. Access: USR'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+ 
+      responses:
+        '200':
+          description: 'Ok. Show [UI06](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui06-users-profile)'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    username:
+                      type: string
+                    bio:
+                      type: string
+                    instagram:
+                      type: string
+                    twitter: 
+                      type: string
+                    linkedin:
+                      type: string
+                    facebook:
+                      type: string
+                    profile_photo:
+                      type: string
+                    number_followers:
+                      type: integer
+                    number_following:
+                      type: integer
+                    number_likes:
+                      type: integer
+                    posts:
+                      type: array
+                      items: 
+                        type: string
+                      nullable: true
+                  example:
+                  - name: "Ana Sousa"
+                    username: "anasousa"
+                    bio: "Hi!"
+                    instagram: https://www.instagram.com/
+                    twitter: https://www.twitter.com/
+                    linkedin: https://www.linkedin.com/
+                    facebook: https://www.facebook.com/
+                    profile_photo: null
+                    number_followers: 0
+                    number_following: 20
+                    number_likes: 0
+                    posts: null  
+ 
+        '404':
+          description: 'Page not found: Show page not found UI'
+ 
+    delete:
+      operationId: R107
+      summary: "R107: Delete account action"
+      description: "Delete account. Access: OWN"
+      tags: 
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+ 
+      responses:
+        '302':
+          description: 'Redirect after deleting user.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful account deletion. Redirect to homepage.'
+                  value: '/'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+  /api/user/{id}/follow:
+    post:
+      operationId: R108
+      summary: "R108: Follow user action"
+      description: "Follow user. Access: USR"
+      tags: 
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+              required:
+                - user_id
+      responses:
+        '200':
+          description: 'Ok, followed user'
+        '400':
+          description: 'Error following user'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+    delete:
+      operationId: R109
+      summary: 'R109: Unfollower user action'
+      description: "Unfollow user. Access: OWN"
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Ok, unfollowed user '
+        '400':
+          description: 'Bad request: Error unfollowing user'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+  /api/user/{id}/block:
+    post:
+      operationId: R110
+      summary: "R110: Block user action"
+      description: "Block user. Access: USR"
+      tags: 
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+              required:
+                - user_id
+      responses:
+        '200':
+          description: 'Ok, blocked user '
+        '400':
+          description: 'Bad request: Error blocking user'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+    delete:
+      operationId: R111
+      summary: 'R111: Unblock user action'
+      description: "Unfollow user. Access: OWN"
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Ok, unblocked user'
+        '400':
+          description: 'Bad request: Error unblocking user'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+  /api/user/{id}/edit_photo:
+    put:
+      operationId: R112
+      summary: 'R112: Update user photo action'
+      description: 'Update user photo action. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                photo:
+                  type: string
+              required:
+                - photo
+ 
+      responses:
+        '200':
+          description: 'Ok, updated photo'
+        '400':
+          description: 'Bad request: Error updating photo'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+  /api/user/{id}/edit_bio:
+    get:
+      operationId: R113
+      summary: 'R113: Update user bio'
+      description: 'Update user bio. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+ 
+      responses:
+        '200':
+          description: 'Ok.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    bio:
+                      type: string
+                  example:
+                    bio: "Hey!"
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+        '404':
+          description: 'Page not found: Show page not found UI'
+ 
+    put:
+      operationId: R114
+      summary: 'R114: Update user bio action'
+      description: 'Update user bio action. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                bio_content:
+                  type: string
+              required:
+                - bio_content
+      responses:
+        '200':
+          description: 'Ok.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    bio_content:
+                      type: string
+                  example:
+                    bio: "Hey, I'm Ana!"
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+        '404':
+          description: 'Page not found: Show page not found UI'
+ 
+  /user/{id}/settings:
+    get:
+      operationId: R115
+      summary: 'R115: Settings forms'
+      description: 'Edit user account form. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Ok. Show [UI08](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui08-settings)'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    username:
+                      type: string
+                    email:
+                      type: string
+                    instagram:
+                      type: string
+                      nullable: true
+                    twitter: 
+                      type: string
+                      nullable: true
+                    linkedin:
+                      type: string
+                      nullable: true
+                    facebook:
+                      type: string
+                      nullable: true
+                    show_people_follow:
+                      type: boolean
+                    show_tags_follow:
+                      type: integer
+                    tags:
+                      type: array
+                      items: 
+                        type: string
+                      nullable: true
+                  example:
+                    name: "Ana Sousa"
+                    username: "anasousa"
+                    email: "anasousa@gmail.com"
+                    instagram: https://www.instagram.com/
+                    twitter: null
+                    linkedin: https://www.linkedin.com/
+                    facebook: https://www.facebook.com/
+                    show_people_follow: true
+                    show_tags_follow: false
+                    posts: ["art", "music"]  
+ 
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+        '404':
+          description: 'Page not found: Show page not found UI'
+ 
+ 
+  /api/user/{id}/settings/edit_account:
+    put:
+      operationId: R116
+      summary: 'R116: Edit user account action'
+      description: 'Edit user account action. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                username:
+                  type: string
+                email:
+                  type: string
+ 
+      responses:
+        '200':
+          description: 'Ok, account edited '
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  username:
+                    type: string
+                  email:
+                    type: string
+                example:
+                  name: "Ana Sousa"
+                  username: "anasousa"
+                  email: "anasousa@gmail.com"
+        '400':
+          description: 'Bad request: Error editing account'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+  /api/user/{id}/settings/edit_social_networks:
+    put:
+      operationId: R117
+      summary: 'R117: Update social newtworks action'
+      description: 'Update social newtworks. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                twitter:
+                  type: string
+                instagram:
+                  type: string
+                facebook:
+                  type: string
+                linkedin:
+                  type: string
+      responses:
+        '200':
+          description: 'Ok, social networks edited '
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  twitter:
+                    type: string
+                  instagram:
+                    type: string
+                  facebook:
+                    type: string
+                  linkedin:
+                    type: string
+                example:
+                  instagram: https://www.instagram.com/
+                  twitter: https://www.twitter.com/
+                  linkedin: https://www.linkedin.com/
+                  facebook: https://www.facebook.com/ 
+        '400':
+          description: 'Bad request: Error editing social networks'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+  /user/{id}/settings/change_password:
+    put:
+      operationId: R118
+      summary: 'R118: Change password action'
+      description: 'Change password action. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                new_password:
+                  type: string
+                confirm_password:
+                  type: string
+              required:
+                - password
+                - new_password
+                - confirm_password
+      responses:
+        '200':
+          description: 'Ok, password changed '
+        '400':
+          description: 'Error changing password'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+  /api/user/{id}/settings/edit_preferences:
+    put:
+      operationId: R119
+      summary: 'R119: Edit preferences action'
+      description: 'Edit preferences action. Access: OWN'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                show_people_follow:
+                  type: boolean
+                show_tags_follow:
+                  type: boolean
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: 'Ok, preferences edited '
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  show_people_follow:
+                    type: boolean
+                  show_tags_follow:
+                    type: boolean
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                example:
+                  show_people_follow: false
+                  show_tags_follow: true
+                  posts: ["art", "music"]  
+        '400':
+          description: 'Bad request: Error editing preferences'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+  /addpost:
+      get:
+        operationId: R201
+        summary: 'R201: Add Post Form'
+        description: 'Provide add post form. Access: USR'
+        tags:
+          - 'M02: Post'
+        responses:
+          '200':
+            description: 'Ok. Show [UI15](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui15-create-post)'
+          '403':
+            description: 'Forbidden client: show no permission UI.'
+      post:
+        operationId: R202
+        summary: 'R202: Add Post Action'
+        description: 'Processes the new post form submission. Access: USR'
+        tags:
+          - 'M02: Post'
+        parameters:
+          - in: query
+            name: user_id
+            schema:
+              type: integer
+            required: true
+        requestBody:
+          required: true
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  thumbnail:
+                    type: string
+                  content:
+                    type: string
+                  is_spoiler:
+                    type: boolean
+                  type:
+                    type: string
+                  category:
+                    type: string
+                  photos:
+                    type: array
+                    items:
+                      type: string
+ 
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                required:
+                  - title
+                  - thumbnail
+                  - is_spoiler
+                  - content 
+                  - type
+                  - category
+                  - user_id
+                  - photos
+                  - tags
+ 
+        responses:
+          '302':
+            description: 'Redirect after processing the new post information.'
+            headers:
+              Location:
+                schema:
+                  type: string
+                examples:
+                  302Success:
+                    description: 'Successful post creation. Redirect to post page.'
+                    value: '/post/{id}'
+                  302Failure:
+                    description: 'Failed post creation. Redirect to add post form page.'
+                    value: '/addpost'
+          '403':
+            description: 'Forbidden client: show no permission UI.'
+ 
+  /post/{id}:
+    get:
+      operationId: R203
+      summary: 'R203: View post'
+      description: 'Show the post. Access: PUB'
+      tags:
+         - 'M02: Post'
+ 
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+ 
+      responses:
+        '200':
+          description: 'Ok. Show [UI14](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui14-post-page)'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    thumbnail:
+                      type: string
+                    content:
+                      type: string
+                    is_spoiler:
+                      type: boolean
+                    created_at:
+                      type: string
+                      format: date
+                    n_views:
+                      type: integer
+                    category:
+                      type: string
+                    author_name:
+                      type: string
+                    up_votes: 
+                      type: integer
+                    down_votes:
+                      type: integer
+                    photos:
+                      type: array
+                      items:
+                        type: string
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                    comments:
+                      type: array
+                      items: 
+                        type: object
+ 
+        '404':
+          description: 'Page not found: Show page not found UI'
+ 
+ 
+ 
+    delete:
+      operationId: R204
+      summary: 'R204: Delete post action'
+      description: 'Delete the post. Access: OWN'
+      tags:
+         - 'M02: Post'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '302':
+          description: 'Redirect after processing the deleting post.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful post deletion. Redirect to post page.'
+                  value: '/post/{id}'
+                302Failure:
+                  description: 'Failed post deletion. Redirect to post page.'
+                  value: '/post/{id}'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+ 
+  /editpost/{id}:
+    get:
+      operationId: R205
+      summary: 'R205: Edit Post Form'
+      description: 'Provide edit post form. Access: OWN'
+      tags:
+        - 'M02: Post'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Ok. Show [UI16](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui16-edit-post)'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    thumbnail:
+                      type: string
+                    content:
+                      type: string
+                    is_spoiler:
+                      type: boolean
+                    type:
+                      type: string
+                    category:
+                      type: string
+                    photos:
+                      type: array
+                      items:
+                        type: string
+                    tags:
+                      type: array
+                      items:
+                        type: string
+ 
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+        '404':
+          description: 'Page not found: Show page not found UI'
+    put:
+      operationId: R206
+      summary: 'R206: Edit Action'
+      description: 'Processes the new post content form submission. Access: OWN'
+      tags:
+        - 'M02: Post'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                thumbnail:
+                  type: string
+                content:
+                  type: string
+                is_spoiler:
+                  type: boolean
+                type:
+                  type: string
+                category:
+                  type: string
+                photos:
+                  type: array
+                  items:
+                    type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - title
+                - thumbnail
+                - is_spoiler
+                - content 
+                - type
+                - category
+                - user_id
+                - upvotes
+                - downvotes
+                - photos
+                - tags
+ 
+      responses:
+        '302':
+          description: 'Redirect after processing the editing post information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful post edition. Redirect to post page.'
+                  value: '/post/{id}'
+                302Failure:
+                  description: 'Failed post edition. Redirect to edit post form.'
+                  value: '/editpost/{id}'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+  /api/post/{id}/save:
+    post:
+      operationId: R207
+      summary: 'R207: Save Post API'
+      description: 'Saves Post. Access: USR'
+      tags:
+        - 'M02: Post'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+ 
+      responses:
+        '200':
+          description: 'Ok, post saved '
+        '400':
+          description: 'Error saving post'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+    delete:
+      operationId: R208
+      summary: 'R208: Delete saved post API'
+      description: 'Delete saved post. Access: OWN'
+      tags:
+         - 'M02: Post'
+ 
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Ok, deleting saved post '
+        '400':
+          description: 'Bad request: Error deleting save post'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+  /api/post/{id}/vote:
+    post:
+      operationId: R209
+      summary: 'R209: Add Post Like/Dislike API'
+      description: 'Adds vote. Access: USR'
+      tags:
+        - 'M02: Post'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                vote:
+                  type: boolean
+              required:
+                - vote
+      responses:
+        '200':
+          description: 'Ok, vote added '
+        '400':
+          description: 'Error adding vote'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+    put:
+      operationId: R210
+      summary: 'R210: Edit vote API'
+      description: 'Edit the vote. Access: OWN'
+      tags:
+        - 'M02: Post'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                vote:
+                  type: boolean
+              required:
+                - vote
+      responses:
+        '200':
+          description: 'Ok, vote edited '
+        '400':
+          description: 'Error editing vote'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+ 
+    delete:
+      operationId: R211
+      summary: 'R211: Delete vote API'
+      description: 'Delete the vote. Access: OWN'
+      tags:
+         - 'M02: Post'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Ok, vote deleted '
+        '400':
+          description: 'Bad request: Error deleting vote'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+ 
+  /post/{id}/report:  
+    post:
+      operationId: R212
+      summary: 'R212: Report Post Action'
+      description: 'Processes the new post report submission. Access: USR'
+      tags:
+        - 'M02: Post'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                motive:
+                  type: string
+              required:
+                - motive
+ 
+      responses:
+        '302':
+          description: 'Redirect after processing the new report information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful report addition. Redirect to post page.'
+                  value: '/post/{id}'
+                302Failure:
+                  description: 'Failed report addition. Redirect to post page.'
+                  value: '/post/{id}'
+        '403':
+          description: 'Forbidden client: show no permission UI.'
+ 
+ 
+  /home:
+    get:
+      operationId: R213
+      summary: 'R213: Homepage'
+      description: 'Show the homepage filtered. Access: PUB'
+      tags:
+        - 'M02: Post'
+      responses:
+        '200':
+          description: 'Ok. Show [UI01](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui01-homepage)'
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      type: object
+ 
+ 
+ 
+  /api/home/{homepageFilters}:
+    get:
+      operationId: R214
+      summary: 'R214: Filter Homepage posts API'
+      description: 'Fitlers posts and returns result as JSON. Access: PUB.'
+      tags: 
+        - 'M02: Post'
+      parameters:
+        - in: path
+          name: homepageFilters
+          description: 'Specifies the filter parameter for Homepage posts'
+          schema:
+            type: string
+            enum: [hot, top, new]
+          required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    thumbnail:
+                      type: string
+                    content:
+                      type: string
+                    is_spoiler:
+                      type: boolean
+                    created_at:
+                        type: string
+                    n_views:
+                        type: integer
+                    category:
+                        type: string
+                    user_id:
+                        type: integer
+                    n_likes:
+                        type: integer
+                    photos:
+                        type: array
+                        items:
+                          type: string
+                    tags:
+                        type: array
+                        items:
+                          type: string
+                    comments:
+                        type: array
+                        items:
+                          type: object
+        '404':
+          description: 'Page not found: Show page not found UI'
+ 
+  /api/post/{post_id}/add_comment:
+    post:
+      operationId: R301
+      summary: 'R301: Add Comment Action API'
+      description: 'Add a new comment. Access: USR'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                user_id:
+                  type: integer
+              required:
+                - content
+                - user_id
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  content:
+                    type: string
+                  user_id:
+                    type: integer
+                  comment_date:
+                    type: string
+                    format: date-time
+                  post_id:
+                    type: string
+              example:
+                - id: 1
+                  content: Agreed!
+                  user_id: 44
+                  comment_date: 2020-05-12t18:15:43z
+                  post_id: 19
+        '400':
+          description: 'Error adding comment'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Post not found'
+ 
+  /api/comment/{comment_id}/edit:
+    get:
+      operationId: R302
+      summary: 'R302: Edit Comment Form API'
+      description: 'Gets the edit form. Access: OWN'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  content:
+                    type: string
+                  user_id:
+                    type: integer
+                  comment_date:
+                    type: string
+                    format: date-time  
+                  post_id:                  
+                    type: integer
+                    nullable: true
+                  comment_id:
+                    type: integer
+                    nullable: true
+                  number_likes:
+                    type: integer
+                  number_dislikes:
+                    type: integer
+                example:
+                - id: 1
+                  content: 'I really liked this article!'
+                  user_id: 24
+                  comment_date: 2020-05-12t18:10:43z
+                  post_id: 19
+                  comment_id: null
+                  number_likes: 10
+                  number_dislikes: 0
+        '400':
+          description: 'Error getting edit comment form'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Comment not found' 
+ 
+    patch:
+      operationId: R303
+      summary: "R303: Edit Comment Action API"
+      description: 'Provides the resource to edit a comment. Access: OWN'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:         
+                  type: string
+              required:
+                - content
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  content:
+                    type: string
+                example:
+                - id: 1
+                  content: 'I really liked this article!'
+        '400':
+          description: 'Error editing comment'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Comment not found'
+ 
+  /api/comment/{comment_id}:
+    delete:
+      operationId: R304
+      summary: "R304: Delete comment API"
+      description: 'Provides the resource to delete a comment. Access: OWN'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Success'
+        '400':
+          description: 'Error deleting comment'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Comment not found'
+ 
+  /api/comment/{comment_id}/vote:
+    post:
+      operationId: R305
+      summary: 'R305: Add comment vote API'
+      description: 'Provides the resource to vote on a comment. Access: USR'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                like:         
+                  type: boolean
+              required:
+                - user_id
+                - like
+      responses:
+        '200':
+          description: 'Success'
+        '400':
+          description: 'Error adding vote'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Comment not found.'
+ 
+    delete:
+      operationId: R306
+      summary: "R306: Delete comment vote API"
+      description: 'Provides the resource to remove a comment vote. Access: OWN'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Success'
+        '400':
+          description: 'Error adding vote'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Comment not found'
+ 
+    put:
+      operationId: R307
+      summary: "R307: Edit comment vote API"
+      description: 'Provides the resource to edit a comment vote. Access: OWN'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                like:        
+                  type: boolean
+              required:
+                - user_id
+                - like
+      responses:
+        '200':
+          description: 'Success'
+        '400':
+          description: 'Error editing comment'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Comment not found'
+ 
+  /comment/{comment_id}/report:
+    post:
+      operationId: R308
+      summary: 'R308: Report comment vote Action'
+      description: 'Provides the resource to report a comment. Access: USR'
+      tags:
+        - 'M03: Comment'
+      parameters:
+      - in: path
+        name: comment_id
+        schema:
+          type: integer
+        required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                motive:         
+                  type: string
+                user_reporting:
+                  type: integer
+                comment_reported:
+                  type: integer
+              required:
+                - motive
+                - user_reporting
+                - comment_reported
+      responses:
+        '200':
+          description: 'Success'
+        '400':
+          description: 'Error reporting comment'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Comment not found'
+ 
+  /api/comment/{comment_id}/thread:
+    get:
+      operationId: R309
+      summary: 'R309: Get all thread comments of a comment API'
+      description: 'Gets all the thread comments associated with a comment. Access: PUB'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    content:
+                      type: string
+                    user_id:
+                      type: integer
+                    comment_date:
+                      type: string
+                      format: date-time  
+                    post_id:                 
+                      type: integer
+                      nullable: true
+                    comment_id:
+                      type: integer
+                    number_likes:
+                      type: integer
+                    number_dislikes:
+                      type: integer
+                  example:
+                  - id: 2
+                    content: 'I agree with you!'
+                    user_id: 35
+                    comment_date: 2020-05-12t18:15:43z
+                    post_id: null
+                    comment_id: 1
+                    number_likes: 2
+                    number_dislikes: 0
+                  - id: 3
+                    content: 'I agree too!'
+                    user_id: 63
+                    comment_date: 2020-05-12t18:15:52z
+                    post_id: null
+                    comment_id: 1
+                    number_likes: 0
+                    number_dislikes: 0
+        '400':
+          description: 'Error getting thread comments'
+        '404':
+          description: 'Comment not found'            
+ 
+  /api/comment/{comment_id}/add_comment:
+    post:
+      operationId: R310
+      summary: 'R310: Add Thread Comment API'
+      description: 'Add a new thread comment. Access: USR'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: comment_id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                user_id:
+                  type: string
+              required:
+                - content
+                - user_id
+      responses:
+        '200':
+          description: 'Ok, thread comment added'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  content:
+                    type: string
+                  user_id:
+                    type: integer
+                  comment_date:
+                    type: string
+                    format: date-time
+                  comment_id:
+                    type: string
+                  number_likes:
+                    type: integer
+                  number_dislikes:
+                    type: integer
+              example:
+                - id: 8
+                  content: This made me laugh!
+                  user_id: 82
+                  comment_date: 2020-09-20t10:12:19z
+                  comment_id: 1
+                  number_likes: 0
+                  number_dislikes: 0
+        '400':
+          description: 'Error adding thread comment'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Comment not found' 
+ 
+  /api/post/{post_id}/comments:
+    get:
+      operationId: R311
+      summary: 'R311: Get more comments of post API'
+      description: 'Gets more comments related to a post. Access: PUB'
+      tags:
+        - 'M03: Comment'
+      parameters:
+        - in: path
+          name: post_id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    content:
+                      type: string
+                    user_id:
+                      type: integer
+                    comment_date:
+                      type: string
+                      format: date-time  
+                    post_id:            
+                      type: integer
+                    comment_id:
+                      type: integer
+                      nullable: true
+                    number_likes:
+                      type: integer
+                    number_dislikes:
+                      type: integer
+                  example:
+                  - id: 4
+                    content: 'I didnt like this movie too!'
+                    user_id: 35
+                    comment_date: 2020-05-12t18:15:43z
+                    post_id: 1
+                    comment_id: null
+                    number_likes: 2
+                    number_dislikes: 0
+                  - id: 5
+                    content: 'I disagree with you'
+                    user_id: 63
+                    comment_date: 2020-05-12t18:15:52z
+                    post_id: 1
+                    comment_id: null
+                    number_likes: 0
+                    number_dislikes: 0
+        '400':
+          description: 'Error getting comments'
+        '404':
+          description: 'Post not found' 
+ 
+  /api/notification/{notification_id}/read:
+    post:
+      operationId: R401
+      summary: 'R401: Mark notification as read API'
+      description: 'Provides the resource to mark a notification as read. Access: OWN'
+      tags:
+        - 'M04: Notification'
+      parameters:
+        - in: path
+          name: notification_id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                read:          
+                  type: boolean
+              required:
+                - read
+      responses:
+        '200':
+          description: 'Ok. Notification added as read successfully.'
+        '400':
+          description: 'Bad request. Error message is specified via an HTTP header.'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'Notification not found.'
+ 
+  /api/user/{user_id}/read:
+    post:
+      operationId: R402
+      summary: 'R402: Mark all user notification as read API'
+      description: 'Provides the resource to mark all notifications of a user as read. Access: OWN'
+      tags:
+        - 'M04: Notification'
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Success'
+        '400':
+          description: 'Error marking all notifications as read.'
+        '403':
+          description: 'Forbidden client: show no permission UI'
+        '404':
+          description: 'User not found.'
+ 
+  /api/user/{user_id}/notifications:        
+    get:
+      operationId: R403
+      summary: 'R403: Get more notifications API'
+      description: 'Gets more notifications of a user. Access: USR'
+      tags:
+        - 'M04: Notification'
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    created_date:
+                      type: string
+                      format: date-time  
+                    notificated_user:
+                      type: integer
+                    read:
+                      type: boolean
+                    type:            
+                      type: string
+                    post_id:
+                      type: integer
+                      nullable: true
+                    follower_id:
+                      type: integer
+                      nullable: true
+                    comment_id:
+                      type: integer
+                      nullable: true
+                    voted_comment:
+                      type: integer
+                      nullable: true
+                    voted_post:
+                      type: integer
+                      nullable: true
+                    voted_user:
+                      type: integer
+                      nullable: true
+                  example:
+                  - id: 1
+                    created_date: 2020-05-12t18:15:43z
+                    notificated_user: 1
+                    read: false
+                    type: publish
+                    post_id: 1
+                    follower_id: null
+                    comment_id: null
+                    voted_comment: null
+                    voted_post: null
+                    voted_user: null
+                  - id: 2
+                    created_date: 2020-05-22t18:15:43z
+                    notificated_user: 1
+                    read: false
+                    type: vote
+                    post_id: null
+                    follower_id: null
+                    comment_id: null
+                    voted_comment: 3
+                    voted_post: null
+                    voted_user: null
+        '400':
+          description: 'Error getting notifications'
+        '404':
+          description: 'Post not found'         
+ 
+  /api/post_filter:
+    get:
+      operationId: R501
+      summary: 'R501: Post filter'
+      description: 'Post filter and return results as JSON.  Access: PUB'
+      tags:
+        - 'M05: Search'
+      parameters:
+        - in: query
+          name: category
+          description: Post category
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: text
+          description: Text to be used in the FTS
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: type
+          description: Type of post
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: start_date
+          description: Starting date of post
+          schema:
+            type: string
+            format: date
+          required: false
+        - in: query
+          name: end_date
+          description: End date of post
+          schema:
+            type: string
+            format: date
+          required: false
+        - in: query
+          name: date
+          description: Date ordering
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: following
+          description: \'Only people I follow\' flag
+          schema:
+            type: boolean
+          required: false
+        - in: query
+          name: tag
+          description: \'Only tags I follow\' flag
+          schema:
+            type: boolean
+          required: false
+      responses:
+        '200':
+          description: 'Success.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    author_id:
+                      type: integer
+                    date:
+                      type: string
+                      format: date
+                    views:
+                      type: integer
+                    reports:
+                      type: integer
+                    type:
+                      type: string
+                    content:
+                      type: string
+                    likes:
+                      type: integer
+ 
+        '400':
+          description: 'Bad request. Error message retrieving data. Show [UI05](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui05-moderator-dashboard)'
+ 
+ 
+  /api/report_filter:
+    get:
+      operationId: R502
+      summary: 'R502: Report filter'
+      description: 'Report filter and return results as JSON.  Access: MOD'
+      tags:
+        - 'M05: Search'
+      parameters:
+        - in: query
+          name: moderator_id
+          description: Moderator ID
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: text
+          description: String to use for full-text search
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: type
+          description: Type of content.(post or comment)
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: category
+          description: Category of content
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: date
+          description: Date ordering
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: unassigned
+          description: Unassigned reports flag
+          schema:
+            type: boolean
+          required: false
+        - in: query
+          name: assigned
+          description: assigned reports flag
+          schema:
+            type: boolean
+          required: false
+      responses:
+        '200':
+          description: 'Success.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    author_id:
+                      type: integer
+                    date:
+                      type: string
+                      format: date
+                    motive:
+                      type: string
+                    reports:
+                      type: integer
+                    content_type:
+                      type: string
+ 
+        '400':
+          description: 'Bad request. Error message retrieving data.'
+ 
+  /about:
+    get:
+      operationId: R601
+      summary: 'R601: Get About Page'
+      description: 'Get About page content.  Access: PUB'
+      tags:
+        - 'M06: Static pages'
+      responses:
+        '202':
+          description: 'Success. Show [UI11](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui11-about-us)'
+ 
+  /faq:
+    get:
+      operationId: R602
+      summary: 'R602: Get FAQ Page'
+      description: 'Get FAQ page content.  Access: PUB'
+      tags:
+        - 'M06: Static pages'
+      responses:
+        '202':
+          description: 'Success. Show [UI12](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui12-faq)'  
+ 
+  /support:
+    get:
+      operationId: R603
+      summary: 'R603: Get Support Page'
+      description: 'Get Support page content.  Access: PUB'
+      tags:
+        - 'M06: Static pages'
+      responses:
+        '202':
+          description: 'Success. Show [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui13-support-page)'
+ 
+    post:
+      operationId: R604
+      summary: 'R604: Send Support Request'
+      description: 'Get Support page content.  Access: PUB'
+      tags:
+        - 'M06: Static pages'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:          
+                  type: integer
+                contact:          
+                  type: string
+                frequency:
+                  type: integer
+ 
+              required:
+                - moderator_id
+                - action
+                - frequency
+      responses:
+        '202':
+          description: 'Success. Show [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui13-support-page)'
+ 
+  /supports:
+    get:
+      operationId: R605
+      summary: 'R605: Get All Support requests'
+      description: 'Get Support page content.  Access: MOD'
+      tags:
+        - 'M06: Static pages'
+      responses:
+        '202':
+          description: 'Success. Show [UI13](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui13-support-page)'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                    contact:
+                      type: string
+                    frequency:
+                      type: integer
+ 
+  /administration/roles:
+    get:
+      operationId: R701
+      summary: 'R701: Get all user and roles'
+      description: 'Get all user and roles and return results as JSON.  Access: SM'
+      tags:
+        - 'M07: Administration'
+      responses:
+        '200':
+          description: 'Success. Show [UI04](https://git.fe.up.pt/lbaw/lbaw2021/lbaw2123/-/wikis/er#ui04-manage-moderators)'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    username:
+                      type: string
+                    role:
+                      type: string
+        '403':
+          description: 'Unauthorized access!.'  
+ 
+ 
+ 
+  /api/administration/roles/{user_id}/edit_role:
+    put:
+      operationId: R702
+      summary: 'R702: Edit a users role'
+      description: 'Edit user role. Access: SM'
+      tags:
+        - 'M07: Administration'
+      parameters:
+        - in: path
+          name: user_id
+          description: User ID
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                new_role:         
+                  type: string
+ 
+              required:
+                - comment_id
+ 
+      responses:
+        '302':
+          description: 'Role updated successfully.Redirecting to role manager'
+          headers:
+            Location:
+              schema:
+                type: string
+        '404':
+          description: 'Error updating role! User ID not found-'
+          headers:
+            Location:
+              schema:
+                type: string
+        '403':
+          description: 'Unauthorized access!.' 
+ 
+ 
+ 
+ 
+ 
+  /reports/{report_id}/close:
+    put:
+      operationId: R703
+      summary: 'R703: Close a report'
+      description: 'Close a report. Access: MOD'
+      tags:
+        - 'M07: Administration'
+      parameters:
+        - in: path
+          name: report_id
+          description: Report ID
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                moderator_id:          
+                  type: integer
+ 
+              required:
+                - moderator_id
+ 
+      responses:
+        '302':
+          description: 'Report dismissed successfully.Redirecting to moderator dashboard'
+          headers:
+            Location:
+              schema:
+                type: string
+        '404':
+          description: 'Report not found!.Redirecting to moderator dashboard'
+          headers:
+            Location:
+              schema:
+                type: string
+        '403':
+          description: 'Unauthorized access!.' 
+ 
+ 
+  /reports/{report_id}/assign_report:
+    put:
+      operationId: R704
+      summary: 'R704: Assign a report'
+      description: 'Assign a report. Access: MOD'
+      tags:
+        - 'M07: Administration'
+      parameters:
+        - in: path
+          name: report_id
+          description: Report ID
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                moderator_id:          
+                  type: integer
+              required:
+                - moderator_id
+      responses:
+        '302':
+          description: 'Report assigned successfully.Redirecting to moderator dashboard'
+          headers:
+            Location:
+              schema:
+                type: string
+        '404':
+          description: 'Report not found!.Redirecting to moderator dashboard'
+          headers:
+            Location:
+              schema:
+                type: string
+        '403':
+          description: 'Unauthorized access!.' 
+ 
+ 
+  /reports/{report_id}/process:
+    put:
+      operationId: R705
+      summary: 'R705: Process a report'
+      description: 'Process a report. Access: MOD'
+      tags:
+        - 'M07: Administration'
+      parameters:
+        - in: path
+          name: report_id
+          description: Report ID
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                moderator_id:       
+                  type: integer
+                action:          
+                  type: string
+ 
+              required:
+                - moderator_id
+                - action
+      responses:
+        '302':
+          description: 'Report processed successfully.Redirecting to moderator dashboard'
+          headers:
+            Location:
+              schema:
+                type: string
+        '404':
+          description: 'Report not found.Redirecting to moderator dashboard'
+          headers:
+            Location:
+              schema:
+                type: string
+        '403':
+          description: 'Unauthorized access!.'
