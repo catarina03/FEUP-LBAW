@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Photo;
 use App\Models\Tag;
+use App\Models\AuthenticatedUser;
+use App\Models\Comment;
+use App\Policies\PostPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Auth;
 
 class PostController extends Controller
 {
@@ -119,11 +124,33 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //$post = Post::find($id); -- ver se o post existe 
-        
+        $post = Post::find($id);
+        if(!$post)
+            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+        if(Auth::check())
+            $user = Auth::user()->id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
+        else
+            $user = 'visitor';
+        $user = 'authenticated_owner';
+        $post->timestamps = false;
+        $post->increment('n_views');
+        $USER = AuthenticatedUser::find($post->user_id);
+        $comments = Comment::where('post_id',$id)->get()->count();
+        $votes = DB::table("vote_post")->where("post_id",$id);
+        $temp = $votes->get()->count();
+        $likes = $votes->where("like",true)->get()->count();
+        $dislikes = $temp - $likes;
+        $tags = DB::select(DB::raw("select t.name
+        FROM post_tag,tag as t
+        WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
+        $date = date("F j, Y", strtotime($post['created_at']));
+
+        $metadata = ['comments'=>$comments,'author'=>$USER['name'],'views' => $post->n_views,
+                     'likes' => $likes,'tags' => $tags,'date'=>$date];
         //checkar se está autenticado e se é o dono
-        //se o post existir vai buscar o necessario para mostrar o post e chama a sua view
-        return view('pages.post', ['user' => 'visitor', 'needsFilter' => 0] ); //['post'=> $post]
+
+        
+        return view('pages.post', ['user' => $user, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata] );
     }
 
     /**

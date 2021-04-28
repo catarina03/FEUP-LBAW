@@ -6,7 +6,7 @@
         <div class="card post-page-post-card justify-content-center pb-5" style="border-radius:5px;">
 
             @if($user != 'visitor')
-                @if(''){{-- Se for o próprio owner a ver --}}
+                @if($user=='authenticated_owner'){{-- Se for o próprio owner a ver --}}
                 <div class="my-post-page-settings btn-group dropdown">
                     <a class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-cog" style="font-size:3em;"></i>
@@ -37,50 +37,30 @@
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-3">
-                <h1 class="post-page-post-title">Mick Jagger Celebrates 150 Years of the Royal Albert Hall in New Video</h1>
+                <h1 class="post-page-post-title">{{$post['title']}}</h1>
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-1">
-                <h2 class="post-page-post-author-date">by <a href="./myprofile.php">Ana Sousa</a>, FEBRUARY 23, 2021</h2>
+                <h2 class="post-page-post-author-date">by <a href="./myprofile.php">{{$metadata['author']}}</a>, {{$metadata['date']}}</h2>
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-1">
                 <div class="pe-3">
-                    <h3 class="post-page-post-interactions">4 <i class="far fa-eye"></i></h3>
+                    <h3 class="post-page-post-interactions">{{$metadata['views']}} <i class="far fa-eye"></i></h3>
                 </div>
                 <div class="pe-3">
-                    <h3 class="post-page-post-interactions">1 <i class="far fa-thumbs-up"></i></h3>
+                    <h3 class="post-page-post-interactions">{{$metadata['likes']}} <i class="far fa-thumbs-up"></i></h3>
                 </div>
                 <div class="pe-3">
                     <h3 class="post-page-post-interactions">0 <i class="far fa-thumbs-down"></i></h3>
                 </div>
                 <div class="pe-3">
-                    <h3 class="post-page-post-interactions">2 <i class="far fa-comments"></i></h3>
+                    <h3 class="post-page-post-interactions">{{$metadata['comments']}} <i class="far fa-comments"></i></h3>
                 </div>
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-2">
-                <p class="post-page-post-text">Mick Jagger narrates a new film on London’s Royal Alberts Hall in
-                    celebration
-                    of the iconic venue’s 150th birthday. Directed by Tom Harper, the 90-second film includes scenes
-                    of the empty venue during the pandemic.
-                    <br>“I would like to take this opportunity to wish the Royal Albert Hall a very happy 150th
-                    birthday and look forward to the future, seeing and listening to many fantastic artists and
-                    musicians performing onstage at this iconic venue,” Jagger says.
-                    <br>“I have desperately missed live performance — there is something electric and fundamentally
-                    human about the shared experience of being in a room surrounded by other people, part of an
-                    audience,” Harper added. “The Royal Albert Hall is a magnificent building even when it’s empty,
-                    but what makes it truly special is the connection it fosters through those shared experiences.
-                    That is what this film is about: Not only a celebration of performances from the Hall’s glorious
-                    past, but also the sense of anticipation of some of the things to look forward to when we can be
-                    together again.”
-                    <br>...<br>... <br>“I have desperately missed live performance — there is something electric and
-                    fundamentally human about the shared experience of being in a room surrounded by other people,
-                    part of an audience,” Harper added. “The Royal Albert Hall is a magnificent building even when
-                    it’s empty, but what makes it truly special is the connection it fosters through those shared
-                    experiences. That is what this film is about: Not only a celebration of performances from the
-                    Hall’s glorious past, but also the sense of anticipation of some of the things to look forward
-                    to when we can be together again.”
+                <p class="post-page-post-text">{{$post['content']}}
                 </p>
             </div>
 
@@ -88,18 +68,12 @@
                 <div class="col-10">
                     <div class="row justify-content-start align-items-center">
                         <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Tags: </h2>
-                        <div class="col-auto post-page-tag-container px-2 m-1">
-                            <a class="post-page-post-tag" href="advanced_search.php">Music</a>
-                        </div>
-                        <div class="col-auto post-page-tag-container px-2 m-1">
-                            <a class="post-page-post-tag" href="advanced_search.php">News</a>
-                        </div>
-                        <div class="col-auto post-page-tag-container px-2 m-1">
-                            <a class="post-page-post-tag" href="advanced_search.php">Band</a>
-                        </div>
-                        <div class="col-auto post-page-tag-container px-2 m-1">
-                            <a class="post-page-post-tag" href="advanced_search.php">Performance</a>
-                        </div>
+                        
+                        @foreach($metadata['tags'] as $tag)
+                            <div class="col-auto post-page-tag-container px-2 m-1">
+                                <a class="post-page-post-tag" href="advanced_search.php">{{$tag->name}}</a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
