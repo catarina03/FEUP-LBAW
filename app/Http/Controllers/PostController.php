@@ -124,29 +124,49 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
-        if(!$post)
+
+        //Get currnt route
+        $route = \Route::current();
+
+        //If route {id} isnt int or post doesnt exist, redirect to notfound.
+        if(!is_numeric($route->parameter('id')))
             return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+        $post = Post::find($id);
+        if(!$post )
+            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+
+        //Verify if user is authenticated and if user is owner of post    
         if(Auth::check())
             $user = Auth::user()->id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
         else
             $user = 'visitor';
-        $user = 'authenticated_owner';
+        
+        //Set timestamps to false(updated_at column doesnt exist) and increment views
         $post->timestamps = false;
         $post->increment('n_views');
+
+        //Get owner TODO:: Get owner only if user!=authenticated_owner' , otherwise the owner is Auth::user()
         $USER = AuthenticatedUser::find($post->user_id);
+
+        //Get comment count,likes and dislikes
         $comments = Comment::where('post_id',$id)->get()->count();
-        $votes = DB::table("vote_post")->where("post_id",$id);
+        $votes = DB::table("vote_post")->where("post_id",$id); //Couldn't figure ut how to do it with pivot table
         $temp = $votes->get()->count();
         $likes = $votes->where("like",true)->get()->count();
         $dislikes = $temp - $likes;
+
+        //Get tags associated with current post TODO:: Use Tag Model
         $tags = DB::select(DB::raw("select t.name
         FROM post_tag,tag as t
         WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
-        $date = date("F j, Y", strtotime($post['created_at']));
 
+        //Get date and thumbnail path
+        $date = date("F j, Y", strtotime($post['created_at']));
+        $thumbnail = "/images/".$post->thumbnail;
+
+        //Generate metadata to send to view
         $metadata = ['comments'=>$comments,'author'=>$USER['name'],'views' => $post->n_views,
-                     'likes' => $likes,'tags' => $tags,'date'=>$date];
+                     'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail];
         //checkar se está autenticado e se é o dono
 
         

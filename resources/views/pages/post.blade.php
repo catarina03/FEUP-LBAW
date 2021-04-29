@@ -30,8 +30,8 @@
             <div class="container-fluid d-flex justify-content-center">
                 <div class="mt-2 col-10 justify-content-center d-flex">
                     <div class="row thumbnail-image">
-                        <img src="https://d15v4l58k2n80w.cloudfront.net/file/1396975600/25413991727/width=1600/height=900/format=-1/fit=crop/crop=394x0+6541x3684/rev=3/t=443967/e=never/k=756accaa/Untitled_Panorama6.jpg"
-                             class="justify-content-conter" alt="Royal Albert Hall">
+                        <img src="{{URL::asset($metadata['thumbnail'])}}"
+                             class="justify-content-conter" alt="alt src">
                     </div>
                 </div>
             </div>
