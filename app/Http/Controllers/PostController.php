@@ -251,15 +251,18 @@ class PostController extends Controller
     public function destroy($post_id)
     {
         //checkar se está autenticado
-
-        $post = Post::find($post_id);
-        if($post != null){
-            if ($post->delete()) {
-                return; //dar return da view da homepage
-            } else {
-                return; // dar return da view do post
+        if(Auth::check()){
+            $post = Post::find($post_id);
+            $this->authorize("delete",[Auth::user(),$post]);
+            if($post != null){
+                if ($post->delete()) {
+                    return view("pages.homepage",["user"=>"visitor","needsFilter"=>1]); //dar return da view da homepage
+                } else {
+                    return $this->show($post_id); // dar return da view do post
+                }
             }
         }
+        return view("pages.homepage",["user"=>"visitor","needsFilter"=>1]);
     }
 
     /**
