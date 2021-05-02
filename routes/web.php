@@ -21,12 +21,14 @@ Route::get('/faq', 'PagesController@faq');
 Route::get('/support', 'PagesController@support');
 Route::post('/support', 'PagesController@supportRequest');
 Route::get('/category/{category}', 'PagesController@category');
-Route::get('api/home/{homepageFilters}', 'PagesController@filterHomePage');
+Route::get('api/home/{homepageFilters}', 'PagesController@list');
+Route::get('/advanced_search','PagesController@advanced_search');
+Route::get('api/post_filter/{filters}','PagesController@postFilter');
+Route::get('api/loadMore/{filters}/{page}', 'PagesController@loadMoreHomepage');
 
 
 //Admin 
 Route::put('api/administration/roles/{user_id}/edit_role','UserController@editRole');//DONE
-Route::get('api/post_filter','PostController@postFilter');  //queries
 Route::get('api/report_filter','ReportController@reportFilter'); //?
 Route::post('api/post/{post_id}/add_comment','CommentController@create'); //DONE
 Route::get('api/comment/{comment_id}/edit','CommentController@editForm'); //??Informações para preencher o formulario?

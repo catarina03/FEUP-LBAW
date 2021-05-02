@@ -1,21 +1,21 @@
-@section('filter-box')
+<script type="text/javascript" src="{{ URL::asset('js/filterbox.js') }}" defer></script>
 <div class="custom-filterBox col-md-3 d-lg-block d-none text-center">
     <div class="container">
         <h4> Search </h4>
-        <form class="pt-2" action="advanced_search.php" method="post">
+        <form class="pt-2" action="" method="get">
             <div class="input-group rounded">
-                <input type="search" class="form-control" placeholder="Search" aria-label="Search"
+                <input type="search" id="search" class="form-control" placeholder="Search" aria-label="Search"
                        aria-describedby="search-addon" />
                 <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
                             <i class="fas fa-search"></i>
                         </span>
             </div>
-            <select class="form-select mt-4" aria-label="Select a type" style="cursor:pointer;">
+            <select class="form-select mt-4" id="type" aria-label="Select a type" style="cursor:pointer;">
                 <option selected>Select a type</option>
-                <option value="1">News</option>
-                <option value="2">Article</option>
-                <option value="3">Review</option>
-                <option value="4">Suggestion</option>
+                <option value="News">News</option>
+                <option value="Article">Article</option>
+                <option value="Review">Review</option>
+                <option value="Suggestion">Suggestion</option>
             </select>
             <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date"
                    style="cursor:pointer;">
@@ -41,4 +41,3 @@
         </form>
     </div>
 </div>
-@show

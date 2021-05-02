@@ -1,0 +1,1 @@
+@each('partials.card', $posts, 'post')
