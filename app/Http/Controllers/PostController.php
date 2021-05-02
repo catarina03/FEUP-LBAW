@@ -140,7 +140,7 @@ class PostController extends Controller
             $user = Auth::user()->id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
         else
             $user = 'visitor';
-        
+        $user = 'authenticated_owner';
         //Set timestamps to false(updated_at column doesnt exist) and increment views
         $post->timestamps = false;
         $post->increment('n_views');
@@ -256,13 +256,13 @@ class PostController extends Controller
             $this->authorize("delete",[Auth::user(),$post]);
             if($post != null){
                 if ($post->delete()) {
-                    return view("pages.homepage",["user"=>"visitor","needsFilter"=>1]); //dar return da view da homepage
+                    return ''; //dar return da view da homepage
                 } else {
-                    return $this->show($post_id); // dar return da view do post
+                    return 'post/' + $post_id; // dar return da view do post
                 }
             }
         }
-        return view("pages.homepage",["user"=>"visitor","needsFilter"=>1]);
+        return '';
     }
 
     /**
