@@ -1143,6 +1143,15 @@ h3.post-page-comment-reply-interactions{
   font-size: small;
 }
 
+.create-post-tag-input:focus{
+    outline: none;
+    border: none;
+}
+
+.create-post-tag-input{
+    border: none;
+}
+
 .create-post-page-post-card .cancel-post {
   color: #0c1d1c;
   text-decoration: underline;

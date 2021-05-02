@@ -8,110 +8,166 @@
     </div>
     <div class="createPost-center col-12 col-lg-7">
         <div class="card create-post-page-post-card d-flex justify-content-center pt-5 pb-5" style="border-radius:5px;">
-            <div class="row justify-content-center">
-                <div class="col-10">
-                    <div class="form-group post-comment-input mb-4">
-                        <label class="add-comment-label" for="edit-title">Post title</label>
-                        <input class="container form-control w-100" id="edit-title" value="">
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center my-3">
-                <div class="col-10">
-                    <div class="row px-0 mx-0">
-                        <div class="col-lg-6 col-12 form-group new-post-thumbnail p-0 m-0 me-lg-4">
-                            <label class="form-label" for="postImage">Select post image</label>
-                            <input type="file" class="form-control" id="postImage" />
-                        </div>
-                        <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1">
-                            <select class="form-select" id="category-dropdown" style="cursor:pointer;">
-                                <option disabled selected hidden>Category</option>
-                                <option>Music</option>
-                                <option>Cinema</option>
-                                <option>TV Show</option>
-                                <option>Theater</option>
-                                <option>Literature</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-3 pt-lg-3 p-1">
-                            <select class="form-select" id="topic-dropdown" style="cursor:pointer;">
-                                <option disabled selected hidden>Type</option>
-                                <option>News</option>
-                                <option>Article</option>
-                                <option>Review</option>
-                                <option>Suggestion</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-7 col-12 form-group spoiler-checkbox p-1 mt-1 mb-0 pb-0 align-self-end">
-                            <input type="checkbox" id="spoiler" name="spoiler-checkbox" value="spoiler">
-                            <label for="spoiler">This post contains spoilers</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container mx-0 px-0 mt-3 create-post-editor-container">
+            <form id="create-post-form" enctype="multipart/form-data" action="{{ url('addpost') }}" method="POST">
+                @csrf
                 <div class="row justify-content-center">
                     <div class="col-10">
-                        <label for="mytextarea">Post</label>
-                        <textarea id="mytextarea" class="create-post-editor col-auto" name="mytextarea" rows="15"
-                                  style="resize:none;"></textarea>
+                        <div class="form-group post-comment-input mb-4">
+                            <label class="add-comment-label" for="title">Post title</label>
+                            <input class="container form-control w-100" id="title" name="title" value="{{ old('title') }}">
+                        </div>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-1">
+                <div class="row justify-content-center my-3">
                     <div class="col-10">
-                        <p><i class="fas fa-exclamation-triangle"></i> Keep in mind that if your post does not
-                            follow all website's rules, it may be reported.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="container mx-0 px-0 mt-3 create-post-tags-container">
-                <div class="row justify-content-center">
-                    <div class="col-10">
-                        <label for="tags" class="col-12 col-form-label">Tags</label>
-                        <div class="bg-white rounded border justify-content-center form-control" id="tags"
-                             style="height:4em;">
-                            <div class="d-flex justify-content-start tags">
-
+                        <div class="row px-0 mx-0">
+                            <div class="col-lg-6 col-12 form-group new-post-thumbnail p-0 m-0 me-lg-4">
+                                <label class="form-label" for="postImage">Select post image</label>
+                                <input type="file" class="form-control" name="thumbnail" id="postImage" value="{{ old('thumbnail') }}" />
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1">
+                                <select class="form-select" id="category" name="category" value="{{ old('category') }}" style="cursor:pointer;">
+                                    <option value="" disabled selected hidden>Category</option>
+                                    @if (old('category') == 'Music')
+                                        <option value="Music" selected>Music</option>
+                                    @else
+                                        <option value="Music">Music</option>
+                                    @endif
+                                    {{-- <option value="Music" >Music</option> --}}
+                                    @if (old('category') == 'Cinema')
+                                        <option value="Cinema" selected>Cinema</option>
+                                    @else
+                                        <option value="Cinema">Cinema</option>
+                                    @endif
+                                    {{-- <option value="Cinema" >Cinema</option> --}}
+                                    @if (old('category') == 'TV Show')
+                                        <option value="TV Show" selected>TV Show</option>
+                                    @else
+                                        <option value="TV Show">TV Show</option>
+                                    @endif
+                                    {{-- <option value="TV Show" >TV Show</option> --}}
+                                    @if (old('category') == 'Theater')
+                                        <option value="Theater" selected>Theater</option>
+                                    @else
+                                        <option value="Theater">Theater</option>
+                                    @endif
+                                    {{-- <option value="Theater" >Theater</option> --}}
+                                    @if (old('category') == 'Literature')
+                                        <option value="Literature" selected>Literature</option>
+                                    @else
+                                        <option value="Literature">Literature</option>
+                                    @endif
+                                    {{-- <option value="Literature" >Literature</option> --}}
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-3 pt-lg-3 p-1">
+                                <select class="form-select" id="topic-dropdown" name="type" style="cursor:pointer;">
+                                    <option disabled selected hidden>Type</option>
+                                    @if (old('type') == 'News')
+                                        <option value="News" selected>News</option>
+                                    @else
+                                        <option value="News">News</option>
+                                    @endif
+                                   {{-- <option>News</option> --}}
+                                    @if (old('type') == 'Article')
+                                        <option value="Article" selected>Article</option>
+                                    @else
+                                        <option value="Article">Article</option>
+                                    @endif
+                                    {{-- <option>Article</option> --}}
+                                    @if (old('type') == 'Review')
+                                        <option value="Review" selected>Review</option>
+                                    @else
+                                        <option value="Review">Review</option>
+                                    @endif
+                                    {{-- <option>Review</option> --}}
+                                    @if (old('type') == 'Suggestion')
+                                        <option value="Suggestion" selected>Suggestion</option>
+                                    @else
+                                        <option value="Suggestion">Suggestion</option>
+                                    @endif
+                                    {{-- <option>Suggestion</option> --}}
+                                </select>
+                            </div>
+                            <div class="col-lg-7 col-12 form-group spoiler-checkbox p-1 mt-1 mb-0 pb-0 align-self-end">
+                                <input type="checkbox" id="spoiler" name="is_spoiler" value="{{ old('is_spoiler') }}">
+                                <label for="spoiler">This post contains spoilers</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-1">
-                    <div class="col-10">
-                        <p>Min: 2 tags - Max 10 tags</p>
+                <div class="container mx-0 px-0 mt-3 create-post-editor-container">
+                    <div class="row justify-content-center">
+                        <div class="col-10">
+                            <label for="mytextarea">Post</label>
+                            <textarea id="mytextarea" class="create-post-editor col-auto" name="content" value="{{ old('content') }}" rows="15"
+                                      style="resize:none;"></textarea>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-1">
+                        <div class="col-10">
+                            <p><i class="fas fa-exclamation-triangle"></i> Keep in mind that if your post does not
+                                follow all website's rules, it may be reported.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="container mx-0 px-0 mt-3">
-                <div class="row justify-content-center">
-                    <div class="col-10">
-                        <label for="tags" class="col-auto ">Add co-authors</label>
-                        <div class="bg-white rounded border justify-content-center form-control" id="tags"
-                             style="height:4em;">
-                            <div class="d-flex justify-content-start tags">
+                <div class="container mx-0 px-0 mt-3 create-post-tags-container">
+                    <div class="row justify-content-center">
+                        <div class="col-10">
+                            <label for="tags" class="col-12 col-form-label">Tags</label>
 
+                            <div class="bg-white rounded border d-flex align-items-center justify-content-center form-control" id="tags"
+                                 style="height:4em;">
+                                <div class="d-flex justify-content-start tags" id="created-post-tags">
+                                   {{-- <a class="btn btn-secondary btn-sm  d-flex justify-content-center m-2">Music <i
+                                            class="bi bi-x ms-1"></i></a>
+                                            --}}
+                                </div>
+                                <input class="container form-control w-100 create-post-tag-input" id="tag-input" name="tag-input" value="{{ old('tag-input') }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mt-1">
+                        <div class="col-10">
+                            <p>Min: 2 tags - Max 10 tags</p>
+                        </div>
+                    </div>
+                </div>
+                {{--
+                      <div class="container mx-0 px-0 mt-3">
+                    <div class="row justify-content-center">
+                        <div class="col-10">
+                            <label for="tags" class="col-auto ">Add co-authors</label>
+                            <div class="bg-white rounded border justify-content-center form-control" id="tags"
+                                 style="height:4em;">
+                                <div class="d-flex justify-content-start tags">
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row justify-content-center mt-5">
-                <div class="col-10">
-                    <div class="row d-flex flex-row">
-                        <div class="col-md-auto col-12 me-auto text-center">
-                            <button type="button" class="btn preview-post"><i class="far fa-eye"></i>
-                                Preview</button>
-                        </div>
-                        <div class="col-md-auto col-12 text-center">
-                            <button type="button" class="btn cancel-post">Cancel</button>
-                        </div>
-                        <div class="col-md-auto col-12 text-center">
-                            <button type="button" class="btn publish-post px-5">Publish</button>
+                --}}
+                <input type="hidden" name="user_id" value="1" />
+                <div class="row justify-content-center mt-5">
+                    <div class="col-10">
+                        <div class="row d-flex flex-row">
+                            <div class="col-md-auto col-12 me-auto text-center">
+                                <button type="button" class="btn preview-post"><i class="far fa-eye"></i>
+                                    Preview</button>
+                            </div>
+                            <div class="col-md-auto col-12 text-center">
+                                <button type="button" class="btn cancel-post">Cancel</button>
+                            </div>
+                            <div class="col-md-auto col-12 text-center">
+                                <button type="submit" id="submit-button" class="btn publish-post px-5">Publish</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+<script src="{{asset('js/createpost.js')}}" defer></script>
 @endsection

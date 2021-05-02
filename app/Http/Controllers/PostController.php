@@ -6,7 +6,10 @@ use App\Models\Post;
 use App\Models\Photo;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 class PostController extends Controller
 {
@@ -27,9 +30,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        // ver se está autenticado 
+        // ver se está autenticado
 
-        return view('pages.createpost', ['user' => 'visitor', 'needsFilter' => 0]);
+        return view('pages.createpost', ['user' => 'authenticated_user', 'needsFilter' => 0]);
     }
 
     /**
@@ -44,11 +47,11 @@ class PostController extends Controller
         $validator = Validator::make($request->all(),
         [
             'title' => ['required', 'string', 'max:120'],
-            'thumbnail' => ['required', 'string'],
+            'thumbnail' => ['required', 'image', 'mimes:jpeg,jpg,png,gif'],
             'content' => ['required', 'string', 'max:5000'],
             'is_spoiler' => ['boolean'],
-            'type' => ['required', 'string'], 
-            'category' => ['required', 'string'], 
+            'type' => ['required', 'string'],
+            'category' => ['required', 'string'],
             'user_id' => ['required', 'int'],
             'photos' => ['array'],
             'tags' => ['array', "min:2", "max:10"],
@@ -58,6 +61,7 @@ class PostController extends Controller
             'title.string' => 'Title must be a string',
             'title.max' => 'Title is too big, max of 120 characters',
             'thumbnail.required' => 'A thumbnail must be uploaded',
+            'thumbnail.image' => 'A thumbnail must be a jpeg,jpg,png,gif image',
             'content.required' => 'Content can not be empty',
             'content.string' => 'Content must be a string',
             'content.max' => 'Content is too big, max of 5000 characters',
@@ -72,7 +76,10 @@ class PostController extends Controller
             'tag.max' => 'Must add at maximum 10 tags',
         ]);
          if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator->errors())->withInput();
+             dd($validator->errors());
+             dd($request->all());
+             return redirect(url()->previous())->withErrors($validator)->withInput();
+
         }
 
         $post = new Post();
@@ -82,13 +89,16 @@ class PostController extends Controller
         $post->is_spoiler = $request->input('is_spoiler');
         $post->type = $request->input('type');
         $post->category = $request->input('category');
-        $post->user_id =  Auth::user()->id;
+        $post->user_id =  Auth::id();
         $post->save();
+
+        $post_id = Post::query()->where('user_id', Auth::id())->orderBy('id', 'desc')->first();
+        Storage::put(public_path().'/images/'.$post_id.'_thumb', $post->thumbnail);
 
 
         foreach($request->input('tags') as $tag){
             //inserir tag na tabela post_tags e na tag se nao existir ainda
-            $t =  DB::table('tag')->select('id')->where('name', '=', $tag)->get(); 
+            $t =  DB::table('tag')->select('id')->where('name', '=', $tag)->get();
             if($t != null){
                 $post->post_tag()->create(['post_id'=> $post->id, 'tag_id' => $t]);
             }
@@ -100,15 +110,16 @@ class PostController extends Controller
             }
         }
 
-
+/*
         foreach($request->input('photos') as $f){//add each photo to Photo table
             $photo = new Photo();
             $photo->photo = $f;
             $photo->post_id = $post->post_id;
             $photo->save();
         }
+*/
 
-        return view('pages.newPost', ['user' => $user]);
+        return view('pages.post', ['user' => $user]);
     }
 
     /**
@@ -119,8 +130,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //$post = Post::find($id); -- ver se o post existe 
-        
+        //$post = Post::find($id); -- ver se o post existe
+
         //checkar se está autenticado e se é o dono
         //se o post existir vai buscar o necessario para mostrar o post e chama a sua view
         return view('pages.post', ['user' => 'visitor', 'needsFilter' => 0] ); //['post'=> $post]
@@ -148,7 +159,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $post_id)
     {
-        //checkar se está autenticado   
+        //checkar se está autenticado
 
         $validator = Validator::make($request->all(),
         [
@@ -156,8 +167,8 @@ class PostController extends Controller
             'thumbnail' => ['required',''],
             'content' => ['required', 'string', 'max:5000'],
             'is_spoiler' => ['boolean', 'required'],
-            'type' => ['required', 'string'], 
-            'category' => ['required', 'string'], 
+            'type' => ['required', 'string'],
+            'category' => ['required', 'string'],
             'user_id' => ['required', 'int'],
             'photos' => ['array'],
             'tags' => ['array'],
@@ -178,7 +189,7 @@ class PostController extends Controller
         }
 
         //update das fotos e tags
-        
+
         $post = Post::find($post_id);
         if($post != null){
             $post->title = $request->input('title');
@@ -192,7 +203,7 @@ class PostController extends Controller
             return; //dar return da view do post
         }
         else return; //dá return da view do post
-        
+
     }
 
     /**
@@ -244,10 +255,10 @@ class PostController extends Controller
             $report->post_reported = $post->id;
             $report->save();
 
-            return; //redirect para a pagina do post  
+            return; //redirect para a pagina do post
         }
-        else return; //nao sei para onde vai 
+        else return; //nao sei para onde vai
 
-        
+
     }
 }
