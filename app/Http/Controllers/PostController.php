@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Photo;
 use App\Models\Tag;
+use App\Models\AuthenticatedUser;
+use App\Models\Comment;
+use App\Policies\PostPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+//use Auth;
 
 class PostController extends Controller
 {
@@ -130,11 +135,53 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //$post = Post::find($id); -- ver se o post existe
 
+        //Get currnt route
+        $route = \Route::current();
+
+        //If route {id} isnt int or post doesnt exist, redirect to notfound.
+        if(!is_numeric($route->parameter('id')))
+            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+        $post = Post::find($id);
+        if(!$post )
+            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+
+        //Verify if user is authenticated and if user is owner of post
+        if(Auth::check())
+            $user = Auth::user()->id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
+        else
+            $user = 'visitor';
+
+        //Set timestamps to false(updated_at column doesnt exist) and increment views
+        $post->timestamps = false;
+        $post->increment('n_views');
+
+        //Get owner TODO:: Get owner only if user!=authenticated_owner' , otherwise the owner is Auth::user()
+        $USER = AuthenticatedUser::find($post->user_id);
+
+        //Get comment count,likes and dislikes
+        $comments = Comment::where('post_id',$id)->get()->count();
+        $votes = DB::table("vote_post")->where("post_id",$id); //Couldn't figure ut how to do it with pivot table
+        $temp = $votes->get()->count();
+        $likes = $votes->where("like",true)->get()->count();
+        $dislikes = $temp - $likes;
+
+        //Get tags associated with current post TODO:: Use Tag Model
+        $tags = DB::select(DB::raw("select t.name
+        FROM post_tag,tag as t
+        WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
+
+        //Get date and thumbnail path
+        $date = date("F j, Y", strtotime($post['created_at']));
+        $thumbnail = "/images/".$post->thumbnail;
+
+        //Generate metadata to send to view
+        $metadata = ['comments'=>$comments,'author'=>$USER['name'],'views' => $post->n_views,
+                     'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail];
         //checkar se está autenticado e se é o dono
-        //se o post existir vai buscar o necessario para mostrar o post e chama a sua view
-        return view('pages.post', ['user' => 'visitor', 'needsFilter' => 0] ); //['post'=> $post]
+
+
+        return view('pages.post', ['user' => $user, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata] );
     }
 
     /**
@@ -215,15 +262,18 @@ class PostController extends Controller
     public function destroy($post_id)
     {
         //checkar se está autenticado
-
-        $post = Post::find($post_id);
-        if($post != null){
-            if ($post->delete()) {
-                return; //dar return da view da homepage
-            } else {
-                return; // dar return da view do post
+        if(Auth::check()){
+            $post = Post::find($post_id);
+            $this->authorize("delete",[Auth::user(),$post]);
+            if($post != null){
+                if ($post->delete()) {
+                    return view("pages.homepage",["user"=>"visitor","needsFilter"=>1]); //dar return da view da homepage
+                } else {
+                    return $this->show($post_id); // dar return da view do post
+                }
             }
         }
+        return view("pages.homepage",["user"=>"visitor","needsFilter"=>1]);
     }
 
     /**
