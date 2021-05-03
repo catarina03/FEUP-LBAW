@@ -15,7 +15,7 @@
                 <div class="card mb-3" onclick="window.location='/post/{{$posts[$i]->id}}'">
                     <div class="row g-0">
                         <div class="col-md-7">
-                            <img src="https://static.toiimg.com/photo/72975551.cms" class="w-100" alt="...">
+                            <img src="{{URL::asset($posts[$i]->thumbnail)}}" class="w-100" alt="...">
                         </div>
                         <div class="col-md-5">
                             <div class="card-body">

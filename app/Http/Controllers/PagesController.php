@@ -14,6 +14,7 @@ class PagesController extends Controller
     {
         $posts = Post::getTopPosts(1);
         foreach($posts as $post){
+            $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
 
@@ -27,6 +28,7 @@ class PagesController extends Controller
         //DB::table('post')->limit(3)->get(); //ir buscar os 3 mais recentes com mais gostos
         
         forEach($posts as $post){
+            $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
         }
         return $posts;
@@ -54,6 +56,7 @@ class PagesController extends Controller
     public function category($category){
         $posts = Post::orderBy('n_views', 'desc')->get();
         foreach($posts as $post){
+            $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
         }
@@ -79,6 +82,7 @@ class PagesController extends Controller
     public function advanced_search(){
         $posts = Post::orderBy('n_views', 'desc')->get();
         foreach($posts as $post){
+            $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
         }
@@ -98,6 +102,7 @@ class PagesController extends Controller
         } 
 
         foreach($posts as $post){
+            $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
         }
@@ -117,6 +122,7 @@ class PagesController extends Controller
         else $posts = Post::getTopPosts($page);//orderBy('n_views', 'desc')->forPage($page, 15)->get(); //mais likes
 
         foreach($posts as $post){
+            $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
         }

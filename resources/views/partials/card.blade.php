@@ -2,7 +2,7 @@
     <div class="col-12 col-md-6 col-xl-4 mb-4">
         <a class=" black-link" href='/post/{{$post->id}}'>
         <div class="card h-100">
-            <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"
+            <img src="{{URL::asset($post->thumbnail)}}"
                 height="200" class="card-img-top" alt="..."> <!--{{URL::asset($post->thumbnail)}}-->
             <div>
                 @if($post->category == "tv show")

@@ -12,7 +12,7 @@ if(t != null){
             hot.classList.remove('active')
         }
         if(new_filter.classList.contains('active')){
-            new_filter.remove('active')
+            new_filter.classList.remove('active')
         }
         makeRequest("top")   
     }); 
@@ -30,7 +30,7 @@ if(hot != null){
             t.classList.remove('active')
         }
         if(new_filter.classList.contains('active')){
-            new_filter.remove('active')
+            new_filter.classList.remove('active')
         }
         
         makeRequest("hot")
@@ -50,8 +50,9 @@ if(new_filter != null){
             hot.classList.remove('active')
         }
         if(t.classList.contains('active')){
-            t.remove('active')
+            t.classList.remove('active')
         }
+    
         makeRequest("new")
     }); 
 }

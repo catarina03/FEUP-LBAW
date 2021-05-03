@@ -261,7 +261,7 @@ class PostController extends Controller
                 }
             }
         }
-        return '';
+        return 'post/' + $post_id;
     }
 
     /**
