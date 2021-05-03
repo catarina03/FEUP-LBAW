@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\AuthenticatedUser;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -43,16 +45,21 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the User profile
      *
      * @param  \App\Models\AuthenticatedUser  $authenticatedUser
      * @return \Illuminate\Http\Response
      */
-    public function show(AuthenticatedUser $authenticatedUser)
+    public function show($id)
     {
-        //view do profile
         //verifica se é o dono do perfil se sim -> my profile, se nao userprofile
-        return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0] ); 
+        $posts = Post::where('user_id', $id)->get();
+        foreach($posts as $post){
+            $post->author = AuthenticatedUser::find($post->user_id)->name;
+            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
+        }
+
+        return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0, 'posts' => $posts] ); 
     }
 
     /**

@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\AuthenticatedUser;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -42,6 +45,67 @@ class Post extends Model
     public function reports()
     {
         return $this->hasMany(Report::class, 'post_reported');
+    }
+
+    public static function getTopPosts(){
+        if(Auth::check()){
+            $user = Auth::user();
+            $user_id = $user->id;
+        }
+        else{
+            $user_id = 0;
+        }
+        return DB::select(
+            DB::raw("select * from post where not exists
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "));"
+               ,['user' => $user_id] ));
+    }
+
+    public static function getHotPosts($page){
+        if(Auth::check()){
+            $user = Auth::user();
+            $user_id = $user->id;
+        }
+        else{
+            $user_id = 0;
+        }
+        return DB::select(
+            DB::raw("select * from post where not exists
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "));"
+               ,['user' => $user_id] ));
+    }
+
+    public static function getNewPosts($page){
+        if(Auth::check()){
+            $user = Auth::user();
+            $user_id = $user->id;
+        }
+        else{
+            $user_id = 0;
+        }
+        return DB::select(
+            DB::raw("select * from post where not exists
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "))
+            order by created_at, desc;"
+               ,['user' => $user_id] ));
+    }
+
+    public static function getSlideShowPosts(){
+        if(Auth::check()){
+            $user = Auth::user();
+            $user_id = $user->id;
+        }
+        else{
+            $user_id = 0;
+        }
+        return DB::select(
+            DB::raw("select * from post where not exists
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "));"
+               ,['user' => $user_id] ));
     }
 
     //notification on publish and vote?

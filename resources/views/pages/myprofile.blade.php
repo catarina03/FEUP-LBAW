@@ -142,13 +142,7 @@
                             </div>
 
                             <div class="postsCards row justify-content-start mt-3">
-                            @include('partials.card')
-                            @include('partials.card')
-                            @include('partials.card')
-                            @include('partials.card')
-                            @include('partials.card')
-                            @include('partials.card')
-                            @include('partials.card')
+                                @each('partials.card', $posts, 'post')
                             </div>
                             <div class="d-flex justify-content-center">
                                 <div class="pagination">
