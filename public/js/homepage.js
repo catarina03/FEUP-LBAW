@@ -72,12 +72,28 @@ function makeRequest(type){
 }
 
 function updateHomepage(posts){
+    let pag = document.querySelector('.homepage .pagination')
+    if(pag != null)
+        pag.parentNode.removeChild(pag)
     let postDiv = document.querySelector('.postsCards')
     let newDiv = document.createElement('div')
     postDiv.innerHTML = ""
     newDiv.innerHTML= posts
     while (newDiv.firstChild) {
         postDiv.appendChild(newDiv.firstChild)
+    }
+    let pagination = document.createElement('div')
+    pagination.className = "pagination d-flex justify-content-center"
+
+    let load = document.createElement('a')
+    load.className = "loadmore"
+    load.innerHTML = "Load More"
+
+    pagination.appendChild(load)
+    postDiv.appendChild(pagination)
+    let loadMore = document.querySelector('.homepage .pagination .loadmore')
+    if(loadMore != null){
+        loadMore.addEventListener('click', loadHandler)
     }
 
 }
@@ -92,7 +108,7 @@ function loadHandler(e){
     e.preventDefault()
 
     let pag = document.querySelector('.homepage .pagination')
-    pag.parentNode.removeChild(pag)
+    if(pag != null) pag.parentNode.removeChild(pag)
     
     const loadRequest = new XMLHttpRequest()
     loadRequest.onreadystatechange = function(){

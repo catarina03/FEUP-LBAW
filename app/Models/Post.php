@@ -48,6 +48,8 @@ class Post extends Model
     }
 
     public static function getTopPosts($page){
+        $offset = $page * 15;
+
         if(Auth::check()){
             $user = Auth::user();
             $user_id = $user->id;
@@ -57,14 +59,15 @@ class Post extends Model
         }
         return DB::select(
             DB::raw("select * from post where not exists
-            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "))
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
             order by n_views desc
-            limit 15;"
-               ,['user' => $user_id] ));
+            OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
+               ,['user' => $user_id, 'offset' => $offset] );
     }
 
     public static function getHotPosts($page){
+        $offset = $page * 15;
         if(Auth::check()){
             $user = Auth::user();
             $user_id = $user->id;
@@ -74,13 +77,15 @@ class Post extends Model
         }
         return DB::select(
             DB::raw("select * from post where not exists
-            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "))
-            limit 15;"
-               ,['user' => $user_id] ));
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
+            order by n_views desc
+            OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
+               ,['user' => $user_id, 'offset' => $offset]);
     }
 
     public static function getNewPosts($page){
+        $offset = $page * 15;
         if(Auth::check()){
             $user = Auth::user();
             $user_id = $user->id;
@@ -90,14 +95,14 @@ class Post extends Model
         }
         return DB::select(
             DB::raw("select * from post where not exists
-            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "))
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
             order by created_at desc
-            limit 15;"
-               ,['user' => $user_id] ));
+            OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
+               ,['user' => $user_id, 'offset' => $offset]);
     }
 
-    public static function getSlideShowPosts(){
+    public static function getSlideShowPosts(){ //ir buscar os 3 mais recentes com mais gostos
         if(Auth::check()){
             $user = Auth::user();
             $user_id = $user->id;
@@ -107,9 +112,10 @@ class Post extends Model
         }
         return DB::select(
             DB::raw("select * from post where not exists
-            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "));"
-               ,['user' => $user_id] ));
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
+            limit 3;")
+               ,['user' => $user_id] );
     }
 
     //notification on publish and vote?

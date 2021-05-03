@@ -12,7 +12,7 @@ class PagesController extends Controller
 {
     public function home()
     {
-        $posts = Post::getTopPosts(1);
+        $posts = Post::getTopPosts(0);
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
@@ -25,7 +25,6 @@ class PagesController extends Controller
 
     public function slideshow(){
         $posts = Post::getSlideShowPosts();
-        //DB::table('post')->limit(3)->get(); //ir buscar os 3 mais recentes com mais gostos
         
         forEach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
@@ -53,33 +52,27 @@ class PagesController extends Controller
         //TODO
     }
 
-    public function category($category){
-        $posts = Post::orderBy('n_views', 'desc')->get();
+    public function category($category){        
+        if($category == "Music") $posts = Post::where('category', 'music')->get();
+        else if($category == "TVShow") $posts = Post::where('category', 'tv show')->get();
+        else if($category == "Cinema") $posts = Post::where('category', 'cinema')->get();
+        else if($category == "Theatre") $posts = Post::where('category', 'theatre')->get();
+        else if($category == "Literature") $posts = Post::where('category', 'literature')->get();
+
+
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
         }
-        if($category == "Music"){
-            //$post = Post::find .... where category == music
-            return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'Music', 'posts' =>$posts]);
-        }
-        else if($category == "TVShow"){
-            return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts]);
-        }
-        else if($category == "Cinema"){
-            return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'Cinema', 'posts' =>$posts]);
-        }
-        else if($category == "Theatre"){
-            return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'Theatre', 'posts' =>$posts]);
-        }
-        else if($category == "Literature"){
-            return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'Literature', 'posts' =>$posts]);
-        }   
+        if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts]);
+
+        return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => $category, 'posts' =>$posts]);
         
     }
 
     public function advanced_search(){
+        //TO DO 
         $posts = Post::orderBy('n_views', 'desc')->get();
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
@@ -90,16 +83,9 @@ class PagesController extends Controller
     }
 
     public function list($homepageFilters){
-        if($homepageFilters == "new"){
-            $posts = Post::getNewPosts(1);//orderBy('created_at', 'desc')->limit(15)->get();
-        }
-        else if($homepageFilters == "hot"){
-            $posts = Post::getHotPosts(1);//orderBy('n_views', 'desc')->limit(15)->get();
-            
-        }
-        else{
-            $posts = Post::getTopPosts(1);//orderBy('n_views', 'desc')->limit(15)->get(); //mais likes
-        } 
+        if($homepageFilters == "new") $posts = Post::getNewPosts(0);
+        else if($homepageFilters == "hot") $posts = Post::getHotPosts(0);
+        else $posts = Post::getTopPosts(0);
 
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
@@ -111,16 +97,12 @@ class PagesController extends Controller
 
     }
 
-    public function loadMoreHomePage($filters, $page){
+    public function loadMoreHomepage($filters, $page){
 
-        if($homepageFilters == "new"){
-            $posts = Post::getNewPosts($page);//orderBy('created_at', 'desc')->forPage($page, 15)->get();
-        }
-        else if($homepageFilters == "hot"){
-            $posts = Post::getTopPosts($page);
-        }
-        else $posts = Post::getTopPosts($page);//orderBy('n_views', 'desc')->forPage($page, 15)->get(); //mais likes
-
+        if($filters == "new") $posts = Post::getNewPosts($page);
+        else if($filters == "hot") $posts = Post::getHotPosts($page);
+        else $posts = Post::getTopPosts($page);
+            
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
