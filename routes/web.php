@@ -11,6 +11,7 @@
 |
 */
 // Home
+Route::get('/', 'Auth\LoginController@home');
 
 // Route::get('/', 'Auth\LoginController@home');
 
@@ -39,9 +40,6 @@ Route::post('api/comment/{comment_id}/add_comment','CommentController@addThread'
 Route::post('api/comment/{comment_id}/vote','CommentController@vote');
 
 Route::put('api/comment/{comment_id}/vote','CommentController@editVote');
-
-
-
 
 
 // Authentication
