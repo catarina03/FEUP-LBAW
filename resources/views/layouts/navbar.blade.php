@@ -27,14 +27,13 @@
                 <li class="nav-item d-lg-none"><a href="{{url('/support')}}" class="nav-link">Support</a></li>
             </ul>
             <ul class="navbar-nav d-flex">
-                @if($user != "visitor")
+                @auth
                 <li class="nav-item d-lg-block d-none ms-lg-3">
                     <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post"
                         href="{{url('/addpost')}}" role="button" aria-expanded="false">
                         <i class="bi bi-plus-square-dotted navbar-icon"></i>
                     </a>
                 </li>
-                @endif
 
                 @if($user == "moderator" || ($user == "system_manager"))
                 <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="{{url('/moderatordashboard')}}"
@@ -54,7 +53,6 @@
                 </li>
                 @endif
 
-                @if($user !== 'visitor')
                 <li class="nav-item d-lg-block d-none dropdown ms-lg-3">
                     <a class="nav-link" href="" id="notificationsDropdown" role="button" data-bs-toggle="dropdown"
                         data-toggle="tooltip" data-placement="bottom" title="Notifications" aria-expanded="false">
@@ -92,19 +90,20 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-left me-2"></i> Sign out</a>
+                        <li><a class="dropdown-item" href="{{ route('logout') }}"><i class="bi bi-box-arrow-left me-2"></i> Sign out</a>
                         </li>
                     </ul>
                 </li>
-                @else
-                <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-attr="{{url('/register')}}" data-bs-target="#register"><a
+                @endauth
+                @guest
+                <li class="nav-item me-3 d-lg-block d-none" ><a href="{{ route('register') }}"
                         style="text-decoration:none;cursor:pointer;"><i class="fa fa-user pe-2"
                             aria-hidden="true"></i>Sign Up</li>
-                <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-attr="{{url('/login')}}" data-bs-target="#login"><a
+                <li class="nav-item me-3 d-lg-block d-none" ><a href="{{ route('login') }}"
                         style="text-decoration:none;cursor:pointer;"><i class="fa fa-sign-in pe-2"
                             aria-hidden="true"></i>Login</a>
                 </li>
-                @endif
+                @endguest
             </ul>
         </div>
 
