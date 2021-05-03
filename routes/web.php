@@ -12,9 +12,9 @@
 */
 // Home
 
-//Route::get('/', 'Auth\LoginController@home');
+// Route::get('/', 'Auth\LoginController@home');
 
-//Pages
+// Pages
 Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 Route::get('/faq', 'PagesController@faq');
@@ -27,19 +27,20 @@ Route::get('api/post_filter/{filters}','PagesController@postFilter');
 Route::get('api/loadMore/{filters}/{page}', 'PagesController@loadMoreHomepage');
 
 
-//Admin 
-Route::put('api/administration/roles/{user_id}/edit_role','UserController@editRole');//DONE
-Route::get('api/report_filter','ReportController@reportFilter'); //?
-Route::post('api/post/{post_id}/add_comment','CommentController@create'); //DONE
-Route::get('api/comment/{comment_id}/edit','CommentController@editForm'); //??Informações para preencher o formulario?
-Route::put('api/comment/{comment_id}/edit','CommentController@editAction'); //put ou patch? //DONE
-Route::delete('api/comment/{comment_id}','CommentController@destroyComment');  //DONE
-Route::get('api/comment/{comment_id}/thread','CommentController@threads'); //DONE
-Route::post('api/comment/{comment_id}/add_comment','CommentController@addThread');//DONE
-Route::post('api/comment/{comment_id}/vote','CommentController@vote');//DONE
-//Route::delete('api/comment/{comment_id}/vote','CommentController@deleteVote');Apagar todos? a spec nao tem nenhum parametro alem de comment_id
-Route::put('api/comment/{comment_id}/vote','CommentController@editVote');//DONE
-//paginas estaticas????
+// Admin 
+Route::put('api/administration/roles/{user_id}/edit_role','UserController@editRole');
+Route::get('api/post_filter','PostController@postFilter');  
+Route::get('api/report_filter','ReportController@reportFilter'); 
+Route::post('api/post/{post_id}/add_comment','CommentController@create'); 
+Route::get('api/comment/{comment_id}/edit','CommentController@editForm'); 
+Route::put('api/comment/{comment_id}/edit','CommentController@editAction'); 
+Route::delete('api/comment/{comment_id}','CommentController@destroyComment');  
+Route::get('api/comment/{comment_id}/thread','CommentController@threads'); 
+Route::post('api/comment/{comment_id}/add_comment','CommentController@addThread');
+Route::post('api/comment/{comment_id}/vote','CommentController@vote');
+
+Route::put('api/comment/{comment_id}/vote','CommentController@editVote');
+
 
 
 
@@ -52,7 +53,7 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 
-//Authenticated User
+// Authenticated User
 Route::get('user/{id}', 'UserController@show');
 Route::delete('user/{id}', 'UserController@destroy');
 Route::get('api/user/{id}/edit_bio', 'UserController@show_edit_bio');
@@ -71,7 +72,7 @@ Route::post('/api/user/{id}/block', 'UserController@block');
 Route::delete('/api/user/{id}/block', 'UserController@unblock');
 Route::put('/api/user/{id}/edit_photo', 'UserController@update_photo');
 
-//Post
+// Post
 Route::get('addpost', 'PostController@create');
 Route::post('addpost', 'PostController@store');
 Route::get('post/{id}', 'PostController@show');
@@ -88,15 +89,15 @@ Route::delete('api/post/{id}/vote', 'PostController@deleteVote');
 
 
 
-//Report
-Route::put('reports/{report_id}/close','ReportController@close'); //Done
-Route::put('reports/{report_id}/assign_report','ReportController@assign');//Done
-Route::put('reports/{report_id}/process','ReportController@process'); //Done
+// Report
+Route::put('reports/{report_id}/close','ReportController@close'); 
+Route::put('reports/{report_id}/assign_report','ReportController@assign');
+Route::put('reports/{report_id}/process','ReportController@process'); 
 
-//Administration
-Route::get('administration/roles','UserController@roles');//DONE
+// Administration
+Route::get('administration/roles','UserController@roles');
 
-//Comment
-Route::put('comment/{comment_id}/report','CommentController@reportComment'); //DONE
+// Comment
+Route::put('comment/{comment_id}/report','CommentController@reportComment');
 
 

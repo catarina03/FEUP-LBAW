@@ -140,22 +140,22 @@ class PostController extends Controller
             $user = Auth::user()->id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
         else
             $user = 'visitor';
+        $user = 'authenticated_user';
         
-        //Set timestamps to false(updated_at column doesnt exist) and increment views
         $post->timestamps = false;
         $post->increment('n_views');
 
-        //Get owner TODO:: Get owner only if user!=authenticated_owner' , otherwise the owner is Auth::user()
+        //Get owner
         $USER = AuthenticatedUser::find($post->user_id);
 
         //Get comment count,likes and dislikes
         $comments = Comment::where('post_id',$id)->get()->count();
-        $votes = DB::table("vote_post")->where("post_id",$id); //Couldn't figure ut how to do it with pivot table
+        $votes = DB::table("vote_post")->where("post_id",$id);
         $temp = $votes->get()->count();
         $likes = $votes->where("like",true)->get()->count();
         $dislikes = $temp - $likes;
 
-        //Get tags associated with current post TODO:: Use Tag Model
+        //Get tags associated with current post
         $tags = DB::select(DB::raw("select t.name
         FROM post_tag,tag as t
         WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
@@ -167,7 +167,6 @@ class PostController extends Controller
         //Generate metadata to send to view
         $metadata = ['comments'=>$comments,'author'=>$USER['name'],'views' => $post->n_views,
                      'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail];
-        //checkar se está autenticado e se é o dono
 
         
         return view('pages.post', ['user' => $user, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata] );
@@ -256,13 +255,13 @@ class PostController extends Controller
             $this->authorize("delete",[Auth::user(),$post]);
             if($post != null){
                 if ($post->delete()) {
-                    return view("pages.homepage",["user"=>"visitor","needsFilter"=>1]); //dar return da view da homepage
+                    return ''; //dar return da view da homepage
                 } else {
-                    return $this->show($post_id); // dar return da view do post
+                    return 'post/' + $post_id; // dar return da view do post
                 }
             }
         }
-        return view("pages.homepage",["user"=>"visitor","needsFilter"=>1]);
+        return '';
     }
 
     /**
@@ -299,5 +298,41 @@ class PostController extends Controller
         else return; //nao sei para onde vai 
 
         
+    }
+
+    public function addSave($id){
+        $route = \Route::current();
+
+        //If route {id} isnt int or post doesnt exist, redirect to notfound.
+        if(!is_numeric($route->parameter('id')))
+            return '';
+        if(Auth::check()){
+            $post = Post::find($post_id);
+            $this->authorize("save",[Auth::user(),$post]);
+            if($post != null){
+                DB::table("saves")->insert([
+                    'user_id' => 1,
+                    'post_id' => $post_id
+                ]);
+                return 'SUCCESS';
+            }
+        }
+        return '';
+    }
+
+    public function deleteSave($id){
+        $route = \Route::current();
+        //If route {id} isnt int or post doesnt exist, redirect to notfound.
+        if(!is_numeric($route->parameter('id')))
+            return '';
+        if(Auth::check()){
+            $post = Post::find($post_id);
+            $save = DB::table("save")->where("post_id",$post_id)->where("user_id",Auth::user()->id);
+            if($post != null && $save != null){
+                if($save->delete())
+                    return 'SUCCESS';
+            }
+        }
+        return '';
     }
 }
