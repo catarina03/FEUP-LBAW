@@ -85,6 +85,7 @@ function updateHomepage(posts){
 
 let loadMore = document.querySelector('.homepage .pagination .loadmore')
 let page = 1
+let last = false
 
 if(loadMore != null) loadMore.addEventListener('click', loadHandler)
 
@@ -102,25 +103,32 @@ function loadHandler(e){
                 let postDiv = document.querySelector('.postsCards')
                 let newDiv = document.createElement('div')
                 newDiv.innerHTML= posts
+
+                let counter = 0
                 while (newDiv.firstChild) {
+                    counter++
                     postDiv.appendChild(newDiv.firstChild)
                 }
                 page++
+                if(counter < 15) last = true
 
-                let pagination = document.createElement('div')
-                pagination.className = "pagination d-flex justify-content-center"
+                if(!last){
+                    let pagination = document.createElement('div')
+                    pagination.className = "pagination d-flex justify-content-center"
 
-                let load = document.createElement('a')
-                load.className = "loadmore"
-                load.innerHTML = "Load More"
+                    let load = document.createElement('a')
+                    load.className = "loadmore"
+                    load.innerHTML = "Load More"
 
-                pagination.appendChild(load)
-                postDiv.appendChild(pagination)
+                    pagination.appendChild(load)
+                    postDiv.appendChild(pagination)
 
-                let loadMore = document.querySelector('.homepage .pagination .loadmore')
-                if(loadMore != null){
-                    loadMore.addEventListener('click', loadHandler)
+                    let loadMore = document.querySelector('.homepage .pagination .loadmore')
+                    if(loadMore != null){
+                        loadMore.addEventListener('click', loadHandler)
+                    }
                 }
+                
             }
             else alert('Error fetching api: ' +  loadRequest.status)
         }
@@ -129,14 +137,4 @@ function loadHandler(e){
     loadRequest.send()
 }
 
-/*let slideshow = document.querySelector('.carousel-inner')
-let slideshowcards = slideshow.querySelectorAll('.carousel-item')
-if(slideshowcards != null){
-    slideshowcards.forEach((card)=> card.addEventListener('click', (e) =>{
-        e.preventDefault()
-        console.log(e.target)
-        let id = this.dataset.idcard
-        console.log(id)
-        //window.location.href = "/post/"+id;
-    }))
-}*/
+

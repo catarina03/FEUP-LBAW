@@ -5,7 +5,11 @@
             <img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/1572B/production/_88615878_976x1024n0037151.jpg"
                 height="200" class="card-img-top" alt="..."> <!--{{URL::asset($post->thumbnail)}}-->
             <div>
+                @if($post->category == "tv show")
+                <a class="black-link categoryTag" href="category/TVShow">
+                @else 
                 <a class="black-link categoryTag" href="category/{{ucfirst($post->category)}}">
+                @endif
                     <h6>{{ucfirst($post->category)}}</h6>
                 </a>
             </div>

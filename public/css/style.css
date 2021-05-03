@@ -427,7 +427,9 @@ hr.solid {
 }
 
 /*********************** HOMEPAGE ************************************/
-
+.homepage-navbar{
+  position: fixed;
+}
 .homepage-view .nav-link {
   color: black;
   max-width: fit-content;

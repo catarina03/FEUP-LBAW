@@ -22,7 +22,7 @@
             <a> to </a>
             <input type="date" class="form-control mt-2" id="endDate" aria-label="End Date"
                    style="cursor:pointer;">
-
+            @auth
             <div class="form-check mt-4">
                 <input class="form-check-input" type="checkbox" value="" id="checkPeople"
                        style="cursor:pointer;">
@@ -36,7 +36,7 @@
                     Only tags I follow
                 </label>
             </div>
-
+            @endauth
             <input type="submit" class="filterButton w-100 mt-4 p-1" value="Filter">
         </form>
     </div>

@@ -12,7 +12,7 @@ class PagesController extends Controller
 {
     public function home()
     {
-        $posts = Post::orderBy('n_views', 'desc')->limit(15)->get();
+        $posts = Post::getTopPosts(1);
         foreach($posts as $post){
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
@@ -23,7 +23,8 @@ class PagesController extends Controller
     }
 
     public function slideshow(){
-        $posts = DB::table('post')->limit(3)->get(); //ir buscar os 3 mais recentes com mais gostos
+        $posts = Post::getSlideShowPosts();
+        //DB::table('post')->limit(3)->get(); //ir buscar os 3 mais recentes com mais gostos
         
         forEach($posts as $post){
             $post->author = AuthenticatedUser::find($post->user_id)->name;
@@ -48,24 +49,6 @@ class PagesController extends Controller
 
     public function supportRequest(){
         //TODO
-    }
-
-    public function list($homepageFilters){
-        if($homepageFilters == "new"){
-            $posts = Post::orderBy('created_at', 'desc')->get();
-        }
-        else if($homepageFilters == "hot"){
-            $posts = Post::orderBy('n_views', 'desc')->get();
-        }
-        else $posts = Post::orderBy('n_views', 'desc')->get(); //mais likes
-
-        foreach($posts as $post){
-            $post->author = AuthenticatedUser::find($post->user_id)->name;
-            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
-        }
-
-        return view('partials.allcards', ['posts' => $posts]);
-
     }
 
     public function category($category){
@@ -102,8 +85,36 @@ class PagesController extends Controller
         return view('pages.advanced_search', ['user' => 'visitor', 'needsFilter' => 0, 'posts'=>$posts]);
     }
 
+    public function list($homepageFilters){
+        if($homepageFilters == "new"){
+            $posts = Post::getNewPosts(1);//orderBy('created_at', 'desc')->limit(15)->get();
+        }
+        else if($homepageFilters == "hot"){
+            $posts = Post::getHotPosts(1);//orderBy('n_views', 'desc')->limit(15)->get();
+            
+        }
+        else{
+            $posts = Post::getTopPosts(1);//orderBy('n_views', 'desc')->limit(15)->get(); //mais likes
+        } 
+
+        foreach($posts as $post){
+            $post->author = AuthenticatedUser::find($post->user_id)->name;
+            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
+        }
+
+        return view('partials.allcards', ['posts' => $posts]);
+
+    }
+
     public function loadMoreHomePage($filters, $page){
-         $posts = Post::orderBy('n_views', 'desc')->forPage($page, 15)->get(); //mais likes
+
+        if($homepageFilters == "new"){
+            $posts = Post::getNewPosts($page);//orderBy('created_at', 'desc')->forPage($page, 15)->get();
+        }
+        else if($homepageFilters == "hot"){
+            $posts = Post::getTopPosts($page);
+        }
+        else $posts = Post::getTopPosts($page);//orderBy('n_views', 'desc')->forPage($page, 15)->get(); //mais likes
 
         foreach($posts as $post){
             $post->author = AuthenticatedUser::find($post->user_id)->name;
