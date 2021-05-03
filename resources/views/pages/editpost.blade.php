@@ -84,12 +84,6 @@
                                         <option value="review">Review</option>
                                     @endif
                                     {{-- <option>Review</option> --}}
-                                    @if ($post['type'] == 'suggestion')
-                                        <option value="suggestion" selected>Suggestion</option>
-                                    @else
-                                        <option value="suggestion">Suggestion</option>
-                                    @endif
-                                    {{-- <option>Suggestion</option> --}}
                                 </select>
                             </div>
                             <div class="col-lg-7 col-12 form-group spoiler-checkbox p-1 mt-1 mb-0 pb-0 align-self-end">

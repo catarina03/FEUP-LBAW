@@ -170,7 +170,7 @@ class PostController extends Controller
         WHERE post_tag.post_id=$post->id AND t.id = post_tag.tag_id;"));
         //Generate metadata to send to view
         $metadata = ['comments'=>0,'author'=>AuthenticatedUser::find($post->user_id)['name'],'views' => 0,
-            'likes' => 0,'tags' => $tags,'date'=>$post->created_at,'thumbnail' => $post->thumbnail];
+            'likes' => 0,'tags' => $tags,'date'=>$post->created_at,'thumbnail' => '/images/'.$post->thumbnail];
 
 
         return view('pages.post', ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]); //TODO, WRONG ROUTE
@@ -402,7 +402,7 @@ class PostController extends Controller
         WHERE post_tag.post_id=$post->id AND t.id = post_tag.tag_id;"));
         //Get date and thumbnail path
         $date = date("F j, Y", strtotime($post['created_at']));
-        $thumbnail = "/images/".$post->thumbnail;
+        $thumbnail = "/images/".$post->thumbnail;;
 
         //Generate metadata to send to view
         $metadata = ['comments'=>$comments,'author'=>$USER['name'],'views' => $post->n_views,
