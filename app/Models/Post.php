@@ -47,7 +47,7 @@ class Post extends Model
         return $this->hasMany(Report::class, 'post_reported');
     }
 
-    public static function getTopPosts(){
+    public static function getTopPosts($page){
         if(Auth::check()){
             $user = Auth::user();
             $user_id = $user->id;
@@ -58,7 +58,9 @@ class Post extends Model
         return DB::select(
             DB::raw("select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "));"
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "))
+            order by n_views desc
+            limit 15;"
                ,['user' => $user_id] ));
     }
 
@@ -73,7 +75,8 @@ class Post extends Model
         return DB::select(
             DB::raw("select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "));"
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "))
+            limit 15;"
                ,['user' => $user_id] ));
     }
 
@@ -89,7 +92,8 @@ class Post extends Model
             DB::raw("select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = " . $user_id . ")
             or (block_user.blocking_user = post.user_id and block_user.blocking_user = " . $user_id . "))
-            order by created_at, desc;"
+            order by created_at desc
+            limit 15;"
                ,['user' => $user_id] ));
     }
 
