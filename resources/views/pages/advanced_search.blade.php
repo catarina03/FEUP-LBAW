@@ -7,22 +7,11 @@
         <h2 style="font-weight:bold;color:#307371;">Advanced Search</h2>
     </div>
     <div class="advanced_search-center  col-12 col-lg-7 order-2 order-lg-1">
-        <p class="pt-4 ps-4 fs-4">4 results found!</p>
+        <p class="pt-4 ps-4 fs-4">N results found!</p>
         <div class="postsCards row mt-3">
-                @include('partials.card')
-                @include('partials.card')
-                @include('partials.card')
-                @include('partials.card')
+            @each('partials.card', $posts, 'post')
         </div>
-        <div class="d-flex justify-content-center">
-            <div class="pagination">
-                <a href="#">&laquo;</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">&raquo;</a>
-            </div>
-        </div>
+
     </div>
     <div class="custom-filterBox col-lg-3 col-12 text-center order-1 order-lg-2">
         <div class="container">
@@ -45,10 +34,10 @@
                 </select>
                 <select class="form-select mt-4" aria-label="Select a type" style="cursor:pointer;">
                     <option value="" selected>Select a type</option>
-                    <option value="1">News</option>
-                    <option value="2">Article</option>
-                    <option value="3">Review</option>
-                    <option value="4">Suggestion</option>
+                    <option value="News">News</option>
+                    <option value="Article">Article</option>
+                    <option value="Review">Review</option>
+                    <option value="Suggestion">Suggestion</option>
                 </select>
                 <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date"
                     style="cursor:pointer;">

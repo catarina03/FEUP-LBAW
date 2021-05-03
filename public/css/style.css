@@ -427,7 +427,9 @@ hr.solid {
 }
 
 /*********************** HOMEPAGE ************************************/
-
+.homepage-navbar{
+  position: fixed;
+}
 .homepage-view .nav-link {
   color: black;
   max-width: fit-content;
@@ -443,7 +445,7 @@ hr.solid {
   padding-right: 0.5em;
 }
 
-.homepage-view .nav-link.active {
+.homepage-view .nav-link.active{
   font-weight: bold;
   color: black;
 }
@@ -473,6 +475,11 @@ hr.solid {
     0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
   cursor: pointer;
   position: relative;
+}
+
+.postsCards .black-link, .carousel-inner .black-link{
+  color: black;
+  text-decoration: none;
 }
 
 .postsCards .card:hover {

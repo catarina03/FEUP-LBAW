@@ -1,0 +1,139 @@
+let filtering = "top"
+let t = document.querySelector(".homepage-navbar a#top");
+if(t != null){
+    t_posts = 
+    t.addEventListener("click", function(e){
+        e.preventDefault()
+        filtering = "top"
+        makeRequest(filtering)
+        if(!this.classList.contains('active')){
+            this.classList.add('active')
+        }
+        if(hot.classList.contains('active')){
+            hot.classList.remove('active')
+        }
+        if(new_filter.classList.contains('active')){
+            new_filter.classList.remove('active')
+        }   
+    }); 
+}
+
+let hot = document.querySelector(".homepage-navbar #hot"); 
+if(hot != null){
+    hot.addEventListener("click", function(e){
+        e.preventDefault()
+        filtering = "hot"
+        makeRequest(filtering)
+        if(!this.classList.contains('active')){
+            this.classList.add('active')
+        }
+        if(t.classList.contains('active')){
+            t.classList.remove('active')
+        }
+        if(new_filter.classList.contains('active')){
+            new_filter.classList.remove('active')
+        }
+    });
+}
+ 
+
+let new_filter = document.querySelector(".homepage-navbar #new");  
+if(new_filter != null){
+    new_filter.addEventListener("click", function(e){
+        e.preventDefault()
+        filtering = "new"
+        makeRequest(filtering)
+        if(!this.classList.contains('active')){
+            this.classList.add('active')
+        }
+        if(hot.classList.contains('active')){
+            hot.classList.remove('active')
+        }
+        if(t.classList.contains('active')){
+            t.classList.remove('active')
+        }
+    }); 
+}
+
+
+function makeRequest(type){
+    const postsRequest = new XMLHttpRequest()
+    postsRequest.onreadystatechange = function(){
+        if(postsRequest.readyState === XMLHttpRequest.DONE){
+            if(postsRequest.status === 200){
+                let posts = postsRequest.responseText
+                updateHomepage(posts)
+            }
+            else alert('Error fetching api: ' +  postsRequest.status)
+        }
+    }
+    postsRequest.open('GET', 'api/home/'+ type, true)
+    postsRequest.send()
+}
+
+function updateHomepage(posts){
+    let postDiv = document.querySelector('.postsCards')
+    let newDiv = document.createElement('div')
+    postDiv.innerHTML = ""
+    newDiv.innerHTML= posts
+    while (newDiv.firstChild) {
+        postDiv.appendChild(newDiv.firstChild)
+    }
+
+}
+
+let loadMore = document.querySelector('.homepage .pagination .loadmore')
+let page = 1
+let last = false
+
+if(loadMore != null) loadMore.addEventListener('click', loadHandler)
+
+function loadHandler(e){
+    e.preventDefault()
+
+    let pag = document.querySelector('.homepage .pagination')
+    pag.parentNode.removeChild(pag)
+    
+    const loadRequest = new XMLHttpRequest()
+    loadRequest.onreadystatechange = function(){
+        if(loadRequest.readyState === XMLHttpRequest.DONE){
+            if(loadRequest.status === 200){
+                let posts = loadRequest.responseText
+                let postDiv = document.querySelector('.postsCards')
+                let newDiv = document.createElement('div')
+                newDiv.innerHTML= posts
+
+                let counter = 0
+                while (newDiv.firstChild) {
+                    counter++
+                    postDiv.appendChild(newDiv.firstChild)
+                }
+                page++
+                if(counter < 15) last = true
+
+                if(!last){
+                    let pagination = document.createElement('div')
+                    pagination.className = "pagination d-flex justify-content-center"
+
+                    let load = document.createElement('a')
+                    load.className = "loadmore"
+                    load.innerHTML = "Load More"
+
+                    pagination.appendChild(load)
+                    postDiv.appendChild(pagination)
+
+                    let loadMore = document.querySelector('.homepage .pagination .loadmore')
+                    if(loadMore != null){
+                        loadMore.addEventListener('click', loadHandler)
+                    }
+                }
+                
+            }
+            else alert('Error fetching api: ' +  loadRequest.status)
+        }
+    }
+    loadRequest.open('GET', 'api/loadMore/'+ filtering + '/' + page, true)
+    loadRequest.send()
+}
+
+

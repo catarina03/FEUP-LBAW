@@ -9,12 +9,7 @@
     <div class="category-center col-12 col-lg-7">
 
         <div class="postsCards row">
-            @include('partials.card')
-            @include('partials.card')
-            @include('partials.card')
-            @include('partials.card')
-            @include('partials.card')
-            @include('partials.card')
+            @each('partials.card', $posts, 'post')
         </div>
         @include('partials.pagination')
     </div>

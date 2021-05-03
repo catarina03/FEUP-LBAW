@@ -1,11 +1,15 @@
+@include('pages.confirm')
 @extends('layouts.app')
 
 @section('content')
+<script type="text/javascript" src="{{ URL::asset('js/delete_confirm.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
 <div class="container post">
+    <p hidden id="post_ID">{{$post->id}}</p>
     <div class="row" style="margin-top: 7em; margin-bottom: 7em;">
         <div class="card post-page-post-card justify-content-center pb-5" style="border-radius:5px;">
 
-            @if($user != 'visitor')
+            @if($user!="visitor")
                 @if($user=='authenticated_owner'){{-- Se for o próprio owner a ver --}}
                 <div class="my-post-page-settings btn-group dropdown">
                     <a class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,7 +41,7 @@
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-3">
-                <h1 class="post-page-post-title">{{$post['title']}}</h1>
+                <h1 class="post-page-post-title">{{$post->title}}</h1>
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-1">
