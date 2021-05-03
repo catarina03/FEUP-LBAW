@@ -4,17 +4,20 @@ s.addEventListener("click", function () {
     let listClass = s.querySelector("i").classList;
 
     if (listClass.contains("bi-bookmark-plus-fill")) {
-      listClass.remove("bi-bookmark-plus-fill");
+      
       addSave();
-      if(verify)
+      if(verify){
+          listClass.remove("bi-bookmark-plus-fill");
         listClass.add("bi-bookmark-check-fill");
-        verify = false;
+      }  
+    verify = false;
       
     } else {
-      listClass.remove("bi-bookmark-check-fill");
-      deleteSave();
-      if(verify)
-        listClass.add("bi-bookmark-plus-fill");
+        deleteSave();
+        if(verify){
+            listClass.remove("bi-bookmark-check-fill");
+            listClass.add("bi-bookmark-plus-fill");
+        }    
         verify = false;
       
     }
