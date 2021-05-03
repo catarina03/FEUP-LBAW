@@ -3,6 +3,7 @@
 
 @section('content')
 <script type="text/javascript" src="{{ URL::asset('js/delete_confirm.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <div class="row" style="margin-top: 7em; margin-bottom: 7em;">

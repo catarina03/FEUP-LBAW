@@ -35,4 +35,10 @@ class PostPolicy
       // Only a post owner can delete it
       return $user->id == $post->user_id;
     }
+
+    public function save(AuthenticatedUser $user, Post $post)
+    {
+      // A post owner cannot save its own post
+      return $user->id != $post->user_id;
+    }
 }

@@ -5,7 +5,6 @@ let token = document.getElementsByName("csrf-token")[0];
 yes.addEventListener("click",delete_post);
 
 function delete_post(){
-    console.log("fdc");
     var getUrl = window.location;
     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
     var request = new XMLHttpRequest();
