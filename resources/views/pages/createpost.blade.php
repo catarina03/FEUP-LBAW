@@ -28,34 +28,34 @@
                             <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1">
                                 <select class="form-select" id="category" name="category" value="{{ old('category') }}" style="cursor:pointer;">
                                     <option value="" disabled selected hidden>Category</option>
-                                    @if (old('category') == 'Music')
-                                        <option value="Music" selected>Music</option>
+                                    @if (old('category') == 'music')
+                                        <option value="music" selected>Music</option>
                                     @else
-                                        <option value="Music">Music</option>
+                                        <option value="music">Music</option>
                                     @endif
                                     {{-- <option value="Music" >Music</option> --}}
-                                    @if (old('category') == 'Cinema')
-                                        <option value="Cinema" selected>Cinema</option>
+                                    @if (old('category') == 'cinema')
+                                        <option value="cinema" selected>Cinema</option>
                                     @else
-                                        <option value="Cinema">Cinema</option>
+                                        <option value="cinema">Cinema</option>
                                     @endif
                                     {{-- <option value="Cinema" >Cinema</option> --}}
-                                    @if (old('category') == 'TV Show')
-                                        <option value="TV Show" selected>TV Show</option>
+                                    @if (old('category') == 'tv Show')
+                                        <option value="tv show" selected>TV Show</option>
                                     @else
-                                        <option value="TV Show">TV Show</option>
+                                        <option value="tv show">TV Show</option>
                                     @endif
                                     {{-- <option value="TV Show" >TV Show</option> --}}
-                                    @if (old('category') == 'Theater')
-                                        <option value="Theater" selected>Theater</option>
+                                    @if (old('category') == 'theatre')
+                                        <option value="theatre" selected>Theater</option>
                                     @else
-                                        <option value="Theater">Theater</option>
+                                        <option value="theatre">Theater</option>
                                     @endif
                                     {{-- <option value="Theater" >Theater</option> --}}
-                                    @if (old('category') == 'Literature')
-                                        <option value="Literature" selected>Literature</option>
+                                    @if (old('category') == 'literature')
+                                        <option value="literature" selected>Literature</option>
                                     @else
-                                        <option value="Literature">Literature</option>
+                                        <option value="literature">Literature</option>
                                     @endif
                                     {{-- <option value="Literature" >Literature</option> --}}
                                 </select>
@@ -63,28 +63,28 @@
                             <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-3 pt-lg-3 p-1">
                                 <select class="form-select" id="topic-dropdown" name="type" style="cursor:pointer;">
                                     <option disabled selected hidden>Type</option>
-                                    @if (old('type') == 'News')
+                                    @if (old('type') == 'news')
                                         <option value="News" selected>News</option>
                                     @else
-                                        <option value="News">News</option>
+                                        <option value="news">News</option>
                                     @endif
                                    {{-- <option>News</option> --}}
-                                    @if (old('type') == 'Article')
-                                        <option value="Article" selected>Article</option>
+                                    @if (old('type') == 'article')
+                                        <option value="article" selected>Article</option>
                                     @else
-                                        <option value="Article">Article</option>
+                                        <option value="article">Article</option>
                                     @endif
                                     {{-- <option>Article</option> --}}
-                                    @if (old('type') == 'Review')
-                                        <option value="Review" selected>Review</option>
+                                    @if (old('type') == 'review')
+                                        <option value="review" selected>Review</option>
                                     @else
-                                        <option value="Review">Review</option>
+                                        <option value="review">Review</option>
                                     @endif
                                     {{-- <option>Review</option> --}}
-                                    @if (old('type') == 'Suggestion')
-                                        <option value="Suggestion" selected>Suggestion</option>
+                                    @if (old('type') == 'suggestion')
+                                        <option value="suggestion" selected>Suggestion</option>
                                     @else
-                                        <option value="Suggestion">Suggestion</option>
+                                        <option value="suggestion">Suggestion</option>
                                     @endif
                                     {{-- <option>Suggestion</option> --}}
                                 </select>
@@ -157,8 +157,13 @@
                                     Preview</button>
                             </div>
                             <div class="col-md-auto col-12 text-center">
-                                <button type="button" class="btn cancel-post">Cancel</button>
+                                <button type="button" id="create-post-cancel-button" class="btn cancel-post">Cancel</button>
                             </div>
+                            <script type="text/javascript" defer>
+                                document.getElementById("create-post-cancel-button").onclick = function () {
+                                    location.href = "/";
+                                };
+                            </script>
                             <div class="col-md-auto col-12 text-center">
                                 <button type="submit" id="submit-button" class="btn publish-post px-5">Publish</button>
                             </div>

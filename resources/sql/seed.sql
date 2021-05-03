@@ -41,7 +41,7 @@ DROP FUNCTION IF EXISTS generate_report_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_thread_comment_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_vote_comment_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_vote_post_notification() CASCADE;
-DROP FUNCTION IF EXISTS delete_unused_tag() CASCADE; 
+DROP FUNCTION IF EXISTS delete_unused_tag() CASCADE;
 
 DROP TRIGGER IF EXISTS block_user ON block_user;
 DROP TRIGGER IF EXISTS check_vote_post ON vote_post;
@@ -101,6 +101,7 @@ CREATE TABLE post(
     content text NOT NULL,
     is_spoiler boolean DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP DEFAULT NOW(),
     n_views integer NOT NULL DEFAULT 0,
     type post_types NOT NULL,
     category category_types NOT NULL,
@@ -181,7 +182,7 @@ CREATE TABLE block_user(
 CREATE TABLE follow_user(
     following_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
     followed_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    CONSTRAINT pk_following_followed PRIMARY KEY (following_user, followed_user), 
+    CONSTRAINT pk_following_followed PRIMARY KEY (following_user, followed_user),
     CHECK (following_user IS DISTINCT FROM followed_user)
 );
 
@@ -195,7 +196,7 @@ CREATE TABLE report(
     user_assigned integer REFERENCES authenticated_user(id),
     comment_reported integer REFERENCES "comment"(id) ON DELETE CASCADE,
     post_reported integer  REFERENCES post(id) ON DELETE CASCADE,
-    CHECK(user_reporting IS DISTINCT FROM user_assigned), 
+    CHECK(user_reporting IS DISTINCT FROM user_assigned),
     CHECK((comment_reported IS NULL AND post_reported IS NOT NULL) OR (comment_reported IS NOT NULL AND post_reported IS NULL)),
     CHECK(reported_date < closed_date)
 );
@@ -245,22 +246,22 @@ CREATE INDEX search_post ON post USING GIN(
 
 
 -- BLOCK USER
-CREATE FUNCTION block_user() RETURNS TRIGGER AS 
-$BODY$ 
-BEGIN 
+CREATE FUNCTION block_user() RETURNS TRIGGER AS
+$BODY$
+BEGIN
 	DELETE
 	FROM follow_user
 	WHERE NEW.blocked_user = following_user AND NEW.blocking_user = followed_user
     OR NEW.blocking_user = following_user AND NEW.blocked_user = followed_user;
 
-	RETURN NEW; 
-END 
-$BODY$ 
+	RETURN NEW;
+END
+$BODY$
 LANGUAGE plpgsql;
 
-CREATE TRIGGER block_user 
-	AFTER INSERT ON block_user 
-	FOR EACH ROW 
+CREATE TRIGGER block_user
+	AFTER INSERT ON block_user
+	FOR EACH ROW
 	EXECUTE PROCEDURE block_user();
 
 
@@ -277,12 +278,12 @@ BEGIN
 		THEN
 			RAISE EXCEPTION 'The author of a post cant like/dislike their own post.';
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_vote_post
     AFTER INSERT ON vote_post
     FOR EACH ROW
@@ -296,18 +297,18 @@ $BODY$
 BEGIN
    IF EXISTS (
             SELECT *
-            FROM comment 
+            FROM comment
             WHERE NEW.comment_id = comment.id AND NEW.user_id = comment.user_id
         )
 		THEN
 			RAISE EXCEPTION 'The author of a comment cant like/dislike their own comment.';
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_vote_comment
     AFTER INSERT ON vote_comment
     FOR EACH ROW
@@ -327,12 +328,12 @@ BEGIN
 		THEN
 			RAISE EXCEPTION 'The author cannot comment on their own post.';
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_post_comment_author
     AFTER INSERT ON comment
     FOR EACH ROW
@@ -347,18 +348,18 @@ BEGIN
    IF EXISTS (
             SELECT *
             FROM post
-            WHERE NEW.post_id = id 
+            WHERE NEW.post_id = id
             AND NEW.comment_date::timestamp < created_at::timestamp
         )
 	    THEN
 		   RAISE EXCEPTION 'The comment has to be made more recently than the post.';
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_comment_date
    AFTER INSERT ON comment
    FOR EACH ROW
@@ -378,12 +379,12 @@ BEGIN
 		THEN
 			RAISE EXCEPTION 'The thread comment % has to be made more recently than the main comment % .', NEW.id, NEW.comment_id;
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_thread_comment_date
     AFTER INSERT ON comment
     FOR EACH ROW
@@ -399,16 +400,16 @@ BEGIN
             SELECT *
             FROM comment c1
             WHERE NEW.comment_id = c1.id AND c1.comment_id IS NOT NULL
-        ) 
+        )
 		THEN
 			RAISE EXCEPTION 'Comments can only have 2 levels.';
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_thread_comment
     AFTER INSERT ON comment
     FOR EACH ROW
@@ -424,16 +425,16 @@ BEGIN
         SELECT *
         FROM post
         WHERE NEW.post_reported = post.id AND NEW.user_reporting = post.user_id
-        ) 
+        )
 		THEN
 			RAISE EXCEPTION 'An authenticated user cannot report their own post.';
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_post_report_author
    AFTER INSERT ON report
    FOR EACH ROW
@@ -449,16 +450,16 @@ BEGIN
             SELECT *
             FROM comment
             WHERE NEW.comment_reported = comment.id AND NEW.user_reporting = comment.user_id
-        ) 
+        )
         THEN
             RAISE EXCEPTION 'An authenticated user cannot report their own comment.';
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_comment_report_author
    AFTER INSERT ON report
    FOR EACH ROW
@@ -471,19 +472,19 @@ CREATE FUNCTION check_post_report_assignment() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF NEW.post_reported IS NOT NULL AND EXISTS (
-            SELECT * 
+            SELECT *
             FROM post
             WHERE NEW.post_reported = post.id AND NEW.user_assigned = post.user_id
-        ) 
+        )
         THEN
             RAISE EXCEPTION 'A moderator/system manager cannot be assigned to their own post.';
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_post_report_assignment
    AFTER INSERT ON report
    FOR EACH ROW
@@ -500,16 +501,16 @@ BEGIN
             FROM comment
             WHERE NEW.comment_reported = comment.id
             AND NEW.user_assigned = comment.user_id
-        ) 
+        )
         THEN
             RAISE EXCEPTION 'A moderator/system manager cannot be assigned to their own comment.';
 	END IF;
-	
+
 	RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER check_comment_report_assignment
    AFTER INSERT ON report
    FOR EACH ROW
@@ -521,14 +522,14 @@ CREATE TRIGGER check_comment_report_assignment
 CREATE FUNCTION generate_follow_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-   INSERT INTO notification (notificated_user, type, follower_id) 
+   INSERT INTO notification (notificated_user, type, follower_id)
    VALUES (NEW.followed_user, 'follow', NEW.following_user);
 
    RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER generate_follow_notification
    AFTER INSERT ON follow_user
    FOR EACH ROW
@@ -547,15 +548,15 @@ BEGIN
         FROM post
         WHERE NEW.post_id = post.id;
 
-        INSERT INTO notification (notificated_user, type, voted_post, voted_user) 
+        INSERT INTO notification (notificated_user, type, voted_post, voted_user)
         VALUES (notification_receiver_id, 'vote', NEW.post_id, NEW.user_id);
     END IF;
-	
+
 	RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER generate_vote_post_notification
    AFTER INSERT ON vote_post
    FOR EACH ROW
@@ -577,12 +578,12 @@ BEGIN
         INSERT INTO notification (notificated_user, type, voted_comment, voted_user)
         VALUES (notification_receiver_id, 'vote', NEW.comment_id, NEW.user_id);
     END IF;
-	
+
 	RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER generate_vote_comment_notification
    AFTER INSERT ON vote_comment
    FOR EACH ROW
@@ -593,7 +594,7 @@ CREATE TRIGGER generate_vote_comment_notification
 -- GENERATES REPORT NOTIFICATION
 CREATE FUNCTION generate_report_notification() RETURNS TRIGGER AS
 $BODY$
-declare                  
+declare
    notification_user_id integer;
 BEGIN
     IF New.post_reported IS NOT NULL THEN
@@ -607,7 +608,7 @@ BEGIN
 
     IF New.comment_reported IS NOT NULL THEN
         SELECT comment.user_id INTO notification_user_id
-        FROM comment 
+        FROM comment
         WHERE new.comment_reported = comment.id;
 
         INSERT INTO notification (notificated_user, type, report_id)
@@ -618,7 +619,7 @@ BEGIN
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER generate_report_notification
    AFTER INSERT ON report
    FOR EACH ROW
@@ -629,16 +630,16 @@ CREATE TRIGGER generate_report_notification
 -- GENERATES COMMENT COMMENT NOTIFICATION
 CREATE FUNCTION generate_comment_notification() RETURNS TRIGGER AS
 $BODY$
-declare                  
+declare
    notification_user_id integer;
 BEGIN
     IF New.comment_id IS NULL THEN
         SELECT post.user_id INTO notification_user_id
-        FROM "comment" INNER JOIN post 
+        FROM "comment" INNER JOIN post
         ON "comment".post_id = post.id
         WHERE post.id = NEW.post_id;
-        
-        INSERT INTO notification (notificated_user, type, comment_id) 
+
+        INSERT INTO notification (notificated_user, type, comment_id)
         VALUES (notification_user_id, 'comment', NEW.id);
     END IF;
 
@@ -646,7 +647,7 @@ BEGIN
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER generate_comment_notification
    AFTER INSERT ON "comment"
    FOR EACH ROW
@@ -657,15 +658,15 @@ CREATE TRIGGER generate_comment_notification
 -- GENERATES THREAD COMMENT NOTIFICATION
 CREATE FUNCTION generate_thread_comment_notification() RETURNS TRIGGER AS
 $BODY$
-declare                  
+declare
    notification_user_id integer;
 BEGIN
     IF New.comment_id IS NOT NULL THEN
         SELECT comment.user_id INTO notification_user_id
-        FROM comment 
+        FROM comment
         WHERE NEW.comment_id = comment.id;
-        
-        INSERT INTO notification (notificated_user, type, comment_id) 
+
+        INSERT INTO notification (notificated_user, type, comment_id)
         VALUES (notification_user_id, 'comment', NEW.id);
     END IF;
 
@@ -673,7 +674,7 @@ BEGIN
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER generate_thread_comment_notification
    AFTER INSERT ON "comment"
    FOR EACH ROW
@@ -684,7 +685,7 @@ CREATE TRIGGER generate_thread_comment_notification
 -- GENERATES PUBLISH NOTIFICATION
 CREATE FUNCTION generate_publish_notification() RETURNS TRIGGER AS
 $BODY$
-declare     
+declare
    to_notify record;
 BEGIN
     for to_notify IN
@@ -700,37 +701,37 @@ BEGIN
 END
 $BODY$
 LANGUAGE plpgsql;
- 
+
 CREATE TRIGGER generate_publish_notification
    AFTER INSERT ON post
    FOR EACH ROW
    EXECUTE PROCEDURE generate_publish_notification();
-  
+
 
 
 -- CHECKS IF TAG IS USED, IF NOT DELETES IT
-CREATE FUNCTION delete_unused_tag() RETURNS TRIGGER AS 
-$BODY$ 
+CREATE FUNCTION delete_unused_tag() RETURNS TRIGGER AS
+$BODY$
 DECLARE
     post_tag_count integer;
-BEGIN 
+BEGIN
     SELECT COUNT(*) INTO post_tag_count
     FROM tag INNER JOIN post_tag ON tag.id = post_tag.tag_id
     WHERE OLD.tag_id = tag.id;
-    
+
     IF (post_tag_count = 0) THEN
         DELETE FROM tag
         WHERE tag.id = OLD.tag_id;
     END IF;
-    
-    RETURN NULL; 
-END 
-$BODY$ 
+
+    RETURN NULL;
+END
+$BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_unused_tag
-    AFTER DELETE ON post_tag 
-    FOR EACH ROW 
+    AFTER DELETE ON post_tag
+    FOR EACH ROW
     EXECUTE PROCEDURE delete_unused_tag();
 
 
@@ -1325,7 +1326,7 @@ One of the judges, Karen McCarthy Woolf, said: “What distinguishes The Fruit o
 Thompson’s poem will be published on the Poetry Society’s website. It will also appear in the spring issue of the Poetry Society’s poetry journal, The Poetry Review.
 ', false, TIMESTAMP '2019-02-10 16:56:36', 262, 'news', 'literature', 21);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Dry Cleaning: the post-punks who sing about Meghan Markle and Müller Rice', 'abs.jpeg', '“You’re just what England needs / You’re going to change us,” Florence Shaw intones on Dry Cleaning’s 2019 track Magic of Meghan. It’s a song she’s been thinking about “quite a bit” since the Oprah interview with the Duchess of Sussex aired. “I was just interested in her and trying to forget about a breakup. But I did have an ominous feeling about Meghan – a sense that it was going to go horribly wrong.”
-The south London-based quartet’s songs are often eerily prophetic – creating something surreal, touching and hilarious that captures the absurdity of modern life. Their sound marries agitated post-punk with Shaw’s sardonic spoken-word lyrics – think Magazine fronted by a Beat poet who talks about phone scams and Travelodges. 
+The south London-based quartet’s songs are often eerily prophetic – creating something surreal, touching and hilarious that captures the absurdity of modern life. Their sound marries agitated post-punk with Shaw’s sardonic spoken-word lyrics – think Magazine fronted by a Beat poet who talks about phone scams and Travelodges.
 The story goes – according to early interviews – that long-term friends guitarist Tom Dowse, bassist Lewis Maynard and drummer Nick Buxton decided to form the band in 2017 after a drunken karaoke session. “Do you want us to stick to that?” asks Dowse. “Because it isn’t really true. We sang Minerva by Deftones together, which was a bonding experience, but I don’t know if it really ignited the desire to be in a band … ”
 A jamming session ensued, and they spent the next few months writing songs and trying to find a singer who wasn’t the usual cliched frontperson. Step forward the band’s friend Shaw, a visual artist who had no musical experience. From the first rehearsal in Maynard’s mum’s garage it was clear that she was the missing link.
 The band have since developed a “near-psychic understanding” of how to leave the right amount of space for each other in their songs. “It’s almost like you’re slowing down time and there’s a conversation between us,” says Dowse. Drawing from wider, weirder influences (they mention everyone from Black Sabbath to Augustus Pablo) than on their first two EPs, they wanted their debut album to “sound like its own little world”.
@@ -1781,14 +1782,14 @@ Speaking of powerful women, what are we thinking regarding Christina? Ruby “da
 ', false, TIMESTAMP '2019-04-01 03:51:44', 62, 'news', 'tv show', 41);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('RuPaul’s Drag Race recap: season 12 finale – she’s a winner baby!', 'abs.jpeg', 'This has certainly been one of the most interesting and unique seasons of Drag Race ever. Not since the heady days of Willam proudly vomiting off the runway have we had such a memorable ride. The guest judge calibre has been higher than ever (“he’s a dinosaur doctor!”) the contestants have been possibly the most talented crop and, in terms of the general progression of the show, things have been messier than ever.
 As if Sherry Pie-gate weren’t enough, the “cursed” 12th season has now been hit by the shadiest queen ever to grace our world stage, Miss Rona. But they haven’t let this stop them. In true 2020 style, this week’s final has been put together via a wifi-defying combination of video chat, special effects and lots of clever editing. Our three finalists are Jaida Essence Hall, who’s natural destiny in life is to wear ballgowns and be fanned by men holding palm fronds while eating grapes; Gigi Goode, the devil in an a-cup, robotic glamour personified; and Crystal Methyd, somewhere between club kid elegance and an extra from Luc Besson’s Fifth Element. So let’s go!
-Bring back. My girls. 
-First, we get a recap of all the girls from season 12. Dahlia Sin’s on a roof! Careful, Dahlia. Aiden Zhane’s looking great but her back garden needs a trim. No, that’s not a euphemism. We think Aiden’s actually going to do very well out of this. She’s got the kind of kooky outsider vibe Drag Race fans love. Meet and greets with lots of tattooed people in polka dot dresses. Opening for Rob Zombie at Download Festival. We can see it now. 
-Next we go to the three finalists and Crystal Methyd is wearing possibly the most avant-garde outfit ever to be seen on Drag Race. An actual, fully-functioning pinata, reminding us of one of our favourite Drag Race drinking games; is it cultural appropriation, or is it just high concept?! Either way, she’s half Mexican so she’s allowed. God, we’re tired. 
-Gigi Goode is stunning as always in a crushed blue velvet Madonna homage. Speaking of Madonna – we’d like to address her directly. Madge. Have you heard Lady Gaga’s “Babylon” yet? If you haven’t, don’t listen. It’s just not worth the aggro. Stick on Schitt’s Creek and have a Twix instead. 
+Bring back. My girls.
+First, we get a recap of all the girls from season 12. Dahlia Sin’s on a roof! Careful, Dahlia. Aiden Zhane’s looking great but her back garden needs a trim. No, that’s not a euphemism. We think Aiden’s actually going to do very well out of this. She’s got the kind of kooky outsider vibe Drag Race fans love. Meet and greets with lots of tattooed people in polka dot dresses. Opening for Rob Zombie at Download Festival. We can see it now.
+Next we go to the three finalists and Crystal Methyd is wearing possibly the most avant-garde outfit ever to be seen on Drag Race. An actual, fully-functioning pinata, reminding us of one of our favourite Drag Race drinking games; is it cultural appropriation, or is it just high concept?! Either way, she’s half Mexican so she’s allowed. God, we’re tired.
+Gigi Goode is stunning as always in a crushed blue velvet Madonna homage. Speaking of Madonna – we’d like to address her directly. Madge. Have you heard Lady Gaga’s “Babylon” yet? If you haven’t, don’t listen. It’s just not worth the aggro. Stick on Schitt’s Creek and have a Twix instead.
 Jaidia Essence Hall is here, and she’s ALREADY wearing a crown. The audacity is palpable, but Jaida has always been audacious and that’s why we love her. Next, “almost live, from his panic room in the Hollywood Hills”, it’s RuPaul! And he’s ... not ... in ... drag. He wasn’t last week either. We have a controversial theory about this. Social distancing of course means that he can’t have his usual hair and makeup squad flitting around him. Maybe ... he’s ... FORGOTTEN HOW TO DO HIS OWN MAKEUP? That’s pure conjecture of course. Please don’t sue the Guardian, RuPaul.
 He reveals that this episode will entail three competitive lipsyncs. First, a three-way close-up lipsync where it’s, presumably, all about the lips and getting the lyrics right. Then, a lipsync from home, with each queen choosing a song they feel represents them, complete with homemade backgrounds (this is a great idea) and finally, the top two queens lipsyncing against each other. We head to Carson, Ross and Michelle – Carson’s home is gorgeous. Books, pianos and drinks everywhere!
 Next we get some video chat from Whoopi Goldberg and she says “as an entertainer, there are times when we are really necessary ... where no-one can do it better than we can. I think this is one of those times.” Whoopi is right. What entertainers do cannot be replicated. They are having a very tough time during the pandemic. Nightlife and theatre culture have been decimated, it’s impossible for performers to work right now, and performers need to work to survive, not just economically but mentally.
-Have a think of all the times you’ve yelled with joy and laughed until your sides hurt, while someone fabulous has been on stage in front of you. Much of our culture wouldn’t exist without performers. Drag Race wouldn’t exist without performers. This column wouldn’t exist without performers. If you know any performers, drag or otherwise, show them as much love as you can right now. That’s all. 
+Have a think of all the times you’ve yelled with joy and laughed until your sides hurt, while someone fabulous has been on stage in front of you. Much of our culture wouldn’t exist without performers. Drag Race wouldn’t exist without performers. This column wouldn’t exist without performers. If you know any performers, drag or otherwise, show them as much love as you can right now. That’s all.
 Crystal Methyd
 Not for the first time this season, we’ve entered unprecedentedly surreal territory for Drag Race. RuPaul is inside a giant eyeball, videocalling Crystal, who’s painted completely pink. If you pause it, it looks like a student art project (second year). We get a cute video message from Crystal’s parents. Her dad says her non-english-speaking grandma records the show and gets the family to translate what she’s saying. We’re not crying, YOU’RE CRYING! (Btw Crystal’s grandma, if you watch it on Netflix you can have subtitles, less of a faff, just saying).
 ', true, TIMESTAMP '2019-10-29 07:27:12', 294, 'review', 'tv show', 90);
@@ -1941,7 +1942,7 @@ true, TIMESTAMP '2020-08-07 06:55:11', 258, 'review', 'literature', 74);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Children’s books roundup – the best new picture books and novels', 'abs.jpeg', 'World Book Day tie-in titles are especially strong this year, from Katherine Rundell’s Skysteppers (Bloomsbury), a nail-biting scramble across the skyline of Paris (and prequel to the bestselling Rooftoppers), to the crazed fun of Humza Arshad and Henry White’s Little Badman and the Radioactive Samosa (Puffin), illustrated by Aleksei Bitskoff, in which a box of irradiated triangular treats confers superpowers on a trio of kids.
 Other brilliant books for eight-year-olds and up this month include Show Us Who You Are (Knights Of) by Elle McNicoll. Cora, who is autistic, loves hanging out with Adrien, son of the CEO of Pomegranate Technologies – until an accident leaves Adrien in a coma. Pomegranate makes holograms of people, preserving memories for grieving families. But what modifications might be made to the holograms in a spurious quest for “perfection”? This is a startlingly original speculative novel, and a moving, passionate interrogation of prejudice against neurodiversity.
 Two Sisters: A Story of Freedom (Scholastic) by Kereen Getten features inseparable 18th-century half-sisters Ruth and Anna, who are sent on a voyage from Jamaica to England. Anna’s almost white skin means she is always treated differently, while Ruth must fight for what should be hers. Told from both girls’ perspectives, this is a hard-hitting, gripping read, full of fierce courage in the face of injustice.
-Meanwhile, Mort the Meek and the Ravens’ Revenge (Stripes) by Rachel Delahaye, illustrated by George Ermos, is the tale of hapless Mort, the only pacifist in a distinctly brutal kingdom, who’s just been made Royal Executioner – and told to bump off his best friend. Crammed with wisecracking corvids and outrageous wordplay, it’s engagingly light-hearted, Pratchettesque comic fantasy.', 
+Meanwhile, Mort the Meek and the Ravens’ Revenge (Stripes) by Rachel Delahaye, illustrated by George Ermos, is the tale of hapless Mort, the only pacifist in a distinctly brutal kingdom, who’s just been made Royal Executioner – and told to bump off his best friend. Crammed with wisecracking corvids and outrageous wordplay, it’s engagingly light-hearted, Pratchettesque comic fantasy.',
 true, TIMESTAMP '2020-11-09 03:02:30', 286, 'article', 'literature', 61);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Tracks of the week reviewed: Cardi B, Finneas, and Foo Fighters', 'abs.jpeg', 'Cardi B - Up
 It is an oft-quoted “fact” that Inuit people have more than 50 words for snow, but Cardi B has 5,000 ways to describe sex, and all of them are horrifically filthy. Up is Cardi’s follow-up to her mega-smut smash WAP, and is basically a list of sex acts and reasons you’d want to shag her, rapped over a trap beat, with Cardi insisting “if it’s up then it’s stuck”. Should we call an ambulance, hun? That doesn’t sound right.
@@ -5596,7 +5597,7 @@ insert into report (reported_date, accepted, closed_date, motive, user_reporting
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-10-07', false, '2020-10-11', 'Fake news', 72, 78, 1, NULL);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-12-11', false, NULL, 'Abusive content', 36, 61, 16, NULL);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-03-14', false, '2020-03-25', 'Other', 38, 36, 35, NULL);
-insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2021-02-24', false, NULL, 'Hate speech', 16, NULL, 37, NULL); 
+insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2021-02-24', false, NULL, 'Hate speech', 16, NULL, 37, NULL);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-08-29', false, NULL, 'Fake news', 90, NULL, 51, NULL);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2021-01-04', false, NULL, 'Other', 18, NULL, 81, NULL);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2021-03-19', false, '2021-03-28', 'Abusive content', 84, 74, 61, NULL);
@@ -5607,7 +5608,7 @@ insert into report (reported_date, accepted, closed_date, motive, user_reporting
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-03-24', false, NULL, 'Fake news', 34, NULL, 58, NULL);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-07-28', false, NULL, 'Other', 29, NULL, 84, NULL);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-05-29', false, '2020-06-05', 'Other', 82, 19, 93, NULL);
-insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-10-05', false, '2020-10-09', 'Other', 46, 34, NULL, 31); 
+insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-10-05', false, '2020-10-09', 'Other', 46, 34, NULL, 31);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-12-23', false, '2020-12-30', 'Abusive content', 64, 45, 100, NULL);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-06-07', false, NULL, 'Fake news', 5, NULL, 69, NULL);
 insert into report (reported_date, accepted, closed_date, motive, user_reporting, user_assigned, post_reported, comment_reported) values ('2020-02-17', false, NULL, 'Hate speech', 85, NULL, 18, NULL);
