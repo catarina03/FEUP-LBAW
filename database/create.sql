@@ -14,6 +14,11 @@ DROP TABLE IF EXISTS block_user CASCADE;
 DROP TABLE IF EXISTS follow_user CASCADE;
 DROP TABLE IF EXISTS report CASCADE;
 DROP TABLE IF EXISTS notification CASCADE;
+DROP TABLE IF EXISTS publish_notification CASCADE;
+DROP TABLE IF EXISTS follow_notification CASCADE;
+DROP TABLE IF EXISTS vote_notification CASCADE;
+DROP TABLE IF EXISTS comment_notification CASCADE;
+DROP TABLE IF EXISTS report_notification CASCADE;
 
 DROP TYPE IF EXISTS category_types;
 DROP TYPE IF EXISTS post_types;
