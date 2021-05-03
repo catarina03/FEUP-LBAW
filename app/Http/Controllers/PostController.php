@@ -99,8 +99,8 @@ class PostController extends Controller
             'tag-input.max' => 'Must add at maximum 10 tags',
         ]);
          if ($validator->fails()) {
-             dd($validator->errors());
-             dd($request->all());
+             //dd($validator->errors());
+             //dd($request->all());
              return redirect(url()->previous())->withErrors($validator)->withInput();
 
         }
@@ -173,7 +173,8 @@ class PostController extends Controller
             'likes' => 0,'tags' => $tags,'date'=>$post->created_at,'thumbnail' => '/images/'.$post->thumbnail];
 
 
-        return view('pages.post', ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]); //TODO, WRONG ROUTE
+        //return view('pages.post', ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]); //TODO, WRONG ROUTE
+        return redirect()->action([PostController::class, 'show'],['id'=>$post->id]);//'/post/'.$post->id, ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]);
         //return redirect()->route("post/".$post->id, ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]);
         //return \redirect()
         //return this.show($post->id);
@@ -409,7 +410,9 @@ class PostController extends Controller
             'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail];
         //checkar se está autenticado e se é o dono
 
-        return view('pages.post', ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]); //TODO, WRONG ROUTE
+        return redirect()->action([PostController::class, 'show'],['id'=>$post_id]);
+        //return \redirect()->route('post/'.$post_id, ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]);
+           // view('pages.post', ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]); //TODO, WRONG ROUTE
 
     }
 

@@ -72,7 +72,7 @@
                 <div class="col-10">
                     <div class="row justify-content-start align-items-center">
                         <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Tags: </h2>
-                        
+
                         @foreach($metadata['tags'] as $tag)
                             <div class="col-auto post-page-tag-container px-2 m-1">
                                 <a class="post-page-post-tag" href="advanced_search.php">{{$tag->name}}</a>

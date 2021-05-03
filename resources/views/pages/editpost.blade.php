@@ -10,11 +10,18 @@
         <div class="card create-post-page-post-card justify-content-center d-flex pt-5 pb-5" style="border-radius:5px;">
             <form id="create-post-form" enctype="multipart/form-data" action="{{ url('addpost') }}" method="POST">
                 @csrf
+
+                {{--TODO
+                @if($errors->any())
+                    {!! implode('', $errors->all('<div>:message</div>')) !!}
+                @endif
+                --}}
+
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <div class="form-group post-comment-input mb-4">
                             <label class="add-comment-label" for="edit-title">Post title</label>
-                            <input class="container form-control w-100" id="edit-title"
+                            <input class="container form-control w-100" name="title" id="title"
                                 value="{{$post['title']}}">
                         </div>
                     </div>
@@ -26,7 +33,7 @@
                         <div class="row px-0 mx-0">
                             <div class="col-lg-6 col-12 form-group new-post-thumbnail p-0 m-0 me-lg-4">
                                 <label class="form-label" for="postImage">Select post image</label>
-                                <input type="file" class="form-control" id="postImage" value="{{$post->thumbnail}}"/>
+                                <input type="file" class="form-control" name="thumbnail" id="postImage" value="{{$post->thumbnail}}"/>
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1">
                                 <select class="form-select" id="category" name="category" style="cursor:pointer;">
@@ -98,7 +105,7 @@
                     <div class="row justify-content-center">
                         <div class="col-10">
                             <label for="mytextarea">Post</label>
-                            <textarea id="mytextarea" class="create-post-editor col-auto" name="mytextarea" rows="15"
+                            <textarea id="mytextarea" class="create-post-editor col-auto" value="{{$post['content']}}" name="content" rows="15"
                                 style="resize:none;">
                                      {{$post['content']}}
                                 </textarea>
@@ -117,15 +124,15 @@
                     <div class="row justify-content-center">
                         <div class="col-10">
                             <label for="tags" class="col-12 col-form-label">Tags</label>
-                            <div class="bg-white rounded border justify-content-center form-control" id="tags"
-                                style="height:4em;">
-                                <div class="d-flex justify-content-start tags">
+                            <div class="bg-white rounded border d-flex align-items-center justify-content-center form-control" id="tags"
+                                 style="height:4em;">
+                                <div class="d-flex justify-content-start tags" id="edited-post-tags">
                                     <a class="btn btn-secondary btn-sm  d-flex justify-content-center m-2">Music <i
                                             class="bi bi-x ms-1"></i></a>
                                     <a class="btn btn-secondary btn-sm  d-flex justify-content-center m-2">News <i
                                             class="bi bi-x ms-1"></i></a>
-                                    <input class="container form-control w-100 create-post-tag-input" id="tag-input" name="tag-input" value="{{ old('tag-input') }}">{{--TODO--}}
                                 </div>
+                                <input class="container form-control w-100 create-post-tag-input" id="tag-input" name="tag-input" value="{{ old('tag-input') }}">
                             </div>
                         </div>
                     </div>
@@ -136,6 +143,7 @@
                     </div>
                 </div>
 
+                <input type="hidden" name="user_id" value="1" />
                 <div class="row justify-content-center mt-5">
                     <div class="col-10">
                         <div class="row d-flex flex-row">
@@ -152,7 +160,7 @@
                                 };
                             </script>
                             <div class="col-md-auto col-12 text-center">
-                                <input type="submit" class="btn publish-post px-5" value="Save Changes">
+                                <input type="submit" class="btn publish-post px-5" id="submit-button" value="Save Changes">
                             </div>
                         </div>
                     </div>
@@ -161,5 +169,5 @@
         </div>
     </div>
 </div>
-<script src="{{asset('js/createpost.js')}}" defer></script>
+<script src="{{asset('js/editpost.js')}}" defer></script>
 @endsection
