@@ -5,6 +5,7 @@ if(t != null){
     t.addEventListener("click", function(e){
         e.preventDefault()
         filtering = "top"
+        makeRequest(filtering)
         if(!this.classList.contains('active')){
             this.classList.add('active')
         }
@@ -13,8 +14,7 @@ if(t != null){
         }
         if(new_filter.classList.contains('active')){
             new_filter.classList.remove('active')
-        }
-        makeRequest("top")   
+        }   
     }); 
 }
 
@@ -23,6 +23,7 @@ if(hot != null){
     hot.addEventListener("click", function(e){
         e.preventDefault()
         filtering = "hot"
+        makeRequest(filtering)
         if(!this.classList.contains('active')){
             this.classList.add('active')
         }
@@ -32,8 +33,6 @@ if(hot != null){
         if(new_filter.classList.contains('active')){
             new_filter.classList.remove('active')
         }
-        
-        makeRequest("hot")
     });
 }
  
@@ -43,6 +42,7 @@ if(new_filter != null){
     new_filter.addEventListener("click", function(e){
         e.preventDefault()
         filtering = "new"
+        makeRequest(filtering)
         if(!this.classList.contains('active')){
             this.classList.add('active')
         }
@@ -52,8 +52,6 @@ if(new_filter != null){
         if(t.classList.contains('active')){
             t.classList.remove('active')
         }
-    
-        makeRequest("new")
     }); 
 }
 

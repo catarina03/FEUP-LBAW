@@ -16,10 +16,12 @@ if(filterButton != null){
         let endDate = document.querySelector('#endDate').value
         let peopleFollowCheck = document.querySelector('#checkPeople')
         let peopleFollow = false
-        if(peopleFollowCheck.checked) peopleFollow = true
-        let tagFollowCheck = document.querySelector('#checkTags').value
+        if(peopleFollowCheck!=null)
+            if(peopleFollowCheck.checked) peopleFollow = true
+        let tagFollowCheck = document.querySelector('#checkTags')
         let tagFollow = false
-        if(tagFollowCheck.checked) tagFollow = true
+        if(tagFollowCheck != null)
+            if(tagFollowCheck.checked) tagFollow = true
         let filters = {}
         if(search !== "") filters[search] = search
         if(type !== "") filters[type] = type  
