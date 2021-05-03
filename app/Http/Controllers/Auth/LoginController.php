@@ -42,11 +42,16 @@ class LoginController extends Controller
     }
 
     public function home() {
-        return redirect('login');
+        return redirect('/');
     }
 
     protected function redirectTo(){
         return url()->previous();
+    }
+
+    public function username()
+    {
+      return 'username';
     }
 
     public function showLoginForm(){

@@ -76,7 +76,7 @@ Route::get('post/{id}', 'PostController@show');
 Route::delete('post/{id}', 'PostController@destroy');
 Route::get('editpost/{id}', 'PostController@edit');
 Route::put('editpost/{id}', 'PostController@update');
-Route::post('post/{id}/report', 'PostControllert@report');
+Route::post('post/{id}/report', 'PostController@report');
 
 Route::post('api/post/{id}/save', 'PostController@addSave');
 Route::delete('api/post/{id}/save', 'PostController@deleteSave');

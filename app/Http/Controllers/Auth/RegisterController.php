@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
+use App\Models\AuthenticatedUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -27,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/cards';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -48,9 +50,24 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => 'string|max:255',
+            'email' => 'string|email|max:255|unique:authenticated_user',
+            'password' => 'string|min:5|confirmed',
+            'bithdate' => 'date|before_or_equal:' . now()->subYears(13),
+            'username' => 'string|max:255|unique:authenticated_user',
+        ],
+        [
+            'name.string' => 'Must be of type string',
+            'name.max' => 'Max of 255 characters',
+            'email.string' => 'Must be of type string',
+            'email.max' => 'Max 255 characters',
+            'email.email' => 'Must be email format',
+            'email.unique' => 'Email already used',
+            'birthdate.date' => 'Must be of type date',
+            'birthdate.before_or_equal' => 'Must be older than 13 years old',
+            'username.max' =>'Max of 255 characters',
+            'username.unique' =>'Username already used',
+            'username.string' => 'Must be of type string',
         ]);
     }
 
@@ -58,14 +75,38 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\Models\User
+     * @return \App\Models\AuthenticatedUser
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+        return AuthenticatedUser::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'birthdate' => $request->input('birthdate'),
+            'username' => $request->input('username')
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        event(new Registered($user = $this->create($request)));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
+
+    public function showRegistrationForm(){
+        return view('auth.register', ['user' => 'visitor', 'needsFilter' => 0]);
     }
 }
