@@ -6,6 +6,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/add_thread.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/add_comment.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/delete_comment.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>
@@ -143,14 +144,27 @@
             @endif
             <span id="comment-section">
             @foreach($metadata['comments'] as $comment)
-                        <div class="row justify-content-center px-4 mx-1">
+            <span class="comment-container">
+                <div class="row justify-content-center px-4 mx-1">
                 <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
                     <div class="row px-2 py-0">
                         <div class="col-auto p-0 m-0">
                             <h3 class="post-page-comment-body m-0">{{$comment['comment']->content}}</h3>
                         </div>
                         <div class="col-auto p-0 m-0 ms-auto">
-                            <i class="fas fa-chevron-down ms-auto"></i>
+                            <span class="comment_id" hidden>{{$comment['comment']->id}}</span>
+                            <div class="dropdown">
+                                <a class="btn fa-cog-icon"  style="font-size:30%;" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-chevron-down ms-auto" style="font-size:3em;"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item edit_comment_button">Edit Comment</a>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <a class="dropdown-item delete_comment_button" >Delete Comment</a>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="row align-items-end px-2 py-1">
@@ -223,6 +237,7 @@
                 </div>
             </div>
             @endif
+            </span>
             @endforeach
             </span>
 
@@ -241,4 +256,5 @@
         </div>
     </div>
 </div>
+@include('pages.confirm')
 @endsection

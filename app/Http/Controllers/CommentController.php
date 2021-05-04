@@ -107,7 +107,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        $comment->delete();
+        return $comment->delete();
     }
 
     public function addComment(Request $request,$post_id){//store?
@@ -125,7 +125,12 @@ class CommentController extends Controller
 
     public function destroyComment(Request $request,$comment_id){
         $comment = Comment::find($comment_id);
-        destroy($comment);
+        if(Auth::check()){
+            if(Auth::user()->id == $comment->user_id){
+                return $this->destroy($comment)?"SUCCESS":"FAIL";
+            }
+        }
+        return "FAIL";
     }
 
     public function threads(Request $request,$comment_id){

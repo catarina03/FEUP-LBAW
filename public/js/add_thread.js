@@ -36,6 +36,7 @@ function addThread(comment_id,content){
         document.getElementById("comment-section").innerHTML = request.responseText;
         content.value = "";
         addListeners();
+        addDeleteCommentListeners();
         
     };
     if(content.value=="" || content.value.match("^\\s+$")){

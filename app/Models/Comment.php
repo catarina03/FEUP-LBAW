@@ -99,11 +99,24 @@ class Comment extends Model
                 <div class=\"row px-2 py-0\">
                     <div class=\"col-auto p-0 m-0\">
                         <h3 class=\"post-page-comment-body m-0\">". htmlspecialchars($comment['comment']->content). "</h3>
+                    </div>    
+                        <div class=\"col-auto p-0 m-0 ms-auto\">
+                            <span class=\"comment_id\" hidden>" . htmlspecialchars($comment['comment']->id) . "</span>
+                            <div class=\"dropdown\">
+                                <a class=\"btn fa-cog-icon\"  style=\"font-size:30%;\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
+                                    <i class=\"fas fa-chevron-down ms-auto\" style=\"font-size:3em;\"></i>
+                                </a>
+                                <ul class=\"dropdown-menu dropdown-menu-end\">
+                                    <a class=\"dropdown-item edit_comment_button\">Edit Comment</a>
+                                    <li>
+                                        <hr class=\"dropdown-divider\">
+                                    </li>
+                                    <a class=\"dropdown-item delete_comment_button\" >Delete Comment</a>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class=\"col-auto p-0 m-0 ms-auto\">
-                        <i class=\"fas fa-chevron-down ms-auto\"></i>
-                    </div>
-                </div>
+    
                 <div class=\"row align-items-end px-2 py-1\">
                     <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end\">
                         <h3 class=\"post-page-comment-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . htmlspecialchars($comment['author']) . "</a>, " .  htmlspecialchars($comment['date']) . "</h3>
