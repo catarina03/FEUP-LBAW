@@ -188,7 +188,6 @@ class PostController extends Controller
      */
     public function show($id)
     {
-
         //Get currnt route
         $route = \Route::current();
 
@@ -206,7 +205,6 @@ class PostController extends Controller
             $user = 'visitor';
 
         //Set timestamps to false(updated_at column doesnt exist) and increment views
-        $user = 'authenticated_user';
         $post->timestamps = false;
         $post->increment('n_views');
 
@@ -214,7 +212,8 @@ class PostController extends Controller
         $USER = AuthenticatedUser::find($post->user_id);
 
         //Get comment count,likes and dislikes
-        $comments = Comment::where('post_id',$id)->get()->count();
+        $comments = CommentController::getPostComments($id);
+        $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
         $temp = $votes->get()->count();
         $likes = $votes->where("like",true)->get()->count();
@@ -230,11 +229,12 @@ class PostController extends Controller
         $thumbnail = "/images/".$post->thumbnail;
 
         //Generate metadata to send to view
-        $metadata = ['comments'=>$comments,'author'=>$USER['name'],'views' => $post->n_views,
-                     'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail];
+        $metadata = ['comment_count'=>$comment_count,'author'=>$USER['name'],'views' => $post->n_views,
+                     'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments];
 
 
         return view('pages.post', ['user' => $user, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata] );
+
     }
 
     /**
@@ -286,7 +286,7 @@ class PostController extends Controller
 
         //$post = Post::find($id);
         //chamar a view do edit post com esta informaçao
-        return view('pages.editpost', ['user' => 'visitor', 'needsFilter' => 0, 'post'=>$post] ); //['post'=> $post]
+        return view('pages.editpost', ['user' => $user, 'needsFilter' => 0, 'post'=>$post] ); //['post'=> $post]
     }
 
     /**
@@ -427,12 +427,13 @@ class PostController extends Controller
         //checkar se está autenticado
         if(Auth::check()){
             $post = Post::find($post_id);
-            $this->authorize("delete",[Auth::user(),$post]);
-            if($post != null){
-                if ($post->delete()) {
-                    return ''; //dar return da view da homepage
-                } else {
-                    return 'post/' + $post_id; // dar return da view do post
+            if(Auth::user()->id == $post->user_id){
+                if($post != null){
+                    if ($post->delete()) {
+                        return ''; //dar return da view da homepage
+                    } else {
+                        return 'post/' + $post_id; // dar return da view do post
+                    }
                 }
             }
         }
@@ -476,6 +477,7 @@ class PostController extends Controller
     }
 
     public function addSave($id){
+        
         $route = \Route::current();
 
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
@@ -483,13 +485,14 @@ class PostController extends Controller
             return '';
         if(Auth::check()){
             $post = Post::find($post_id);
-            $this->authorize("save",[Auth::user(),$post]);
-            if($post != null){
-                DB::table("saves")->insert([
-                    'user_id' => 1,
-                    'post_id' => $post_id
-                ]);
-                return 'SUCCESS';
+            if(Auth::user()->id != $post->user_id){
+                if($post != null){
+                    DB::table("saves")->insert([
+                        'user_id' => 1,
+                        'post_id' => $post_id
+                    ]);
+                    return 'SUCCESS';
+                }
             }
         }
         return '';

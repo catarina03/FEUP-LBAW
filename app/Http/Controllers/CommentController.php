@@ -2,8 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Photo;
+use App\Models\Tag;
+use App\Models\AuthenticatedUser;
 use App\Models\Comment;
+use App\Policies\PostPolicy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -174,6 +184,29 @@ class CommentController extends Controller
         where('comment_id',$validatedData['comment_id'])->update([
             'like' => $validatedData['like']
         ]);
+    }
+
+
+    public static function getPostComments($post_id){
+        $comments = Comment::where("post_id",$post_id)->get();
+        $result = array();
+        foreach($comments as $comment){
+            $votes = DB::table("vote_comment")->where("comment_id",$comment->id);
+            $temp = $votes->get()->count();
+            $likes = $votes->where("like",true)->get()->count();
+            $dislikes = $temp - $likes;
+            $threads = Comment::where("comment_id",$comment->id);
+            $temp_array = array();
+            $temp_array["comment"] = $comment;
+            $temp_array["likes"] = $likes;
+            $temp_array["dislikes"] = $dislikes;
+            $temp_array["date"] = date("F j, Y", strtotime($comment['comment_date']));
+            $temp_array["author"] = AuthenticatedUser::find($comment->user_id)->name;
+            $temp_array["threads"] = $threads;
+            $temp_array["thread_count"] = $threads->get()->count();
+            $result[] = $temp_array;
+        }
+        return $result;
     }
 
     
