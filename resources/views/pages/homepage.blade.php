@@ -8,12 +8,21 @@
         <nav class="nav homepage-navbar w-100 d-lg-block d-flex justify-content-center">
             <a class="nav-link active fs-5" id="top" href=''><img src="images/bar-chart.svg" height="25">
                 Top
+                <div class="spinner-border spinner-border-sm d-none topLoad" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </a>
             <a class="nav-link fs-5" id="hot" href=''><img src="images/flame.svg" height="25">
                 Hot
+                <div class="spinner-border spinner-border-sm d-none  hotLoad" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </a>
             <a class="nav-link fs-5" id="new" href="/"><img src="images/calendar.svg" height="25">
                 New
+                <div class="spinner-border spinner-border-sm d-none newLoad" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </a>
         </nav>
     </div>
