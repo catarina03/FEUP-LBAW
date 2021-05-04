@@ -8,7 +8,6 @@ document.getElementById("submit-button").onclick = function() {
     document.getElementById("tag-input").value = inputArray;
 };
 
-
 let tags = document.getElementById("created-post-tags");
 
 let tagInput = document.getElementById("tag-input");
@@ -29,14 +28,17 @@ tagInput.addEventListener("keyup", function(event){
 function addTag(){
     let input = tagInput.value;
     tags.innerHTML += writeTag(input);
+    document.querySelectorAll("i.post-tag-remover").forEach( item => {
+         item.addEventListener('click', event => {
+             console.log(event.target);
+             item.parentElement.remove();
+         })
+    });
     tagInput.value = '';
 }
 
 function writeTag(tag){
-    let content =
-        '<a class="btn btn-secondary btn-sm d-flex justify-content-center m-2">'
+    return '<a class="post-tag btn btn-secondary btn-sm d-flex justify-content-center m-2">'
         + tag
-        + '<i class="bi bi-x ms-1"></i></a>';
-
-    return content;
+        + '<i class="bi bi-x ms-1 post-tag-remover"></i></a>';
 }

@@ -29,6 +29,12 @@ tagInput.addEventListener("keyup", function(event){
 function addTag(){
     let input = tagInput.value;
     tags.innerHTML += writeTag(input);
+    document.querySelectorAll("i.post-tag-remover").forEach( item => {
+        item.addEventListener('click', event => {
+            console.log(event.target);
+            item.parentElement.remove();
+        })
+    });
     tagInput.value = '';
 }
 
