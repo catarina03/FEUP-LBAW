@@ -9,12 +9,17 @@
     <div class="createPost-center col-12 col-lg-7">
         <div class="card create-post-page-post-card d-flex justify-content-center pt-5 pb-5" style="border-radius:5px;">
             <form id="create-post-form" enctype="multipart/form-data" action="{{ url('addpost') }}" method="POST">
+                <ul>
+                </ul>
                 @csrf
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <div class="form-group post-comment-input mb-4">
                             <label class="add-comment-label" for="title">Post title</label>
                             <input class="container form-control w-100" id="title" name="title" value="{{ old('title') }}">
+                            @error('title')
+                            <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
