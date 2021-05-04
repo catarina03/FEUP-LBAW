@@ -195,7 +195,7 @@ class CommentController extends Controller
             $temp = $votes->get()->count();
             $likes = $votes->where("like",true)->get()->count();
             $dislikes = $temp - $likes;
-            $threads = Comment::where("comment_id",$comment->id);
+            $threads = CommentController::getCommentThreads($comment->id);
             $temp_array = array();
             $temp_array["comment"] = $comment;
             $temp_array["likes"] = $likes;
@@ -203,7 +203,27 @@ class CommentController extends Controller
             $temp_array["date"] = date("F j, Y", strtotime($comment['comment_date']));
             $temp_array["author"] = AuthenticatedUser::find($comment->user_id)->name;
             $temp_array["threads"] = $threads;
-            $temp_array["thread_count"] = $threads->get()->count();
+            $temp_array["thread_count"] = count($threads);
+            $result[] = $temp_array;
+        }
+        return $result;
+    }
+
+    public static function getCommentThreads($comment_id){
+        $comments = Comment::where("comment_id",$comment_id)->get();
+        $result = array();
+        foreach($comments as $comment){
+            $votes = DB::table("vote_comment")->where("comment_id",$comment->id);
+            $temp = $votes->get()->count();
+            $likes = $votes->where("like",true)->get()->count();
+            $dislikes = $temp - $likes;
+            $threads = Comment::where("comment_id",$comment->id);
+            $temp_array = array();
+            $temp_array["comment"] = $comment;
+            $temp_array["likes"] = $likes;
+            $temp_array["dislikes"] = $dislikes;
+            $temp_array["date"] = date("F j, Y", strtotime($comment['comment_date']));
+            $temp_array["author"] = AuthenticatedUser::find($comment->user_id)->name;
             $result[] = $temp_array;
         }
         return $result;
