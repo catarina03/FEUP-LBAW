@@ -31,7 +31,7 @@ Route::get('api/loadMore/{filters}/{page}', 'PagesController@loadMoreHomepage');
 // Admin 
 Route::put('api/administration/roles/{user_id}/edit_role','UserController@editRole');
 Route::get('api/report_filter','ReportController@reportFilter'); 
-Route::post('api/post/{post_id}/add_comment','CommentController@create'); 
+Route::post('api/post/{post_id}/add_comment','CommentController@store'); 
 Route::get('api/comment/{comment_id}/edit','CommentController@editForm'); 
 Route::put('api/comment/{comment_id}/edit','CommentController@editAction'); 
 Route::delete('api/comment/{comment_id}','CommentController@destroyComment');  

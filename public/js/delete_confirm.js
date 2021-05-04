@@ -1,3 +1,9 @@
+function encodeForAjax(data) {
+    return Object.keys(data).map(function(k){
+      return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+    }).join('&')
+  }
+
 let confirm = document.getElementById("confirm");
 let yes = confirm.getElementsByClassName("col-2 btn custom-button")[0];
 let id = document.getElementById("post_ID");

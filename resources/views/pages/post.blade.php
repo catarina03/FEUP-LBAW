@@ -4,8 +4,10 @@
 @section('content')
 <script type="text/javascript" src="{{ URL::asset('js/delete_confirm.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/add_comment.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
+    <p hidden id="user_ID">{{$user_id}}</p>
     <div class="row" style="margin-top: 7em; margin-bottom: 7em;">
         <div class="card post-page-post-card justify-content-center pb-5" style="border-radius:5px;">
 
@@ -127,18 +129,18 @@
                     <div class="row m-0 p-0">
                         <div class="d-flex mx-0 px-0">
                             <!--<label class="post-page-add-comment-label" for="add-comment">Add comment...</label>-->
-                            <textarea class="container form-control post-page-add-comment w-100" id="add-comment" rows="2" placeholder="Join the discussion"></textarea>
+                            <textarea class="container form-control post-page-add-comment w-100 add-comment" id="add-comment" rows="2" placeholder="Join the discussion"></textarea>
                         </div>
                     </div>
                     <div class="row px-0 mx-0 justify-content-end">
                         <div class="col-auto px-0">
-                            <button class="post-page-comment-button btn mt-1 mb-2">Comment</button>
+                            <button id="add_comment_button" class="post-page-comment-button btn mt-1 mb-2">Comment</button>
                         </div>
                     </div>
                 </div>
             </div>
             @endif
-
+            <span id="comment-section">
             @foreach($metadata['comments'] as $comment)
                         <div class="row justify-content-center px-4 mx-1">
                 <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
@@ -205,7 +207,7 @@
                         <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
                             <div class="row px-0 mx-0">
                                 <div class="d-flex mx-0 px-0">
-                                        <textarea class="container form-control post-page-add-comment-reply w-100" id="add-comment" rows="1"
+                                        <textarea class="container form-control post-page-add-comment-reply w-100 add-thread" id="add-comment" rows="1"
                                                   placeholder="Answer in thread"></textarea>
                                 </div>
                             </div>
@@ -220,6 +222,7 @@
             </div>
             @endif
             @endforeach
+            </span>
 
             
 

@@ -30,7 +30,7 @@ class PostPolicy
       return Auth::check();
     }
 
-    public function delete(AuthenticatedUser $user, Post $post)
+    public function delete(User $user, Post $post)
     {
       // Only a post owner can delete it
       return $user->id == $post->user_id;

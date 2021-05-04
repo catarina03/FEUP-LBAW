@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -199,8 +200,11 @@ class PostController extends Controller
             return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
 
         //Verify if user is authenticated and if user is owner of post
-        if(Auth::check())
-            $user = Auth::user()->id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
+        $user_id = null;
+        if(Auth::check()){
+            $user_id = Auth::user()->id;
+            $user = $user_id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
+        }
         else
             $user = 'visitor';
 
@@ -229,11 +233,11 @@ class PostController extends Controller
         $thumbnail = "/images/".$post->thumbnail;
 
         //Generate metadata to send to view
-        $metadata = ['comment_count'=>$comment_count,'author'=>$USER['name'],'views' => $post->n_views,
+        $metadata = ['comment_count'=>$comment_count,'author'=>$USER->name,'views' => $post->n_views,
                      'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments];
 
 
-        return view('pages.post', ['user' => $user, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata] );
+        return view('pages.post', ['user' => $user, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id] );
 
     }
 
@@ -429,6 +433,7 @@ class PostController extends Controller
             $post = Post::find($post_id);
             if(Auth::user()->id == $post->user_id){
                 if($post != null){
+                    //$this->authorize("delete",[Auth::user(),$post]);
                     if ($post->delete()) {
                         return ''; //dar return da view da homepage
                     } else {
