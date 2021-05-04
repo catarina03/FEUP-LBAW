@@ -5,6 +5,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/delete_confirm.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/add_comment.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/add_thread.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>
@@ -213,7 +214,8 @@
                             </div>
                             <div class="row px-0 mx-0 justify-content-end">
                                 <div class="col-auto px-0">
-                                    <button class="post-page-comment-button btn m-0 mt-1">Comment</button>
+                                    <span class="thread_comment_id" hidden>{{$comment['comment']->id}}</span>
+                                    <button class="post-page-comment-button btn m-0 mt-1 add_thread_button">Comment</button>
                                 </div>
                             </div>
                         </div>

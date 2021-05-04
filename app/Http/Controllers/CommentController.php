@@ -138,12 +138,19 @@ class CommentController extends Controller
             'user_id' => 'required|numeric',
             'comment_id' => 'required|numeric'
         ]);
-
-        DB::table('comment')->insert([
-            'content' => $validatedData['content'],
-            'user_id' => $validatedData['user_id'],
-            'comment_id' => $validatedData['comment_id']
-        ]);
+        if(Auth::check()){
+            $comment = Comment::find($validatedData['comment_id']);
+            if($comment != null && Auth::user()->id == $validatedData['user_id']){
+                DB::table('comment')->insert([
+                    'content' => $validatedData['content'],
+                    'user_id' => $validatedData['user_id'],
+                    'comment_id' => $validatedData['comment_id']
+                ]);
+                $comments = CommentController::getPostComments($comment->post_id);
+                return CommentController::commentsAsHtml($comments);
+            }
+        }
+        return "";
 
     }
 
@@ -247,7 +254,7 @@ class CommentController extends Controller
             <div class=\"col-10 post-page-comment pt-3 pb-2 px-3 mt-2\">
                 <div class=\"row px-2 py-0\">
                     <div class=\"col-auto p-0 m-0\">
-                        <h3 class=\"post-page-comment-body m-0\">".$comment['comment']->content. "</h3>
+                        <h3 class=\"post-page-comment-body m-0\">". htmlspecialchars($comment['comment']->content). "</h3>
                     </div>
                     <div class=\"col-auto p-0 m-0 ms-auto\">
                         <i class=\"fas fa-chevron-down ms-auto\"></i>
@@ -255,15 +262,15 @@ class CommentController extends Controller
                 </div>
                 <div class=\"row align-items-end px-2 py-1\">
                     <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end\">
-                        <h3 class=\"post-page-comment-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . $comment['author'] . "</a>, " .  $comment['date'] . "</h3>
+                        <h3 class=\"post-page-comment-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . htmlspecialchars($comment['author']) . "</a>, " .  htmlspecialchars($comment['date']) . "</h3>
                     </div>
                     <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto\">
                         <div class=\"row\">
                             <div class=\"d-flex\">
-                                <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . $comment['likes'] . " <i title=\"Like comment\" class=\"far fa-thumbs-up\"></i></h3>
-                                <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . $comment['dislikes'] . " <i title=\"Dislike comment\" class=\"far fa-thumbs-down\"></i></h3>
+                                <h3 class=\"post-page-comment-interactions pe-3 my-0\">" .htmlspecialchars( $comment['likes']) . " <i title=\"Like comment\" class=\"far fa-thumbs-up\"></i></h3>
+                                <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . htmlspecialchars($comment['dislikes']) . " <i title=\"Dislike comment\" class=\"far fa-thumbs-down\"></i></h3>
                                 <i title=\"Report comment\" class=\"fas fa-ban my-0 pe-3 post-page-report-comment\"></i>
-                                <h3 class=\"post-page-comment-interactions my-0\">" . $comment['thread_count'] . " <i class=\"far fa-comments\"></i></h3>
+                                <h3 class=\"post-page-comment-interactions my-0\">" . htmlspecialchars($comment['thread_count']) . " <i class=\"far fa-comments\"></i></h3>
                             </div>
                         </div>
                     </div>
@@ -277,18 +284,18 @@ class CommentController extends Controller
                     <div class=\"col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1\">
                         <div class=\"row px-2 py-0\">
                             <div class=\"col-auto p-0 m-0\">
-                                <h3 class=\"post-page-comment-reply-body m-0\">" . $thread['comment']->content . "</h3>
+                                <h3 class=\"post-page-comment-reply-body m-0\">" . htmlspecialchars($thread['comment']->content) . "</h3>
                             </div>
                         </div>
                         <div class=\"row align-items-end px-2 py-0\">
                             <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end\">
-                                <h3 class=\"post-page-comment-reply-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . $thread['author'] . "</a>, " . $thread['date'] . "</h3>
+                                <h3 class=\"post-page-comment-reply-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . htmlspecialchars($thread['author']) . "</a>, " . htmlspecialchars($thread['date']) . "</h3>
                             </div>
                             <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto\">
                                 <div class=\"row\">
                                     <div class=\"d-flex\">
-                                        <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . $thread['likes'] . " <i title=\"Like comment\" class=\"far fa-thumbs-up\"></i></h3>
-                                        <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . $thread['dislikes'] . " <i title=\"Dislike comment\" class=\"far fa-thumbs-down\"></i></h3>
+                                        <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . htmlspecialchars($thread['likes']) . " <i title=\"Like comment\" class=\"far fa-thumbs-up\"></i></h3>
+                                        <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . htmlspecialchars($thread['dislikes']) . " <i title=\"Dislike comment\" class=\"far fa-thumbs-down\"></i></h3>
                                         <i title=\"Report comment\" class=\"fas fa-ban my-0 post-page-report-comment\"></i>
                                     </div>
                                 </div>
