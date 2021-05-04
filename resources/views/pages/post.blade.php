@@ -4,8 +4,8 @@
 @section('content')
 <script type="text/javascript" src="{{ URL::asset('js/delete_confirm.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
-<script type="text/javascript" src="{{ URL::asset('js/add_comment.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/add_thread.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/add_comment.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>

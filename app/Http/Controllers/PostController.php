@@ -216,7 +216,7 @@ class PostController extends Controller
         $USER = AuthenticatedUser::find($post->user_id);
 
         //Get comment count,likes and dislikes
-        $comments = CommentController::getPostComments($id);
+        $comments = Comment::getPostComments($id);
         $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
         $temp = $votes->get()->count();
@@ -489,12 +489,12 @@ class PostController extends Controller
         if(!is_numeric($route->parameter('id')))
             return '';
         if(Auth::check()){
-            $post = Post::find($post_id);
+            $post = Post::find($id);
             if(Auth::user()->id != $post->user_id){
                 if($post != null){
                     DB::table("saves")->insert([
                         'user_id' => 1,
-                        'post_id' => $post_id
+                        'post_id' => $id
                     ]);
                     return 'SUCCESS';
                 }
