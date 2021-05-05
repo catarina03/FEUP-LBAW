@@ -91,18 +91,22 @@ class Comment extends Model
         return $result;
     }
 
-    public static function commentsAsHtml($comments){
+    public static function commentsAsHtml($comments,$user_id){
         $result = "";
         foreach($comments as $comment){
-            $result = $result . "<div class=\"row justify-content-center px-4 mx-1\">
+            $result = $result . 
+            "<span class=\"comment-container\">
+            <div class=\"row justify-content-center px-4 mx-1\">
             <div class=\"col-10 post-page-comment pt-3 pb-2 px-3 mt-2\">
                 <div class=\"row px-2 py-0\">
                     <div class=\"col-auto p-0 m-0\">
                         <h3 class=\"post-page-comment-body m-0\">". htmlspecialchars($comment['comment']->content). "</h3>
                     </div>    
                         <div class=\"col-auto p-0 m-0 ms-auto\">
-                            <span class=\"comment_id\" hidden>" . htmlspecialchars($comment['comment']->id) . "</span>
-                            <div class=\"dropdown\">
+                            <span class=\"comment_id\" hidden>" . htmlspecialchars($comment['comment']->id) . "</span>" .
+                            
+                            ($user_id==$comment['comment']->user_id?
+                            "<div class=\"dropdown\">
                                 <a class=\"btn fa-cog-icon\"  style=\"font-size:30%;\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
                                     <i class=\"fas fa-chevron-down ms-auto\" style=\"font-size:3em;\"></i>
                                 </a>
@@ -113,10 +117,13 @@ class Comment extends Model
                                     </li>
                                     <a class=\"dropdown-item delete_comment_button\" >Delete Comment</a>
                                 </ul>
-                            </div>
-                        </div>
+                            </div>":"")
+
+                            .
+
+                        "</div>
                     </div>
-    
+            
                 <div class=\"row align-items-end px-2 py-1\">
                     <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end\">
                         <h3 class=\"post-page-comment-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . htmlspecialchars($comment['author']) . "</a>, " .  htmlspecialchars($comment['date']) . "</h3>
@@ -182,7 +189,8 @@ class Comment extends Model
                     </div>
                 </div>
             </div>
-        </div>\n";
+        </div>
+        </span>\n";
         
         
     }

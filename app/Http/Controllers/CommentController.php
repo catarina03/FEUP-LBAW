@@ -59,7 +59,7 @@ class CommentController extends Controller
                     'post_id' => $validatedData['post_id']
                 ]);
                 $comments = Comment::getPostComments($post_id);
-                return Comment::commentsAsHtml($comments);
+                return Comment::commentsAsHtml($comments,Auth::user()->id);
             }
         }
         return "";
@@ -126,8 +126,10 @@ class CommentController extends Controller
     public function destroyComment(Request $request,$comment_id){
         $comment = Comment::find($comment_id);
         if(Auth::check()){
-            if(Auth::user()->id == $comment->user_id){
-                return $this->destroy($comment)?"SUCCESS":"FAIL";
+            if($comment!=null){
+                if(Auth::user()->id == $comment->user_id){
+                    return $this->destroy($comment)?"SUCCESS":"FAIL";
+                }
             }
         }
         return "FAIL";
@@ -152,7 +154,7 @@ class CommentController extends Controller
                     'comment_id' => $validatedData['comment_id']
                 ]);
                 $comments = Comment::getPostComments($comment->post_id);
-                return Comment::commentsAsHtml($comments);
+                return Comment::commentsAsHtml($comments,Auth::user()->id);
             }
         }
         return "";

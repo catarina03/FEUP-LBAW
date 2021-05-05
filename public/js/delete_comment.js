@@ -31,8 +31,6 @@ function deleteComment(comment_id,container){
             alert("Failed to delete comment!");
             return;
         }
-        addDeleteCommentListeners();
-        addListeners();
         
     };
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
