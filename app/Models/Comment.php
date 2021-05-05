@@ -50,10 +50,11 @@ class Comment extends Model
     }
 
     public static function getPostComments($post_id){
-        $comments = Comment::where("post_id",$post_id)->get();
+        $comments = Comment::where("post_id",$post_id)->orderBy("comment_date","desc")->get();
         $result = array();
         foreach($comments as $comment){
-            $votes = DB::table("vote_comment")->where("comment_id",$comment->id);
+            $temp = Comment::getCommentInfo($comment->id);
+            /*$votes = DB::table("vote_comment")->where("comment_id",$comment->id);
             $temp = $votes->get()->count();
             $likes = $votes->where("like",true)->get()->count();
             $dislikes = $temp - $likes;
@@ -66,16 +67,18 @@ class Comment extends Model
             $temp_array["author"] = AuthenticatedUser::find($comment->user_id)->name;
             $temp_array["threads"] = $threads;
             $temp_array["thread_count"] = count($threads);
-            $result[] = $temp_array;
+            $result[] = $temp_array;*/
+            $result[] = $temp;
         }
         return $result;
     }
 
     public static function getCommentThreads($comment_id){
-        $comments = Comment::where("comment_id",$comment_id)->get();
+        $comments = Comment::where("comment_id",$comment_id)->orderBy("comment_date","desc")->get();
         $result = array();
         foreach($comments as $comment){
-            $votes = DB::table("vote_comment")->where("comment_id",$comment->id);
+            $temp = Comment::getThreadInfo($comment->id);
+            /*$votes = DB::table("vote_comment")->where("comment_id",$comment->id);
             $temp = $votes->get()->count();
             $likes = $votes->where("like",true)->get()->count();
             $dislikes = $temp - $likes;
@@ -85,7 +88,8 @@ class Comment extends Model
             $temp_array["dislikes"] = $dislikes;
             $temp_array["date"] = date("F j, Y", strtotime($comment['comment_date']));
             $temp_array["author"] = AuthenticatedUser::find($comment->user_id)->name;
-            $result[] = $temp_array;
+            $result[] = $temp_array;*/
+            $result[] = $temp;
         }
         return $result;
     }
@@ -133,7 +137,7 @@ class Comment extends Model
                             ($user_id==$comment['comment']->user_id?
                             "<div class=\"dropdown\">
                                 <a class=\"btn fa-cog-icon\"  style=\"font-size:30%;\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
-                                    <i class=\"fas fa-chevron-down ms-auto\" style=\"font-size:3em;\"></i>
+                                    <i class=\"fas fa-cog ms-auto\" style=\"font-size:3em;\"></i>
                                 </a>
                                 <ul class=\"dropdown-menu dropdown-menu-end\">
                                     <a class=\"dropdown-item edit_comment_button\">Edit Comment</a>

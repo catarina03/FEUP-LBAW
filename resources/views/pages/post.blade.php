@@ -157,7 +157,7 @@
                             @if($user_id==$comment['comment']->user_id)
                             <div class="dropdown">
                                 <a class="btn fa-cog-icon"  style="font-size:30%;" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-chevron-down ms-auto" style="font-size:3em;"></i>
+                                    <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item edit_comment_button">Edit Comment</a>

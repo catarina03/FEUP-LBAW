@@ -89,7 +89,7 @@ function confirmEdit(comment_id,container){
                             (userID.innerText==comment['comment']['user_id']?
                             `<div class="dropdown">
                                 <a class="btn fa-cog-icon"  style="font-size:30%;" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-chevron-down ms-auto" style="font-size:3em;"></i>
+                                    <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item edit_comment_button">Edit Comment</a>
@@ -176,8 +176,15 @@ function confirmEdit(comment_id,container){
         </span>\n`;
         container.innerHTML = result;
         addListeners();
-        addDeleteCommentListeners();
+        let new_element = container.getElementsByClassName("delete_comment_button")[0];
+        let comment_container = new_element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        new_element.addEventListener("click",function(e){
+            e.preventDefault();
+            deleteComment(comment['comment']['id'],comment_container);
+        });
+        //addDeleteCommentListeners();
         addEditListeners();
+        addListeners();
         }
         else{
             alert("Error editing comment!");
