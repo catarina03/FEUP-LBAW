@@ -110,16 +110,33 @@ class CommentController extends Controller
         return $comment->delete();
     }
 
-    public function addComment(Request $request,$post_id){//store?
-        
+    public function editForm(Request $request,$comment_id){
+
+        //Checagem de erros
+        if(Auth::check()){
+            $comment = Comment::find($comment_id);
+            if($comment!=null && Auth::user()->id == $comment->user_id){
+                return json_encode($comment);
+            }
+        }
+        return ""; 
     }
 
     public function editAction(Request $request,$comment_id){//update?
         $validatedData = $request->validate([
-            'content' => 'required|max:255|min:1',
-            'comment_id' => 'required|numeric'
+            'content' => 'required|max:255|min:1'
         ]);
-        DB::table('comment')->where('id',$comment_id)->update(['content' => $validatedData['content']]); 
+        if(Auth::check()){
+            $comment = Comment::find($comment_id);
+            $comment->timestamps = false;
+            if($comment!=null && Auth::user()->id == $comment->user_id){
+                $comment->content = $validatedData['content'];
+                if($comment->save())
+                    return json_encode(Comment::getCommentInfo($comment_id));
+                return "";
+            }
+        }
+        return ""; 
     }
 
 

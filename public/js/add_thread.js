@@ -37,6 +37,7 @@ function addThread(comment_id,content){
         content.value = "";
         addListeners();
         addDeleteCommentListeners();
+        addEditListeners();
         
     };
     if(content.value=="" || content.value.match("^\\s+$")){
