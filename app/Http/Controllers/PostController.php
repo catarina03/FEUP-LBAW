@@ -37,7 +37,7 @@ class PostController extends Controller
     {
         // ver se está autenticado
 
-        return view('pages.createpost', ['user' => 'authenticated_user', 'needsFilter' => 0]);
+        return view('pages.createpost', ['needsFilter' => 0]);
     }
 
     /**
@@ -194,10 +194,10 @@ class PostController extends Controller
 
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
-            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+            return view('pages.pagenotfound',['needsFilter' => 0]);
         $post = Post::find($id);
         if(!$post )
-            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+            return view('pages.pagenotfound',['needsFilter' => 0]);
 
         //Verify if user is authenticated and if user is owner of post
         if(Auth::check())
@@ -250,10 +250,10 @@ class PostController extends Controller
 
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
-            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+            return view('pages.pagenotfound',['needsFilter' => 0]);
         $post = Post::find($id);
         if(!$post )
-            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+            return view('pages.pagenotfound',['needsFilter' => 0]);
 
         //Verify if user is authenticated and if user is owner of post
         if(Auth::check())
@@ -286,7 +286,7 @@ class PostController extends Controller
 
         //$post = Post::find($id);
         //chamar a view do edit post com esta informaçao
-        return view('pages.editpost', ['user' => 'visitor', 'needsFilter' => 0, 'post'=>$post] ); //['post'=> $post]
+        return view('pages.editpost', ['needsFilter' => 0, 'post'=>$post] ); //['post'=> $post]
     }
 
     /**
