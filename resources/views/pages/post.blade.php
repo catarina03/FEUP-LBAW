@@ -196,6 +196,23 @@
                                 <div class="col-auto p-0 m-0">
                                     <h3 class="post-page-comment-reply-body m-0">{{$thread['comment']->content}}</h3>
                                 </div>
+                                <div class="col-auto p-0 m-0 ms-auto">
+                                    <span class="comment_id" hidden>{{$thread['comment']->id}}</span>
+                                    @if($user_id==$thread['comment']->user_id)
+                                    <div class="dropdown">
+                                        <a class="btn fa-cog-icon"  style="font-size:30%;" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item edit_comment_button">Edit Comment</a>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <a class="dropdown-item delete_comment_button" >Delete Comment</a>
+                                        </ul>
+                                    </div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="row align-items-end px-2 py-0">
                                 <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end">

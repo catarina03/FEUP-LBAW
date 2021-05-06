@@ -5,12 +5,14 @@ function addListeners(){
     let x = document.getElementsByClassName("add_thread_button");
     if(x!=null){
         for(let i = 0;i<x.length;i++){
-                element = x[i];
-                let parent = element.parentNode;
+                let element = x[i];
+                let elementClone = element.cloneNode(true);
+                element.parentNode.replaceChild(elementClone,element);
+                let parent = elementClone.parentNode;
                 let comment_id = parent.getElementsByClassName("thread_comment_id")[0].innerText;
                 let content = parent.parentNode.parentNode.getElementsByClassName("row px-0 mx-0")[0].
                 getElementsByClassName("d-flex mx-0 px-0")[0].getElementsByClassName("add-thread")[0];
-                element.addEventListener("click",function(e){
+                elementClone.addEventListener("click",function(e){
                     e.preventDefault();
                     addThread(comment_id,content);
                 });
