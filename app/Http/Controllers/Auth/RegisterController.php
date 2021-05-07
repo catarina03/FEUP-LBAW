@@ -107,6 +107,6 @@ class RegisterController extends Controller
     }
 
     public function showRegistrationForm(){
-        return view('auth.register', ['user' => 'visitor', 'needsFilter' => 0]);
+        return view('auth.register', ['needsFilter' => 0]);
     }
 }

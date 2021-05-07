@@ -16,16 +16,16 @@ class PagesController extends Controller
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
-            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
+            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
 
         }
         $slideshow = $this->slideshow();
-        return view('pages.homepage', ['user' => 'system_manager', 'needsFilter' => 0, 'posts'=>$posts,'slideshow'=>$slideshow]);
+        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow]);
     }
 
     public function slideshow(){
         $posts = Post::getSlideShowPosts();
-        
+
         forEach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
@@ -35,24 +35,24 @@ class PagesController extends Controller
 
     public function about()
     {
-        return view('pages.about', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.about', ['needsFilter' => 0] );
     }
 
     public function faq()
     {
-        return view('pages.faq', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.faq', ['needsFilter' => 0] );
     }
 
     public function support()
     {
-        return view('pages.support', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.support', ['needsFilter' => 0] );
     }
 
     public function supportRequest(){
         //TODO
     }
 
-    public function category($category){        
+    public function category($category){
         if($category == "Music") $posts = Post::where('category', 'music')->get();
         else if($category == "TVShow") $posts = Post::where('category', 'tv show')->get();
         else if($category == "Cinema") $posts = Post::where('category', 'cinema')->get();
@@ -63,23 +63,23 @@ class PagesController extends Controller
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
-            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
+            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
         }
-        if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts]);
+        if($category == "TVShow") return view('pages.categorypage', ['needsFilter' => 1, 'category' => 'TV Show', 'posts' =>$posts]);
 
-        return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => $category, 'posts' =>$posts]);
-        
+        return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts]);
+
     }
 
     public function advanced_search(){
-        //TO DO 
+        //TO DO
         $posts = Post::orderBy('n_views', 'desc')->get();
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
-            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
+            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
         }
-        return view('pages.advanced_search', ['user' => 'visitor', 'needsFilter' => 0, 'posts'=>$posts]);
+        return view('pages.advanced_search', ['needsFilter' => 0, 'posts'=>$posts]);
     }
 
     public function list($homepageFilters){
@@ -90,7 +90,7 @@ class PagesController extends Controller
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
-            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
+            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
         }
 
         return view('partials.allcards', ['posts' => $posts]);
@@ -102,11 +102,11 @@ class PagesController extends Controller
         if($filters == "new") $posts = Post::getNewPosts($page);
         else if($filters == "hot") $posts = Post::getHotPosts($page);
         else $posts = Post::getTopPosts($page);
-            
+
         foreach($posts as $post){
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
-            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
+            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
         }
 
         return view('partials.allcards', ['posts' => $posts]);

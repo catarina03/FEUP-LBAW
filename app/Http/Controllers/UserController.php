@@ -30,7 +30,7 @@ class UserController extends Controller
     public function create()
     {
         //
-       
+
     }
 
     /**
@@ -56,10 +56,10 @@ class UserController extends Controller
         $posts = Post::where('user_id', $id)->get();
         foreach($posts as $post){
             $post->author = AuthenticatedUser::find($post->user_id)->name;
-            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count(); 
+            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
         }
 
-        return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0, 'posts' => $posts] ); 
+        return view('pages.myprofile', ['needsFilter' => 0, 'posts' => $posts] );
     }
 
     /**
@@ -71,7 +71,7 @@ class UserController extends Controller
     public function edit(AuthenticatedUser $authenticatedUser)
     {
         //view de settings
-        return view('pages.settings', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.settings', ['needsFilter' => 0] );
     }
 
     /**
@@ -108,7 +108,7 @@ class UserController extends Controller
         DB::table("authenticated_user")->where("id",$user_id)->update(["authenticated_user_type" => $validatedData["new_role"]]);
     }
     /**
-     * Follow a user 
+     * Follow a user
      *
      * @param  \App\Models\AuthenticatedUser  $authenticatedUser
      * @return \Illuminate\Http\Response
@@ -117,7 +117,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if(!Auth::check()) return; //mandar para login ou sem permissoes
-        
+
         $followed_user = AuthenticatedUser::find($id);
         if($followed_user != null)
             $user->follow_user()->create(['followed_user'=> $id, 'following_user' => $user->id]);
@@ -125,7 +125,7 @@ class UserController extends Controller
 
 
     /**
-     * Unfollow a user 
+     * Unfollow a user
      *
      * @param  \App\Models\AuthenticatedUser  $authenticatedUser
      * @return \Illuminate\Http\Response
@@ -142,7 +142,7 @@ class UserController extends Controller
     }
 
     /**
-     * Block a user 
+     * Block a user
      *
      * @param  \App\Models\AuthenticatedUser  $authenticatedUser
      * @return \Illuminate\Http\Response
@@ -158,7 +158,7 @@ class UserController extends Controller
     }
 
     /**
-     * Unblock a user 
+     * Unblock a user
      *
      * @param  \App\Models\AuthenticatedUser  $authenticatedUser
      * @return \Illuminate\Http\Response
@@ -196,7 +196,7 @@ class UserController extends Controller
     public function edit_account(Request $request, AuthenticatedUser $authenticatedUser)
     {
         $user = Auth::check();
-        if(!Auth::check()) return; 
+        if(!Auth::check()) return;
 
         //
         $data = Validator::make($request->all(),
@@ -214,7 +214,7 @@ class UserController extends Controller
         $user->username = $data['username'];
         $user->email = $data['email'];
         $user->save();
-        
+
 
 
     }
@@ -229,7 +229,7 @@ class UserController extends Controller
     public function edit_social_networks(Request $request, AuthenticatedUser $authenticatedUser)
     {
         $user = Auth::check();
-        if(!Auth::check()) return; 
+        if(!Auth::check()) return;
 
         //
         $data = Validator::make($request->all(),
@@ -262,7 +262,7 @@ class UserController extends Controller
     public function edit_preferences(Request $request, AuthenticatedUser $authenticatedUser)
     {
         $user = Auth::check();
-        if(!Auth::check()) return; 
+        if(!Auth::check()) return;
 
         //
         $data = Validator::make($request->all(),
@@ -278,7 +278,7 @@ class UserController extends Controller
         $user->show_people_i_follow = $data['show_people_i_follow'];
         $user->show_tags_i_follow = $data['show_tags_i_follow'];
         $user->save();
-        
+
     }
 
 
@@ -292,7 +292,7 @@ class UserController extends Controller
     public function change_password(Request $request, AuthenticatedUser $authenticatedUser)
     {
         $user = Auth::check();
-        if(!Auth::check()) return; 
+        if(!Auth::check()) return;
 
         //
         $data = Validator::make($request->all(),
@@ -315,7 +315,7 @@ class UserController extends Controller
             ), 300);
         }
 
-        
+
 
         //inserir password
         $user->save();
