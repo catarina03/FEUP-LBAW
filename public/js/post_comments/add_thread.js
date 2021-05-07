@@ -40,6 +40,7 @@ function addThread(comment_id,content){
         addListeners();
         addDeleteCommentListeners();
         addEditListeners();
+        addShowThreadListeners();
         
     };
     if(content.value=="" || content.value.match("^\\s+$")){

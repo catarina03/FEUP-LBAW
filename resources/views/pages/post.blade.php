@@ -9,6 +9,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/delete_comment.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/edit_comment.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/sort_comments.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/show_threads.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>
@@ -155,10 +156,13 @@
                         </div>
                         <div class="col-auto p-0 m-0 ms-auto">
                             <span class="comment_id" hidden>{{$comment['comment']->id}}</span>
+                            
+                               
+                            
                             @if($user_id==$comment['comment']->user_id)
                             <div class="dropdown">
-                                <a class="btn fa-cog-icon"  style="font-size:30%;" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>
+                                <a class="btn fa-cog-icon"   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i  class="fas fa-cog ms-auto" ></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item edit_comment_button">Edit Comment</a>
@@ -169,6 +173,7 @@
                                 </ul>
                             </div>
                             @endif
+                            
                         </div>
                     </div>
                     <div class="row align-items-end px-2 py-1">
@@ -182,6 +187,8 @@
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['dislikes']}} <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
                                     <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
                                     <h3 class="post-page-comment-interactions my-0">{{$comment['thread_count']}} <i class="far fa-comments"></i></h3>
+                                    <h3 class="post-page-comment-interactions pe-3 my-0 show-hide-replies" style="white-space:pre;">    <i style="color:black;"title="Show/Hide replies" class="fas fa-chevron-down"></i></h3>
+                            
                                 </div>
                             </div>
                         </div>
@@ -189,7 +196,7 @@
                 </div>
             </div>
             @foreach($comment['threads'] as $thread)
-                        <div class="row justify-content-center px-4 mx-1">
+                        <div class="row justify-content-center px-4 mx-1 thread-section">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1">
@@ -200,6 +207,7 @@
                                 <div class="col-auto p-0 m-0 ms-auto">
                                     <span class="comment_id" hidden>{{$thread['comment']->id}}</span>
                                     @if($user_id==$thread['comment']->user_id)
+                                    
                                     <div class="dropdown">
                                         <a class="btn fa-cog-icon"  style="font-size:30%;" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>

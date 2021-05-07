@@ -126,7 +126,7 @@ function confirmEdit(comment_id,container){
             
             for(let j = 0;j< comment['threads'].length;j++){
                 let thread = comment['threads'][j];
-                result += `<div class="row justify-content-center px-4 mx-1">
+                result += `<div class="row justify-content-center px-4 mx-1 thread-section">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1">
@@ -162,6 +162,7 @@ function confirmEdit(comment_id,container){
                                             <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(thread['likes'].toString()) + ` <i title="Like comment" class="far fa-thumbs-up"></i></h3>
                                             <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(thread['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
                                             <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
+                                            <h3 class="post-page-comment-interactions pe-3 my-0 show-hide-replies" style="white-space:pre;">    <i style="color:black;"title="Show/Hide replies" class="fas fa-chevron-down"></i></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -194,7 +195,7 @@ function confirmEdit(comment_id,container){
             </span>\n`;
         }
         else{
-            result+=`<div class="row justify-content-center px-4 mx-1">
+            result+=`<div class="row justify-content-center px-4 mx-1 thread-section">
             <div class="col-10 mx-0 px-0">
                 <div class="row justify-content-end comment-replies mx-0 px-0">
                     <div class="col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1">

@@ -26,6 +26,7 @@ function addComment(){
         addListeners();
         addDeleteCommentListeners();
         addEditListeners();
+        addShowThreadListeners();
         
     };
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
