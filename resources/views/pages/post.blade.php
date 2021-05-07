@@ -4,10 +4,11 @@
 @section('content')
 <script type="text/javascript" src="{{ URL::asset('js/delete_confirm.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
-<script type="text/javascript" src="{{ URL::asset('js/add_thread.js') }}" defer></script>
-<script type="text/javascript" src="{{ URL::asset('js/add_comment.js') }}" defer></script>
-<script type="text/javascript" src="{{ URL::asset('js/delete_comment.js') }}" defer></script>
-<script type="text/javascript" src="{{ URL::asset('js/edit_comment.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/add_thread.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/add_comment.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/delete_comment.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/edit_comment.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/sort_comments.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>
@@ -116,9 +117,9 @@
                             <div class="dropdown p-0 m-0">
                                 <button class="btn btn-secondary dropdown-toggle comment-sort-by-button p-0 m-0" type="button" id="comments-sort-by" data-bs-toggle="dropdown" aria-expanded="false">Sort by</button>
                                 <ul class="dropdown-menu comments-sort-by" aria-labelledby="comments-sort-by">
-                                    <li><a class="dropdown-item">Most popular</a></li>
-                                    <li><a class="dropdown-item">Newest</a></li>
-                                    <li><a class="dropdown-item">Oldest</a></li>
+                                    <li><a id="sort_popular" class="dropdown-item">Most popular</a></li>
+                                    <li><a id="sort_newest" class="dropdown-item">Newest</a></li>
+                                    <li><a id="sort_oldest" class="dropdown-item">Oldest</a></li>
                                 </ul>
                             </div>
                         </div>

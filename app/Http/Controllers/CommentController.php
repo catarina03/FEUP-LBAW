@@ -58,7 +58,7 @@ class CommentController extends Controller
                     'user_id' => $validatedData['user_id'],
                     'post_id' => $validatedData['post_id']
                 ]);
-                $comments = Comment::getPostComments($post_id);
+                $comments = Comment::getPostComments($post_id,"desc");
                 return Comment::commentsAsHtml($comments,Auth::user()->id);
             }
         }
@@ -170,7 +170,7 @@ class CommentController extends Controller
                     'user_id' => $validatedData['user_id'],
                     'comment_id' => $validatedData['comment_id']
                 ]);
-                $comments = Comment::getPostComments($comment->post_id);
+                $comments = Comment::getPostComments($comment->post_id,"desc");
                 return Comment::commentsAsHtml($comments,Auth::user()->id);
             }
         }

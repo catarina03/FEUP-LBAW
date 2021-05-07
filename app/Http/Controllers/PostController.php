@@ -216,7 +216,7 @@ class PostController extends Controller
         $USER = AuthenticatedUser::find($post->user_id);
 
         //Get comment count,likes and dislikes
-        $comments = Comment::getPostComments($id);
+        $comments = Comment::getPostComments($id,"desc");
         $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
         $temp = $votes->get()->count();
@@ -517,5 +517,49 @@ class PostController extends Controller
             }
         }
         return '';
+    }
+
+    public function popularComments(Request $request, $post_id){
+        $route = \Route::current();
+        if(!is_numeric($route->parameter('post_id')))
+            return "";
+        $post = Post::find($post_id);
+        if(!$post )
+            return "";
+        $user_id = 0;
+        if(Auth::check())
+            $user_id = Auth::user()->id;
+        $comments = Comment::getPostPopularComments($post_id);
+        return Comment::commentsAsHtml($comments,$user_id);
+
+
+    }
+
+    public function newerComments(Request $request, $post_id){
+        $route = \Route::current();
+        if(!is_numeric($route->parameter('post_id')))
+            return "";
+        $post = Post::find($post_id);
+        if(!$post )
+            return "";
+        $user_id = 0;
+        if(Auth::check())
+            $user_id = Auth::user()->id;
+        $comments = Comment::getPostComments($post_id,"desc");
+        return Comment::commentsAsHtml($comments,$user_id);
+    }
+
+    public function olderComments(Request $request, $post_id){
+        $route = \Route::current();
+        if(!is_numeric($route->parameter('post_id')))
+            return "";
+        $post = Post::find($post_id);
+        if(!$post )
+            return "";
+        $user_id = 0;
+        if(Auth::check())
+            $user_id = Auth::user()->id;
+        $comments = Comment::getPostComments($post_id,"asc");
+        return Comment::commentsAsHtml($comments,$user_id);
     }
 }

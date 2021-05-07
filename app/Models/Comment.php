@@ -49,25 +49,33 @@ class Comment extends Model
         return $this->hasOne(Comment::class,"comment_id");
     }
 
-    public static function getPostComments($post_id){
-        $comments = Comment::where("post_id",$post_id)->orderBy("comment_date","desc")->get();
+    public static function getPostComments($post_id,$date_order){
+        $comments = Comment::where("post_id",$post_id)->orderBy("comment_date",$date_order)->get();
         $result = array();
         foreach($comments as $comment){
             $temp = Comment::getCommentInfo($comment->id);
-            /*$votes = DB::table("vote_comment")->where("comment_id",$comment->id);
-            $temp = $votes->get()->count();
-            $likes = $votes->where("like",true)->get()->count();
-            $dislikes = $temp - $likes;
-            $threads = Comment::getCommentThreads($comment->id);
-            $temp_array = array();
-            $temp_array["comment"] = $comment;
-            $temp_array["likes"] = $likes;
-            $temp_array["dislikes"] = $dislikes;
-            $temp_array["date"] = date("F j, Y", strtotime($comment['comment_date']));
-            $temp_array["author"] = AuthenticatedUser::find($comment->user_id)->name;
-            $temp_array["threads"] = $threads;
-            $temp_array["thread_count"] = count($threads);
-            $result[] = $temp_array;*/
+            $result[] = $temp;
+        }
+        return $result;
+    }
+
+    public static function getPostPopularComments($post_id){
+        $comments = DB::select(DB::raw("SELECT C.content as c_content,C.id as c_id,C.user_id as c_user_id,C.post_id as c_post_id,C.comment_id as c_comment_id ,
+                SUM(CASE WHEN R.like THEN 1 ELSE 0 END) AS overallRating
+            FROM comment C
+            LEFT JOIN vote_comment  R ON R.comment_id = C.id
+            WHERE C.post_id = $post_id
+            GROUP BY C.id
+            ORDER BY overallRating desc;"));
+
+        $comment_ids = array();
+        foreach($comments as  $comment){
+            $comment_ids[] = $comment->c_id;
+        }
+        
+        $result = array();
+        foreach($comment_ids as $id){
+            $temp = Comment::getCommentInfo($id);
             $result[] = $temp;
         }
         return $result;
@@ -78,17 +86,6 @@ class Comment extends Model
         $result = array();
         foreach($comments as $comment){
             $temp = Comment::getThreadInfo($comment->id);
-            /*$votes = DB::table("vote_comment")->where("comment_id",$comment->id);
-            $temp = $votes->get()->count();
-            $likes = $votes->where("like",true)->get()->count();
-            $dislikes = $temp - $likes;
-            $temp_array = array();
-            $temp_array["comment"] = $comment;
-            $temp_array["likes"] = $likes;
-            $temp_array["dislikes"] = $dislikes;
-            $temp_array["date"] = date("F j, Y", strtotime($comment['comment_date']));
-            $temp_array["author"] = AuthenticatedUser::find($comment->user_id)->name;
-            $result[] = $temp_array;*/
             $result[] = $temp;
         }
         return $result;

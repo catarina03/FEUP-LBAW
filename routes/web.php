@@ -97,3 +97,10 @@ Route::get('administration/roles','UserController@roles');
 Route::put('comment/{comment_id}/report','CommentController@reportComment');
 
 
+
+
+// Sort comments
+Route::get('api/post/{post_id}/popular_comments','PostController@popularComments');
+Route::get('api/post/{post_id}/newer_comments','PostController@newerComments');
+Route::get('api/post/{post_id}/older_comments','PostController@olderComments');
+
