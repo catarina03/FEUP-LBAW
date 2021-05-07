@@ -211,7 +211,7 @@ class Comment extends Model
             </div>
         </div>";
         }
-        $result = $result . "<div class=\"row justify-content-center px-4 mx-1\">
+        $result = $result . ($user_id!=0?"<div class=\"row justify-content-center px-4 mx-1\">
             <div class=\"col-10 mx-0 px-0\">
                 <div class=\"row justify-content-end comment-replies mx-0 px-0\">
                     <div class=\"col-11 post-page-comment-reply-editor px-0 mx-0 mt-1\">
@@ -231,7 +231,7 @@ class Comment extends Model
                 </div>
             </div>
         </div>
-        </span>\n";
+        </span>\n":"");
         
         
     }
