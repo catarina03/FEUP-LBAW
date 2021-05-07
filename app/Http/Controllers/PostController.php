@@ -204,6 +204,8 @@ class PostController extends Controller
         if(Auth::check()){
             $user_id = Auth::user()->id;
             $user = $user_id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
+            if(!PostPolicy::show_post(Auth::user(),$post))
+                return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
         }
         else
             $user = 'visitor';
