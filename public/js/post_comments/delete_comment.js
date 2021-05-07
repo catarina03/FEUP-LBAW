@@ -3,11 +3,13 @@ function addDeleteCommentListeners(){
     let x = document.getElementsByClassName("delete_comment_button");
     if(x!=null){
         for(let i = 0;i<x.length;i++){
-                element = x[i];
-                let parent = element.parentNode;
+                let element = x[i];
+                let elementClone = element.cloneNode(true);
+                element.parentNode.replaceChild(elementClone,element);
+                let parent = elementClone.parentNode;
                 let container = parent.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
                 let comment_id = parent.parentNode.parentNode.getElementsByClassName("comment_id")[0].innerText;
-                element.addEventListener("click",function(e){
+                elementClone.addEventListener("click",function(e){
                     e.preventDefault();
                     deleteComment(comment_id,container);
                 });

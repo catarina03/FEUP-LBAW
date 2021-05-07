@@ -126,7 +126,7 @@ function confirmEdit(comment_id,container){
             
             for(let j = 0;j< comment['threads'].length;j++){
                 let thread = comment['threads'][j];
-                result += `<div class="row justify-content-center px-4 mx-1 thread-section">
+                result += `<span class="thread-container"><div class="row justify-content-center px-4 mx-1 thread-section">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1">
@@ -170,7 +170,7 @@ function confirmEdit(comment_id,container){
                         </div>
                     </div>
                 </div>
-            </div>`;
+            </div></span>`;
             }
             result += `<div class="row justify-content-center px-4 mx-1">
                 <div class="col-10 mx-0 px-0">
@@ -193,6 +193,18 @@ function confirmEdit(comment_id,container){
                 </div>
             </div>
             </span>\n`;
+            container.innerHTML = result;
+            let new_elements = container.getElementsByClassName("delete_comment_button");
+            for(let k = 0;k<new_elements.length;k++){
+                let temp = new_elements[k];
+                let comment_container = temp.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+                let local_cid = temp.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0].innerText;
+                temp.addEventListener("click",function(e){
+                    e.preventDefault();
+                    deleteComment(local_cid,comment_container);
+                });
+            }
+            
         }
         else{
             result+=`<div class="row justify-content-center px-4 mx-1 thread-section">
@@ -237,21 +249,22 @@ function confirmEdit(comment_id,container){
                 </div>
             </div>
         </div>`;
-    
-        }
-        container.innerHTML = result;
-        addListeners();
+        container.parentNode.parentNode.innerHTML = result;
         let new_elements = container.getElementsByClassName("delete_comment_button");
         for(let k = 0;k<new_elements.length;k++){
             let temp = new_elements[k];
             let comment_container = temp.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
             let local_cid = temp.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0].innerText;
             temp.addEventListener("click",function(e){
-            e.preventDefault();
-            deleteComment(local_cid,comment_container);
-        });
+                e.preventDefault();
+                deleteComment(local_cid,comment_container);
+            });
+        }
+            
         }
         
+        addDeleteCommentListeners();
+        addListeners();
         addEditListeners();
         }
         else{
