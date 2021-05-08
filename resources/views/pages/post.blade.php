@@ -52,7 +52,7 @@
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-1">
-                <h2 class="post-page-post-author-date">by <a href="./myprofile.php">{{$metadata['author']}}</a>, {{$metadata['date']}}</h2>
+                <h2 class="post-page-post-author-date">by <a href="{{route('profile',['id'=>$user_id])}}">{{$metadata['author']}}</a>, {{$metadata['date']}}</h2>
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-1">
@@ -178,7 +178,7 @@
                     </div>
                     <div class="row align-items-end px-2 py-1">
                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end">
-                            <h3 class="post-page-comment-author-date p-0 m-0">by <a href="./userprofile.php">{{$comment['author']}}</a>, {{$comment['date']}}</h3>
+                            <h3 class="post-page-comment-author-date p-0 m-0">by <a href="{{route('profile',['id'=>$comment['comment']['user_id']])}}">{{$comment['author']}}</a>, {{$comment['date']}}</h3>
                         </div>
                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                             <div class="row">
@@ -214,11 +214,11 @@
                                                 <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item edit_comment_button">Edit Comment</a>
+                                                <a class="dropdown-item edit_comment_button">Edit Thread</a>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
-                                                <a class="dropdown-item delete_comment_button" >Delete Comment</a>
+                                                <a class="dropdown-item delete_comment_button" >Delete Thread</a>
                                             </ul>
                                         </div>
                                         @endif
@@ -226,7 +226,7 @@
                                 </div>
                                 <div class="row align-items-end px-2 py-0">
                                     <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end">
-                                        <h3 class="post-page-comment-reply-author-date p-0 m-0">by <a href="./userprofile.php">{{$thread['author']}}</a>, {{$thread['date']}}</h3>
+                                        <h3 class="post-page-comment-reply-author-date p-0 m-0">by <a href="{{route('profile',['id'=>$thread['comment']['user_id']])}}">{{$thread['author']}}</a>, {{$thread['date']}}</h3>
                                     </div>
                                     <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                                         <div class="row">

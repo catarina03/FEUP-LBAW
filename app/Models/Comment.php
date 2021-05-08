@@ -120,6 +120,7 @@ class Comment extends Model
     public static function commentsAsHtml($comments,$user_id){
         $result = "";
         foreach($comments as $comment){
+            $comment_route = request()->getSchemeAndHttpHost() .'/user/' . $comment['comment']->user_id;
             $result = $result . 
             "<span class=\"comment-container\">
             <div class=\"row justify-content-center px-4 mx-1\">
@@ -152,7 +153,7 @@ class Comment extends Model
             
                 <div class=\"row align-items-end px-2 py-1\">
                     <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end\">
-                        <h3 class=\"post-page-comment-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . nl2br(htmlspecialchars($comment['author'])) . "</a>, " .  nl2br(htmlspecialchars($comment['date'])) . "</h3>
+                        <h3 class=\"post-page-comment-author-date p-0 m-0\">by <a href=\"" .$comment_route . "\">" . nl2br(htmlspecialchars($comment['author'])) . "</a>, " .  nl2br(htmlspecialchars($comment['date'])) . "</h3>
                     </div>
                     <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto\">
                         <div class=\"row\">
@@ -169,6 +170,7 @@ class Comment extends Model
             </div>
         </div>\n";
         foreach($comment['threads'] as $thread){
+            $thread_route = request()->getSchemeAndHttpHost() .'/user/' . $thread['comment']->user_id;
             $result = $result . "<span  class=\"thread-container\"><div class=\"row justify-content-center px-4 mx-1 thread-section\">
             <div class=\"col-10 mx-0 px-0\">
                 <div class=\"row justify-content-end comment-replies mx-0 px-0\">
@@ -195,7 +197,7 @@ class Comment extends Model
                         "</div></div>
                         <div class=\"row align-items-end px-2 py-0\">
                             <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end\">
-                                <h3 class=\"post-page-comment-reply-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . nl2br(htmlspecialchars($thread['author'])) . "</a>, " . nl2br(htmlspecialchars($thread['date'])) . "</h3>
+                                <h3 class=\"post-page-comment-reply-author-date p-0 m-0\">by <a href=\"".$thread_route ."\">" . nl2br(htmlspecialchars($thread['author'])) . "</a>, " . nl2br(htmlspecialchars($thread['date'])) . "</h3>
                             </div>
                             <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto\">
                                 <div class=\"row\">

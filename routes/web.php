@@ -51,7 +51,7 @@ Route::post('register', 'Auth\RegisterController@register');
 
 
 // Authenticated User
-Route::get('user/{id}', 'UserController@show');
+Route::get('user/{id}', 'UserController@show')->name('profile');
 Route::delete('user/{id}', 'UserController@destroy');
 Route::get('api/user/{id}/edit_bio', 'UserController@show_edit_bio');
 Route::put('api/user/{id}/edit_bio', 'UserController@edit_bio');
