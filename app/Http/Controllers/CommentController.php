@@ -44,19 +44,31 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request,$post_id)
-    {
-        $validatedData = $request->validate([
-            'content' => 'required|max:255',
-            'user_id' => 'required|numeric',
-            'post_id' => 'required|numeric'
-        ]);
+    {   
+        $validator = Validator::make($request->all(),
+            [
+                'content' => ['required', 'string', 'max:1000','min:1'],
+                'user_id' => ['required', 'numeric'],
+                'post_id' => ['required', 'numeric'],
+            ],
+            [
+                'content.required' => 'Content cannot be empty',
+                'user_id.numeric' => 'UserID must be a number',
+                'user_id.required' => 'UserID must be a number',
+                'post_id.numeric' => 'PostID must be a number',
+                'posst_id.required' => 'PostID must be a number',
+                'content.max' => 'Content is too big, max of 1000 characters',
+                'content.min' => 'Content is too short, max of 1000 characters'
+            ]);
+        if($validator->fails())
+                return "";
         if(Auth::check()){
-            $post = Post::find($validatedData['post_id']);
+            $post = Post::find($request->input('post_id'));
             if($post != null && Auth::user()->id != $post->user_id){
                 DB::table('comment')->insert([
-                    'content' => $validatedData['content'],
-                    'user_id' => $validatedData['user_id'],
-                    'post_id' => $validatedData['post_id']
+                    'content' => $request->input('content'),
+                    'user_id' => $request->input('user_id'),
+                    'post_id' => $request->input('post_id')
                 ]);
                 $comments = Comment::getPostComments($post_id,"desc");
                 return Comment::commentsAsHtml($comments,Auth::user()->id);
@@ -157,18 +169,30 @@ class CommentController extends Controller
     }
 
     public function addThread(Request $request,$comment_id){
-        $validatedData = $request->validate([
-            'content' => 'required|max:255',
-            'user_id' => 'required|numeric',
-            'comment_id' => 'required|numeric'
+        $validator = Validator::make($request->all(),
+        [
+            'content' => ['required', 'string', 'max:1000','min:1'],
+            'user_id' => ['required', 'numeric'],
+            'comment_id' => ['required', 'numeric'],
+        ],
+        [
+            'content.required' => 'Content cannot be empty',
+            'user_id.numeric' => 'UserID must be a number',
+            'user_id.required' => 'UserID must be a number',
+            'comment_id.numeric' => 'CommentID must be a number',
+            'comment_id.required' => 'CommentID must be a number',
+            'content.max' => 'Content is too big, max of 1000 characters',
+            'content.min' => 'Content is too short, max of 1000 characters'
         ]);
+        if($validator->fails())
+            return "";
         if(Auth::check()){
-            $comment = Comment::find($validatedData['comment_id']);
-            if($comment != null && Auth::user()->id == $validatedData['user_id']){
+            $comment = Comment::find($request->input('comment_id'));
+            if($comment != null && Auth::user()->id == $request->input('user_id')){
                 DB::table('comment')->insert([
-                    'content' => $validatedData['content'],
-                    'user_id' => $validatedData['user_id'],
-                    'comment_id' => $validatedData['comment_id']
+                    'content' => $request->input('content'),
+                    'user_id' => $request->input('user_id'),
+                    'comment_id' => $request->input('comment_id')
                 ]);
                 $comments = Comment::getPostComments($comment->post_id,"desc");
                 return Comment::commentsAsHtml($comments,Auth::user()->id);

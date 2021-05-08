@@ -19,7 +19,7 @@ function show_replies(element){
             let temp = parent[j];
             let hidden = temp.getAttribute("hidden");
             console.log("Before : " + hidden);
-            if(hidden==="true")
+            if(hidden)
                 temp.removeAttribute("hidden");
             else{
                 temp.setAttribute("hidden",true);

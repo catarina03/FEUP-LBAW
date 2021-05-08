@@ -197,7 +197,7 @@
             </div>
             @foreach($comment['threads'] as $thread)
                 <span class="thread-container">
-                <div class="row justify-content-center px-4 mx-1 thread-section">
+                <div hidden class="row justify-content-center px-4 mx-1 thread-section">
                     <div class="col-10 mx-0 px-0">
                         <div class="row justify-content-end comment-replies mx-0 px-0">
                             <div class="col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1">
