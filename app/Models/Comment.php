@@ -126,10 +126,10 @@ class Comment extends Model
             <div class=\"col-10 post-page-comment pt-3 pb-2 px-3 mt-2\">
                 <div class=\"row px-2 py-0\">
                     <div class=\"col-auto p-0 m-0\">
-                        <h3 class=\"post-page-comment-body m-0\">". htmlspecialchars($comment['comment']->content). "</h3>
+                        <h3 class=\"post-page-comment-body m-0\">". nl2br(htmlspecialchars($comment['comment']->content)). "</h3>
                     </div>    
                         <div class=\"col-auto p-0 m-0 ms-auto\">
-                            <span class=\"comment_id\" hidden>" . htmlspecialchars($comment['comment']->id) . "</span>" .
+                            <span class=\"comment_id\" hidden>" . nl2br(htmlspecialchars($comment['comment']->id)) . "</span>" .
                             
                             ($user_id==$comment['comment']->user_id?
                             "<div class=\"dropdown\">
@@ -152,15 +152,15 @@ class Comment extends Model
             
                 <div class=\"row align-items-end px-2 py-1\">
                     <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end\">
-                        <h3 class=\"post-page-comment-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . htmlspecialchars($comment['author']) . "</a>, " .  htmlspecialchars($comment['date']) . "</h3>
+                        <h3 class=\"post-page-comment-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . nl2br(htmlspecialchars($comment['author'])) . "</a>, " .  nl2br(htmlspecialchars($comment['date'])) . "</h3>
                     </div>
                     <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto\">
                         <div class=\"row\">
                             <div class=\"d-flex\">
-                                <h3 class=\"post-page-comment-interactions pe-3 my-0\">" .htmlspecialchars( $comment['likes']) . " <i title=\"Like comment\" class=\"far fa-thumbs-up\"></i></h3>
-                                <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . htmlspecialchars($comment['dislikes']) . " <i title=\"Dislike comment\" class=\"far fa-thumbs-down\"></i></h3>
+                                <h3 class=\"post-page-comment-interactions pe-3 my-0\">" .nl2br(htmlspecialchars( $comment['likes'])) . " <i title=\"Like comment\" class=\"far fa-thumbs-up\"></i></h3>
+                                <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . nl2br(htmlspecialchars($comment['dislikes'])) . " <i title=\"Dislike comment\" class=\"far fa-thumbs-down\"></i></h3>
                                 <i title=\"Report comment\" class=\"fas fa-ban my-0 pe-3 post-page-report-comment\"></i>
-                                <h3 class=\"post-page-comment-interactions my-0\">" . htmlspecialchars($comment['thread_count']) . " <i class=\"far fa-comments\"></i></h3>
+                                <h3 class=\"post-page-comment-interactions my-0\">" . nl2br(htmlspecialchars($comment['thread_count'])) . " <i class=\"far fa-comments\"></i></h3>
                                 <h3 class=\"post-page-comment-interactions pe-3 my-0 show-hide-replies\" style=\"white-space:pre;\">    <i style=\"color:black;\"title=\"Show/Hide replies\" class=\"fas fa-chevron-down\"></i></h3>
                             </div>
                         </div>
@@ -175,7 +175,7 @@ class Comment extends Model
                     <div class=\"col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1\">
                         <div class=\"row px-2 py-0\">
                             <div class=\"col-auto p-0 m-0\">
-                                <h3 class=\"post-page-comment-reply-body m-0\">" . htmlspecialchars($thread['comment']->content) . "</h3>
+                                <h3 class=\"post-page-comment-reply-body m-0\">" . nl2br(htmlspecialchars($thread['comment']->content)) . "</h3>
                             </div>" ."<div class=\"col-auto p-0 m-0 ms-auto\">".
                             "<span class=\"comment_id\" hidden>{$thread['comment']->id}</span>".
                             ($user_id==$thread['comment']->user_id?
@@ -195,13 +195,13 @@ class Comment extends Model
                         "</div></div>
                         <div class=\"row align-items-end px-2 py-0\">
                             <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end\">
-                                <h3 class=\"post-page-comment-reply-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . htmlspecialchars($thread['author']) . "</a>, " . htmlspecialchars($thread['date']) . "</h3>
+                                <h3 class=\"post-page-comment-reply-author-date p-0 m-0\">by <a href=\"./userprofile.php\">" . nl2br(htmlspecialchars($thread['author'])) . "</a>, " . nl2br(htmlspecialchars($thread['date'])) . "</h3>
                             </div>
                             <div class=\"col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto\">
                                 <div class=\"row\">
                                     <div class=\"d-flex\">
-                                        <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . htmlspecialchars($thread['likes']) . " <i title=\"Like comment\" class=\"far fa-thumbs-up\"></i></h3>
-                                        <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . htmlspecialchars($thread['dislikes']) . " <i title=\"Dislike comment\" class=\"far fa-thumbs-down\"></i></h3>
+                                        <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . nl2br(htmlspecialchars($thread['likes'])) . " <i title=\"Like comment\" class=\"far fa-thumbs-up\"></i></h3>
+                                        <h3 class=\"post-page-comment-interactions pe-3 my-0\">" . nl2br(htmlspecialchars($thread['dislikes'])) . " <i title=\"Dislike comment\" class=\"far fa-thumbs-down\"></i></h3>
                                         <i title=\"Report comment\" class=\"fas fa-ban my-0 post-page-report-comment\"></i>
                                     </div>
                                 </div>
@@ -224,7 +224,7 @@ class Comment extends Model
                         </div>
                         <div class=\"row px-0 mx-0 justify-content-end\">
                             <div class=\"col-auto px-0\">
-                                <span class=\"thread_comment_id\" hidden>" . htmlspecialchars($comment['comment']->id) ."</span>
+                                <span class=\"thread_comment_id\" hidden>" . nl2br(htmlspecialchars($comment['comment']->id)) ."</span>
                                 <button class=\"post-page-comment-button btn m-0 mt-1 add_thread_button\">Comment</button>
                             </div>
                         </div>

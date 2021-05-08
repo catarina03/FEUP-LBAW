@@ -135,14 +135,24 @@ class CommentController extends Controller
     }
 
     public function editAction(Request $request,$comment_id){//update?
-        $validatedData = $request->validate([
-            'content' => 'required|max:255|min:1'
+        $validator = Validator::make($request->all(),
+        [
+            'content' => ['required', 'string', 'max:1000','min:1']
+        ],
+        [
+            'content.required' => 'Content cannot be empty',
+            'content.max' => 'Content is too big, max of 1000 characters',
+            'content.min' => 'Content is too short, min of 1 characters'
         ]);
+        
+        if($validator->fails())
+            return "";
+        
         if(Auth::check()){
             $comment = Comment::find($comment_id);
             $comment->timestamps = false;
             if($comment!=null && Auth::user()->id == $comment->user_id){
-                $comment->content = $validatedData['content'];
+                $comment->content = $request['content'];
                 if($comment->save())
                     return json_encode(Comment::getCommentInfo($comment_id));
                 return "";

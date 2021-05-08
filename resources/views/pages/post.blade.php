@@ -152,7 +152,7 @@
                 <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
                     <div class="row px-2 py-0">
                         <div class="col-auto p-0 m-0">
-                            <h3 class="post-page-comment-body m-0">{{$comment['comment']->content}}</h3>
+                            <h3 class="post-page-comment-body m-0">{!! nl2br(e($comment['comment']->content)) !!}</h3>
                         </div>
                         <div class="col-auto p-0 m-0 ms-auto">
                             <span class="comment_id" hidden>{{$comment['comment']->id}}</span>
