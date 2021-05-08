@@ -16,8 +16,8 @@
     <div class="row" style="margin-top: 7em; margin-bottom: 7em;">
         <div class="card post-page-post-card justify-content-center pb-5" style="border-radius:5px;">
 
-            @if($user!="visitor")
-                @if($user=='authenticated_owner'){{-- Se for o próprio owner a ver --}}
+            @auth
+                @if($isOwner)
                 <div class="my-post-page-settings btn-group dropdown">
                     <a class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-cog" style="font-size:3em;"></i>
@@ -36,7 +36,7 @@
                         <i class="bi bi-bookmark-plus-fill" title="Save/unsave post" style="font-size:3em; cursor:pointer;"></i>
                     </div>
                 @endif
-            @endif
+            @endauth
 
             <div class="container-fluid d-flex justify-content-center">
                 <div class="mt-2 col-10 justify-content-center d-flex">
@@ -52,7 +52,7 @@
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-1">
-                <h2 class="post-page-post-author-date">by <a href="{{route('profile',['id'=>$user_id])}}">{{$metadata['author']}}</a>, {{$metadata['date']}}</h2>
+                <h2 class="post-page-post-author-date">by <a href="{{route('profile',['id'=>$metadata['author']->id])}}">{{$metadata['author']->name}}</a>, {{$metadata['date']}}</h2>
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-1">
@@ -89,7 +89,7 @@
                 </div>
             </div>
 
-                @if($user=="authenticated_user") {{-- User is not the owner of the post --}}
+                @if(!$isOwner) {{-- User is not the owner of the post --}}
             <div class="row justify-content-center mt-3 px-4 mx-1">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-start align-items-center px-0 mx-0">
@@ -128,7 +128,7 @@
                 </div>
             </div>
 
-            @if($user=="authenticated_user") {{-- User is not the owner of the post --}}
+            @if(!$isOwner) {{-- User is not the owner of the post --}}
             <div class="row justify-content-center px-4 mx-1">
                 <div class="col-10 mx-0 px-0" style="border-radius:5px;">
                     <div class="row m-0 p-0">
@@ -244,7 +244,7 @@
                 </div>
              </span>
             @endforeach
-            @if($user!="visitor")
+            @auth
             <div class="row justify-content-center px-4 mx-1">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-end comment-replies mx-0 px-0">
@@ -265,7 +265,7 @@
                     </div>
                 </div>
             </div>
-            @endif
+            @endauth
             </span>
             @endforeach
             </span>

@@ -203,12 +203,12 @@ class PostController extends Controller
         $user_id = null;
         if(Auth::check()){
             $user_id = Auth::user()->id;
-            $user = $user_id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
+            $isOwner = $user_id == $post->user_id? true : false;
             if(!PostPolicy::show_post(Auth::user(),$post))
                 return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
         }
         else
-            $user = 'visitor';
+            $isOwner = false;
 
         //Set timestamps to false(updated_at column doesnt exist) and increment views
         $post->timestamps = false;
@@ -235,11 +235,11 @@ class PostController extends Controller
         $thumbnail = "/images/".$post->thumbnail;
 
         //Generate metadata to send to view
-        $metadata = ['comment_count'=>$comment_count,'author'=>$USER->name,'views' => $post->n_views,
+        $metadata = ['comment_count'=>$comment_count,'author'=>$USER,'views' => $post->n_views,
                      'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments];
 
 
-        return view('pages.post', ['user' => $user, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id] );
+        return view('pages.post', ['isOwner' => $isOwner, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id] );
 
     }
 
@@ -433,16 +433,16 @@ class PostController extends Controller
         //checkar se está autenticado
         if(Auth::check()){
             $post = Post::find($post_id);
-            if(Auth::user()->id == $post->user_id){
+            //if(Auth::user()->id == $post->user_id){
                 if($post != null){
-                    //$this->authorize("delete",[Auth::user(),$post]);
+                    $this->authorize("delete",$post);
                     if ($post->delete()) {
                         return ''; //dar return da view da homepage
                     } else {
                         return 'post/' + $post_id; // dar return da view do post
                     }
                 }
-            }
+            //}
         }
         return 'post/' + $post_id;
     }
