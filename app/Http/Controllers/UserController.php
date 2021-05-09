@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\AuthenticatedUser;
 use App\Models\Post;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +50,7 @@ class UserController extends Controller
      * Display the User profile
      *
      * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View|Response
      */
     public function show($id)
     {
@@ -66,12 +68,31 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View|Response
      */
     public function edit(AuthenticatedUser $authenticatedUser)
     {
         //view de settings
         return view('pages.settings', ['needsFilter' => 0]);
+    }
+
+    /**
+     * Search users by username
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function search(Request $request): JsonResponse
+    {
+
+        $search = $request->input("query");
+
+        if (!empty($search))
+            $roles = AuthenticatedUser::query()->select("id", "username", "authenticated_user_type")->orderBy("authenticated_user_type")->where('username', 'LIKE', "%{$search}%")->get();
+        else
+            $roles = AuthenticatedUser::query()->select("id", "username", "authenticated_user_type")->orderBy("authenticated_user_type")->get();
+
+        return response()->json($roles);
     }
 
     /**

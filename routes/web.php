@@ -28,6 +28,7 @@ Route::get('api/loadMore/{filters}/{page}', 'PagesController@loadMoreHomepage');
 
 // Admin
 Route::get('administration/roles','UserController@roles');
+Route::get('api/administration/roles/{username}','UserController@search');
 Route::put('api/administration/roles/{user_id}/edit_role','UserController@editRole');
 Route::get('api/report_filter','ReportController@reportFilter');
 Route::post('api/post/{post_id}/add_comment','CommentController@create');
