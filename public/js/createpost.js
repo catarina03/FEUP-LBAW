@@ -1,16 +1,49 @@
 'use strict'
 
-document.getElementById("submit-button").onclick = function() {
+let tags = document.getElementById("created-post-tags");
+let submitButton = document.getElementById("submit-button");
+let tagInput = document.getElementById("tag-input");
+let postForm = document.getElementById("create-post-form")
+
+/*
+submitButton.addEventListener("click", function (){
     let inputArray = [];
     for (let i = 0; i < tags.children.length; i++){
         inputArray.push(tags.children.item(i).textContent.trim());
     }
-    document.getElementById("tag-input").value = inputArray;
+    document.getElementById("tag-input-form").value = inputArray;
+    console.log(document.getElementById("tag-input-form"));
+});
+ */
+
+/*
+submitButton.onclick = function() {
+    let inputArray = [];
+    for (let i = 0; i < tags.children.length; i++){
+        inputArray.push(tags.children.item(i).textContent.trim());
+    }
+    document.getElementById("tags").value = inputArray;
+    console.log(document.getElementById("tag-input-form"));
 };
+ */
 
-let tags = document.getElementById("created-post-tags");
+postForm.addEventListener("submit", function (){
+    let inputArray = [];
+    for (let i = 0; i < tags.children.length; i++){
+        inputArray.push(tags.children.item(i).textContent.trim());
+    }
+    document.getElementById("tags").value = inputArray;
+    console.log(document.getElementById("tag-input-form"));
+})
 
-let tagInput = document.getElementById("tag-input");
+
+document.addEventListener("load", function (){
+    let input = tagInput.value;
+    tags.innerHTML += writeTag(document.getElementById("tag-input-form"));
+})
+
+
+
 tagInput.addEventListener("keyup", function(event){
     let code;
     if (event.key !== undefined) {
@@ -38,7 +71,7 @@ function addTag(){
 }
 
 function writeTag(tag){
-    return '<a class="post-tag btn btn-secondary btn-sm d-flex justify-content-center m-2">'
+    return '<a class="col post-tag btn btn-secondary btn-sm d-flex justify-content-center m-2">'
         + tag
         + '<i class="bi bi-x ms-1 post-tag-remover"></i></a>';
 }

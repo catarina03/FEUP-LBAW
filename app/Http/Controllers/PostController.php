@@ -77,7 +77,7 @@ class PostController extends Controller
             'category' => ['required', 'string'],
             'user_id' => ['required', 'int'],
             'photos' => ['array'],
-            'tag-input' => ['string', "minTags:2", "maxTags:10", "noDups"],
+            'tag-input-form' => ['string', "minTags:2", "maxTags:10", "noDups"],
         ],
         [
             'title.required' => 'Title can not be empty',
@@ -85,7 +85,7 @@ class PostController extends Controller
             'title.max' => 'Title is too big, max of 120 characters',
             'thumbnail.required' => 'A thumbnail must be uploaded',
             'thumbnail.image' => 'A thumbnail must be a jpeg,jpg,png,gif image',
-            'content.required' => 'Content can not be empty',
+            'content.required' => 'Content cannot be empty',
             'content.string' => 'Content must be a string',
             'content.max' => 'Content is too big, max of 5000 characters',
             'is_spoiler.boolean' => 'is_spoiler must be a boolean',
@@ -95,8 +95,8 @@ class PostController extends Controller
             'category.string' => 'Category must be string',
             'user_id.required' => 'User ID is required',
             'user_id.int' => 'User ID must be an integer',
-            'tag-input.min' => 'Must add at least 2 tags',
-            'tag-input.max' => 'Must add at maximum 10 tags',
+            'tag-input-form.min' => 'Must add at least 2 tags',
+            'tag-input-form.max' => 'Must add at maximum 10 tags',
         ]);
          if ($validator->fails()) {
              //dd($validator->errors());
@@ -128,7 +128,7 @@ class PostController extends Controller
         //$post_id = Post::query()->where('user_id', Auth::id())->orderBy('id', 'desc')->first();
         //Storage::put(public_path().'/images/'.$post->id.'_thumb', $post->thumbnail);
 
-        $tagArray = explode(',', $request->input('tag-input'));
+        $tagArray = explode(',', $request->input('tag-input-form'));
 
         info($tagArray);
 

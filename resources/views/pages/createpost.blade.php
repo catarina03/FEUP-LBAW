@@ -8,6 +8,11 @@
     </div>
     <div class="createPost-center col-12 col-lg-7">
         <div class="card create-post-page-post-card d-flex justify-content-center pt-5 pb-5" style="border-radius:5px;">
+
+            @if($errors->any())
+                {{ implode('', $errors->all('<div>:message</div>')) }}
+            @endif
+
             <form id="create-post-form" enctype="multipart/form-data" action="{{ url('addpost') }}" method="POST">
                 <ul>
                 </ul>
@@ -16,7 +21,7 @@
                     <div class="col-10">
                         <div class="form-group post-comment-input mb-4">
                             <label class="add-comment-label" for="title">Post title</label>
-                            <input class="container form-control w-100" id="title" name="title" value="{{ old('title') }}">
+                            <input class="container form-control w-100" id="title" name="title" value="{{ old('title') }}" required>
                             @error('title')
                             <div class="error">{{ $message }}</div>
                             @enderror
@@ -28,10 +33,13 @@
                         <div class="row px-0 mx-0">
                             <div class="col-lg-6 col-12 form-group new-post-thumbnail p-0 m-0 me-lg-4">
                                 <label class="form-label" for="postImage">Select post image</label>
-                                <input type="file" class="form-control" name="thumbnail" id="postImage" value="{{ old('thumbnail') }}" />
+                                <input type="file" class="form-control" name="thumbnail" id="postImage" value="{{ old('thumbnail') }}" required />
+                                @error('thumbnail')
+                                <div class="error">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1">
-                                <select class="form-select" id="category" name="category" value="{{ old('category') }}" style="cursor:pointer;">
+                                <select class="form-select" id="category" name="category" value="{{ old('category') }}" style="cursor:pointer;" required>
                                     <option value="" disabled selected hidden>Category</option>
                                     @if (old('category') == 'music')
                                         <option value="music" selected>Music</option>
@@ -64,9 +72,12 @@
                                     @endif
                                     {{-- <option value="Literature" >Literature</option> --}}
                                 </select>
+                                @error('category')
+                                <div class="error">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-3 pt-lg-3 p-1">
-                                <select class="form-select" id="topic-dropdown" name="type" style="cursor:pointer;">
+                                <select class="form-select" id="topic-dropdown" name="type" style="cursor:pointer;" required>
                                     <option disabled selected hidden>Type</option>
                                     @if (old('type') == 'news')
                                         <option value="News" selected>News</option>
@@ -87,6 +98,9 @@
                                     @endif
                                     {{-- <option>Review</option> --}}
                                 </select>
+                                @error('type')
+                                <div class="error">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-lg-7 col-12 form-group spoiler-checkbox p-1 mt-1 mb-0 pb-0 align-self-end">
                                 <input type="checkbox" id="spoiler" name="is_spoiler" value="{{ old('is_spoiler') }}">
@@ -100,7 +114,10 @@
                         <div class="col-10">
                             <label for="mytextarea">Post</label>
                             <textarea id="mytextarea" class="create-post-editor col-auto" name="content" value="{{ old('content') }}" rows="15"
-                                      style="resize:none;"></textarea>
+                                      style="resize:none;" required></textarea>
+                            @error('content')
+                            <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="row justify-content-center mt-1">
@@ -115,15 +132,18 @@
                         <div class="col-10">
                             <label for="tags" class="col-12 col-form-label">Tags</label>
 
-                            <div class="bg-white rounded border d-flex align-items-center justify-content-center form-control" id="tags"
+                            <div class="container bg-white rounded border d-flex align-items-center justify-content-center form-control" id="tags"
                                  style="height:4em;">
-                                <div class="d-flex justify-content-start tags" id="created-post-tags">
+                                <div class="row d-flex justify-content-start tags" id="created-post-tags">
                                    {{-- <a class="btn btn-secondary btn-sm  d-flex justify-content-center m-2">Music <i
                                             class="bi bi-x ms-1"></i></a>
                                             --}}
                                 </div>
-                                <input class="container form-control w-100 create-post-tag-input" id="tag-input" name="tag-input" value="{{ old('tag-input') }}">
+                                <input class="col-4 form-control w-100 create-post-tag-input" id="tag-input" name="tag-input" value="{{ old('tag-input') }}" >
                             </div>
+                            @error('tags')
+                            <div class="error">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="row justify-content-center mt-1">
@@ -148,6 +168,7 @@
                 </div>
                 --}}
                 <input type="hidden" name="user_id" value="1" />
+                <input type="hidden" id="tag-input-form" name="tag-input-form" value="{{ old('tag-input-form') }}" />
                 <div class="row justify-content-center mt-5">
                     <div class="col-10">
                         <div class="row d-flex flex-row">
