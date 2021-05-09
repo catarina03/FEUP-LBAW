@@ -1179,3 +1179,10 @@ h3.post-page-comment-reply-interactions{
   color: #0c1d1c;
   font-weight: 400;
 }
+
+
+#comment-section .btn.fa-cog-icon{
+  padding-right: 0;
+  padding-top:0;
+}
+

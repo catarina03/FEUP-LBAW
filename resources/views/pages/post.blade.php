@@ -147,9 +147,9 @@
             @endif
             <span id="comment-section">
             @foreach($metadata['comments'] as $comment)
-            <span class="comment-container">
+            <span class="comment-container" >
                 <div class="row justify-content-center px-4 mx-1">
-                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
+                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2 show-hide-replies" style="cursor:pointer">
                     <div class="row px-2 py-0">
                         <div class="col-auto p-0 m-0">
                             <h3 class="post-page-comment-body m-0">{!! nl2br(e($comment['comment']->content)) !!}</h3>
@@ -187,7 +187,7 @@
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['dislikes']}} <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
                                     <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
                                     <h3 class="post-page-comment-interactions my-0">{{$comment['thread_count']}} <i class="far fa-comments"></i></h3>
-                                    <h3 class="post-page-comment-interactions pe-3 my-0 show-hide-replies" style="white-space:pre;">    <i style="color:black;"title="Show/Hide replies" class="fas fa-chevron-down"></i></h3>
+                                    <h3 class="post-page-comment-interactions pe-3 my-0 " style="white-space:pre;">    <i style="color:black;"title="Show/Hide replies" class="fas fa-chevron-down"></i></h3>
                             
                                 </div>
                             </div>
@@ -245,7 +245,7 @@
              </span>
             @endforeach
             @auth
-            <div class="row justify-content-center px-4 mx-1">
+            <div class="row justify-content-center px-4 mx-1 thread-reply" hidden>
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">

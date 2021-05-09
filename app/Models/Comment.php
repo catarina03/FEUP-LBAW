@@ -124,7 +124,7 @@ class Comment extends Model
             $result = $result . 
             "<span class=\"comment-container\">
             <div class=\"row justify-content-center px-4 mx-1\">
-            <div class=\"col-10 post-page-comment pt-3 pb-2 px-3 mt-2\">
+            <div class=\"col-10 post-page-comment pt-3 pb-2 px-3 mt-2 show-hide-replies\" style=\"cursor:pointer\">
                 <div class=\"row px-2 py-0\">
                     <div class=\"col-auto p-0 m-0\">
                         <h3 class=\"post-page-comment-body m-0\">". nl2br(htmlspecialchars($comment['comment']->content)). "</h3>
@@ -214,7 +214,7 @@ class Comment extends Model
             </div>
         </div></span>";
         }
-        $result = $result . ($user_id!=0?"<div class=\"row justify-content-center px-4 mx-1\">
+        $result = $result . ($user_id!=0?"<div class=\"row justify-content-center px-4 mx-1 thread-reply\">
             <div class=\"col-10 mx-0 px-0\">
                 <div class=\"row justify-content-end comment-replies mx-0 px-0\">
                     <div class=\"col-11 post-page-comment-reply-editor px-0 mx-0 mt-1\">
