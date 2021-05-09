@@ -46,7 +46,7 @@
 
                 @if(Auth::user()->authenticated_user_type == "System Manager")
                 <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="{{url('/administration/roles')}}"
-                        role="button" data-togle="tooltip" data-placement="bottom" title="Manage Moderators"
+                        role="button" data-togle="tooltip" data-placement="bottom" title="Manage Roles"
                         aria-expanded="false">
                         <i class="bi bi-people-fill navbar-icon"></i>
                     </a>

@@ -13,8 +13,6 @@
 // Home
 Route::get('/', 'Auth\LoginController@home');
 
-// Route::get('/', 'Auth\LoginController@home');
-
 // Pages
 Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
@@ -29,6 +27,7 @@ Route::get('api/loadMore/{filters}/{page}', 'PagesController@loadMoreHomepage');
 
 
 // Admin
+Route::get('administration/roles','UserController@roles');
 Route::put('api/administration/roles/{user_id}/edit_role','UserController@editRole');
 Route::get('api/report_filter','ReportController@reportFilter');
 Route::post('api/post/{post_id}/add_comment','CommentController@create');
@@ -89,9 +88,6 @@ Route::get('moderator/reports', 'ReportController@show');
 Route::put('reports/{report_id}/close','ReportController@close');
 Route::put('reports/{report_id}/assign_report','ReportController@assign');
 Route::put('reports/{report_id}/process','ReportController@process');
-
-// Administration
-Route::get('administration/roles','UserController@roles');
 
 // Comment
 Route::put('comment/{comment_id}/report','CommentController@reportComment');
