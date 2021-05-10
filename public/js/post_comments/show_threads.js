@@ -14,20 +14,23 @@ function addShowThreadListeners(){
 
 function show_replies(element){
     let parent = element.parentNode.parentNode.getElementsByClassName("thread-section");
-        
+    let reply = element.parentNode.parentNode.getElementsByClassName("thread-reply")[0];
     for(let j = 0;j<parent.length;j++){
             let temp = parent[j];
-            let reply = temp.parentNode.parentNode.getElementsByClassName("thread-reply")[0];
             let hidden = temp.getAttribute("hidden");
             console.log("Before : " + hidden);
-            if(hidden){
+            if(hidden)
                 temp.removeAttribute("hidden");
-                reply.removeAttribute("hidden");
-            }    
-            else{
+            
+            else
                 temp.setAttribute("hidden",true);
-                reply.setAttribute("hidden",true);
-            }
             console.log("After : " + temp.getAttribute("hidden"));
+        }
+        let hiddenH = reply.getAttribute("hidden");
+        if(hiddenH){
+            reply.removeAttribute("hidden");
+        }    
+        else{
+            reply.setAttribute("hidden",true);
         }
 }

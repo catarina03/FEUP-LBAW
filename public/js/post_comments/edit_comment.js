@@ -223,11 +223,11 @@ function confirmEdit(comment_id,container){
                                 <i class=\"fas fa-cog ms-auto\" style=\"font-size:3em;\"></i>
                             </a>
                             <ul class=\"dropdown-menu dropdown-menu-end\">
-                                <a class=\"dropdown-item edit_comment_button\">Edit Comment</a>
+                                <a class=\"dropdown-item edit_comment_button\">Edit Thread</a>
                                 <li>
                                     <hr class=\"dropdown-divider\"></hr>
                                 </li>
-                                <a class=\"dropdown-item delete_comment_button\" >Delete Comment</a>
+                                <a class=\"dropdown-item delete_comment_button\" >Delete Thread</a>
                             </ul>
                         </div></div>`:``)
                         +
