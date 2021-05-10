@@ -45,7 +45,7 @@
                         <div class="card card-profile col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5" style="border-radius:2%;">
                             <div class="row justify-content-center">
                                 <div class="col-lg-2 col-10 d-flex justify-content-center text-center">
-                                    <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
+                                    <h5 class="card-title mt-5 profile-name">{{$user->name}}</h5>
                                     <a href="./settings.php" class="position-absolute d-inline corner-icons d-xl-none"
                                         data-toggle="tooltip" data-placement="bottom" title="Settings"
                                         style="transform:translate(-4em, -1em);"><i class="bi bi-gear-fill pe-2"
@@ -54,7 +54,7 @@
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-lg-2 col-10 d-flex justify-content-center">
-                                    <p class="profile-username">@ana_sousa</p>
+                                    <p class="profile-username">@</p><p class="profile-username">{{$user->username}}</p>
                                 </div>
                             </div>
 
@@ -64,13 +64,13 @@
                                     <div class="col-lg-6 col-sm-12">
                                         <div class="row justify-content-around statistics-profile">
                                             <div class="col-4 d-flex justify-content-center text-center">
-                                                <p>800 Followers</p>
+                                                <p>{{$nFollowers}} Followers</p>
                                             </div>
                                             <div class="col-4 d-flex justify-content-center text-center">
-                                                <p>500 Following</p>
+                                                <p>{{$nFollowing}} Following</p>
                                             </div>
                                             <div class="col-4 d-flex justify-content-center text-center">
-                                                <p>900 Likes</p>
+                                                <p>{{$nLikes}} Likes</p>
                                             </div>
                                         </div>
                                     </div>
@@ -90,9 +90,7 @@
                                             </a>
                                             <div class="row card-body bio ">
                                                 <div class="col-12  text-center d-flex">
-                                                    I am a senior editor and specialized in covering the evolution and
-                                                    impact of
-                                                    brands. Bidibodibi
+                                                    {{$user->bio}}
                                                 </div>
                                             </div>
                                         </div>
@@ -113,22 +111,30 @@
 
                                 <div class="row justify-content-center mt-2">
                                     <div class="col-lg-2 col-sm-4  d-flex justify-content-center">
-                                        <a href="https://www.instagram.com/"
+                                        @if($user->instagram != null)
+                                        <a href="{{$user->instagram}}"
                                             class="btn btn-secondary btn-sm social-media d-flex justify-content-center">
                                             <i class="bi bi-instagram"></i>
                                         </a>
-                                        <a href="https://www.twitter.com/"
+                                        @endif
+                                        @if($user->twitter != null)
+                                        <a href="{{$user->twitter}}"
                                             class="btn btn-secondary btn-sm  social-media d-flex justify-content-center">
                                             <i class="bi bi-twitter"></i>
                                         </a>
-                                        <a href="https://www.facebook.com/"
+                                        @endif
+                                        @if($user->facebook != null)
+                                        <a href="{{$user->facebook}}"
                                             class="btn btn-secondary btn-sm  social-media d-flex justify-content-center">
                                             <i class="bi bi-facebook"></i>
                                         </a>
-                                        <a href="https://www.linkedin.com/"
+                                        @endif
+                                        @if($user->linkedin != null)
+                                        <a href="{{$user->linkedin}}"
                                             class="btn btn-secondary btn-sm  social-media d-flex justify-content-center">
                                             <i class="bi bi-linkedin"></i>
                                         </a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="justify-content-center d-flex ">

@@ -27,13 +27,13 @@
                 <div class="col-lg-6 col-sm-12">
                     <div class="row justify-content-around statistics-profile">
                         <div class="col-4 d-flex justify-content-center ">
-                            <p>800 Followers</p>
+                            <p>{{$nFollowers}} Followers</p>
                         </div>
                         <div class="col-4  d-flex justify-content-center">
-                            <p>500 Following</p>
+                            <p>{{$nFollowing}} Following</p>
                         </div>
                         <div class="col-4  d-flex justify-content-center">
-                            <p>900 Likes</p>
+                            <p>{{$nLikes}} Likes</p>
                         </div>
                     </div>
                 </div>
