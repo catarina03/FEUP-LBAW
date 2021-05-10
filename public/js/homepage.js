@@ -33,7 +33,7 @@ if(new_filter != null && loadN != null){
         filtering = "new"
         displaySpinner(true, "new")
         makeRequest(filtering)
-        setActive(this, hot, top)
+        setActive(this, t, hot)
     });
 }
 
@@ -49,6 +49,8 @@ function makeRequest(type){
         if(postsRequest.readyState === XMLHttpRequest.DONE){
             if(postsRequest.status === 200){
                 let posts = postsRequest.responseText
+                console.log(type)
+                console.log("posts" + posts)
                 updateHomepage(posts)
                 displaySpinner(true, type)
             }
@@ -95,7 +97,7 @@ function displaySpinner(display, type){
         }
     }
 
-    if(type === "news"){
+    if(type === "new"){
         if(display && loadN.classList.contains('d-none')){
             loadN.classList.remove('d-none')
             loadN.classList.add('d-inline-block')
@@ -108,11 +110,8 @@ function displaySpinner(display, type){
 }
 
 
-
-
-
 let loadMore = document.querySelector('.homepage .pagination .loadmore')
-let page = 1
+let page = 2
 let last = false
 
 if(loadMore != null) loadMore.addEventListener('click', loadHandler)

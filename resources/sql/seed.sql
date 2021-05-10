@@ -42,6 +42,7 @@ DROP FUNCTION IF EXISTS generate_thread_comment_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_vote_comment_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_vote_post_notification() CASCADE;
 DROP FUNCTION IF EXISTS delete_unused_tag() CASCADE;
+DROP FUNCTION IF EXISTS post_search() CASCADE;
 
 DROP TRIGGER IF EXISTS block_user ON block_user;
 DROP TRIGGER IF EXISTS check_vote_post ON vote_post;
@@ -62,6 +63,7 @@ DROP TRIGGER IF EXISTS generate_comment_notification ON comment;
 DROP TRIGGER IF EXISTS generate_thread_comment_notification ON comment;
 DROP TRIGGER IF EXISTS generate_publish_notification ON post;
 DROP TRIGGER IF EXISTS delete_unused_tag ON post_tag;
+DROP TRIGGER IF EXISTS post_search ON post;
 
 CREATE TYPE category_types AS ENUM ('music', 'tv show', 'cinema', 'theatre', 'literature');
 CREATE TYPE post_types AS ENUM ('news', 'article','review');
@@ -105,7 +107,8 @@ CREATE TABLE post(
     n_views integer NOT NULL DEFAULT 0,
     type post_types NOT NULL,
     category category_types NOT NULL,
-    user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE
+    user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+    search TSVECTOR
 );
 
 CREATE TABLE photo(
@@ -735,6 +738,26 @@ CREATE TRIGGER delete_unused_tag
     EXECUTE PROCEDURE delete_unused_tag();
 
 
+CREATE OR REPLACE FUNCTION post_search() RETURNS TRIGGER AS
+$BODY$
+DECLARE
+    author varchar(255);
+BEGIN
+    SELECT username INTO author FROM authenticated_user WHERE  New.user_id = id;
+    IF TG_OP = 'INSERT' THEN
+        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', author), 'C'));
+    ELSEIF TG_OP = 'UPDATE' AND (New.title <> OLD.title OR NEW.content <> OLD.content) THEN
+        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', author), 'C'));
+    END IF;
+    RETURN NEW;
+END;
+$BODY$
+    LANGUAGE 'plpgsql';
+
+CREATE TRIGGER post_search
+    BEFORE INSERT OR UPDATE ON post
+    FOR EACH ROW
+    EXECUTE PROCEDURE post_search();
 
     --TAG
 insert into tag (name) values ('uniform');

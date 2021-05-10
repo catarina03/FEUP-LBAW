@@ -21,12 +21,12 @@ Route::get('/about', 'PagesController@about');
 Route::get('/faq', 'PagesController@faq');
 Route::get('/support', 'PagesController@support');
 Route::post('/support', 'PagesController@supportRequest');
-Route::get('/category/{category}', 'PagesController@category');
+Route::get('/{category}', 'PagesController@category');
 Route::get('api/home/{homepageFilters}', 'PagesController@list');
-Route::get('/advanced_search','PagesController@advanced_search');
-Route::get('api/post_filter/{filters}','PagesController@postFilter');
+Route::get('search/{filters}', 'PagesController@showAdvancedSearch');
+Route::get('api/search/{filters}', 'PagesController@advancedSearch');
 Route::get('api/loadMore/{filters}/{page}', 'PagesController@loadMoreHomepage');
-
+Route::get('api/category/loadMore/{category}/{page}', 'PagesController@loadMoreCategoryPage');
 
 // Admin
 Route::put('api/administration/roles/{user_id}/edit_role','UserController@editRole');
