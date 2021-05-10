@@ -35,8 +35,8 @@
                     </a>
                 </li>
 
-                @if($user == "moderator" || ($user == "system_manager"))
-                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="{{url('/moderatordashboard')}}"
+                @if(Auth::user()->authenticated_user_type == "Moderator" || (Auth::user()->authenticated_user_type == "System Manager"))
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="{{ url('/moderator/reports') }}"
                         role="button" data-togle="tooltip" data-placement="bottom" title="Manage Reports"
                         aria-expanded="false">
                         <i class="bi bi-list-task navbar-icon"></i>
@@ -44,8 +44,8 @@
                 </li>
                 @endif
 
-                @if($user == "system_manager")
-                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="{{url('/manageroles')}}"
+                @if(Auth::user()->authenticated_user_type == "System Manager")
+                <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link" href="{{url('/administration/roles')}}"
                         role="button" data-togle="tooltip" data-placement="bottom" title="Manage Moderators"
                         aria-expanded="false">
                         <i class="bi bi-people-fill navbar-icon"></i>
@@ -81,11 +81,11 @@
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="myprofile.php"><i class="bi bi-person me-2"></i> Profile</a>
+                        <li><a class="dropdown-item" href="{{ url('user/'.Auth::user()->id) }}"><i class="bi bi-person me-2"></i> Profile</a>
                         </li>
-                        <li><a class="dropdown-item" href="myprofile.php#"><i class="bi bi-bookmark me-2"></i> Saved
+                        <li><a class="dropdown-item" href="{{ url('user/'.Auth::user()->id) }}"><i class="bi bi-bookmark me-2"></i> Saved
                                 Posts</a></li>
-                        <li><a class="dropdown-item" href="settings.php"><i class="bi bi-gear me-2"></i> Settings</a>
+                        <li><a class="dropdown-item" href="{{ url('user/'.Auth::user()->id.'/settings') }}"><i class="bi bi-gear me-2"></i> Settings</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">

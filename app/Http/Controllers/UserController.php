@@ -78,7 +78,7 @@ class UserController extends Controller
     public function edit(AuthenticatedUser $authenticatedUser)
     {
         //view de settings
-        return view('pages.settings', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.settings', ['needsFilter' => 0] );
     }
 
     /**

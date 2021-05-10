@@ -28,14 +28,14 @@ Route::get('api/post_filter/{filters}','PagesController@postFilter');
 Route::get('api/loadMore/{filters}/{page}', 'PagesController@loadMoreHomepage');
 
 
-// Admin 
+// Admin
 Route::put('api/administration/roles/{user_id}/edit_role','UserController@editRole');
-Route::get('api/report_filter','ReportController@reportFilter'); 
-Route::post('api/post/{post_id}/add_comment','CommentController@create'); 
-Route::get('api/comment/{comment_id}/edit','CommentController@editForm'); 
-Route::put('api/comment/{comment_id}/edit','CommentController@editAction'); 
-Route::delete('api/comment/{comment_id}','CommentController@destroyComment');  
-Route::get('api/comment/{comment_id}/thread','CommentController@threads'); 
+Route::get('api/report_filter','ReportController@reportFilter');
+Route::post('api/post/{post_id}/add_comment','CommentController@store');
+Route::get('api/comment/{comment_id}/edit','CommentController@editForm');
+Route::put('api/comment/{comment_id}/edit','CommentController@editAction');
+Route::delete('api/comment/{comment_id}','CommentController@destroyComment');
+Route::get('api/comment/{comment_id}/thread','CommentController@threads');
 Route::post('api/comment/{comment_id}/add_comment','CommentController@addThread');
 Route::post('api/comment/{comment_id}/vote','CommentController@vote');
 
@@ -51,7 +51,7 @@ Route::post('register', 'Auth\RegisterController@register');
 
 
 // Authenticated User
-Route::get('user/{id}', 'UserController@show');
+Route::get('user/{id}', 'UserController@show')->name('profile');
 Route::delete('user/{id}', 'UserController@destroy');
 Route::get('api/user/{id}/edit_bio', 'UserController@show_edit_bio');
 Route::put('api/user/{id}/edit_bio', 'UserController@edit_bio');
@@ -84,12 +84,11 @@ Route::post('api/post/{id}/vote', 'PostController@addVote');
 Route::put('api/post/{id}/vote', 'PostController@editVote');
 Route::delete('api/post/{id}/vote', 'PostController@deleteVote');
 
-
-
 // Report
-Route::put('reports/{report_id}/close','ReportController@close'); 
+Route::get('moderator/reports', 'ReportController@show');
+Route::put('reports/{report_id}/close','ReportController@close');
 Route::put('reports/{report_id}/assign_report','ReportController@assign');
-Route::put('reports/{report_id}/process','ReportController@process'); 
+Route::put('reports/{report_id}/process','ReportController@process');
 
 // Administration
 Route::get('administration/roles','UserController@roles');
@@ -97,4 +96,11 @@ Route::get('administration/roles','UserController@roles');
 // Comment
 Route::put('comment/{comment_id}/report','CommentController@reportComment');
 
+
+
+
+// Sort comments
+Route::get('api/post/{post_id}/popular_comments','PostController@popularComments');
+Route::get('api/post/{post_id}/newer_comments','PostController@newerComments');
+Route::get('api/post/{post_id}/older_comments','PostController@olderComments');
 

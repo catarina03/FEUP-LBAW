@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +38,7 @@ class PostController extends Controller
     {
         // ver se está autenticado
 
-        return view('pages.createpost', ['user' => 'authenticated_user', 'needsFilter' => 0]);
+        return view('pages.createpost', ['needsFilter' => 0]);
     }
 
     /**
@@ -188,25 +189,28 @@ class PostController extends Controller
      */
     public function show($id)
     {
-
         //Get currnt route
         $route = \Route::current();
 
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
-            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+            return view('pages.pagenotfound',['needsFilter' => 0]);
         $post = Post::find($id);
         if(!$post )
-            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+            return view('pages.pagenotfound',['needsFilter' => 0]);
 
         //Verify if user is authenticated and if user is owner of post
-        if(Auth::check())
-            $user = Auth::user()->id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
+        $user_id = null;
+        if(Auth::check()){
+            $user_id = Auth::user()->id;
+            $isOwner = $user_id == $post->user_id? true : false;
+            if(!PostPolicy::show_post(Auth::user(),$post))
+                return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+        }
         else
-            $user = 'visitor';
+            $isOwner = false;
 
         //Set timestamps to false(updated_at column doesnt exist) and increment views
-        $user = 'authenticated_user';
         $post->timestamps = false;
         $post->increment('n_views');
 
@@ -214,7 +218,8 @@ class PostController extends Controller
         $USER = AuthenticatedUser::find($post->user_id);
 
         //Get comment count,likes and dislikes
-        $comments = Comment::where('post_id',$id)->get()->count();
+        $comments = Comment::getPostComments($id,"desc");
+        $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
         $temp = $votes->get()->count();
         $likes = $votes->where("like",true)->get()->count();
@@ -230,11 +235,12 @@ class PostController extends Controller
         $thumbnail = "/images/".$post->thumbnail;
 
         //Generate metadata to send to view
-        $metadata = ['comments'=>$comments,'author'=>$USER['name'],'views' => $post->n_views,
-                     'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail];
+        $metadata = ['comment_count'=>$comment_count,'author'=>$USER,'views' => $post->n_views,
+                     'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments];
 
 
-        return view('pages.post', ['user' => $user, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata] );
+        return view('pages.post', ['isOwner' => $isOwner, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id] );
+
     }
 
     /**
@@ -250,10 +256,10 @@ class PostController extends Controller
 
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
-            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+            return view('pages.pagenotfound',['needsFilter' => 0]);
         $post = Post::find($id);
         if(!$post )
-            return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+            return view('pages.pagenotfound',['needsFilter' => 0]);
 
         //Verify if user is authenticated and if user is owner of post
         if(Auth::check())
@@ -286,7 +292,7 @@ class PostController extends Controller
 
         //$post = Post::find($id);
         //chamar a view do edit post com esta informaçao
-        return view('pages.editpost', ['user' => 'visitor', 'needsFilter' => 0, 'post'=>$post] ); //['post'=> $post]
+        return view('pages.editpost', ['needsFilter' => 0, 'post'=>$post] ); //['post'=> $post]
     }
 
     /**
@@ -427,14 +433,16 @@ class PostController extends Controller
         //checkar se está autenticado
         if(Auth::check()){
             $post = Post::find($post_id);
-            $this->authorize("delete",[Auth::user(),$post]);
-            if($post != null){
-                if ($post->delete()) {
-                    return ''; //dar return da view da homepage
-                } else {
-                    return 'post/' + $post_id; // dar return da view do post
+            //if(Auth::user()->id == $post->user_id){
+                if($post != null){
+                    $this->authorize("delete",$post);
+                    if ($post->delete()) {
+                        return ''; //dar return da view da homepage
+                    } else {
+                        return 'post/' + $post_id; // dar return da view do post
+                    }
                 }
-            }
+            //}
         }
         return 'post/' + $post_id;
     }
@@ -476,20 +484,22 @@ class PostController extends Controller
     }
 
     public function addSave($id){
+        
         $route = \Route::current();
 
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
             return '';
         if(Auth::check()){
-            $post = Post::find($post_id);
-            $this->authorize("save",[Auth::user(),$post]);
-            if($post != null){
-                DB::table("saves")->insert([
-                    'user_id' => 1,
-                    'post_id' => $post_id
-                ]);
-                return 'SUCCESS';
+            $post = Post::find($id);
+            if(Auth::user()->id != $post->user_id){
+                if($post != null){
+                    DB::table("saves")->insert([
+                        'user_id' => 1,
+                        'post_id' => $id
+                    ]);
+                    return 'SUCCESS';
+                }
             }
         }
         return '';
@@ -509,5 +519,49 @@ class PostController extends Controller
             }
         }
         return '';
+    }
+
+    public function popularComments(Request $request, $post_id){
+        $route = \Route::current();
+        if(!is_numeric($route->parameter('post_id')))
+            return "";
+        $post = Post::find($post_id);
+        if(!$post )
+            return "";
+        $user_id = 0;
+        if(Auth::check())
+            $user_id = Auth::user()->id;
+        $comments = Comment::getPostPopularComments($post_id);
+        return Comment::commentsAsHtml($comments,$user_id);
+
+
+    }
+
+    public function newerComments(Request $request, $post_id){
+        $route = \Route::current();
+        if(!is_numeric($route->parameter('post_id')))
+            return "";
+        $post = Post::find($post_id);
+        if(!$post )
+            return "";
+        $user_id = 0;
+        if(Auth::check())
+            $user_id = Auth::user()->id;
+        $comments = Comment::getPostComments($post_id,"desc");
+        return Comment::commentsAsHtml($comments,$user_id);
+    }
+
+    public function olderComments(Request $request, $post_id){
+        $route = \Route::current();
+        if(!is_numeric($route->parameter('post_id')))
+            return "";
+        $post = Post::find($post_id);
+        if(!$post )
+            return "";
+        $user_id = 0;
+        if(Auth::check())
+            $user_id = Auth::user()->id;
+        $comments = Comment::getPostComments($post_id,"asc");
+        return Comment::commentsAsHtml($comments,$user_id);
     }
 }
