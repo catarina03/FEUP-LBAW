@@ -342,11 +342,18 @@ hr.solid {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
 }
 
-.postsCards .card .savePost {
+.postsCards .card .savePost{
   position: absolute;
   top: -30px;
   right: -10px;
   color: #0c1d1c;
+}
+
+.postsCards .card .optionsPost {
+    position: absolute;
+    top: -30px;
+    right: -10px;
+    color: #0c1d1c;
 }
 
 .my-profile .postsCards .card .infoPosts {
@@ -357,6 +364,10 @@ hr.solid {
 
 .postsCards .card .savePost:hover {
   color: #ffc2ad;
+}
+
+.postsCards .card .optionsPost:hover {
+    color: #ffc2ad;
 }
 
 .postsCards .card .infoPosts {

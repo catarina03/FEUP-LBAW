@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AuthenticatedUser;
 use App\Models\Post;
+use App\Policies\PostPolicy;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -52,21 +53,36 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        //Verify if user is authenticated and if user is owner of post
+        $user_id = null;
+        if(Auth::check()){
+            $user_id = Auth::user()->id;
+        }
+        else{
+            return redirect('/');
+        }
+
         //verifica se é o dono do perfil se sim -> my profile, se nao userprofile
         $posts = Post::where('user_id', $id)->get();
         $nLikes = 0;
         foreach($posts as $post){
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
+            $post->thumbnail = "/images/".$post->thumbnail;
             $nLikes += $post->likes;
         }
 
         $nFollowers = DB::table("follow_user")->where("followed_user", $id)->get()->count();
         $nFollowing = DB::table("follow_user")->where("following_user", $id)->get()->count();
 
-        $user = AuthenticatedUser::find($post->user_id);
+        $user = AuthenticatedUser::find($id);
 
-        return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
+        if($user_id == $id){
+            return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0, 'user_id'=>$user_id, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
+        }
+        else {
+            return view('pages.userprofile', ['needsFilter' => 0, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
+        }
     }
 
     /**
@@ -189,7 +205,33 @@ class UserController extends Controller
      */
     public function update_photo(Request $request, AuthenticatedUser $authenticatedUser)
     {
+        $user = Auth::check();
+        if(!Auth::check()) return;
+
         //
+        $validator = Validator::make($request->all(),
+        [
+            'photo' => ['required', 'image', 'mimes:jpeg,jpg,png,gif']
+        ],
+        [
+            'photo.required' => 'A photo must be uploaded',
+            'photo.image' => 'A photo must be a jpeg,jpg,png,gif image'
+        ]);
+        if ($validator->fails()) {
+            return redirect(url()->previous())->withErrors($validator)->withInput();
+        }
+
+        // function assumes that the image is valid and verification was done before
+        $date = date('Y-m-d H:i:s');
+        $imageSalt = random_bytes(5);
+        $imageName = hash("sha256", $request->file('thumbnail')->getFilename() . $date . $authenticatedUser->id . $imageSalt) . "." . $request->file('thumbnail')->getClientOriginalExtension();
+
+        unlink(public_path('images/users'.$authenticatedUser->profile_photo));
+
+        $request->thumbnail->move(public_path('images/users'), $imageName);
+        AuthenticatedUser::where('id', $authenticatedUser->id)->update(['profile_photo'=>$imageName]);
+
+        $authenticatedUser->profile_photo = $imageName;
     }
 
 
