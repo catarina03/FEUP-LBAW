@@ -1,6 +1,6 @@
-<script type="text/javascript" src="{{ URL::asset('js/filterbox.js') }}" defer></script>
-<div class="custom-filterBox col-md-3 d-lg-block d-none text-center">
-    <div class="container">
+<script type="text/javascript" src="{{ URL::asset('js/filterBox.js') }}" defer></script>
+<div class="custom-filterBox col-md-3  d-flex text-center justify-content-center">
+    <div class="container  ">
         <h4> Search </h4>
         <form class="pt-2" action="" method="get">
             <div class="input-group rounded">
@@ -11,7 +11,7 @@
                         </span>
             </div>
             <select class="form-select mt-4" id="type" aria-label="Select a type" style="cursor:pointer;">
-                <option selected>Select a type</option>
+                <option selected value ="">Select a type</option>
                 <option value="News">News</option>
                 <option value="Article">Article</option>
                 <option value="Review">Review</option>

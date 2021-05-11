@@ -2,8 +2,10 @@
 
 let pencil = document.querySelector(".my-profile .pencil-icon");
 let save = document.querySelector(".my-profile .save-form");
+/*
 let photo = document.querySelector("img.rounded-circle.profile-avatar");
 let user_id = document.querySelector("input.page-info.user_id");
+ */
 
 if (pencil != null) {
   pencil.addEventListener("click", function () {
@@ -42,6 +44,7 @@ if (save != null) {
   });
 }
 
+/*
 if(photo != null){
     photo.addEventListener("submit", function(e){
         e.preventDefault()
@@ -90,5 +93,7 @@ function updateProfilePhoto(photoResponse){
     addLoadMore(postDiv)
 
     */
+/*
     photo.src = photoResponse;
 }
+ */

@@ -2,6 +2,7 @@
 
 @section('content')
 <script type="text/javascript" src="{{ URL::asset('js/myprofile.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/update_profile_photo.js') }}" defer></script>
 <div class="container-fluid my-profile justify-content-center mx-auto">
     <div class="row justify-content-start profile my-profile g-0">
         <div class="col-2 d-none d-xl-flex d-flex-column justify-content-center"

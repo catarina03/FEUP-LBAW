@@ -2,7 +2,7 @@
     <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center ">
         @if(Auth::user()->profile_photo != null)
             <img class="rounded-circle profile-avatar"
-                 src="{{ URL::asset($photo) }}"
+                 src="{{ URL::asset('images/users/'.$photo) }}"
                  width="200" height="200" alt="avatar">
         @else
             <img class="rounded-circle profile-avatar"

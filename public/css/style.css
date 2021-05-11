@@ -546,7 +546,9 @@ hr.solid {
 }
 
 /* HOME PAGE */
-
+.custom-filterBox{
+    align-content: center;
+}
 .custom-filterBox .container {
   background-color: #0c1d1c;
   max-width: fit-content;
@@ -554,6 +556,7 @@ hr.solid {
   padding: 2em;
   color: #fcf3ee;
   border-radius: 1%;
+  position: fixed;
 }
 
 .custom-filterBox input.filterButton {

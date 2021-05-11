@@ -49,7 +49,6 @@ class Post extends Model
 
     public static function getTopPosts($page){
         $offset = $page * 15;
-
         if(Auth::check()){
             $user = Auth::user();
             $user_id = $user->id;
@@ -63,7 +62,8 @@ class Post extends Model
             or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
             order by n_views desc
             OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
-               ,['user' => $user_id, 'offset' => $offset] );
+               ,['user' => $user_id, 'offset' => $offset]);
+
     }
 
     public static function getHotPosts($page){
@@ -79,13 +79,15 @@ class Post extends Model
             DB::raw("select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
             or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
-            order by n_views desc
-            OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
+            order by id desc
+             OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
                ,['user' => $user_id, 'offset' => $offset]);
+
     }
 
     public static function getNewPosts($page){
         $offset = $page * 15;
+
         if(Auth::check()){
             $user = Auth::user();
             $user_id = $user->id;
@@ -99,7 +101,8 @@ class Post extends Model
             or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
             order by created_at desc
             OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
-               ,['user' => $user_id, 'offset' => $offset]);
+            ,['user' => $user_id, 'offset' => $offset]);
+
     }
 
     public static function getSlideShowPosts(){ //ir buscar os 3 mais recentes com mais gostos

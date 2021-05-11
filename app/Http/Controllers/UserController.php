@@ -207,17 +207,19 @@ class UserController extends Controller
      */
     public function update_photo(Request $request, AuthenticatedUser $authenticatedUser)
     {
+       // dd($request);
+
         $user = Auth::check();
         if(!Auth::check()) return;
 
         //
         $validator = Validator::make($request->all(),
         [
-            'photo' => ['required', 'image', 'mimes:jpeg,jpg,png,gif']
+            'avatar' => ['required', 'image', 'mimes:jpeg,jpg,png,gif']
         ],
         [
-            'photo.required' => 'A photo must be uploaded',
-            'photo.image' => 'A photo must be a jpeg,jpg,png,gif image'
+            'avatar.required' => 'A photo must be uploaded',
+            'avatar.image' => 'A photo must be a jpeg,jpg,png,gif image'
         ]);
         if ($validator->fails()) {
             return redirect(url()->previous())->withErrors($validator)->withInput();
@@ -226,13 +228,18 @@ class UserController extends Controller
         // function assumes that the image is valid and verification was done before
         $date = date('Y-m-d H:i:s');
         $imageSalt = random_bytes(5);
-        $imageName = hash("sha256", $request->file('thumbnail')->getFilename() . $date . $authenticatedUser->id . $imageSalt) . "." . $request->file('thumbnail')->getClientOriginalExtension();
+        $imageName = hash("sha256", $request->file('avatar')->getFilename() . $date . $authenticatedUser->id . $imageSalt) . "." . $request->file('avatar')->getClientOriginalExtension();
 
-        unlink(public_path('images/users'.$authenticatedUser->profile_photo));
+        if($authenticatedUser->profile_photo != null && $authenticatedUser->profile_photo != 'abs.jpeg'){
+            unlink(public_path('images/users/'.$authenticatedUser->profile_photo));
+        } //TODO: TEST SEM O FILE ABS.JPEG
 
-        dd($request);
 
-        $request->profile_photo->move(public_path('images/users'), $imageName);
+//        dd($request);
+
+        $request->avatar->move(public_path('images/users'), $imageName);
+      //  $request->profile_photo->move($request->avatar, public_path('images/users').$imageName);
+
         AuthenticatedUser::where('id', $authenticatedUser->id)->update(['profile_photo'=>$imageName]);
         $authenticatedUser->profile_photo = $imageName;
 
