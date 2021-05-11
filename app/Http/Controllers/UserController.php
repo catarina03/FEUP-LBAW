@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\AuthenticatedUser;
 use App\Models\Post;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -50,7 +52,7 @@ class UserController extends Controller
      * Display the User profile
      *
      * @param AuthenticatedUser $authenticatedUser
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View|Response
+     * @return Application|Factory|View|Response
      */
     public function show($id)
     {
@@ -68,7 +70,7 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param AuthenticatedUser $authenticatedUser
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View|Response
+     * @return Application|Factory|View|Response
      */
     public function edit(AuthenticatedUser $authenticatedUser)
     {
@@ -82,17 +84,17 @@ class UserController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function search(Request $request): JsonResponse
+    public function searchRoles(Request $request): JsonResponse
     {
-
         $search = $request->input("query");
 
         if (!empty($search))
-            $roles = AuthenticatedUser::query()->select("id", "username", "authenticated_user_type")->orderBy("authenticated_user_type")->where('username', 'LIKE', "%{$search}%")->get();
+            $roles = AuthenticatedUser::query()->select("id", "username", "authenticated_user_type")->where('username', 'LIKE', $search.'%')->orderBy("authenticated_user_type")->get();
         else
             $roles = AuthenticatedUser::query()->select("id", "username", "authenticated_user_type")->orderBy("authenticated_user_type")->get();
 
-        return response()->json($roles);
+        $view = view('partials.roles_list', ['roles' => $roles])->render();
+        return response()->json($view);
     }
 
     /**

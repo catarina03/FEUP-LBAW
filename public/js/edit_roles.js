@@ -31,8 +31,8 @@ function edit_role(event) {
 let roles_list = document.querySelector(".roles-list")
 let search = document.getElementById("search")
 let searchButton = document.getElementById("search-addon")
-if(search != null) search.addEventListener('keyup', search_username)
-if(searchButton != null) searchButton.addEventListener('click', search_username)
+if (search != null) search.addEventListener('keyup', search_username)
+if (searchButton != null) searchButton.addEventListener('click', search_username)
 
 function search_username(event) {
     event.preventDefault()
@@ -48,8 +48,7 @@ function search_username(event) {
 function sendRequest(url) {
     let request = new XMLHttpRequest()
     request.open('get', url, true)
-    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.setRequestHeader('Accept', 'application/json')
     request.onreadystatechange = function () {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
@@ -63,5 +62,12 @@ function sendRequest(url) {
 }
 
 function updateRolesList(response) {
-    alert(response)
+    const roles = JSON.parse(response)
+    let spinner = document.querySelector(".spinner")
+    spinner.classList.add("d-none")
+    spinner.classList.remove("d-flex")
+    if(roles === "") {
+        alert("There is no match!")
+    }
+    else roles_list.innerHTML = roles
 }
