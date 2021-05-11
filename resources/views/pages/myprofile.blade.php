@@ -17,47 +17,9 @@
         <div class="col-xl-8 col-12 my-profile-div">
             <div class="row justify-content-center">
                 <div class="col-12 d-block">
-                    <div class="row justify-content-center d-flex my-3 position-relative ">
-                        <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center ">
-                            <img class="rounded-circle profile-avatar"
-                                src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
-                                width="200" height="200" alt="avatar">
-                            {{--
-                            {{ Form::open(array('url' => 'api/user/'.Auth::user()->id.'/edit_photo', 'method' => 'PUT', 'data-toggle'=>'tooltip', 'data-placement'=>'bottom', 'title'=>'Update Profile Photo')) }}
-                                <div class="form-group">
-                                    <label for="avatar" class="position-absolute d-inline corner-icons"
-                                           style="transform:translate(-3em, 14em);"><svg xmlns="http://www.w3.org/2000/svg"
-                                                                                         width="40" height="40" fill="currentColor" class="bi bi-camera-fill"
-                                                                                         viewBox="0 0 16 16">
-                                            <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                            <path
-                                                d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
-                                        </svg></label>
-                                    <input type="file" class="form-control-file" accept=".jpeg,.jpg,.png,.gif"
-                                           name="avatar" id="avatar" onchange="this.form.submit();" hidden>
-                                </div>
-                            {{ Form::close() }}
-                            --}}
 
-                            <form action="{{ url("api/user/".Auth::user()->id."/edit_photo") }}" method="post" data-toggle="tooltip" data-placement="bottom"
-                                title="Update Profile Photo">
-                                @method('PUT')
-                                <div class="form-group">
-                                    <label for="avatar" class="position-absolute d-inline corner-icons"
-                                        style="transform:translate(-3em, 14em);"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="40" height="40" fill="currentColor" class="bi bi-camera-fill"
-                                            viewBox="0 0 16 16">
-                                            <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                            <path
-                                                d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z" />
-                                        </svg></label>
-                                    <input type="file" class="form-control-file" accept=".jpeg,.jpg,.png,.gif"
-                                        name="avatar" id="avatar" onchange="this.form.submit();" hidden>
-                                </div>
-                            </form>
-                        </div>
+                    @include('partials.profilephoto')
 
-                    </div>
                     <div class="row mt-1 d-flex justify-content-center">
                         <div class="card card-profile col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5" style="border-radius:2%;">
                             <div class="row justify-content-center">
@@ -91,40 +53,9 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                                <div class="row justify-content-center">
-                                    <div class="card col-lg-6 col-sm-12 d-flex justify-content-center bio">
-                                        <div class="row position-relative" data-toggle="tooltip" data-placement="bottom"
-                                            title="Edit Bio">
-                                            <a
-                                                class="position-absolute top-0 end-0 translate-middle-y d-inline corner-icons pencil-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                    fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                                </svg>
-                                            </a>
-                                            <div class="row card-body bio ">
-                                                <div class="col-12  text-center d-flex">
-                                                    {{$user->bio}}
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                    </div>
-                                    <form action="#" method="post" class=" col-lg-12 position-relative ">
-                                        <div class="row position-relative d-none  justify-content-center bio-form">
-                                            <div class="form-group row col-lg-6 justify-content-end">
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                                    style="resize:none;"></textarea>
-                                                <button type="submit"
-                                                    class="btn btn-sm col-2 me-2 mt-1 my-profile-features save-button save-form">Save</button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                </div>
+                                @include('partials.profilebio')
 
                                 <div class="row justify-content-center mt-2">
                                     <div class="col-lg-2 col-sm-4  d-flex justify-content-center">

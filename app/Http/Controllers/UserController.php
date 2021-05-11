@@ -77,11 +77,13 @@ class UserController extends Controller
 
         $user = AuthenticatedUser::find($id);
 
+        $photo = 'images/users/'.Auth::user()->profile_photo;
+
         if($user_id == $id){
-            return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0, 'user_id'=>$user_id, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
+            return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0, 'user_id'=>$user_id, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
         }
         else {
-            return view('pages.userprofile', ['needsFilter' => 0, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
+            return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
         }
     }
 
@@ -228,10 +230,51 @@ class UserController extends Controller
 
         unlink(public_path('images/users'.$authenticatedUser->profile_photo));
 
-        $request->thumbnail->move(public_path('images/users'), $imageName);
-        AuthenticatedUser::where('id', $authenticatedUser->id)->update(['profile_photo'=>$imageName]);
+        dd($request);
 
+        $request->profile_photo->move(public_path('images/users'), $imageName);
+        AuthenticatedUser::where('id', $authenticatedUser->id)->update(['profile_photo'=>$imageName]);
         $authenticatedUser->profile_photo = $imageName;
+
+        //return $authenticatedUser->profile_photo;
+        return view('partials.profilephoto', ['photo'=>$imageName]);
+    }
+
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
+     * @return \Illuminate\Http\Response
+     */
+    public function edit_bio(Request $request, AuthenticatedUser $authenticatedUser)
+    {
+        $user = Auth::check();
+        if(!Auth::check()) return;
+
+        //
+        $validator = Validator::make($request->all(),
+        [
+            'bio-content' => ['required', 'string', 'max:120']
+        ],
+        [
+            'bio-content.required' => 'The bio must be present',
+            'bio-content.string' => 'The bio must be a string',
+            'bio-content.max' => 'The bio must have 120 characters at max'
+
+        ]);
+        if ($validator->fails()) {
+            return redirect(url()->previous())->withErrors($validator)->withInput();
+        }
+
+      //  dd($request);
+
+        AuthenticatedUser::where('id', $authenticatedUser->id)->update(['bio'=>$request->input('bio-content')]);
+
+        //return $authenticatedUser->profile_photo;
+        return view('partials.profilebio', ['user'=>$authenticatedUser]);
     }
 
 
