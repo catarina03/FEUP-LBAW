@@ -179,7 +179,8 @@ class Comment extends Model
                             <div class=\"col-auto p-0 m-0\">
                                 <h3 class=\"post-page-comment-reply-body m-0\">" . nl2br(htmlspecialchars($thread['comment']->content)) . "</h3>
                             </div>" ."<div class=\"col-auto p-0 m-0 ms-auto\">".
-                            "<span class=\"comment_id\" hidden>{$thread['comment']->id}</span>".
+                            "<span class=\"comment_id THREADID\" hidden>{$thread['comment']->id}</span>
+                            <span class=\"parent_id\" hidden>{$comment['comment']->id}</span>".
                             ($user_id==$thread['comment']->user_id?
                             "<div class=\"dropdown\">
                             <a class=\"btn fa-cog-icon\"  style=\"font-size:30%;\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
