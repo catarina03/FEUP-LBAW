@@ -69,5 +69,12 @@ function updateRolesList(response) {
     if(roles === "") {
         alert("There is no match!")
     }
-    else roles_list.innerHTML = roles
+    else {
+        roles_list.innerHTML = roles
+        let roles_items = document.getElementsByClassName("role-item")
+        if (roles_items != null) {
+            for (let i = 0; i < roles_items.length; i++)
+                roles_items[i].addEventListener("click", edit_role)
+        }
+    }
 }

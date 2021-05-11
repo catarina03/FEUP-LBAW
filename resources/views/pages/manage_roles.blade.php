@@ -7,7 +7,7 @@
                 <h1 class="text-center manage_roles-title mt-1 m-3">Manage Roles</h1>
                 <div class="roles-card pt-2 row" style="background-color:#8ab5b1; border:none;">
                     <div class="input-group rounded m-0 p-0">
-                        <input type="search" class="form-control" id="search"
+                        <input type="text" class="form-control" id="search"
                                placeholder="Search a person by username to edit their role" aria-label="Search"
                                aria-describedby="search-addon"/>
                         <button class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
