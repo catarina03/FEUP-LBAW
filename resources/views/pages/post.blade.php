@@ -10,6 +10,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/edit_comment.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/sort_comments.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/show_threads.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/comments_aux.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>
@@ -155,7 +156,7 @@
                             <h3 class="post-page-comment-body m-0">{!! nl2br(e($comment['comment']->content)) !!}</h3>
                         </div>
                         <div class="col-auto p-0 m-0 ms-auto">
-                            <span class="comment_id" hidden>{{$comment['comment']->id}}</span>
+                            <span class="comment_id COMMENTID" hidden>{{$comment['comment']->id}}</span>
                             
                                
                             
@@ -206,7 +207,8 @@
                                             <h3 class="post-page-comment-reply-body m-0">{{$thread['comment']->content}}</h3>
                                         </div>
                                         <div class="col-auto p-0 m-0 ms-auto">
-                                            <span class="comment_id" hidden>{{$thread['comment']->id}}</span>
+                                            <span class="comment_id THREADID" hidden>{{$thread['comment']->id}}</span>
+                                            <span class="parent_id" hidden>{{$comment['comment']->id}}</span>
                                             @if($user_id==$thread['comment']->user_id)
                                             
                                             <div class="dropdown">
@@ -257,7 +259,7 @@
                             </div>
                             <div class="row px-0 mx-0 justify-content-end">
                                 <div class="col-auto px-0">
-                                    <span class="thread_comment_id" hidden>{{$comment['comment']->id}}</span>
+                                    <span class="thread_comment_id FODASSE2" hidden>{{$comment['comment']->id}}</span>
                                     <button class="post-page-comment-button btn m-0 mt-1 add_thread_button">Comment</button>
                                 </div>
                             </div>

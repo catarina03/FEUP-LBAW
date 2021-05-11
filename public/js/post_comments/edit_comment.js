@@ -135,7 +135,8 @@ function confirmEdit(comment_id,container){
                                 <div class="col-auto p-0 m-0">
                                     <h3 class="post-page-comment-reply-body m-0">` + escapeHtml(thread['comment']['content']) + `</h3>
                                 </div><div class=\"col-auto p-0 m-0 ms-auto\">`+
-                                `<span class="comment_id" hidden>${thread['comment']['id']}</span>`
+                                `<span class="comment_id THREADID" hidden>${thread['comment']['id']}</span>
+                                <span class="parent_id" hidden>${comment['comment']['id']}</span>`
                                     +
                                 (userID.innerText == thread['comment']['user_id']?
                                 `<div class=\"dropdown\">
@@ -199,7 +200,7 @@ function confirmEdit(comment_id,container){
             for(let k = 0;k<new_elements.length;k++){
                 let temp = new_elements[k];
                 let comment_container = temp.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-                let local_cid = temp.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0].innerText;
+                let local_cid = temp.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0];
                 temp.addEventListener("click",function(e){
                     e.preventDefault();
                     deleteComment(local_cid,comment_container);
@@ -208,6 +209,7 @@ function confirmEdit(comment_id,container){
             
         }
         else{
+            let extra_temp = container.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0].innerText;
             result+=`<div class="row justify-content-center px-4 mx-1 thread-section">
             <div class="col-10 mx-0 px-0">
                 <div class="row justify-content-end comment-replies mx-0 px-0">
@@ -216,7 +218,8 @@ function confirmEdit(comment_id,container){
                             <div class="col-auto p-0 m-0">
                                 <h3 class="post-page-comment-reply-body m-0">` + escapeHtml(comment['comment']['content']) + `</h3>
                             </div><div class=\"col-auto p-0 m-0 ms-auto\">`+
-                            `<span class="comment_id" hidden>${comment['comment']['id']}</span>`
+                            `<span class="comment_id THREADID" hidden>${comment['comment']['id']}</span>
+                            <span class="parent_id" hidden>${extra_temp}</span>`
                             +
                             (userID.innerText == comment['comment']['user_id']?`<div class=\"dropdown\">
                             <a class=\"btn fa-cog-icon\"  style=\"font-size:30%;\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
@@ -255,7 +258,7 @@ function confirmEdit(comment_id,container){
         for(let k = 0;k<new_elements.length;k++){
             let temp = new_elements[k];
             let comment_container = temp.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-            let local_cid = temp.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0].innerText;
+            let local_cid = temp.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0];
             temp.addEventListener("click",function(e){
                 e.preventDefault();
                 deleteComment(local_cid,comment_container);

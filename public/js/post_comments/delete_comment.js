@@ -8,7 +8,7 @@ function addDeleteCommentListeners(){
                 element.parentNode.replaceChild(elementClone,element);
                 let parent = elementClone.parentNode;
                 let container = parent.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-                let comment_id = parent.parentNode.parentNode.getElementsByClassName("comment_id")[0].innerText;
+                let comment_id = parent.parentNode.parentNode.getElementsByClassName("comment_id")[0];
                 elementClone.addEventListener("click",function(e){
                     e.preventDefault();
                     deleteComment(comment_id,container);
@@ -22,12 +22,17 @@ function deleteComment(comment_id,container){
     var getUrl = window.location;
     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
     var request = new XMLHttpRequest();
-    console.log(getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id);
-    request.open('delete', getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id, true);
+    console.log(getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id.innerText);
+    request.open('delete', getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id.innerText, true);
     request.onload = function (){
         result = "";
         if(request.responseText == "SUCCESS"){
             container.innerHTML = "";
+            if(comment_id.classList.contains("THREADID")){
+                let l = comment_id.parentNode.getElementsByClassName("parent_id")[0];
+                updateThreadsNo(-1,l.innerText);
+
+            }
         }
         else{
             alert("Failed to delete comment!");
