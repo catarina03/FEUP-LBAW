@@ -11,9 +11,8 @@ class PagesController extends Controller
 {
     public function home()
     {
-        $p = Post::getTopPosts();
-        $posts = Post::whereIn('id',$p)->forPage(1, 15)->get();
-        $posts = $this->getPostsInfo($posts);
+        $p = Post::getTopPosts(1);
+        $posts = $this->getPostsInfo($p);
         $slideshow = $this->slideshow();
 
         return view('pages.homepage', ['user' => 'system_manager', 'needsFilter' => 0, 'posts'=>$posts,'slideshow'=>$slideshow]);
@@ -21,26 +20,18 @@ class PagesController extends Controller
 
     public function slideshow(){
         $posts = Post::getSlideShowPosts();
-
-        forEach($posts as $post){
-            $post->thumbnail = "/images/".$post->thumbnail;
-            $post->author = AuthenticatedUser::find($post->user_id)->name;
-        }
-        return $posts;
+        return $this->getPostsInfo($posts);
     }
 
-    public function about()
-    {
+    public function about(){
         return view('pages.about', ['user' => 'visitor', 'needsFilter' => 0] );
     }
 
-    public function faq()
-    {
+    public function faq(){
         return view('pages.faq', ['user' => 'visitor', 'needsFilter' => 0] );
     }
 
-    public function support()
-    {
+    public function support(){
         return view('pages.support', ['user' => 'visitor', 'needsFilter' => 0] );
     }
 
@@ -64,25 +55,22 @@ class PagesController extends Controller
     }
 
     public function list($homepageFilters){
-        if($homepageFilters == "new") $p = Post::getNewPosts();
-        else if($homepageFilters == "hot") $p = Post::getHotPosts();
-        else $p = Post::getTopPosts();
+        if($homepageFilters == "new") $p = Post::getNewPosts(1);
+        else if($homepageFilters == "hot") $p = Post::getHotPosts(1);
+        else $p = Post::getTopPosts(1);
 
-        $posts = Post::whereIn('id',$p)->forPage(0, 15)->get();
-        $posts = $this->getPostsInfo($posts);
+        $posts = $this->getPostsInfo($p);
 
         return view('partials.allcards', ['posts' => $posts]);
 
     }
 
     public function loadMoreHomepage($filters, $page){
+        if($filters == "new") $p = Post::getNewPosts($page);
+        else if($filters == "hot") $p = Post::getHotPosts($page);
+        else $p = Post::getTopPosts($page);
 
-        if($filters == "new") $p = Post::getNewPosts();
-        else if($filters == "hot") $p = Post::getHotPosts();
-        else $p = Post::getTopPosts();
-
-        $posts = Post::whereIn('id',$p)->forPage($page, 15)->get();
-        $posts = $this->getPostsInfo($posts);
+        $posts = $this->getPostsInfo($p);
 
         return view('partials.allcards', ['posts' => $posts]);
     }

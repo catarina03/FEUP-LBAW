@@ -120,12 +120,26 @@ function loadHandler(e){
     e.preventDefault()
 
     let pag = document.querySelector('.homepage .pagination')
-    if(pag != null) pag.parentNode.removeChild(pag)
+    let parent = pag.parentNode
+    if(pag != null) parent.removeChild(pag)
+
+    let outterDiv = document.createElement('div')
+    outterDiv.classList = "d-flex justify-content-center"
+    let spinnerDiv = document.createElement('div')
+    spinnerDiv.classList = "spinner-border spinner-border-sm text-center"
+    let spinner = document.createElement('span')
+    spinner.classList = "visually-hidden"
+    spinner.innerText = "Loading..."
+
+    spinnerDiv.appendChild(spinner)
+    outterDiv.appendChild(spinnerDiv)
+    parent.appendChild(outterDiv)
 
     const loadRequest = new XMLHttpRequest()
     loadRequest.onreadystatechange = function(){
         if(loadRequest.readyState === XMLHttpRequest.DONE){
             if(loadRequest.status === 200){
+                parent.removeChild(outterDiv)
                 let posts = loadRequest.responseText
                 let postDiv = document.querySelector('.postsCards')
                 let newDiv = document.createElement('div')
