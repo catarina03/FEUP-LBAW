@@ -22,7 +22,7 @@
             <h4> Search </h4>
             <form class="pt-2" action="" method="get">
                 <div class="input-group rounded">
-                    <input type="search" id="search" class="form-control" placeholder="Search" aria-label="Search"
+                    <input type="text" id="search" class="form-control" placeholder="Search" aria-label="Search"
                         aria-describedby="search-addon" />
                     <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
                         <i class="fas fa-search"></i>
@@ -61,7 +61,10 @@
                     </label>
                 </div>
 
-                <input type="submit" class="filterButton w-100 mt-4 p-1" value="Filter">
+                <button type="button" class="filterButton w-100 mt-4 p-1">
+                    <i class="fa fa-circle-notch fa-spin d-none search-spinner"></i>
+                    <span class="search-span">Search</span>
+                </button>
             </form>
         </div>
     </div>

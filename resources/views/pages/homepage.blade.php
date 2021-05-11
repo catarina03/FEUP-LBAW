@@ -6,21 +6,21 @@
 <div class="homepage row g-0" style="margin-top: 5em; margin-bottom:7em;">
     <div class="homepage-view col-lg-2 col-12 pt-lg-5 pt-2 ps-lg-5">
         <nav class="nav homepage-navbar w-100 d-lg-block d-flex justify-content-center">
-            <a class="nav-link active fs-5" id="top" href=''><img src="images/bar-chart.svg" height="25">
+            <a class="nav-link active fs-5 pe-5" id="top" href=''><img src="images/bar-chart.svg" height="25">
                 Top
-                <div class="spinner-border spinner-border-sm d-none topLoad" role="status">
+                <div class="spinner-border spinner-border-sm d-none topLoad m-0 p-0" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </a>
-            <a class="nav-link fs-5" id="hot" href=''><img src="images/flame.svg" height="25">
+            <a class="nav-link fs-5 pe-5" id="hot" href=''><img src="images/flame.svg" height="25">
                 Hot
-                <div class="spinner-border spinner-border-sm d-none  hotLoad" role="status">
+                <div class="spinner-border spinner-border-sm d-none  hotLoad m-0 p-0" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </a>
-            <a class="nav-link fs-5" id="new" href="/"><img src="images/calendar.svg" height="25">
+            <a class="nav-link fs-5 pe-5" id="new" href="/"><img src="images/calendar.svg" height="25">
                 New
-                <div class="spinner-border spinner-border-sm d-none newLoad" role="status">
+                <div class="spinner-border spinner-border-sm d-none newLoad m-0 p-0" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </a>
@@ -30,7 +30,11 @@
         @include('partials.slider_card', ['posts' => $slideshow])
         <div class="postsCards row">
             @each('partials.card', $posts, 'post')
-            @include('partials.pagination')
+            @if(count($posts) > 0)
+                @include('partials.pagination')
+            @else
+                <p>No posts</p>
+            @endif
         </div>
     </div>
     @include('partials.filterbox')

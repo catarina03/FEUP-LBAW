@@ -548,7 +548,7 @@ hr.solid {
   position: fixed;
 }
 
-.custom-filterBox input.filterButton {
+.custom-filterBox .filterButton {
   background-color: #8ab5b1;
   border: none;
   border-radius: 2%;
@@ -556,7 +556,7 @@ hr.solid {
   font-weight: bold;
 }
 
-.custom-filterBox input.filterButton:hover {
+.custom-filterBox .filterButton:hover {
   color: #307371;
 }
 

@@ -9,8 +9,7 @@ use Auth;
 
 class PagesController extends Controller
 {
-    public function home()
-    {
+    public function home(){
         $p = Post::getTopPosts(1);
         $posts = $this->getPostsInfo($p);
         $slideshow = $this->slideshow();
@@ -18,9 +17,7 @@ class PagesController extends Controller
     }
 
     public function slideshow(){
-        $posts = Post::getSlideShowPosts();
-        $posts = $this->getPostsInfo($p);
-        return $posts;
+        return $posts = $this->getPostsInfo(Post::getSlideShowPosts());
     }
 
     public function about(){
@@ -109,7 +106,7 @@ class PagesController extends Controller
 
         return json_encode($final_filters);*/
 
-        $posts = Post::where('category', 'music')->forPage(0,15)->get();
+        $posts = Post::where('category', 'music')->paginate(15)->get();
         $posts = $this->getPostsInfo($posts);
 
         return  json_encode(array('posts'=> view('partials.allcards', ['posts' => $posts]), 'number_res'=>count($posts)));
@@ -144,6 +141,12 @@ class PagesController extends Controller
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
+            if(Auth::check()){
+                $save = DB::table("saved_by")->where("post_id",$post->id)->where("authenticatedUser_id", Auth::user()->id)->get();
+                if($save != null) $post->saved = true;
+                else $post->saved = false;
+            }
+            else $post->saved = false;
         }
         return $posts;
     }

@@ -7,7 +7,7 @@
             <div>
                 @if($post->category == "tv show")
                 <a class="black-link categoryTag" href="category/TVShow">
-                @else 
+                @else
                 <a class="black-link categoryTag" href="category/{{ucfirst($post->category)}}">
                 @endif
                     <h6>{{ucfirst($post->category)}}</h6>
@@ -15,7 +15,11 @@
             </div>
             @auth
             <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
-                <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                @if($post->saved == false)
+                    <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                @else
+                    <i class="bi bi-bookmark-check-fill" style="font-size:3em;"></i>
+                @endif
             </div>
             @endauth
             <div class="infoPosts">

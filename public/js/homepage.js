@@ -7,8 +7,8 @@ if(t != null && loadT != null){
         e.preventDefault()
         filtering = "top"
         displaySpinner(true, "top")
+        setActive(t, hot, new_filter)
         makeRequest(filtering)
-        setActive(this, hot, new_filter)
     });
 }
 
@@ -19,8 +19,8 @@ if(hot != null && loadH != null){
         e.preventDefault()
         filtering = "hot"
         displaySpinner(true, "hot")
+        setActive(hot,t,new_filter)
         makeRequest(filtering)
-        setActive(this,t,new_filter)
     });
 }
 
@@ -32,13 +32,14 @@ if(new_filter != null && loadN != null){
         e.preventDefault()
         filtering = "new"
         displaySpinner(true, "new")
+        setActive(new_filter, t, hot)
         makeRequest(filtering)
-        setActive(this, t, hot)
+
     });
 }
 
 function setActive(current, firstNotActive, secondNotActive){
-    if(current.classList.contains('active')) current.classList.add('active')
+    if(!current.classList.contains('active')) current.classList.add('active')
     if(firstNotActive.classList.contains('active')) firstNotActive.classList.remove('active')
     if(secondNotActive.classList.contains('active')) secondNotActive.classList.remove('active')
 }
@@ -121,7 +122,7 @@ function loadHandler(e){
 
     let pag = document.querySelector('.homepage .pagination')
     let parent = pag.parentNode
-    if(pag != null) parent.removeChild(pag)
+    parent.removeChild(pag)
 
     let outterDiv = document.createElement('div')
     outterDiv.classList = "d-flex justify-content-center"

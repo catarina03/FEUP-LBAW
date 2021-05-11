@@ -26,10 +26,12 @@ if(categoryFilter != null){
 if(advancedSearchFilter != null){
     advancedSearchFilter.addEventListener('click', (e) => {
         e.preventDefault()
+        let spin = addSpinner()
         getFilters()
         const filterRequest = new XMLHttpRequest()
         filterRequest.onreadystatechange = function(){
             if(filterRequest.readyState === XMLHttpRequest.DONE){
+                removeSpinner(spin)
                 if(filterRequest.status === 200){
                     let posts = JSON.parse(filterRequest.responseText)
                     updateAdvancedSearch(posts)
@@ -54,7 +56,6 @@ let tagFollowCheck = document.querySelector('#checkTags')
 
 function getFilters(){
     filters = {}
-
     let search = searchElem.value
     let category = null
     if(categorySelect != null) category = categorySelect.options[categorySelect.selectedIndex].value
@@ -67,6 +68,32 @@ function getFilters(){
     let tagFollow = false
     if(peopleFollowCheck!=null) peopleFollow = peopleFollowCheck.checked
     if(tagFollowCheck != null) tagFollow = tagFollowCheck.checked
+
+    let today = new Date()
+    if(startDate !== ""){
+        let minDate = new Date(startDate)
+        if(minDate > today){
+            alert("Start date must be before today")
+            console.log("here2")
+            return -1
+        }
+        if(endDate !== ""){
+            let maxDate = new Date(endDate)
+            if(minDate >=  maxDate){
+                alert("End date must be greater than start date")
+                console.log("here1")
+                return -1
+            }
+        }
+    }
+    if(endDate !== ""){
+        let maxDate = new Date(endDate)
+        if(maxDate > today){
+            alert("End date must be before today")
+            console.log("here3")
+            return -1
+        }
+    }
 
 
     if(search !== "") filters['search'] = search
@@ -85,8 +112,8 @@ function getFilters(){
 }
 
 function redirectWithFilters(){
-    getFilters()
-    window.location = "search/filters?" + encodeForAjax(filters)
+    addSpinner()
+    if(getFilters() !== -1) window.location = "search/filters?" + encodeForAjax(filters)
 }
 
 
@@ -124,5 +151,22 @@ function onLoad(){
     url.searchParams.get('peopleFollow') === "true"? peopleFollowCheck.checked = true: peopleFollowCheck.checked = false
 }
 
+
+function addSpinner(){
+    let searchspan = document.querySelector('.search-span')
+    searchspan.remove()
+    let s = document.querySelector('.search-spinner')
+    s.classList.remove('d-none')
+    s.classList.add('d-inline-block')
+    return s;
+}
+
+function removeSpinner(s){
+    s.classList.remove('d-inline-block')
+    s.classList.add('d-none')
+
+    let b = document.querySelector('.filterButton')
+    b.innerHTML = b.innerHTML + '<span class=\"search-span\">Search</span>'
+}
 
 
