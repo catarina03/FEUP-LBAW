@@ -14,25 +14,25 @@ class PagesController extends Controller
         $p = Post::getTopPosts(1);
         $posts = $this->getPostsInfo($p);
         $slideshow = $this->slideshow();
-
-        return view('pages.homepage', ['user' => 'system_manager', 'needsFilter' => 0, 'posts'=>$posts,'slideshow'=>$slideshow]);
+        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow]);
     }
 
     public function slideshow(){
         $posts = Post::getSlideShowPosts();
-        return $this->getPostsInfo($posts);
+        $posts = $this->getPostsInfo($p);
+        return $posts;
     }
 
     public function about(){
-        return view('pages.about', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.about', ['needsFilter' => 0] );
     }
 
     public function faq(){
-        return view('pages.faq', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.faq', ['needsFilter' => 0] );
     }
 
     public function support(){
-        return view('pages.support', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.support', ['needsFilter' => 0] );
     }
 
     public function supportRequest(){
@@ -50,7 +50,7 @@ class PagesController extends Controller
         $posts = $this->getPostsInfo($posts);
         if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts]);
 
-        return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => $category, 'posts' =>$posts]);
+        return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts]);
 
     }
 
