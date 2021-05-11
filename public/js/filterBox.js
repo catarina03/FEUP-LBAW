@@ -33,6 +33,7 @@ if(advancedSearchFilter != null){
             if(filterRequest.readyState === XMLHttpRequest.DONE){
                 removeSpinner(spin)
                 if(filterRequest.status === 200){
+                    console.log("hi")
                     let posts = JSON.parse(filterRequest.responseText)
                     updateAdvancedSearch(posts)
                 }
@@ -46,13 +47,14 @@ if(advancedSearchFilter != null){
     if(advancedSearch != null) document.addEventListener('DOMContentLoaded', onLoad)
 }
 
-let searchElem = document.querySelector(' #search')
-let categorySelect = document.querySelector(' #category')
-let typeSelect = document.querySelector(' #type')
-let startDateElem = document.querySelector(' #startDate')
+let searchElem = document.querySelector('#search')
+let categorySelect = document.querySelector('#category')
+let typeSelect = document.querySelector('#type')
+let startDateElem = document.querySelector('#startDate')
 let endDateElem = document.querySelector('#endDate')
 let peopleFollowCheck = document.querySelector('#checkPeople')
 let tagFollowCheck = document.querySelector('#checkTags')
+let myPostsCheck = document.querySelector('#checkMyPosts')
 
 function getFilters(){
     filters = {}
@@ -63,37 +65,12 @@ function getFilters(){
     let type = typeSelect.options[typeSelect.selectedIndex].value
     let startDate = startDateElem.value
     let endDate = endDateElem.value
-
     let peopleFollow = false
     let tagFollow = false
+    let myPosts = false
     if(peopleFollowCheck!=null) peopleFollow = peopleFollowCheck.checked
     if(tagFollowCheck != null) tagFollow = tagFollowCheck.checked
-
-    let today = new Date()
-    if(startDate !== ""){
-        let minDate = new Date(startDate)
-        if(minDate > today){
-            alert("Start date must be before today")
-            console.log("here2")
-            return -1
-        }
-        if(endDate !== ""){
-            let maxDate = new Date(endDate)
-            if(minDate >=  maxDate){
-                alert("End date must be greater than start date")
-                console.log("here1")
-                return -1
-            }
-        }
-    }
-    if(endDate !== ""){
-        let maxDate = new Date(endDate)
-        if(maxDate > today){
-            alert("End date must be before today")
-            console.log("here3")
-            return -1
-        }
-    }
+    if(myPostsCheck != null) myPosts = myPostsCheck.checked
 
 
     if(search !== "") filters['search'] = search
@@ -102,13 +79,14 @@ function getFilters(){
     if(endDate !== "") filters['endDate'] = endDate
     if(peopleFollow !== "") filters['peopleFollow'] = peopleFollow
     if(tagFollow !== "") filters['tagFollow'] = tagFollow
+    if(myPosts !== "") filters['myPosts'] = myPosts
 
     if(category == null){
         let url = new URL(window.location.href)
         category = url.searchParams.get('category')
     }
 
-    if(category != null) filters['category'] = category
+    if(category !== "") filters['category'] = category
 }
 
 function redirectWithFilters(){
@@ -145,10 +123,11 @@ function onLoad(){
     url.searchParams.get('search') != null? searchElem.value = url.searchParams.get('search'): searchElem.value = ""
     url.searchParams.get('category') != null? categorySelect.value = url.searchParams.get('category'): categorySelect.value = ""
     url.searchParams.get('type') != null? typeSelect.value = url.searchParams.get('type'): typeSelect.value = ""
-    url.searchParams.get('startDate') != null? startDateElem.value = url.searchParams.get('startDate'): startDateElem = ""
-    url.searchParams.get('endDate') != null? endDateElem.value = url.searchParams.get('endDate'): endDateElem = ""
+    url.searchParams.get('startDate') != null? startDateElem.value = url.searchParams.get('startDate'): startDateElem.value= ""
+    url.searchParams.get('endDate') != null? endDateElem.value = url.searchParams.get('endDate'): endDateElem.value = ""
     url.searchParams.get('tagFollow') === "true"? tagFollowCheck.checked = true: tagFollowCheck.checked = false
     url.searchParams.get('peopleFollow') === "true"? peopleFollowCheck.checked = true: peopleFollowCheck.checked = false
+    url.searchParams.get('myPosts') === "true"? myPostsCheck.checked = true: myPostsCheck.checked = false
 }
 
 

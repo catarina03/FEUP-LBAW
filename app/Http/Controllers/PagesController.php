@@ -116,22 +116,21 @@ class PagesController extends Controller
         $posts = [];
         $type = $request->input('type');
         $search = $request->input('search');
-        if(!empty($search)){
+        $startDate = $request->input('startDate');
+        /*if(!empty($search)){
            // $posts
-        }
-       /* if(!empty($type)){
-            $posts = DB::table('post')->where('type', $type)->get();
+        }*/
+        if(!empty($startDate)){
+            $posts = Post::where('created_at' , '>', $startDate);
         }
 
-        if(!empty($search)){
-            //query to search
-        }*/
+
 
         //query para filtrar
         //contar o n de resultados
         //coloacar nos filtros os filtros recebidos
         //fazer cena do load
-        $posts = Post::orderBy('n_views', 'desc')->get();
+
         $posts = $this->getPostsInfo($posts);
         return view('pages.advanced_search', ['user' => 'visitor', 'needsFilter' => 0, 'posts' => $posts]);
     }
