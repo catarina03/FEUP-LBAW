@@ -7,17 +7,20 @@ function addSortListeners(){
     popular.addEventListener("click",function(e){
         e.preventDefault();
         sortComments("popular_comments",comment_section);
+        updateSortedBy("Popular");
         
     });
 
     newest.addEventListener("click",function(e){
         e.preventDefault();
         sortComments("newer_comments",comment_section);
+        updateSortedBy("Newer");
     });
 
     oldest.addEventListener("click",function(e){
         e.preventDefault();
         sortComments("older_comments",comment_section);
+        updateSortedBy("Older");
     });
 }
 

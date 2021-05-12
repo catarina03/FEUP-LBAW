@@ -16,34 +16,7 @@ function updateThreadsNo(ammount,comment_id){
     return false;
 }
 
-function min_path(node1, node2) {
-    if(node1 === node2) {
-        return node1;
-    }
-
-    var node_1_ancestors = get_ancestors(node1);
-    var node_2_ancestors = get_ancestors(node2);
-
-    var divergent_index = 0;
-    while(node_1_ancestors[divergent_index] === node_2_ancestors[divergent_index]) {
-        divergent_index++;
-    }
-
-    var path = [];
-    for(var i = node_1_ancestors.length - 1; i >= divergent_index - 1; i--) {
-        path.push(node_1_ancestors[i]);
-    }
-    for(var i = divergent_index; i < node_2_ancestors.length; i++) {
-        path.push(node_2_ancestors[i]);
-    }
-
-    return path;
-}
-
-function get_ancestors(node) {
-    var ancestors = [node];
-    while(ancestors[0] !== null) {
-        ancestors.unshift(ancestors[0].parentElement);
-    }
-    return ancestors;
+function updateSortedBy(text){
+    let sorted = document.getElementsByClassName("comment-sort-by-button p-0 m-0")[0];
+    sorted.innerText = text;
 }

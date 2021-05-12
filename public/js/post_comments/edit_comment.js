@@ -117,7 +117,7 @@ function confirmEdit(comment_id,container){
                                     <h3 class="post-page-comment-interactions pe-3 my-0">` +escapeHtml( comment['likes'].toString()) + ` <i title="Like comment" class="far fa-thumbs-up"></i></h3>
                                     <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
                                     <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
-                                    <h3 class="post-page-comment-interactions my-0">` + escapeHtml(comment['thread_count'].toString()) + ` <i class="far fa-comments"></i></h3>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -179,15 +179,13 @@ function confirmEdit(comment_id,container){
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
                             <div class="row px-0 mx-0">
-                                <div class="d-flex mx-0 px-0">
-                                        <textarea class="container form-control post-page-add-comment-reply w-100 add-thread" id="add-comment" rows="1"
-                                                placeholder="Answer in thread"></textarea>
+                                <div class="col-11 d-flex mx-0 px-0">
+                                    <textarea class="container form-control post-page-add-comment-reply w-100 add-thread" id="add-comment" rows="1"
+                                      placeholder="Answer in thread"></textarea>
                                 </div>
-                            </div>
-                            <div class="row px-0 mx-0 justify-content-end">
-                                <div class="col-auto px-0">
-                                    <span class="thread_comment_id" hidden>` + escapeHtml(comment['comment']['id'].toString()) +`</span>
-                                    <button class="post-page-comment-button btn m-0 mt-1 add_thread_button">Comment</button>
+                                <div class=\"col-1 d-flex mx-0 px-0\">
+                                    <span class=\"thread_comment_id\" hidden>` + escapeHtml(comment['comment']['id'].toString()) +`</span>
+                                    <button class=\"post-page-comment-button btn-sm btn-block m-0 mt-0 add_thread_button\">Comment</button>
                                 </div>
                             </div>
                         </div>
