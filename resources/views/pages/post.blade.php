@@ -89,8 +89,8 @@
                         @endforeach
                         @endif
                         @if(count($metadata['tags']) == 0)
-                            <div class="col-auto post-page-tag-container px-2 m-1">
-                                    <p>There are no tags associated with this post!</a>
+                            <div class="col-auto mt-3">
+                                    <b><p>There are no tags associated with this post!</a></b>
                             </div>
                         @endif    
                     </div>
@@ -154,6 +154,7 @@
             </div>
             @endif
             <span id="comment-section">
+            @if(count($metadata['comments']) > 0)
             @foreach($metadata['comments'] as $comment)
             <span class="comment-container" >
                 <div class="row justify-content-center px-4 mx-1">
@@ -276,6 +277,12 @@
             @endauth
             </span>
             @endforeach
+            @endif
+            @if(count($metadata['comments']) == 0)
+                <div class="container-fluid d-flex col-10 justify-content-center mt-3">
+                    <p><b>There are no comments in this post. Be the first to leave your thoughts!</b></p>
+                </div>
+            @endif
             </span>
 
             
