@@ -1,4 +1,4 @@
-@include('pages.confirm')
+
 @extends('layouts.app')
 
 @section('content')
@@ -135,7 +135,7 @@
                     </div>
                 </div>
             </div>
-
+            @auth
             @if(!$isOwner) {{-- User is not the owner of the post --}}
             <div class="row justify-content-center px-4 mx-1">
                 <div class="col-10 mx-0 px-0" style="border-radius:5px;">
@@ -153,6 +153,7 @@
                 </div>
             </div>
             @endif
+            @endauth
             <span id="comment-section">
             @if(count($metadata['comments']) > 0)
             @foreach($metadata['comments'] as $comment)
@@ -300,5 +301,6 @@
         </div>
     </div>
 </div>
-@include('pages.confirm')
+
 @endsection
+@include('pages.confirm')
