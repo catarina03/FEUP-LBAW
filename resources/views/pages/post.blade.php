@@ -290,9 +290,9 @@
 
             <div class="row justify-content-center px-4 mx-1">
                 <div class="row justify-content-center mt-4 mb-2 mx-0 p-0">
-                    <div class="col-10">
+                    <div class="col-2">
                         <div class="row">
-                            <button class="post-page-load-comments-button btn m-0 mt-1">Load 2 more  comments</button>
+                            <button class="post-page-load-comments-button btn m-0 mt-1">Load more</button>
                         </div>
                     </div>
                 </div>
