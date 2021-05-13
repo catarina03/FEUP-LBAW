@@ -41,6 +41,7 @@ function addThread(comment_id,content){
         addDeleteCommentListeners();
         addEditListeners();
         addShowThreadListeners();
+        updateSortedBy("Sort by");
         
     };
     if(content.value=="" || content.value.match("^\\s+$")){

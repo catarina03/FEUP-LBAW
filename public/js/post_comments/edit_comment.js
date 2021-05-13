@@ -268,6 +268,7 @@ function confirmEdit(comment_id,container){
         addDeleteCommentListeners();
         addListeners();
         addEditListeners();
+        updateSortedBy("Sort by");
         }
         else{
             alert("Error editing comment!");

@@ -49,7 +49,7 @@
             </div>
 
             <div class="container-fluid d-flex col-10 justify-content-left mt-3">
-                <h1 class="post-page-post-title">{{$post->title}}</h1>
+                <h1 class="post-page-post-title">{{$post->is_spoiler?"[SPOILER]":""}}{{$post->title}}</h1>
             </div>
 
             

@@ -27,6 +27,7 @@ function addComment(){
         addDeleteCommentListeners();
         addEditListeners();
         addShowThreadListeners();
+        updateSortedBy("Sort by");
         
     };
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
