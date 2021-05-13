@@ -23,8 +23,8 @@ Route::get('/support', 'PagesController@support');
 Route::post('/support', 'PagesController@supportRequest');
 Route::get('/{category}', 'PagesController@category');
 Route::get('api/home/{homepageFilters}', 'PagesController@list');
-Route::get('search/{filters}', 'PagesController@showAdvancedSearch');
-Route::get('api/search/{filters}', 'PagesController@advancedSearch');
+Route::get('search/{filters}', 'PagesController@advancedSearch');
+Route::get('api/search/{filters}/{page}', 'PagesController@loadMoreAdvancedSearch');
 Route::get('api/loadMore/{filters}/{page}', 'PagesController@loadMoreHomepage');
 Route::get('api/category/loadMore/{category}/{page}', 'PagesController@loadMoreCategoryPage');
 

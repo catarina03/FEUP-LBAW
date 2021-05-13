@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use App\Models\AuthenticatedUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Auth;
+
 
 class PagesController extends Controller
 {
@@ -58,7 +59,7 @@ class PagesController extends Controller
 
         $posts = $this->getPostsInfo($p);
 
-        return view('partials.allcards', ['posts' => $posts]);
+        return response()->json(view('partials.allcards', ['posts' => $posts])->render());
 
     }
 
@@ -69,7 +70,7 @@ class PagesController extends Controller
 
         $posts = $this->getPostsInfo($p);
 
-        return view('partials.allcards', ['posts' => $posts]);
+        return response()->json(view('partials.allcards', ['posts' => $posts])->render());
     }
 
     public function loadMoreCategoryPage($category, $page){
@@ -80,59 +81,66 @@ class PagesController extends Controller
         else if($category == "Literature") $posts = Post::where('category', 'literature')->forPage($page,15)->get();
 
         $posts = $this->getPostsInfo($posts);
-        return view('partials.allcards', ['posts' => $posts]);
+        return response()->json(view('partials.allcards', ['posts' => $posts])->render());
     }
 
 
     public function advancedSearch(Request $request){
-        //thinking about calling this function everytime a advanced search is made
-       /* $filters = json_decode($f);
+        $p = $this->filter($request,1);
+        $posts = $this->getPostsInfo($p);
 
-        if(isset($filters['search'])) $final_filters['search'] = $filters['search'];
-        else $final_filters['search']  = "";
-        if(isset($filters['type'])) $final_filters['type'] = $filters['type'];
-        else $final_filters['type']  = "";
-        if(isset($filters['startDate'])) $final_filters['startDate'] = $filters['startDate'];
-        else $final_filters['startDate']  = "";
-        if(isset($filters['endDate'])) $final_filters['endDate'] = $filters['endDate'];
-        else $final_filters['endDate']  = "";
-        if(isset($filters['peopleFollow'])) $final_filters['peopleFollow'] = $filters['endDate'];
-        else $final_filters['peopleFollow']  = "";
-        if(isset($filters['tagFollow'])) $final_filters['$tagFollow'] = $filters['tagFollow'];
-        else $final_filters['tagFollow']  = "";
-        if(isset($filters['category'])) $final_filters['category'] = $filters['category'];
-        else $final_filters['category']  = "";
-
-
-        return json_encode($final_filters);*/
-
-        $posts = Post::where('category', 'music')->paginate(15)->get();
-        $posts = $this->getPostsInfo($posts);
-
-        return  json_encode(array('posts'=> view('partials.allcards', ['posts' => $posts]), 'number_res'=>count($posts)));
+        return view('pages.advanced_search', ['needsFilter'=> 1,'posts' => $posts, 'number_res'=> $p->total()])->render();
     }
 
-    public function showAdvancedSearch(Request $request){
-        $posts = [];
-        $type = $request->input('type');
-        $search = $request->input('search');
-        $startDate = $request->input('startDate');
-        /*if(!empty($search)){
-           // $posts
-        }*/
-        if(!empty($startDate)){
-            $posts = Post::where('created_at' , '>', $startDate);
+    public function loadMoreAdvancedSearch(Request $request,$filters, $page){
+        $p = $this->filter($request,$page);
+        $posts = $this->getPostsInfo($p);
+
+        return response()->json(array('posts'=> view('partials.allcards', ['posts' => $posts])->render(), 'number_res'=> $p->total()));
+    }
+
+    public function filter(Request $request, $page){
+        $date = date("m/d/Y", time());
+        $query = Post::where('created_at', '<=', $date);
+
+        if($request->has('search')){
+            $s = trim($request->input('search'));
+            $query->when(!empty($s), function($q) use ($s){
+                return $q->whereRaw('search @@ plainto_tsquery(\'english\', ?)', [$s])
+                    ->orderByRaw('ts_rank(search, plainto_tsquery(\'english\', ?)) DESC', [$s]);
+            });
         }
-
-
-
-        //query para filtrar
-        //contar o n de resultados
-        //coloacar nos filtros os filtros recebidos
-        //fazer cena do load
-
-        $posts = $this->getPostsInfo($posts);
-        return view('pages.advanced_search', ['user' => 'visitor', 'needsFilter' => 0, 'posts' => $posts]);
+        if($request->has('type')){
+            $query->where('type', strtolower($request->input('type')));
+        }
+        if($request->has('category')){
+            $query->where('category', strtolower($request->input('category')));
+        }
+        if($request->has('startDate')){
+            $query->where('created_at', '>=',date("m/d/Y", strtotime($request->input('startDate'))));
+        }
+        if($request->has('endDate')){
+            $query->where('created_at', '<=',date("m-d-Y", strtotime($request->input('endDate'))));
+        }
+        if($request->has('peopleFollow')){
+            if($request->input('peopleFollow') == "true"){
+                $ids = DB::table("follow_user")->where("following_user",Auth::user()->id)->value('followed_user');
+                $query->whereIn('user_id', $ids);
+            }
+        }
+        if($request->has('tagFollow')){
+            if($request->input('tagFollow') == "true") {
+                $tags = DB::table("follow_tag")->where("authenticatedUser_id", Auth::user()->id)->value('tag_id');
+                $posts = DB::table('post_tag')->whereIn('tag_id', $tags)->value('post_id');
+                $query->whereIn('id', $posts);
+            }
+        }
+        if($request->has('myPosts')){
+            if($request->input('tagFollow') == "true") {
+                $query->where('user_id', Auth::user()->id);
+            }
+        }
+        return $query->paginate(15,'*', 'page', $page);
     }
 
     public function getPostsInfo($posts){

@@ -1,5 +1,6 @@
+<script type="text/javascript" src="{{ URL::asset('js/utils.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/filterBox.js') }}" defer></script>
-<div class="custom-filterBox col-md-3  d-flex justify-content-center">
+<div class="custom-filterBox filterbox col-md-3  d-flex justify-content-center">
     <div class="container  ">
         <h4 class="text-center"> Search </h4>
         <form class="pt-2" action="" method="get">
@@ -15,12 +16,10 @@
                 <option value="News">News</option>
                 <option value="Article">Article</option>
                 <option value="Review">Review</option>
-                <option value="Suggestion">Suggestion</option>
             </select>
-            <input type="date" class="form-control mt-4" id="startDate" aria-label="Start Date"
-                   style="cursor:pointer;">
+            <input type="date" class="form-control mt-4" id="startDate1"  style="cursor:pointer;">
             <p class="text-center mt-1 mb-1">to</p>
-            <input type="date" class="form-control mt-0" id="endDate" aria-label="End Date" style="cursor:pointer;">
+            <input type="date" class="form-control mt-0" id="endDate1"  style="cursor:pointer;">
             @auth
             <div class="form-check mt-4">
                 <input class="form-check-input" type="checkbox" value="" id="checkPeople"
@@ -46,6 +45,9 @@
                 <i class="fa fa-circle-notch fa-spin d-none search-spinner"></i>
                 <span class="search-span">Search</span>
             </button>
+            <div class="justify-content-center d-flex mt-1">
+                <span class="text-center error-span" style="color:#cc3300; font-size:10px"></span>
+            </div>
 
         </form>
     </div>

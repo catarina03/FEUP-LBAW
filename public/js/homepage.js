@@ -49,9 +49,7 @@ function makeRequest(type){
     postsRequest.onreadystatechange = function(){
         if(postsRequest.readyState === XMLHttpRequest.DONE){
             if(postsRequest.status === 200){
-                let posts = postsRequest.responseText
-                console.log(type)
-                console.log("posts" + posts)
+                let posts = JSON.parse(postsRequest.responseText)
                 updateHomepage(posts)
                 displaySpinner(true, type)
             }
@@ -124,24 +122,14 @@ function loadHandler(e){
     let parent = pag.parentNode
     parent.removeChild(pag)
 
-    let outterDiv = document.createElement('div')
-    outterDiv.classList = "d-flex justify-content-center"
-    let spinnerDiv = document.createElement('div')
-    spinnerDiv.classList = "spinner-border spinner-border-sm text-center"
-    let spinner = document.createElement('span')
-    spinner.classList = "visually-hidden"
-    spinner.innerText = "Loading..."
-
-    spinnerDiv.appendChild(spinner)
-    outterDiv.appendChild(spinnerDiv)
-    parent.appendChild(outterDiv)
+    let outterDiv = addLoadSpinner(parent)
 
     const loadRequest = new XMLHttpRequest()
     loadRequest.onreadystatechange = function(){
         if(loadRequest.readyState === XMLHttpRequest.DONE){
             if(loadRequest.status === 200){
                 parent.removeChild(outterDiv)
-                let posts = loadRequest.responseText
+                let posts = JSON.parse(loadRequest.responseText)
                 let postDiv = document.querySelector('.postsCards')
                 let newDiv = document.createElement('div')
                 newDiv.innerHTML= posts
@@ -157,29 +145,19 @@ function loadHandler(e){
                 if(!last){
                     addLoadMore(postDiv)
                 }
-
             }
             else alert('Error fetching api: ' +  loadRequest.status)
         }
     }
-    loadRequest.open('GET', 'api/loadMore/'+ filtering + '/' + page, true)
+    loadRequest.open('GET', 'api/loadMore/'+ filtering + '/' + page , true)
     loadRequest.send()
 }
 
 
-function addLoadMore(postDiv){
-    let pagination = document.createElement('div')
-    pagination.className = "pagination d-flex justify-content-center"
 
-    let load = document.createElement('a')
-    load.className = "loadmore"
-    load.innerHTML = "Load More"
 
-    pagination.appendChild(load)
-    postDiv.appendChild(pagination)
-    let loadMore = document.querySelector('.homepage .pagination .loadmore')
-    if(loadMore != null){
-        loadMore.addEventListener('click', loadHandler)
-    }
-}
+
+
+
+
 

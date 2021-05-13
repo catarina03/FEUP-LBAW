@@ -743,7 +743,7 @@ $BODY$
 DECLARE
     author varchar(255);
 BEGIN
-    SELECT username INTO author FROM authenticated_user WHERE  New.user_id = id;
+    SELECT username INTO author FROM authenticated_user WHERE  id = New.user_id;
     IF TG_OP = 'INSERT' THEN
         NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', author), 'C'));
     ELSEIF TG_OP = 'UPDATE' AND (New.title <> OLD.title OR NEW.content <> OLD.content) THEN
