@@ -218,7 +218,7 @@ class PostController extends Controller
         $USER = AuthenticatedUser::find($post->user_id);
 
         //Get comment count,likes and dislikes
-        $comments = Comment::getPostComments($id,"desc");
+        $comments = Comment::getPostComments($id,"desc",1);
         $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
         $temp = $votes->get()->count();
@@ -547,7 +547,7 @@ class PostController extends Controller
         $user_id = 0;
         if(Auth::check())
             $user_id = Auth::user()->id;
-        $comments = Comment::getPostComments($post_id,"desc");
+        $comments = Comment::getPostComments($post_id,"desc",1);
         return Comment::commentsAsHtml($comments,$user_id);
     }
 
@@ -561,7 +561,21 @@ class PostController extends Controller
         $user_id = 0;
         if(Auth::check())
             $user_id = Auth::user()->id;
-        $comments = Comment::getPostComments($post_id,"asc");
+        $comments = Comment::getPostComments($post_id,"asc",1);
+        return Comment::commentsAsHtml($comments,$user_id);
+    }
+
+    public function loadMore(Request $request, $post_id,$page){
+        $route = \Route::current();
+        if(!is_numeric($route->parameter('post_id')) || !is_numeric($route->parameter('page')))
+            return "";
+        $post = Post::find($post_id);
+        if(!$post )
+            return "";
+        $user_id = 0;
+        if(Auth::check())
+            $user_id = Auth::user()->id;
+        $comments = Comment::getPostComments($post_id,"desc",$page);
         return Comment::commentsAsHtml($comments,$user_id);
     }
 }

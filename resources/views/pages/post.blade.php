@@ -11,6 +11,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/sort_comments.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/show_threads.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/comments_aux.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/load_more.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>
@@ -68,7 +69,7 @@
                         <h3 class="post-page-post-interactions">0 <i class="far fa-thumbs-down"></i></h3>
                     </div>
                     <div class="pe-3">
-                        <h3 class="post-page-post-interactions">{{$metadata['comment_count']}} <i class="far fa-comments"></i></h3>
+                        <h3 class="post-page-post-interactions" id="post_comment_count">{{$metadata['comment_count']}} <i class="far fa-comments"></i></h3>
                     </div>
                 </div>
             
@@ -287,16 +288,17 @@
             </span>
 
             
-
+            @if(count($metadata['comments'])>0)
             <div class="row justify-content-center px-4 mx-1">
                 <div class="row justify-content-center mt-4 mb-2 mx-0 p-0">
                     <div class="col-2">
                         <div class="row">
-                            <button class="post-page-load-comments-button btn m-0 mt-1">Load more</button>
+                            <button id="load_more" class="post-page-load-comments-button btn m-0 mt-1">Load more</button>
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
 
         </div>
     </div>

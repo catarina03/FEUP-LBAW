@@ -109,7 +109,7 @@
                                                   placeholder="Answer in thread"></textarea>
                                 </div>
                                 <div class="col-1 d-flex mx-0 px-0">
-                                    <span class="thread_comment_id FODASSE2" hidden>{{$comment['comment']->id}}</span>
+                                    <span class="thread_comment_id" hidden>{{$comment['comment']->id}}</span>
                                     <button class="post-page-comment-button btn-sm btn-block m-0 mt-0 add_thread_button">Comment</button>
                                 </div>
                             </div>

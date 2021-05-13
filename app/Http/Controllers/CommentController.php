@@ -70,7 +70,7 @@ class CommentController extends Controller
                     'user_id' => $request->input('user_id'),
                     'post_id' => $request->input('post_id')
                 ]);
-                $comments = Comment::getPostComments($post_id,"desc");
+                $comments = Comment::getPostComments($post_id,"desc",1);
                 return Comment::commentsAsHtml($comments,Auth::user()->id);
             }
         }
@@ -204,7 +204,7 @@ class CommentController extends Controller
                     'user_id' => $request->input('user_id'),
                     'comment_id' => $request->input('comment_id')
                 ]);
-                $comments = Comment::getPostComments($comment->post_id,"desc");
+                $comments = Comment::getPostComments($comment->post_id,"desc",1);
                 return Comment::commentsAsHtml($comments,Auth::user()->id);
             }
         }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 class Comment extends Model
 {
 
@@ -49,8 +50,9 @@ class Comment extends Model
         return $this->hasOne(Comment::class,"comment_id");
     }
 
-    public static function getPostComments($post_id,$date_order){
-        $comments = Comment::where("post_id",$post_id)->orderBy("comment_date",$date_order)->get();
+    public static function getPostComments($post_id,$date_order,$offset){
+        
+            $comments = Comment::where("post_id",$post_id)->orderBy("comment_date",$date_order)->get()->forPage($offset,5)->all();
         $result = array();
         foreach($comments as $comment){
             $temp = Comment::getCommentInfo($comment->id);

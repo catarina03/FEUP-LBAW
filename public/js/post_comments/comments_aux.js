@@ -20,3 +20,10 @@ function updateSortedBy(text){
     let sorted = document.getElementsByClassName("comment-sort-by-button p-0 m-0")[0];
     sorted.innerText = text;
 }
+
+
+function updateCommentCount(amount){
+    let container = document.getElementById("post_comment_count");
+    container.parentNode.innerHTML= `<h3 class="post-page-post-interactions" id="post_comment_count">` + (parseInt(container.innerText) + amount) + " <i class=\"far fa-comments\"></i></h3>";
+    return true;
+}
