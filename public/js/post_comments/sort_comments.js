@@ -40,6 +40,7 @@ function sortComments(sort_by,comment_section){
         addDeleteCommentListeners();
         addEditListeners();
         addShowThreadListeners();
+        currentPage = 1;
     };
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
     request.send();

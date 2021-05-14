@@ -18,13 +18,11 @@ function show_replies(element){
     for(let j = 0;j<parent.length;j++){
             let temp = parent[j];
             let hidden = temp.getAttribute("hidden");
-            console.log("Before : " + hidden);
             if(hidden)
                 temp.removeAttribute("hidden");
             
             else
                 temp.setAttribute("hidden",true);
-            console.log("After : " + temp.getAttribute("hidden"));
         }
         let hiddenH = reply.getAttribute("hidden");
         if(hiddenH){

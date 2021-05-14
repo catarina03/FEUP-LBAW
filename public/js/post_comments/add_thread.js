@@ -35,6 +35,18 @@ function addThread(comment_id,content){
             alert("Error adding comment");
             return;
         }
+        let containers = document.getElementsByClassName("comment-container");
+        /*for(let i = 0;i<containers.length;i++){
+            let temp = containers[i];
+            if(temp.getElementsByClassName("COMMENTID").innerText == comment_id){
+                let temp_threads = request.responseText;
+                let local_threads = containers[i].getElementsByClassName("thread-container");
+                for(let k = 0;k<local_threads.length;k++){
+                    temp_threads+= local_threads[i];
+                }
+
+            }
+        }*/
         document.getElementById("comment-section").innerHTML = request.responseText;
         content.value = "";
         addListeners();

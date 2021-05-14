@@ -124,4 +124,9 @@ class Comment extends Model
         $metadata = ["comments"=>$comments];
         return view("partials.comments",["user_id"=> $user_id,"metadata"=> $metadata]);
     }
+
+    public static function single_commentAsHtml($comment_id,$user_id){
+        $comment = Comment::getCommentInfo($comment_id);
+        return view("partials.single_comment",["user_id"=>$user_id,"comment"=>$comment,"isThread" => $comment['comment']->comment_id==null?false:true]);
+    }
 }

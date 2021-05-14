@@ -65,13 +65,13 @@ class CommentController extends Controller
         if(Auth::check()){
             $post = Post::find($request->input('post_id'));
             if($post != null && Auth::user()->id != $post->user_id){
-                DB::table('comment')->insert([
+                $cid = DB::table('comment')->insertGetId([
                     'content' => $request->input('content'),
                     'user_id' => $request->input('user_id'),
                     'post_id' => $request->input('post_id')
                 ]);
-                $comments = Comment::getPostComments($post_id,"desc",1);
-                return Comment::commentsAsHtml($comments,Auth::user()->id);
+                //$comments = Comment::getPostComments($post_id,"desc",1);
+                return Comment::single_commentAsHtml($cid,Auth::user()->id);
             }
         }
         return "";

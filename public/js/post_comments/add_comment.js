@@ -21,7 +21,9 @@ function addComment(){
             alert("Error adding comment");
             return;
         }
-        document.getElementById("comment-section").innerHTML = request.responseText;
+        let temp = request.responseText;
+        temp+=document.getElementById("comment-section").innerHTML;
+        document.getElementById("comment-section").innerHTML = temp;
         content.value = "";
         addListeners();
         addDeleteCommentListeners();

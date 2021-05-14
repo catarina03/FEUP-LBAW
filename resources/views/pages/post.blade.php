@@ -194,7 +194,7 @@
                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                             <div class="row">
                                 <div class="d-flex">
-                                    <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['likes']}} <i title="Like comment"  class="far fa-thumbs-up"></i></h3>
+                                    <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['likes']}} <i title="Like comment"  class="far fa-thumbs-up XD"></i></h3>
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['dislikes']}} <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
                                     @if($user_id != $comment['comment']->user_id)
                                     <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3"></i>
@@ -208,6 +208,7 @@
                     </div>
                 </div>
             </div>
+            
             @foreach($comment['threads'] as $thread)
                 <span class="thread-container">
                     <div hidden class="row justify-content-center px-4 mx-1 thread-section">
@@ -283,6 +284,7 @@
             @endauth
             </span>
             @endforeach
+        
             @endif
             @if(count($metadata['comments']) == 0)
                 <div class="container-fluid d-flex col-10 justify-content-center mt-3">
