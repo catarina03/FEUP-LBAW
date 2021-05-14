@@ -82,18 +82,18 @@
                 <div class="col-10">
                     <div class="row justify-content-start align-items-center">
                         <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Tags: </h2>
-                        @if(count($metadata['tags']) > 0)
+                        <div class="col-auto post-page-tag-container px-2 m-1">
+                            <a class="post-page-post-tag" href="advanced_search.php">{{$post->type}}</a>
+                        </div>
+                        <div class="col-auto post-page-tag-container px-2 m-1">
+                            <a class="post-page-post-tag" href="advanced_search.php">{{$post->category}}</a>
+                        </div>
                         @foreach($metadata['tags'] as $tag)
                             <div class="col-auto post-page-tag-container px-2 m-1">
                                 <a class="post-page-post-tag" href="advanced_search.php">{{$tag->name}}</a>
                             </div>
                         @endforeach
-                        @endif
-                        @if(count($metadata['tags']) == 0)
-                            <div class="col-auto mt-3">
-                                    <b><p>There are no tags associated with this post!</a></b>
-                            </div>
-                        @endif    
+                        
                     </div>
                 </div>
             </div>
@@ -194,9 +194,11 @@
                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                             <div class="row">
                                 <div class="d-flex">
-                                    <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['likes']}} <i title="Like comment" class="far fa-thumbs-up"></i></h3>
+                                    <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['likes']}} <i title="Like comment"  class="far fa-thumbs-up"></i></h3>
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['dislikes']}} <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
-                                    <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
+                                    @if($user_id != $comment['comment']->user_id)
+                                    <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3"></i>
+                                    @endif
                                     <h3 class="post-page-comment-interactions my-0">{{$comment['thread_count']}} <i class="far fa-comments"></i></h3>
                                     
                             
@@ -245,7 +247,9 @@
                                                 <div class="d-flex">
                                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$thread['likes']}} <i title="Like comment" class="far fa-thumbs-up"></i></h3>
                                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$thread['dislikes']}} <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
-                                                    <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
+                                                    @if($user_id != $thread['comment']->user_id)
+                                                        <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

@@ -27,3 +27,22 @@ function updateCommentCount(amount){
     container.parentNode.innerHTML= `<h3 class="post-page-post-interactions" id="post_comment_count">` + (parseInt(container.innerText) + amount) + " <i class=\"far fa-comments\"></i></h3>";
     return true;
 }
+
+function openThreads(comment_id){
+    let container = document.getElementsByClassName("comment-container");
+    for(let i =0;i<container.length;i++){
+        let cur_id = container[i].getElementsByClassName("thread_comment_id")[0].innerText;
+        console.log(cur_id + " " + comment_id);
+        
+        if(cur_id == comment_id){
+            container[i].getElementsByClassName("thread-reply")[0].removeAttribute("hidden");
+
+            let sections = container[i].getElementsByClassName("thread-section");
+            for(let k = 0;k<sections.length;k++){
+                sections[k].removeAttribute("hidden");
+            }
+            return true;
+        }
+    }
+    return false;
+}

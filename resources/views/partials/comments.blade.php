@@ -38,7 +38,9 @@
                                 <div class="d-flex">
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['likes']}} <i title="Like comment" class="far fa-thumbs-up"></i></h3>
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['dislikes']}} <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
+                                    @if($user_id != $comment['comment']->user_id)
                                     <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
+                                    @endif
                                     <h3 class="post-page-comment-interactions my-0">{{$comment['thread_count']}} <i class="far fa-comments"></i></h3>
                                     
                             
@@ -87,7 +89,9 @@
                                                 <div class="d-flex">
                                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$thread['likes']}} <i title="Like comment" class="far fa-thumbs-up"></i></h3>
                                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$thread['dislikes']}} <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
-                                                    <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
+                                                    @if($user_id != $thread['comment']->user_id)
+                                                        <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
