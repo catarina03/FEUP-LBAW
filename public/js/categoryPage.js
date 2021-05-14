@@ -21,7 +21,9 @@ function loadHandler(e){
         if(loadRequest.readyState === XMLHttpRequest.DONE){
             if(loadRequest.status === 200){
                 parent.removeChild(outterDiv)
-                let posts = JSON.parse(loadRequest.responseText)
+                let response = JSON.parse(loadRequest.responseText)
+                let posts = response['posts']
+                const number_res = response['number_res']
                 let postDiv = document.querySelector('.postsCards')
                 let newDiv = document.createElement('div')
                 newDiv.innerHTML= posts
@@ -32,10 +34,14 @@ function loadHandler(e){
                     postDiv.appendChild(newDiv.firstChild)
                 }
                 page++
-                if(counter < 15) last = true
 
-                if(!last){
-                    addLoadMore(postDiv)
+                if(number_res > 15){
+                    if(number_res % 15 === 0){
+                        if(number_res / 15 !== page) addLoadMore(postDiv)
+                    }
+                    else {
+                        if (number_res / 15 + 1 !== page) addLoadMore(postDiv)
+                    }
                 }
 
             }
@@ -45,6 +51,4 @@ function loadHandler(e){
     loadRequest.open('GET',window.location.protocol +"//" + window.location.host +'/api/category/loadMore/'+ category + '/' + page , true)
     loadRequest.send()
 }
-
-
 

@@ -7,8 +7,6 @@ if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', loadHandler)
 
 let filters = {}
 let pageAdv = 2
-let lastAdv = false
-
 
 let searchElem = document.querySelector('#search')
 let categorySelect = document.querySelector('#category')
@@ -42,24 +40,8 @@ if(advancedSearchFilter != null){
         let s = addSpinner()
         if(getFilters() !== -1) window.location = "filters?" + encodeForAjax(filters)
         removeSpinner(s)
-       /* let spin = addSpinner()
-        ifgetFilters()
-        const filterRequest = new XMLHttpRequest()
-        filterRequest.onreadystatechange = function(){
-            if(filterRequest.readyState === XMLHttpRequest.DONE){
-                removeSpinner(spin)
-                if(filterRequest.status === 200){
-                    let posts = JSON.parse(filterRequest.responseText)
-                    updateAdvancedSearch(false,posts['posts'], posts['number_res'])
-                }
-                else alert('Error fetching api: ' +  filterRequest.status)
-            }
-        }
-        filterRequest.open('GET', window.location.protocol + "//" + window.location.host + "search/filters?" + encodeForAjax(filters), true)
-        filterRequest.send()
-*/
     })
-    if(advancedSearch != null) document.addEventListener('DOMContentLoaded', onLoad)
+    if(advancedSearch != null) advancedSearch.addEventListener('DOMContentLoaded', onLoad)
 }
 
 
@@ -110,7 +92,7 @@ function redirectWithFilters(){
     removeSpinner(s)
 }
 
-function updateAdvancedSearch(adding, posts, number_res){
+function updateAdvancedSearch(adding, posts, number_res, page){
     let n_res = document.querySelector('.number-res')
     n_res.innerText = number_res + " results found!"
     let pag = document.querySelector('.pagination')
@@ -126,9 +108,11 @@ function updateAdvancedSearch(adding, posts, number_res){
     }
     if(number_res > 15){
         if(adding){
-            if(counter < 15) lastAdv = true
-            if(!lastAdv){
-                addLoadMore(postDiv)
+            if(number_res % 15 === 0){
+                if(number_res / 15 !== page) addLoadMore(postDiv)
+            }
+            else{
+                if(number_res/15 + 1 !== page) addLoadMore(postDiv)
             }
         }
         else addLoadMore(postDiv)
@@ -145,9 +129,9 @@ function onLoad(){
     url.searchParams.get('type') != null? typeSelect.value = url.searchParams.get('type'): typeSelect.value = ""
     url.searchParams.get('startDate') != null? startDateElem.value = url.searchParams.get('startDate'): startDateElem.value= ""
     url.searchParams.get('endDate') != null? endDateElem.value = url.searchParams.get('endDate'): endDateElem.value = ""
-    url.searchParams.get('tagFollow') === "true"? tagFollowCheck.checked = true: tagFollowCheck.checked = false
-    url.searchParams.get('peopleFollow') === "true"? peopleFollowCheck.checked = true: peopleFollowCheck.checked = false
-    url.searchParams.get('myPosts') === "true"? myPostsCheck.checked = true: myPostsCheck.checked = false
+    if(tagFollowCheck != null)  url.searchParams.get('tagFollow') === "true"? tagFollowCheck.checked = true: tagFollowCheck.checked = false
+    if(peopleFollowCheck != null) url.searchParams.get('peopleFollow') === "true"? peopleFollowCheck.checked = true: peopleFollowCheck.checked = false
+    if(myPostsCheck != null) url.searchParams.get('myPosts') === "true"? myPostsCheck.checked = true: myPostsCheck.checked = false
 }
 
 function loadHandler(e){
@@ -158,14 +142,16 @@ function loadHandler(e){
 
     let outterDiv = addLoadSpinner(parent)
     getFilters()
+
     const filterRequest = new XMLHttpRequest()
     filterRequest.onreadystatechange = function(){
         if(filterRequest.readyState === XMLHttpRequest.DONE){
             if(filterRequest.status === 200){
                 parent.removeChild(outterDiv)
                 let posts = JSON.parse(filterRequest.responseText)
-                updateAdvancedSearch(true, posts['posts'], posts['number_res'])
+                updateAdvancedSearch(true, posts['posts'], posts['number_res'], pageAdv)
                 pageAdv++
+
             }
             else alert('Error fetching api: ' +  filterRequest.status)
         }

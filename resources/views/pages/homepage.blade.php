@@ -28,7 +28,7 @@
         </nav>
     </div>
     <div class="homepage-center col-12 col-lg-7">
-        @include('partials.slider_card', ['posts' => $slideshow])
+        @include('partials.slideshowCard', ['posts' => $slideshow])
         <div class="postsCards row">
             @each('partials.card', $posts, 'post')
             @if(count($posts) > 0)
@@ -38,6 +38,6 @@
             @endif
         </div>
     </div>
-    @include('partials.filterbox')
+    @include('partials.filterBox')
 </div>
 @endsection

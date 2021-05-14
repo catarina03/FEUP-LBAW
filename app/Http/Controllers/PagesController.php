@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class PagesController extends Controller
 {
     public function home(){
-        $p = Post::getTopPosts(1);
+        $p = Post::getPostsOrdered("top", 1);
         $posts = $this->getPostsInfo($p);
         $slideshow = $this->slideshow();
         return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow]);
@@ -39,11 +39,11 @@ class PagesController extends Controller
 
     public function category(Request $request){
         $category = $request->input('category');
-        if($category == "Music") $posts = Post::where('category', 'music')->forPage(1,15)->get();
-        else if($category == "TVShow") $posts = Post::where('category', 'tv show')->forPage(1,15)->get();
-        else if($category == "Cinema") $posts = Post::where('category', 'cinema')->forPage(1,15)->get();
-        else if($category == "Theatre") $posts = Post::where('category', 'theatre')->forPage(1,15)->get();
-        else if($category == "Literature") $posts = Post::where('category', 'literature')->forPage(1,15)->get();
+        if($category == "Music") $posts = Post::where('category', 'music')->paginate(15,'*', 'page', 1);
+        else if($category == "TVShow") $posts = Post::where('category', 'tv show')->paginate(15,'*', 'page', 1);
+        else if($category == "Cinema") $posts = Post::where('category', 'cinema')->paginate(15,'*', 'page', 1);
+        else if($category == "Theatre") $posts = Post::where('category', 'theatre')->paginate(15,'*', 'page', 1);
+        else if($category == "Literature") $posts = Post::where('category', 'literature')->paginate(15,'*', 'page', 1);
 
         $posts = $this->getPostsInfo($posts);
         if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts]);
@@ -53,35 +53,26 @@ class PagesController extends Controller
     }
 
     public function list($homepageFilters){
-        if($homepageFilters == "new") $p = Post::getNewPosts(1);
-        else if($homepageFilters == "hot") $p = Post::getHotPosts(1);
-        else $p = Post::getTopPosts(1);
-
+        $p = Post::getPostsOrdered($homepageFilters, 1);
         $posts = $this->getPostsInfo($p);
-
         return response()->json(view('partials.allcards', ['posts' => $posts])->render());
-
     }
 
     public function loadMoreHomepage($filters, $page){
-        if($filters == "new") $p = Post::getNewPosts($page);
-        else if($filters == "hot") $p = Post::getHotPosts($page);
-        else $p = Post::getTopPosts($page);
-
+        $p = Post::getPostsOrdered($filters, $page);
         $posts = $this->getPostsInfo($p);
-
         return response()->json(view('partials.allcards', ['posts' => $posts])->render());
     }
 
     public function loadMoreCategoryPage($category, $page){
-        if($category == "Music") $posts = Post::where('category', 'music')->forPage($page,15)->get();
-        else if($category == "TVShow") $posts = Post::where('category', 'tv show')->forPage($page,15)->get();
-        else if($category == "Cinema") $posts = Post::where('category', 'cinema')->forPage($page,15)->get();
-        else if($category == "Theatre") $posts = Post::where('category', 'theatre')->forPage($page,15)->get();
-        else if($category == "Literature") $posts = Post::where('category', 'literature')->forPage($page,15)->get();
+        if($category == "Music") $p = Post::where('category', 'music')->paginate(15,'*', 'page', $page);
+        else if($category == "TVShow") $p = Post::where('category', 'tv show')->paginate(15,'*', 'page', $page);
+        else if($category == "Cinema") $p = Post::where('category', 'cinema')->paginate(15,'*', 'page', $page);
+        else if($category == "Theatre") $p = Post::where('category', 'theatre')->paginate(15,'*', 'page', $page);
+        else if($category == "Literature") $p = Post::where('category', 'literature')->paginate(15,'*', 'page', $page);
 
-        $posts = $this->getPostsInfo($posts);
-        return response()->json(view('partials.allcards', ['posts' => $posts])->render());
+        $posts = $this->getPostsInfo($p);
+        return response()->json(array('posts'=> view('partials.allcards', ['posts' => $posts])->render(), 'number_res'=> $p->total()));
     }
 
 

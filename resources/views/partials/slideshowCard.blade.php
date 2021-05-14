@@ -6,21 +6,21 @@
         <button type="button" data-bs-target="#topNews" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-        @for($i = 0; $i < count($posts); $i++) 
-            @if($i==0) 
+        @for($i = 0; $i < count($posts); $i++)
+            @if($i==0)
             <div class="carousel-item active">
             @else
             <div class="carousel-item">
             @endif
                 <div class="card mb-3" onclick="window.location='/post/{{$posts[$i]->id}}'">
                     <div class="row g-0">
-                        <div class="col-md-7">
-                            <img src="{{URL::asset($posts[$i]->thumbnail)}}" class="w-100" alt="...">
+                        <div class="col-md-7 ">
+                            <img src="{{URL::asset($posts[$i]->thumbnail)}}" class="w-100 card-photo" alt="...">
                         </div>
                         <div class="col-md-5">
                             <div class="card-body">
                                 <h5 class="card-title mb-3">{{$posts[$i]->title}}</h5>
-                                <p class="card-text d-inline">{{substr($posts[$i]->content, 0, 250) }}</p>
+                                <p class="card-text d-inline">{{ Str::limit(wordwrap($posts[$i]->content, 25),200)}}</p>
                                 <strong> (read more)</strong>
                                 <p class="card-text mt-3"><small>by <a href='/user/{{$posts[1]->user_id}}'
                                             id="authorName">{{$posts[$i]->author}}</a>,

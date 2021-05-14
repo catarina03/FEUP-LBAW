@@ -454,8 +454,14 @@ hr.solid {
   max-height: fit-content;
   background-color: #fcf3ee;
   cursor: pointer;
+  height:20rem;
 }
-
+#topNews .card-body{
+    height:20rem;
+}
+#topNews .card-photo{
+    height: 19.95rem;
+}
 #authorName {
   cursor: pointer;
   font-weight: bold;
