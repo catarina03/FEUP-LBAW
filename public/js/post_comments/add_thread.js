@@ -49,6 +49,7 @@ function addThread(comment_id,content){
         }
         //document.getElementById("comment-section").innerHTML = request.responseText;
         content.value = "";
+        updateThreadsNo(1,comment_id);
         addListeners();
         addDeleteCommentListeners();
         addEditListeners();
