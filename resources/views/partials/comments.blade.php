@@ -50,6 +50,7 @@
                     </div>
                 </div>
             </div>
+            <span class="comment_thread_section">
             @foreach($comment['threads'] as $thread)
                 <span class="thread-container">
                     <div hidden class="row justify-content-center px-4 mx-1 thread-section">
@@ -102,6 +103,7 @@
                     </div>
              </span>
             @endforeach
+            </span>
             @auth
             <div class="row justify-content-center px-4 mx-1 thread-reply" hidden>
                 <div class="col-10 mx-0 px-0">

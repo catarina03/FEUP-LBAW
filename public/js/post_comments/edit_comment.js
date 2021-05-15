@@ -3,11 +3,17 @@ addEditListeners();
 function addEditListeners(){
     for(let i = 0;i<edit_comment_buttons.length;i++){
         let element = edit_comment_buttons[i];
-        let comment_id = element.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0].innerText;
-        let container = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        let container;
+        let aux = element.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0];
+        let comment_id = aux.innerText;
+        if(aux.classList.contains("COMMENTID"))
+            container = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        else if(aux.classList.contains("THREADID")){
+            container = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        }
         element.addEventListener("click",function(e){
-            e.preventDefault();
-            editForm(comment_id,container);
+        e.preventDefault();
+        editForm(comment_id,container);
         });
     }
 }
@@ -86,7 +92,7 @@ function confirmEdit(comment_id,container){
                             <h3 class="post-page-comment-body m-0">`+ escapeHtml(comment['comment']['content'])+ `</h3>
                         </div>    
                             <div class="col-auto p-0 m-0 ms-auto">
-                                <span class="comment_id" hidden>` + escapeHtml(comment['comment']['id'].toString()) + `</span>` +
+                                <span class="comment_id COMMENTID" hidden>` + escapeHtml(comment['comment']['id'].toString()) + `</span>` +
                                 
                                 (userID.innerText==comment['comment']['user_id']?
                                 `<div class="dropdown">
@@ -123,7 +129,7 @@ function confirmEdit(comment_id,container){
                         </div>
                     </div>
                 </div>
-            </div>\n`;
+            </div>\n<span class="comment_thread_section">`;
             
             for(let j = 0;j< comment['threads'].length;j++){
                 let thread = comment['threads'][j];
@@ -173,7 +179,7 @@ function confirmEdit(comment_id,container){
                 </div>
             </div></span>`;
             }
-            result += `<div class="row justify-content-center px-4 mx-1 thread-reply">
+            result += `</span><div class="row justify-content-center px-4 mx-1 thread-reply">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
@@ -251,7 +257,7 @@ function confirmEdit(comment_id,container){
                 </div>
             </div>
         </div>`;
-        container.parentNode.parentNode.innerHTML = result;
+        container.innerHTML = result;
         let new_elements = container.getElementsByClassName("delete_comment_button");
         for(let k = 0;k<new_elements.length;k++){
             let temp = new_elements[k];

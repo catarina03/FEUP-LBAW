@@ -53,23 +53,24 @@
                 <h1 class="post-page-post-title">{{$post->is_spoiler?"[SPOILER]":""}}{{$post->title}}</h1>
             </div>
 
-            
-                <div class="container-fluid d-flex col-10 justify-content-left mt-1">
-                    <h2 class="post-page-post-author-date">by <a href="{{route('profile',['id'=>$metadata['author']->id])}}">{{$metadata['author']->name}}</a>, {{$metadata['date']}}</h2>
-                </div>
+                <div class="row justify-content-between">
+                    <div class="container-fluid d-flex px-0 col-4 mt-1">
+                        <h2 class="post-page-post-author-date">by <a href="{{route('profile',['id'=>$metadata['author']->id])}}">{{$metadata['author']->name}}</a>, {{$metadata['date']}}</h2>
+                    </div>
 
-                <div class="container-fluid d-flex col-10 justify-content-left mt-1">
-                    <div class="pe-3">
-                        <h3 class="post-page-post-interactions">{{$metadata['views']}} <i class="far fa-eye"></i></h3>
-                    </div>
-                    <div class="pe-3">
-                        <h3 class="post-page-post-interactions">{{$metadata['likes']}} <i class="far fa-thumbs-up"></i></h3>
-                    </div>
-                    <div class="pe-3">
-                        <h3 class="post-page-post-interactions">0 <i class="far fa-thumbs-down"></i></h3>
-                    </div>
-                    <div class="pe-3">
-                        <h3 class="post-page-post-interactions" id="post_comment_count">{{$metadata['comment_count']}} <i class="far fa-comments"></i></h3>
+                    <div class="container-fluid d-flex col-2 mt-1">
+                        <div class="pe-3">
+                            <h3 class="post-page-post-interactions">{{$metadata['views']}} <i class="far fa-eye"></i></h3>
+                        </div>
+                        <div class="pe-3">
+                            <h3 class="post-page-post-interactions">{{$metadata['likes']}} <i class="far fa-thumbs-up"></i></h3>
+                        </div>
+                        <div class="pe-3">
+                            <h3 class="post-page-post-interactions">0 <i class="far fa-thumbs-down"></i></h3>
+                        </div>
+                        <div class="pe-3">
+                            <h3 class="post-page-post-interactions" id="post_comment_count">{{$metadata['comment_count']}} <i class="far fa-comments"></i></h3>
+                        </div>
                     </div>
                 </div>
             
@@ -203,12 +204,16 @@
                                     
                             
                                 </div>
+                                
                             </div>
+                            
                         </div>
+                        
                     </div>
                 </div>
+               
             </div>
-            
+            <span class="comment_thread_section">
             @foreach($comment['threads'] as $thread)
                 <span class="thread-container">
                     <div hidden class="row justify-content-center px-4 mx-1 thread-section">
@@ -261,6 +266,7 @@
                     </div>
              </span>
             @endforeach
+            </span>
             @auth
             <div class="row justify-content-center px-4 mx-1 thread-reply" hidden>
                 <div class="col-10 mx-0 px-0">

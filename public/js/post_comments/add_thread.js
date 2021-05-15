@@ -36,18 +36,18 @@ function addThread(comment_id,content){
             return;
         }
         let containers = document.getElementsByClassName("comment-container");
-        /*for(let i = 0;i<containers.length;i++){
+        //let tempK = request.responseText;
+        for(let i = 0;i<containers.length;i++){
             let temp = containers[i];
-            if(temp.getElementsByClassName("COMMENTID").innerText == comment_id){
+            if(temp.getElementsByClassName("COMMENTID")[0].innerText == comment_id){
                 let temp_threads = request.responseText;
-                let local_threads = containers[i].getElementsByClassName("thread-container");
-                for(let k = 0;k<local_threads.length;k++){
-                    temp_threads+= local_threads[i];
-                }
-
+                let cont = containers[i].getElementsByClassName("comment_thread_section")[0];
+                temp_threads += cont.innerHTML;
+                cont.innerHTML = temp_threads;
+                break;
             }
-        }*/
-        document.getElementById("comment-section").innerHTML = request.responseText;
+        }
+        //document.getElementById("comment-section").innerHTML = request.responseText;
         content.value = "";
         addListeners();
         addDeleteCommentListeners();

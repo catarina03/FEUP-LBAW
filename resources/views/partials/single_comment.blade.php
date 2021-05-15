@@ -49,6 +49,7 @@
                     </div>
                 </div>
             </div>
+            <span class="comment_thread_section">
             @foreach($comment['threads'] as $thread)
                 <span class="thread-container">
                     <div hidden class="row justify-content-center px-4 mx-1 thread-section">
@@ -101,6 +102,7 @@
                     </div>
              </span>
             @endforeach
+            </span>
             @auth
             <div class="row justify-content-center px-4 mx-1 thread-reply" hidden>
                 <div class="col-10 mx-0 px-0">
@@ -156,7 +158,7 @@
                                     </div>
                                     <div class="row align-items-end px-2 py-0">
                                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end">
-                                            <h3 class="post-page-comment-reply-author-date p-0 m-0">by <a href="{{route('profile',['id'=>$thread['comment']['user_id']])}}">{{$comment['author']}}</a>, {{$comment['date']}}</h3>
+                                            <h3 class="post-page-comment-reply-author-date p-0 m-0">by <a href="{{route('profile',['id'=>$comment['comment']['user_id']])}}">{{$comment['author']}}</a>, {{$comment['date']}}</h3>
                                         </div>
                                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                                             <div class="row">
