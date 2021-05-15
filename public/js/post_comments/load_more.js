@@ -37,11 +37,11 @@ function loadMore(){
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
     request.send();
 }
-
+/*
 let teste = document.getElementsByClassName("XD");
 for(let i =0;i<teste.length;i++){
     teste[i].addEventListener("click",function(e){
         e.stopPropagation();
         console.log("CARAI");
     })
-}
+}*/
