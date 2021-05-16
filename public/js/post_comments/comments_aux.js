@@ -25,7 +25,10 @@ function updateSortedBy(text){
 function updateCommentCount(amount){
     let container = document.getElementById("post_comment_count");
     container.parentNode.innerHTML= `<h3 class="post-page-post-interactions" id="post_comment_count">` + (parseInt(container.innerText) + amount) + " <i class=\"far fa-comments\"></i></h3>";
-    return true;
+    if(parseInt(container.innerText) + amount == 0)
+        LoadMoreVisibility(true);
+        EmptyCommentsVisibility(false);
+        return true;
 }
 
 function openThreads(comment_id){
@@ -48,13 +51,20 @@ function openThreads(comment_id){
 }
 
 
-function fixCommentSettingsListeners(){
-    let j = document.querySelectorAll(".comment_settings > .btn.fa-cog-icon");
-    for(let h = 0;h<j.length;h++){
-        let temp = j[h];
-        temp.addEventListener("click",function(e){
-            e.stopPropagation();
-           
-        });
+function LoadMoreVisibility(isV){
+    let j = document.getElementById("load_more");
+    if(j!=null){
+        if(isV)
+            j.setAttribute("hidden",isV);
+        else
+            j.removeAttribute("hidden");
     }
+}
+
+function EmptyCommentsVisibility(isV){
+    let j = document.getElementById("empty-comments");
+    if(isV)
+        j.setAttribute("hidden",isV);
+    else
+        j.removeAttribute("hidden");
 }

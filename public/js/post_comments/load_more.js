@@ -57,12 +57,12 @@ function removeDup(){
             console.log(":" + actual.innerText + ":");
             if(seen.includes(actual.innerText)){
                 //console.log("REMOVED");
-                actual.parentNode.parentNode.parentNode.parentNode.setAttribute("hidden",true);
+                actual.parentNode.parentNode.parentNode.parentNode.remove();
             }    
             else{
                 
                 seen.push(actual.innerText);
             }
-            console.log(seen);
+            
         }
 }
