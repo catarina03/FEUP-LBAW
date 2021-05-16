@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 class Comment extends Model
 {
 
@@ -49,5 +50,83 @@ class Comment extends Model
         return $this->hasOne(Comment::class,"comment_id");
     }
 
-    //notification on comment
+    public static function getPostComments($post_id,$date_order,$offset){
+        
+            $comments = Comment::where("post_id",$post_id)->orderBy("comment_date",$date_order)->get()->forPage($offset,5)->all();
+        $result = array();
+        foreach($comments as $comment){
+            $temp = Comment::getCommentInfo($comment->id);
+            $result[] = $temp;
+        }
+        return $result;
+    }
+
+    public static function getPostPopularComments($post_id){
+        $comments = DB::select(DB::raw("SELECT C.content as c_content,C.id as c_id,C.user_id as c_user_id,C.post_id as c_post_id,C.comment_id as c_comment_id ,
+                SUM(CASE WHEN R.like THEN 1 ELSE 0 END) AS overallRating
+            FROM comment C
+            LEFT JOIN vote_comment  R ON R.comment_id = C.id
+            WHERE C.post_id = $post_id
+            GROUP BY C.id
+            ORDER BY overallRating desc;"));
+
+        $comment_ids = array();
+        foreach($comments as  $comment){
+            $comment_ids[] = $comment->c_id;
+        }
+        
+        $result = array();
+        foreach($comment_ids as $id){
+            $temp = Comment::getCommentInfo($id);
+            $result[] = $temp;
+        }
+        return $result;
+    }
+
+    public static function getCommentThreads($comment_id){
+        $comments = Comment::where("comment_id",$comment_id)->orderBy("comment_date","desc")->get();
+        $result = array();
+        foreach($comments as $comment){
+            $temp = Comment::getThreadInfo($comment->id);
+            $result[] = $temp;
+        }
+        return $result;
+    }
+
+
+    public static function getCommentInfo($comment_id){
+        $comment = Comment::find($comment_id);
+        $votes = DB::table("vote_comment")->where("comment_id",$comment->id);
+        $temp = $votes->get()->count();
+        $likes = $votes->where("like",true)->get()->count();
+        $dislikes = $temp - $likes;
+        $threads = Comment::getCommentThreads($comment->id);
+        $temp_array = array();
+        $temp_array["comment"] = $comment;
+        $temp_array["likes"] = $likes;
+        $temp_array["dislikes"] = $dislikes;
+        $temp_array["date"] = date("F j, Y", strtotime($comment['comment_date']));
+        $temp_array["author"] = AuthenticatedUser::find($comment->user_id)->name;
+        $temp_array["threads"] = $threads;
+        $temp_array["thread_count"] = count($threads);
+        return $temp_array;
+    }
+
+    public static function getThreadInfo($thread_id){
+        $result = Comment::getCommentInfo($thread_id);
+        unset($result["threads"]);
+        unset($result["thread_count"]);
+        return $result;
+    }
+
+    public static function commentsAsHtml($comments,$user_id){
+        $result = "";
+        $metadata = ["comments"=>$comments];
+        return view("partials.comments",["user_id"=> $user_id,"metadata"=> $metadata]);
+    }
+
+    public static function single_commentAsHtml($comment_id,$user_id){
+        $comment = Comment::getCommentInfo($comment_id);
+        return view("partials.single_comment",["user_id"=>$user_id,"comment"=>$comment,"isThread" => $comment['comment']->comment_id==null?false:true]);
+    }
 }
