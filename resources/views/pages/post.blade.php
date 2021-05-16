@@ -300,7 +300,7 @@
             </span>
 
             
-            @if(count($metadata['comments'])>5)
+            @if($metadata['comment_count']>5)
             <div class="row justify-content-center px-4 mx-1">
                 <div class="row justify-content-center mt-4 mb-2 mx-0 p-0">
                     <div class="col-2">
