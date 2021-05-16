@@ -25,9 +25,10 @@ function updateSortedBy(text){
 function updateCommentCount(amount){
     let container = document.getElementById("post_comment_count");
     container.parentNode.innerHTML= `<h3 class="post-page-post-interactions" id="post_comment_count">` + (parseInt(container.innerText) + amount) + " <i class=\"far fa-comments\"></i></h3>";
-    if(parseInt(container.innerText) + amount == 0)
+    if(parseInt(container.innerText) + amount == 0){
         LoadMoreVisibility(true);
         EmptyCommentsVisibility(false);
+    }    
         return true;
 }
 
