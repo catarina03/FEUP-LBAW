@@ -2,8 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Photo;
+use App\Models\Tag;
+use App\Models\AuthenticatedUser;
 use App\Models\Comment;
+use App\Policies\PostPolicy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -33,9 +43,38 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request,$post_id)
+    {   
+        $validator = Validator::make($request->all(),
+            [
+                'content' => ['required', 'string', 'max:1000','min:1'],
+                'user_id' => ['required', 'numeric'],
+                'post_id' => ['required', 'numeric'],
+            ],
+            [
+                'content.required' => 'Content cannot be empty',
+                'user_id.numeric' => 'UserID must be a number',
+                'user_id.required' => 'UserID must be a number',
+                'post_id.numeric' => 'PostID must be a number',
+                'posst_id.required' => 'PostID must be a number',
+                'content.max' => 'Content is too big, max of 1000 characters',
+                'content.min' => 'Content is too short, max of 1000 characters'
+            ]);
+        if($validator->fails())
+                return "";
+        if(Auth::check()){
+            $post = Post::find($request->input('post_id'));
+            if($post != null && Auth::user()->id != $post->user_id){
+                $cid = DB::table('comment')->insertGetId([
+                    'content' => $request->input('content'),
+                    'user_id' => $request->input('user_id'),
+                    'post_id' => $request->input('post_id')
+                ]);
+                //$comments = Comment::getPostComments($post_id,"desc",1);
+                return Comment::single_commentAsHtml($cid,Auth::user()->id);
+            }
+        }
+        return "";
     }
 
     /**
@@ -80,35 +119,59 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        $comment->delete();
+        return $comment->delete();
     }
 
-    public function addComment(Request $request,$post_id){//store?
-        $validatedData = $request->validate([
-            'content' => 'required|max:255',
-            'user_id' => 'required|numeric',
-            'post_id' => 'required|numeric'
-        ]);
+    public function editForm(Request $request,$comment_id){
 
-        DB::table('comment')->insert([
-            'content' => $validatedData['content'],
-            'user_id' => $validatedData['user_id'],
-            'post_id' => $validatedData['post_id']
-        ]); //Tem de explicitar o comment_date?
+        //Checagem de erros
+        if(Auth::check()){
+            $comment = Comment::find($comment_id);
+            if($comment!=null && Auth::user()->id == $comment->user_id){
+                return json_encode($comment);
+            }
+        }
+        return ""; 
     }
 
     public function editAction(Request $request,$comment_id){//update?
-        $validatedData = $request->validate([
-            'content' => 'required|max:255',
-            'comment_id' => 'required|numeric'
+        $validator = Validator::make($request->all(),
+        [
+            'content' => ['required', 'string', 'max:1000','min:1']
+        ],
+        [
+            'content.required' => 'Content cannot be empty',
+            'content.max' => 'Content is too big, max of 1000 characters',
+            'content.min' => 'Content is too short, min of 1 characters'
         ]);
-        DB::table('comment')->where('id',$comment_id)->update(['content' => $validatedData['content']]); 
+        
+        if($validator->fails())
+            return "";
+        
+        if(Auth::check()){
+            $comment = Comment::find($comment_id);
+            $comment->timestamps = false;
+            if($comment!=null && Auth::user()->id == $comment->user_id){
+                $comment->content = $request['content'];
+                if($comment->save())
+                    return json_encode(Comment::getCommentInfo($comment_id));
+                return "";
+            }
+        }
+        return ""; 
     }
 
 
     public function destroyComment(Request $request,$comment_id){
         $comment = Comment::find($comment_id);
-        destroy($comment);
+        if(Auth::check()){
+            if($comment!=null){
+                if(Auth::user()->id == $comment->user_id){
+                    return $this->destroy($comment)?"SUCCESS":"FAIL";
+                }
+            }
+        }
+        return "FAIL";
     }
 
     public function threads(Request $request,$comment_id){
@@ -116,17 +179,36 @@ class CommentController extends Controller
     }
 
     public function addThread(Request $request,$comment_id){
-        $validatedData = $request->validate([
-            'content' => 'required|max:255',
-            'user_id' => 'required|numeric',
-            'comment_id' => 'required|numeric'
+        $validator = Validator::make($request->all(),
+        [
+            'content' => ['required', 'string', 'max:1000','min:1'],
+            'user_id' => ['required', 'numeric'],
+            'comment_id' => ['required', 'numeric'],
+        ],
+        [
+            'content.required' => 'Content cannot be empty',
+            'user_id.numeric' => 'UserID must be a number',
+            'user_id.required' => 'UserID must be a number',
+            'comment_id.numeric' => 'CommentID must be a number',
+            'comment_id.required' => 'CommentID must be a number',
+            'content.max' => 'Content is too big, max of 1000 characters',
+            'content.min' => 'Content is too short, max of 1000 characters'
         ]);
-
-        DB::table('comment')->insert([
-            'content' => $validatedData['content'],
-            'user_id' => $validatedData['user_id'],
-            'comment_id' => $validatedData['comment_id']
-        ]);
+        if($validator->fails())
+            return "";
+        if(Auth::check()){
+            $comment = Comment::find($request->input('comment_id'));
+            if($comment != null && Auth::user()->id == $request->input('user_id')){
+                $cid=DB::table('comment')->insertGetId([
+                    'content' => $request->input('content'),
+                    'user_id' => $request->input('user_id'),
+                    'comment_id' => $request->input('comment_id')
+                ]);
+                //$comments = Comment::getPostComments($comment->post_id,"desc",1);
+                return Comment::single_commentAsHtml($cid,Auth::user()->id);
+            }
+        }
+        return "";
 
     }
 
@@ -175,7 +257,5 @@ class CommentController extends Controller
             'like' => $validatedData['like']
         ]);
     }
-
-    
 
 }
