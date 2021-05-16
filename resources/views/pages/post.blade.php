@@ -2,6 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/comments_aux.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/delete_confirm.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/add_thread.js') }}" defer></script>
@@ -10,7 +11,6 @@
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/edit_comment.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/sort_comments.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/show_threads.js') }}" defer></script>
-<script type="text/javascript" src="{{ URL::asset('js/post_comments/comments_aux.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/load_more.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
@@ -124,7 +124,7 @@
                         <div class="col-auto m-0 p-0">
                             <h3 class="mt-0 py-0 mb-1">Comments</h3>
                         </div>
-                        <div class="col-auto p-0 m-0">
+                        <div hidden class="col-auto p-0 m-0">
                             <div class="dropdown p-0 m-0">
                                 <button class="btn btn-secondary dropdown-toggle comment-sort-by-button p-0 m-0" type="button" id="comments-sort-by" data-bs-toggle="dropdown" aria-expanded="false">Sort by</button>
                                 <ul class="dropdown-menu comments-sort-by" aria-labelledby="comments-sort-by">
@@ -161,7 +161,7 @@
             @foreach($metadata['comments'] as $comment)
             <span class="comment-container" >
                 <div class="row justify-content-center px-4 mx-1">
-                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2 show-hide-replies" style="cursor:pointer">
+                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
                     <div class="row px-2 py-0">
                         <div class="col-auto p-0 m-0">
                             <h3 class="post-page-comment-body m-0">{!! nl2br(e($comment['comment']->content)) !!}</h3>
@@ -172,7 +172,7 @@
                                
                             
                             @if($user_id==$comment['comment']->user_id)
-                            <div class="dropdown">
+                            <div class="dropdown comment_settings">
                                 <a class="btn fa-cog-icon"   data-bs-toggle="dropdown" aria-expanded="false">
                                     <i  class="fas fa-cog ms-auto" ></i>
                                 </a>
@@ -201,7 +201,7 @@
                                     <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3"></i>
                                     @endif
                                     <h3 class="post-page-comment-interactions my-0">{{$comment['thread_count']}} <i class="far fa-comments"></i></h3>
-                                    
+                                    <h3 class="post-page-comment-interactions my-0 px-3 show-hide-replies"> <i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show</h3>
                             
                                 </div>
                                 
@@ -300,7 +300,7 @@
             </span>
 
             
-            @if(count($metadata['comments'])>0)
+            @if(count($metadata['comments'])>5)
             <div class="row justify-content-center px-4 mx-1">
                 <div class="row justify-content-center mt-4 mb-2 mx-0 p-0">
                     <div class="col-2">

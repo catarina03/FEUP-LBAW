@@ -86,7 +86,7 @@ function confirmEdit(comment_id,container){
             if(comment['comment']['post_id'] != null){
                 result+=`<span class="comment-container">
                 <div class="row justify-content-center px-4 mx-1">
-                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2 show-hide-replies\" style="cursor:pointer">
+                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2\">
                     <div class="row px-2 py-0">
                         <div class="col-auto p-0 m-0">
                             <h3 class="post-page-comment-body m-0">`+ escapeHtml(comment['comment']['content'])+ `</h3>
@@ -121,9 +121,12 @@ function confirmEdit(comment_id,container){
                             <div class="row">
                                 <div class="d-flex">
                                     <h3 class="post-page-comment-interactions pe-3 my-0">` +escapeHtml( comment['likes'].toString()) + ` <i title="Like comment" class="far fa-thumbs-up"></i></h3>
-                                    <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
-                                    <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
-                                    <h3 class="post-page-comment-interactions my-0">${comment['thread_count']} <i class="far fa-comments"></i></h3>
+                                    <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>`
+                                    +
+                                    (userID.innerText!=comment['comment']['user_id']?`<i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>`:"")
+                                    +
+                                    `<h3 class="post-page-comment-interactions my-0">${comment['thread_count']} <i class="far fa-comments"></i></h3>
+                                    <h3 class="post-page-comment-interactions my-0 px-3 show-hide-replies"> <i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show</h3>
                                 </div>
                             </div>
                         </div>
@@ -168,9 +171,11 @@ function confirmEdit(comment_id,container){
                                     <div class="row">
                                         <div class="d-flex">
                                             <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(thread['likes'].toString()) + ` <i title="Like comment" class="far fa-thumbs-up"></i></h3>
-                                            <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(thread['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
-                                            <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
-                                        </div>
+                                            <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(thread['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>`
+                                            +
+                                            (userID.innerText!=thread['comment']['user_id']?`<i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>`:"")
+                                            +
+                                            `</div>
                                     </div>
                                 </div>
                             </div>
@@ -210,6 +215,7 @@ function confirmEdit(comment_id,container){
                 });
             }
             addShowThreadListeners();
+        
             
         }
         else{
@@ -247,9 +253,11 @@ function confirmEdit(comment_id,container){
                                 <div class="row">
                                     <div class="d-flex">
                                         <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['likes'].toString()) + ` <i title="Like comment" class="far fa-thumbs-up"></i></h3>
-                                        <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
-                                        <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
-                                    </div>
+                                        <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>`
+                                        +
+                                        (userID.innerText!=comment['comment']['user_id']?`<i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>`:"")
+                                        +
+                                        `</div>
                                 </div>
                             </div>
                         </div>

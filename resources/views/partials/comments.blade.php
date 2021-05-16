@@ -2,7 +2,7 @@
             @foreach($metadata['comments'] as $comment)
             <span class="comment-container" >
                 <div class="row justify-content-center px-4 mx-1">
-                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2 show-hide-replies" style="cursor:pointer">
+                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
                     <div class="row px-2 py-0">
                         <div class="col-auto p-0 m-0">
                             <h3 class="post-page-comment-body m-0">{!! nl2br(e($comment['comment']->content)) !!}</h3>
@@ -42,7 +42,7 @@
                                     <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
                                     @endif
                                     <h3 class="post-page-comment-interactions my-0">{{$comment['thread_count']}} <i class="far fa-comments"></i></h3>
-                                    
+                                    <h3 class="post-page-comment-interactions my-0 px-3 show-hide-replies"> <i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show</h3>
                             
                                 </div>
                             </div>
@@ -127,10 +127,5 @@
             @endauth
             </span>
             @endforeach
-            @endif
-            @if(count($metadata['comments']) == 0)
-                <div class="container-fluid d-flex col-10 justify-content-center mt-3">
-                    <p><b>There are no comments in this post. Be the first to leave your thoughts!</b></p>
-                </div>
             @endif
             </span>

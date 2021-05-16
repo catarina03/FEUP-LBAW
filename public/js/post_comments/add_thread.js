@@ -1,6 +1,5 @@
 let userID = document.getElementById("user_ID");
 addListeners();
-
 function addListeners(){
     let x = document.getElementsByClassName("add_thread_button");
     if(x!=null){
@@ -53,7 +52,7 @@ function addThread(comment_id,content){
         addListeners();
         addDeleteCommentListeners();
         addEditListeners();
-        addShowThreadListeners();
+        //addShowThreadListeners();
         updateSortedBy("Sort by");
         openThreads(comment_id);
         

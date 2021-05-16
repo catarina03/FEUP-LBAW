@@ -46,3 +46,15 @@ function openThreads(comment_id){
     }
     return false;
 }
+
+
+function fixCommentSettingsListeners(){
+    let j = document.querySelectorAll(".comment_settings > .btn.fa-cog-icon");
+    for(let h = 0;h<j.length;h++){
+        let temp = j[h];
+        temp.addEventListener("click",function(e){
+            e.stopPropagation();
+           
+        });
+    }
+}
