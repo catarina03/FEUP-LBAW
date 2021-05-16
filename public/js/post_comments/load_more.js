@@ -2,10 +2,11 @@
 loadMoreListener();
 function loadMoreListener(){
     let button = document.getElementById("load_more");
-    button.addEventListener("click",function(e){
-        e.preventDefault();
-        loadMore();
-    });
+    if(button!=null)
+        button.addEventListener("click",function(e){
+            e.preventDefault();
+            loadMore();
+        });
 }
 
 function loadMore(){
@@ -24,6 +25,7 @@ function loadMore(){
 
         currentPage+=1;
         comment_section.innerHTML += request.responseText;
+        removeDup();
         addListeners();
         addDeleteCommentListeners();
         addEditListeners();
@@ -45,3 +47,22 @@ for(let i =0;i<teste.length;i++){
         console.log("CARAI");
     })
 }*/
+
+function removeDup(){
+    let new_comments = document.getElementsByClassName("COMMENTID");
+        let seen = [];
+        console.log(new_comments.length);
+        for(let i =0;i<new_comments.length;i++){
+            let actual = new_comments[i];
+            console.log(":" + actual.innerText + ":");
+            if(seen.includes(actual.innerText)){
+                //console.log("REMOVED");
+                actual.parentNode.parentNode.parentNode.parentNode.setAttribute("hidden",true);
+            }    
+            else{
+                
+                seen.push(actual.innerText);
+            }
+            console.log(seen);
+        }
+}
