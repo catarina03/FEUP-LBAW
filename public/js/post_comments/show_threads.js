@@ -20,21 +20,21 @@ function show_replies(element){
     for(let j = 0;j<parent.length;j++){
             let temp = parent[j];
             let hidden = temp.getAttribute("hidden");
-            if(hidden)
+            if(hidden=="")
                 temp.removeAttribute("hidden");
             
             else
-                temp.setAttribute("hidden",true);
+                temp.setAttribute("hidden","");
         }
         let hiddenH = reply.getAttribute("hidden");
         let k = element.getElementsByTagName("i")[0];
-        if(hiddenH){
+        if(hiddenH==""){
             reply.removeAttribute("hidden");
             
             element.innerHTML = `<i class="fas fa-chevron-down my-0" style="cursor:pointer;"></i>Hide`;
         }    
         else{
-            reply.setAttribute("hidden",true);
+            reply.setAttribute("hidden","");
             element.innerHTML = `<i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show`;
         }
 }
