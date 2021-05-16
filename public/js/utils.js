@@ -4,21 +4,6 @@ function encodeForAjax(data) {
     }).join('&')
 }
 
-function addLoadMore(postDiv){
-    let pagination = document.createElement('div')
-    pagination.className = "pagination d-flex justify-content-center"
-
-    let load = document.createElement('a')
-    load.className = "loadmore"
-    load.innerHTML = "Load More"
-
-    pagination.appendChild(load)
-    postDiv.appendChild(pagination)
-    let loadMore = document.querySelector('.pagination .loadmore')
-    if(loadMore != null){
-        loadMore.addEventListener('click', loadHandler)
-    }
-}
 
 function addLoadSpinner(parent){
     let outterDiv = document.createElement('div')

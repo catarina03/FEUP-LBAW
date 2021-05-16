@@ -14,7 +14,8 @@ class PagesController extends Controller
         $p = Post::getPostsOrdered("top", 1);
         $posts = $this->getPostsInfo($p);
         $slideshow = $this->slideshow();
-        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow]);
+        $n_posts = Post::count();
+        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow, 'n_posts' => $n_posts]);
     }
 
     public function slideshow(){
@@ -45,23 +46,26 @@ class PagesController extends Controller
         else if($category == "Theatre") $posts = Post::where('category', 'theatre')->paginate(15,'*', 'page', 1);
         else if($category == "Literature") $posts = Post::where('category', 'literature')->paginate(15,'*', 'page', 1);
 
+        $n_posts = $posts->total();
         $posts = $this->getPostsInfo($posts);
-        if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts]);
+        if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts, 'n_posts' => $n_posts]);
 
-        return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts]);
+        return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts, 'n_posts' => $n_posts]);
 
     }
 
     public function list($homepageFilters){
         $p = Post::getPostsOrdered($homepageFilters, 1);
         $posts = $this->getPostsInfo($p);
-        return response()->json(view('partials.allcards', ['posts' => $posts])->render());
+        $n_posts = Post::count();
+        return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts, 'n_posts' => $n_posts])->render(),'n_posts' => $n_posts));
     }
 
     public function loadMoreHomepage($filters, $page){
         $p = Post::getPostsOrdered($filters, $page);
         $posts = $this->getPostsInfo($p);
-        return response()->json(view('partials.allcards', ['posts' => $posts])->render());
+        $n_posts = Post::count();
+        return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts])->render(), 'n_posts'=> $n_posts));
     }
 
     public function loadMoreCategoryPage($category, $page){
@@ -83,14 +87,14 @@ class PagesController extends Controller
         return view('pages.advanced_search', ['needsFilter'=> 1,'posts' => $posts, 'number_res'=> $p->total()])->render();
     }
 
-    public function loadMoreAdvancedSearch(Request $request,$filters, $page){
-        $p = $this->filter($request,$page);
+    public function loadMoreAdvancedSearch(Request $request){
+        $p = $this->filter($request);
         $posts = $this->getPostsInfo($p);
 
         return response()->json(array('posts'=> view('partials.allcards', ['posts' => $posts])->render(), 'number_res'=> $p->total()));
     }
 
-    public function filter(Request $request, $page){
+    public function filter(Request $request){
         $date = date("m/d/Y", time());
         $query = Post::where('created_at', '<=', $date);
 
@@ -131,7 +135,7 @@ class PagesController extends Controller
                 $query->where('user_id', Auth::user()->id);
             }
         }
-        return $query->paginate(15,'*', 'page', $page);
+        return $query->paginate(15,'*', 'page', $request->input('page'));
     }
 
     public function getPostsInfo($posts){

@@ -43,7 +43,7 @@
             @endauth
             <button type="button" class="filterButton w-100 mt-4 p-1">
                 <i class="fa fa-circle-notch fa-spin d-none search-spinner"></i>
-                <span class="search-span">Search</span>
+                <span class="search-span d-inline-block">Search</span>
             </button>
             <div class="justify-content-center d-flex mt-1">
                 <span class="text-center error-span" style="color:#cc3300; font-size:10px"></span>

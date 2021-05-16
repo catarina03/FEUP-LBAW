@@ -12,7 +12,9 @@
         <div class="postsCards row">
             @each('partials.card', $posts, 'post')
         </div>
-        @include('partials.pagination')
+        @if($n_posts > 15)
+            @include('partials.pagination')
+        @endif
     </div>
     @include('partials.filterBox')
 </div>

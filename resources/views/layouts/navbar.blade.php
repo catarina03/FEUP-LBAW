@@ -14,11 +14,11 @@
 
         <div class="navbar-collapse collapse w-100" id="navbar" navbar>
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a href="{{url('/category?category=Music')}}" class="nav-link">Music</a></li>
-                <li class="nav-item"><a href="{{url('/category?category=Cinema')}}" class="nav-link">Cinema</a></li>
-                <li class="nav-item"><a href="{{url('/category?category=TVShow')}}" class="nav-link">TV Show</a></li>
-                <li class="nav-item"><a href="{{url('/category?category=Theatre')}}" class="nav-link">Theatre</a></li>
-                <li class="nav-item"><a href="{{url('/category?category=Literature')}}" class="nav-link">Literature</a></li>
+                <li class="nav-item"><a href="{{url('category/category?category=Music')}}" class="nav-link">Music</a></li>
+                <li class="nav-item"><a href="{{url('category/category?category=Cinema')}}" class="nav-link">Cinema</a></li>
+                <li class="nav-item"><a href="{{url('category/category?category=TVShow')}}" class="nav-link">TV Show</a></li>
+                <li class="nav-item"><a href="{{url('category/category?category=Theatre')}}" class="nav-link">Theatre</a></li>
+                <li class="nav-item"><a href="{{url('category/category?category=Literature')}}" class="nav-link">Literature</a></li>
                 <li>
                     <hr class="dropdown-divider" style="color:white;">
                 </li>

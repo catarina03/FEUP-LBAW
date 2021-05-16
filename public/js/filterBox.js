@@ -3,11 +3,6 @@ let categoryFilter = document.querySelector('.category .filterButton')
 let advancedSearchFilter = document.querySelector('.advanced_search .filterButton')
 let advancedSearch = document.querySelector('.advanced_search')
 let loadMoreAdv = document.querySelector('.advanced_search .pagination .loadmore')
-if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', loadHandler)
-
-let filters = {}
-let pageAdv = 2
-
 let searchElem = document.querySelector('#search')
 let categorySelect = document.querySelector('#category')
 let typeSelect = document.querySelector('#type')
@@ -17,23 +12,17 @@ let peopleFollowCheck = document.querySelector('#checkPeople')
 let tagFollowCheck = document.querySelector('#checkTags')
 let myPostsCheck = document.querySelector('#checkMyPosts')
 
+let filters = {}
+let pageAdv = 2
 
-if(homepageFilter != null) {
-    homepageFilter.addEventListener('click', (e) => {
-        e.preventDefault()
-        startDateElem = document.querySelector('input[type="date"]#startDate1')
-        endDateElem = document.querySelector('input[type="date"]#endDate1')
-        redirectWithFilters()
-    })
-}
-if(categoryFilter != null){
-    categoryFilter.addEventListener('click', (e) => {
-        e.preventDefault()
-        startDateElem = document.querySelector('input[type="date"]#startDate1')
-        endDateElem = document.querySelector('input[type="date"]#endDate1')
-        redirectWithFilters()
-    })
-}
+if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', (e) => loadHandlerAdvancedSearch(e))
+
+if(homepageFilter != null) homepageFilter.addEventListener('click', (e) => redirectWithFilters(e))
+
+if(categoryFilter != null) categoryFilter.addEventListener('click', (e) => redirectWithFilters(e))
+
+if(advancedSearch != null) document.addEventListener('DOMContentLoaded', onLoad)
+
 if(advancedSearchFilter != null){
     advancedSearchFilter.addEventListener('click', (e) => {
         e.preventDefault()
@@ -41,11 +30,7 @@ if(advancedSearchFilter != null){
         if(getFilters() !== -1) window.location = "filters?" + encodeForAjax(filters)
         removeSpinner(s)
     })
-    if(advancedSearch != null) advancedSearch.addEventListener('DOMContentLoaded', onLoad)
 }
-
-
-
 
 
 function getFilters(){
@@ -55,8 +40,6 @@ function getFilters(){
     if(categorySelect != null) category = categorySelect.options[categorySelect.selectedIndex].value
 
     let type = typeSelect.options[typeSelect.selectedIndex].value
-
-
     let startDate = startDateElem.value
     let endDate = endDateElem.value
     if(checkDates(startDate, endDate) === -1) return -1
@@ -78,22 +61,20 @@ function getFilters(){
     if(tagFollow !== "") filters['tagFollow'] = tagFollow
     if(myPosts !== "") filters['myPosts'] = myPosts
 
-    if(category == null){
-        let url = new URL(window.location.href)
-        category = url.searchParams.get('category')
-    }
-
+    if(category == null) category = (new URL(window.location.href)).searchParams.get('category')
     if(category !== "" && category !== null) filters['category'] = category
 }
 
-function redirectWithFilters(){
-    let s = addSpinner()
-    if(getFilters() !== -1) window.location = "search/filters?" + encodeForAjax(filters)
-    removeSpinner(s)
+function redirectWithFilters(e){
+    e.preventDefault()
+    addSpinner()
+    startDateElem = document.querySelector('input[type="date"]#startDate1')
+    endDateElem = document.querySelector('input[type="date"]#endDate1')
+    if(getFilters() !== -1) window.location = (window.location.protocol + "//" + window.location.host + "/search/filters?" + encodeForAjax(filters))
 }
 
 function updateAdvancedSearch(adding, posts, number_res, page){
-    let n_res = document.querySelector('.number-res')
+    const n_res = document.querySelector('.number-res')
     n_res.innerText = number_res + " results found!"
     let pag = document.querySelector('.pagination')
     if(pag != null) pag.parentNode.removeChild(pag)
@@ -101,21 +82,18 @@ function updateAdvancedSearch(adding, posts, number_res, page){
     let newDiv = document.createElement('div')
     if(!adding) postDiv.innerHTML = ""
     newDiv.innerHTML= posts
-    let counter = 0
-    while (newDiv.firstChild) {
+
+    while (newDiv.firstChild)
         postDiv.appendChild(newDiv.firstChild)
-        counter++
-    }
+
     if(number_res > 15){
         if(adding){
-            if(number_res % 15 === 0){
-                if(number_res / 15 !== page) addLoadMore(postDiv)
+            if(number_res % 15 === 0) {
+                if (Math.floor(number_res) / 15 > page) addLoadMoreAdvancedSearch(postDiv)
             }
-            else{
-                if(number_res/15 + 1 !== page) addLoadMore(postDiv)
-            }
+            else if(Math.floor(number_res / 15 + 1) > page) addLoadMoreAdvancedSearch(postDiv)
         }
-        else addLoadMore(postDiv)
+        else addLoadMoreAdvancedSearch(postDiv)
     }
     return postDiv
 }
@@ -123,7 +101,8 @@ function updateAdvancedSearch(adding, posts, number_res, page){
 function onLoad(){
     startDateElem = document.querySelector('input[type="date"]#startDate2')
     endDateElem = document.querySelector('input[type="date"]#endDate2')
-    let url = new URL(window.location.href)
+
+    const url = new URL(window.location.href)
     url.searchParams.get('search') != null? searchElem.value = url.searchParams.get('search'): searchElem.value = ""
     url.searchParams.get('category') != null? categorySelect.value = url.searchParams.get('category'): categorySelect.value = ""
     url.searchParams.get('type') != null? typeSelect.value = url.searchParams.get('type'): typeSelect.value = ""
@@ -134,52 +113,51 @@ function onLoad(){
     if(myPostsCheck != null) url.searchParams.get('myPosts') === "true"? myPostsCheck.checked = true: myPostsCheck.checked = false
 }
 
-function loadHandler(e){
+function loadHandlerAdvancedSearch(e){
     e.preventDefault()
     let pag = document.querySelector('.advanced_search .pagination')
     let parent = pag.parentNode
     parent.removeChild(pag)
 
-    let outterDiv = addLoadSpinner(parent)
+    let outerDiv = addLoadSpinner(parent)
     getFilters()
-
+    filters['page'] = pageAdv
     const filterRequest = new XMLHttpRequest()
     filterRequest.onreadystatechange = function(){
         if(filterRequest.readyState === XMLHttpRequest.DONE){
             if(filterRequest.status === 200){
-                parent.removeChild(outterDiv)
-                let posts = JSON.parse(filterRequest.responseText)
-                updateAdvancedSearch(true, posts['posts'], posts['number_res'], pageAdv)
+                parent.removeChild(outerDiv)
+                const response = JSON.parse(filterRequest.responseText)
+                updateAdvancedSearch(true, response['posts'], response['number_res'], pageAdv)
                 pageAdv++
-
             }
             else alert('Error fetching api: ' +  filterRequest.status)
         }
     }
-    filterRequest.open('GET', window.location.protocol + "//" + window.location.host + '/api/search/'+ encodeForAjax(filters) + "/" + pageAdv, true)
+    filterRequest.open('GET', window.location.protocol + "//" + window.location.host + '/api/search?'+ encodeForAjax(filters), true)
     filterRequest.send()
 }
 
 
 function addSpinner(){
     let searchspan = document.querySelector('.search-span')
-    searchspan.remove()
+    searchspan.classList.remove('d-inline-block')
+    searchspan.classList.add('d-none')
+
     let s = document.querySelector('.search-spinner')
     s.classList.remove('d-none')
     s.classList.add('d-inline-block')
-    return s;
 }
 
-function removeSpinner(s){
+/*function removeSpinner(){
+    let searchspan = document.querySelector('.search-span')
+    searchspan.classList.remove('d-none')
+    searchspan.classList.add('d-inline-block')
+
+    let s = document.querySelector('.search-spinner')
     s.classList.remove('d-inline-block')
     s.classList.add('d-none')
-
-    if(homepageFilter != null ) homepageFilter.innerHTML = '<i class="fa fa-circle-notch fa-spin d-none search-spinner"></i>' + '<span class=\"search-span\">Search</span>'
-    if(categoryFilter != null ) categoryFilter.innerHTML = '<i class="fa fa-circle-notch fa-spin d-none search-spinner"></i>' +'<span class=\"search-span\">Search</span>'
-    if(advancedSearchFilter != null ) advancedSearchFilter.innerHTML = '<i class="fa fa-circle-notch fa-spin d-none search-spinner"></i>' + '<span class=\"search-span\">Search</span>'
-    let b = document.querySelector('.filterButton')
-    b.innerHTML = '<span class=\"search-span\">Search</span>'
-}
+}*/
 
 
 function checkDates(startDate, endDate){
@@ -205,5 +183,21 @@ function checkDates(startDate, endDate){
             errorSpan.innerText = "End date must be before today"
             return -1
         }
+    }
+}
+
+function addLoadMoreAdvancedSearch(postDiv){
+    let pagination = document.createElement('div')
+    pagination.className = "pagination d-flex justify-content-center"
+
+    let load = document.createElement('a')
+    load.className = "loadmore"
+    load.innerHTML = "Load More"
+
+    pagination.appendChild(load)
+    postDiv.appendChild(pagination)
+    let loadMore = document.querySelector('.advanced_search .pagination .loadmore')
+    if(loadMore != null){
+        loadMore.addEventListener('click', loadHandlerAdvancedSearch)
     }
 }

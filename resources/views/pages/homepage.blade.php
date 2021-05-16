@@ -31,7 +31,7 @@
         @include('partials.slideshowCard', ['posts' => $slideshow])
         <div class="postsCards row">
             @each('partials.card', $posts, 'post')
-            @if(count($posts) > 0)
+            @if($n_posts > 15)
                 @include('partials.pagination')
             @else
                 <p>No posts</p>
