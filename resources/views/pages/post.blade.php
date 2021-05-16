@@ -293,8 +293,8 @@
         
             @endif
             @if(count($metadata['comments']) == 0)
-                <div class="container-fluid d-flex col-10 justify-content-center mt-3">
-                    <p><b>There are no comments in this post. Be the first to leave your thoughts!</b></p>
+                <div  class="container-fluid d-flex col-10 justify-content-center mt-3">
+                    <p><b id="empty-comments">There are no comments in this post. Be the first to leave your thoughts!</b></p>
                 </div>
             @endif
             </span>
