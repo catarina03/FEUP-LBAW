@@ -409,7 +409,25 @@ hr.solid {
     text-align: center;
 }
 
+.pagination-loadmore a {
+    color: #0c1d1c;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border: 1px solid #0c1d1c;
+    margin: 0 4px;
+}
 
+.pagination-loadmore a.active {
+    background-color: #0c1d1c;
+    color: white;
+    border: 1px solid #0c1d1c;
+}
+
+.pagination-loadmore a:hover:not(.active) {
+    background-color: #ddd;
+}
 
 /*********************** HOMEPAGE ************************************/
 .homepage-navbar {
@@ -437,17 +455,20 @@ hr.solid {
 }
 
 .homepage-center #topNews .card {
-  max-height: fit-content;
-  background-color: #fcf3ee;
-  cursor: pointer;
-  height:20rem;
+    max-height: fit-content;
+    background-color: #fcf3ee;
+    cursor: pointer;
+    height: 20rem;
 }
-#topNews .card-body{
-    height:20rem;
+
+#topNews .card-body {
+    height: 20rem;
 }
-#topNews .card-photo{
+
+#topNews .card-photo {
     height: 19.95rem;
 }
+
 #authorName {
     cursor: pointer;
     font-weight: bold;
@@ -527,29 +548,30 @@ hr.solid {
 }
 
 /* HOME PAGE */
-.custom-filterBox{
+.custom-filterBox {
     align-content: center;
 }
+
 .custom-filterBox .container {
-  background-color: #0c1d1c;
-  max-width: fit-content;
-  max-height: fit-content;
-  padding: 2em;
-  color: #fcf3ee;
-  border-radius: 1%;
-  position: absolute;
+    background-color: #0c1d1c;
+    max-width: fit-content;
+    max-height: fit-content;
+    padding: 2em;
+    color: #fcf3ee;
+    border-radius: 1%;
+    position: absolute;
 }
 
 .custom-filterBox .filterButton {
-  background-color: #8ab5b1;
-  border: none;
-  border-radius: 2%;
-  color: #0c1d1c;
-  font-weight: bold;
+    background-color: #8ab5b1;
+    border: none;
+    border-radius: 2%;
+    color: #0c1d1c;
+    font-weight: bold;
 }
 
 .custom-filterBox .filterButton:hover {
-  color: #307371;
+    color: #307371;
 }
 
 .custom-filterBox .form-check-input {
@@ -752,7 +774,7 @@ a.footer-link:hover {
     font-weight: bold;
 }
 
-.edit-roles-button  {
+.edit-roles-button {
     background-color: transparent;
     color: black;
     border: none;
@@ -1240,17 +1262,17 @@ h3.post-page-comment-reply-interactions {
 }
 
 
-#comment-section .btn.fa-cog-icon{
-  padding-right: 0;
-  padding-top:0;
+#comment-section .btn.fa-cog-icon {
+    padding-right: 0;
+    padding-top: 0;
 }
 
-.btn-sm.post-page-comment-button{
-  background-color: #0C1D1C;
-  color: #EFF9FA;
-  font-family: 'Roboto', sans-serif;
-  border-style: none;
-  box-shadow:none;
-  
+.btn-sm.post-page-comment-button {
+    background-color: #0C1D1C;
+    color: #EFF9FA;
+    font-family: 'Roboto', sans-serif;
+    border-style: none;
+    box-shadow: none;
+
 }
 

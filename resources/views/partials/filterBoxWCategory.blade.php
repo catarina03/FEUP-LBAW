@@ -6,7 +6,7 @@
         <form class="pt-2" action="" method="get">
             <div class="input-group rounded">
                 <input type="text" id="search" class="form-control" placeholder="Search" aria-label="Search"
-                       aria-describedby="search-addon" />
+                       aria-describedby="search-addon"/>
                 <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
                             <i class="fas fa-search"></i>
                         </span>
@@ -20,14 +20,14 @@
                 <option value="Literature">Literature</option>
             </select>
             <select class="form-select mt-4" id="type" aria-label="Select a type" style="cursor:pointer;">
-                <option selected value ="">Select a type</option>
+                <option selected value="">Select a type</option>
                 <option value="News">News</option>
                 <option value="Article">Article</option>
                 <option value="Review">Review</option>
             </select>
-            <input type="date" class="form-control mt-4" id="startDate2"  style="cursor:pointer;">
+            <input type="date" class="form-control mt-4" id="startDate2" style="cursor:pointer;">
             <p class="text-center mt-1 mb-1">to</p>
-            <input type="date" class="form-control mt-0" id="endDate2"  style="cursor:pointer;">
+            <input type="date" class="form-control mt-0" id="endDate2" style="cursor:pointer;">
             @auth
                 <div class="form-check mt-4">
                     <input class="form-check-input" type="checkbox" value="" id="checkPeople"
@@ -61,7 +61,8 @@
     </div>
     <div>
         <div style="margin-top:800px;">
-            <button class="d-flex btn mx-auto py-0 px-0 btn-lg" style="float:right;" id="advanced-search-go-top"><i class="fas fa-arrow-circle-up m-0 p-5"></i></button>
+            <button class="d-flex btn mx-auto py-0 px-0 btn-lg" style="float:right;" id="advanced-search-go-top"><i
+                    class="fas fa-arrow-circle-up m-0 p-5"></i></button>
         </div>
     </div>
 </div>

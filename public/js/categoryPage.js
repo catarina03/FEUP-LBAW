@@ -1,4 +1,4 @@
-let loadMoreCategory = document.querySelector('.category .pagination .loadmore')
+let loadMoreCategory = document.querySelector('.category .pagination-loadmore .loadmore')
 let page = 2
 const url = new URL(window.location.href)
 let category = url.searchParams.get('category')
@@ -21,7 +21,7 @@ if(top_button != null){
 
 function loadHandlerCategory(e){
     e.preventDefault()
-    let pag = document.querySelector('.category .pagination')
+    let pag = document.querySelector('.category .pagination-loadmore')
     let parent = pag.parentNode
     parent.removeChild(pag)
 
@@ -68,7 +68,7 @@ function addLoadMoreCategory(postDiv){
 
     pagination.appendChild(load)
     postDiv.appendChild(pagination)
-    let loadMore = document.querySelector('.category .pagination .loadmore')
+    let loadMore = document.querySelector('.category .pagination-loadmore .loadmore')
     if(loadMore != null) loadMore.addEventListener('click', loadHandlerCategory)
 }
 

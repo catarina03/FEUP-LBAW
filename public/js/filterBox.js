@@ -2,7 +2,7 @@ let homepageFilter = document.querySelector('.homepage .filterButton')
 let categoryFilter = document.querySelector('.category .filterButton')
 let advancedSearchFilter = document.querySelector('.advanced_search .filterButton')
 let advancedSearch = document.querySelector('.advanced_search')
-let loadMoreAdv = document.querySelector('.advanced_search .pagination .loadmore')
+let loadMoreAdv = document.querySelector('.advanced_search .pagination-loadmore .loadmore')
 let searchElem = document.querySelector('#search')
 let categorySelect = document.querySelector('#category')
 let typeSelect = document.querySelector('#type')
@@ -84,7 +84,7 @@ function redirectWithFilters(e){
 function updateAdvancedSearch(adding, posts, number_res, page){
     const n_res = document.querySelector('.number-res')
     n_res.innerText = number_res + " results found!"
-    let pag = document.querySelector('.pagination')
+    let pag = document.querySelector('.pagination-loadmore')
     if(pag != null) pag.parentNode.removeChild(pag)
     let postDiv = document.querySelector('.advanced_search .postsCards')
     let newDiv = document.createElement('div')
@@ -123,7 +123,7 @@ function onLoad(){
 
 function loadHandlerAdvancedSearch(e){
     e.preventDefault()
-    let pag = document.querySelector('.advanced_search .pagination')
+    let pag = document.querySelector('.advanced_search .pagination-loadmore')
     let parent = pag.parentNode
     parent.removeChild(pag)
 
@@ -204,7 +204,7 @@ function addLoadMoreAdvancedSearch(postDiv){
 
     pagination.appendChild(load)
     postDiv.appendChild(pagination)
-    let loadMore = document.querySelector('.advanced_search .pagination .loadmore')
+    let loadMore = document.querySelector('.advanced_search .pagination-loadmore .loadmore')
     if(loadMore != null){
         loadMore.addEventListener('click', loadHandlerAdvancedSearch)
     }

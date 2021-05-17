@@ -76,7 +76,7 @@ function makeRequest(type){
 }
 
 function updateHomepage(posts, n_posts){
-    let pag = document.querySelector('.homepage .pagination')
+    let pag = document.querySelector('.homepage .pagination-loadmore')
     if(pag != null)
         pag.parentNode.removeChild(pag)
     let postDiv = document.querySelector('.postsCards')
@@ -123,14 +123,14 @@ function displaySpinner(display, type){
 }
 
 
-let loadMore = document.querySelector('.homepage .pagination .loadmore')
+let loadMore = document.querySelector('.homepage .pagination-loadmore .loadmore')
 let page = 2
 
 if(loadMore != null) loadMore.addEventListener('click', loadHandlerHomepage)
 
 function loadHandlerHomepage(e){
     e.preventDefault()
-    let pag = document.querySelector('.homepage .pagination')
+    let pag = document.querySelector('.homepage .pagination-loadmore')
     let parent = pag.parentNode
     parent.removeChild(pag)
 
@@ -177,7 +177,7 @@ function addLoadMoreHomepage(postDiv){
 
     pagination.appendChild(load)
     postDiv.appendChild(pagination)
-    let loadMore = document.querySelector('.homepage .pagination .loadmore')
+    let loadMore = document.querySelector('.homepage .pagination-loadmore .loadmore')
     if(loadMore != null) loadMore.addEventListener('click', loadHandlerHomepage)
 }
 
