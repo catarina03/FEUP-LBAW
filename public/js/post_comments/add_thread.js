@@ -38,13 +38,15 @@ function addThread(comment_id,content){
         //let tempK = request.responseText;
         for(let i = 0;i<containers.length;i++){
             let temp = containers[i];
-            if(temp.getElementsByClassName("COMMENTID")[0].innerText == comment_id){
-                let temp_threads = request.responseText;
-                let cont = containers[i].getElementsByClassName("comment_thread_section")[0];
-                temp_threads += cont.innerHTML;
-                cont.innerHTML = temp_threads;
-                break;
-            }
+            let text = temp.getElementsByClassName("COMMENTID")[0].innerText;
+            if(text)
+                if(text == comment_id){
+                    let temp_threads = request.responseText;
+                    let cont = containers[i].getElementsByClassName("comment_thread_section")[0];
+                    temp_threads += cont.innerHTML;
+                    cont.innerHTML = temp_threads;
+                    break;
+                }
         }
         //document.getElementById("comment-section").innerHTML = request.responseText;
         content.value = "";
