@@ -5,7 +5,7 @@ function addSavePostListeners(){
     for(let i =0;i<s.length;i++){
       let element = s[i];
       element.addEventListener("click",function (e) {
-          e.stopPropagation();
+
           e.stopImmediatePropagation();
           let listClass = element.querySelector("i").classList;
           let aux = element.getElementsByClassName("save_post_id")[0];

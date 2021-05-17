@@ -129,7 +129,8 @@ function loadHandlerAdvancedSearch(e){
                 parent.removeChild(outerDiv)
                 const response = JSON.parse(filterRequest.responseText)
                 updateAdvancedSearch(true, response['posts'], response['number_res'], pageAdv)
-                pageAdv++
+                pageAdv++;
+                addSavePostListeners();
             }
             else alert('Error fetching api: ' +  filterRequest.status)
         }

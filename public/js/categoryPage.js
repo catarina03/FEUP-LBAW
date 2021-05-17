@@ -35,7 +35,8 @@ function loadHandlerCategory(e){
                     }
                     else if(Math.floor(number_res / 15 + 1) > page) addLoadMoreCategory(postDiv)
                 }
-                page++
+                page++;
+                addSavePostListeners();
             }
             else alert('Error fetching api: ' +  loadRequest.status)
         }
