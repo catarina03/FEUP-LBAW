@@ -32,6 +32,14 @@ if(advancedSearchFilter != null){
     })
 }
 
+let top_button_advanced = document.querySelector("#advanced-search-go-top")
+if(top_button_advanced != null){
+    top_button_advanced.addEventListener('click', function(){
+        window.scrollTo(0,0)
+    })
+}
+
+
 
 function getFilters(){
     filters = {}

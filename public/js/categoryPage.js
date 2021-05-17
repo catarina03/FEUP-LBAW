@@ -6,6 +6,17 @@ if(category == null) category = "Music"
 
 if(loadMoreCategory != null) loadMoreCategory.addEventListener('click', loadHandlerCategory)
 
+/*window.addEventListener('scroll', function(){
+    if((document.body.offsetHeight + document.body.scrollTop) >= document.body._scrollHeight){
+        loadHandlerCategory()
+    }
+})*/
+
+let top_button = document.querySelector("#go-top")
+top_button.addEventListener('click', function(){
+    window.scrollTo(0,0)
+})
+
 function loadHandlerCategory(e){
     e.preventDefault()
     let pag = document.querySelector('.category .pagination')

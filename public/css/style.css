@@ -551,10 +551,9 @@ hr.solid {
   padding: 2em;
   color: #fcf3ee;
   border-radius: 1%;
+  position: absolute;
 }
-.filterbox.custom-filterBox .container{
-    position: fixed;
-}
+
 .custom-filterBox .filterButton {
   background-color: #8ab5b1;
   border: none;

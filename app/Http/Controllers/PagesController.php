@@ -144,9 +144,10 @@ class PagesController extends Controller
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
             if(Auth::check()){
-                $save = DB::table("saved_by")->where("post_id",$post->id)->where("authenticatedUser_id", Auth::user()->id)->get();
-                if($save != null) $post->saved = true;
-                else $post->saved = false;
+                //$save = DB::table("saved_by")->where("post_id",$post->id)->where("authenticatedUser_id", Auth::user()->id)->get();
+                //if($save != null) $post->saved = true;
+                //else
+                $post->saved = false;
             }
             else $post->saved = false;
         }

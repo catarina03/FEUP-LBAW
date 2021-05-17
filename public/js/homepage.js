@@ -5,6 +5,12 @@ let hot = document.querySelector(".homepage-navbar #hot");
 let loadH = document.querySelector(".homepage-navbar .hotLoad")
 let new_filter = document.querySelector(".homepage-navbar #new")
 let loadN = document.querySelector(".homepage-navbar .newLoad")
+let top_button = document.querySelector("#go-top")
+top_button.addEventListener('click', function(){
+    window.scrollTo(0,0)
+})
+
+
 
 if(t != null && loadT != null){
     t.addEventListener("click", function(e){
@@ -54,6 +60,7 @@ function makeRequest(type){
                 const response = JSON.parse(postsRequest.responseText)
                 let posts = response['posts']
                 let n_posts = response['n_posts']
+                window.scrollTo(0,0)
                 updateHomepage(posts, n_posts)
                 displaySpinner(false, type)
                 enableLinks(type)
