@@ -920,18 +920,18 @@ a.footer-link:hover {
     color: #0c1d1c;
     font-size: xx-large;
 }
-
-.post-page-post-thumbs-up-button i:hover {
-    color: green;
+.post-page-post-thumbs-up-button:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .post-page-post-thumbs-down-button i {
     color: #0c1d1c;
     font-size: xx-large;
 }
-
-.post-page-post-thumbs-down-button i:hover {
-    color: darkred;
+.post-page-post-thumbs-down-button:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .post-page-post-report-button {
