@@ -15,7 +15,7 @@
             @auth
                 @if(!$post->isOwner)
                     <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
-                        <span class="save_post_id" hidden>{{$post->id}}</span>
+                        <span class="save_post_id homepage" hidden>{{$post->id}}</span>
                         @if($post->saved == false)
                             <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         @else

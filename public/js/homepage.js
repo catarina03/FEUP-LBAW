@@ -147,7 +147,8 @@ function loadHandlerHomepage(e){
                     }
                     else if(Math.floor(n_posts / 15 + 1) > page) addLoadMoreHomepage(postDiv)
                 }
-                page++
+                page++;
+                addSavePostListeners();
             }
             else alert('Error fetching api: ' +  loadRequest.status)
         }
