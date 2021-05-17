@@ -12,5 +12,3 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea/
-docker-compose.yaml
-composer.lock
