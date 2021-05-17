@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Models;
-use App\Models\AuthenticatedUser;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -47,69 +45,35 @@ class Post extends Model
         return $this->hasMany(Report::class, 'post_reported');
     }
 
-    public static function getTopPosts($page){
-        $offset = $page * 15;
-
+    public static function getPostsOrdered($order, $page){
+        $offset = ($page-1) * 15;
         if(Auth::check()){
             $user = Auth::user();
             $user_id = $user->id;
         }
-        else{
-            $user_id = 0;
-        }
+        else $user_id = 0;
+
+        $query_order = "";
+        if($order == "top")  $query_order = "order by n_views desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+
+        else if($order == "hot") $query_order = "order by id desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+
+        else if($order == "new") $query_order = "order by created_at desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+
         return DB::select(
             DB::raw("select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
-            order by n_views desc
-            OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
-               ,['user' => $user_id, 'offset' => $offset] );
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))".$query_order)
+            ,['user' => $user_id, 'offset' => $offset]);
     }
 
-    public static function getHotPosts($page){
-        $offset = $page * 15;
+    public static function getSlideShowPosts(){
         if(Auth::check()){
             $user = Auth::user();
             $user_id = $user->id;
         }
-        else{
-            $user_id = 0;
-        }
-        return DB::select(
-            DB::raw("select * from post where not exists
-            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
-            order by n_views desc
-            OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
-               ,['user' => $user_id, 'offset' => $offset]);
-    }
+        else $user_id = 0;
 
-    public static function getNewPosts($page){
-        $offset = $page * 15;
-        if(Auth::check()){
-            $user = Auth::user();
-            $user_id = $user->id;
-        }
-        else{
-            $user_id = 0;
-        }
-        return DB::select(
-            DB::raw("select * from post where not exists
-            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
-            order by created_at desc
-            OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;")
-               ,['user' => $user_id, 'offset' => $offset]);
-    }
-
-    public static function getSlideShowPosts(){ //ir buscar os 3 mais recentes com mais gostos
-        if(Auth::check()){
-            $user = Auth::user();
-            $user_id = $user->id;
-        }
-        else{
-            $user_id = 0;
-        }
         return DB::select(
             DB::raw("select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
@@ -118,6 +82,5 @@ class Post extends Model
                ,['user' => $user_id] );
     }
 
-    //notification on publish and vote?
 
 }
