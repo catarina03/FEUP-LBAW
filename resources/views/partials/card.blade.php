@@ -13,13 +13,16 @@
                      </a>
             </div>
             @auth
-            <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
-                @if($post->saved == false)
-                    <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
-                @else
-                    <i class="bi bi-bookmark-check-fill" style="font-size:3em;"></i>
+                @if(!$post->isOwner)
+                    <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
+                        <span class="save_post_id" hidden>{{$post->id}}</span>
+                        @if($post->saved == false)
+                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                        @else
+                            <i class="bi bi-bookmark-check-fill" style="font-size:3em;"></i>
+                        @endif
+                    </div>
                 @endif
-            </div>
             @endauth
             <div class="infoPosts">
                 <i class="far fa-eye"></i><span>{{$post->n_views}}</span>
