@@ -35,6 +35,7 @@
                 </div>
                 @else
                     <div class="post-page-save-post-bookmark savePost">
+                        <span class="save_post_id" hidden>{{$post->id}}</span>
                         <i class="bi {{$metadata['isSaved']?"bi-bookmark-check-fill":"bi-bookmark-plus-fill"}}" title="Save/unsave post" style="font-size:3em; cursor:pointer;"></i>
                     </div>
                 @endif
