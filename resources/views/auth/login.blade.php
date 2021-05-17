@@ -3,7 +3,7 @@
 @section('content')
 
 <form class="row g-0 " style="margin-bottom: 5em;margin-top:4em;" method="POST" action=" {{ route('login') }}">
-    {{ csrf_field() }}
+    @csrf
     <label for="username" class=" ms-1 col-form-label-sm text-white">Username</label>
     <div class="row">
         <div class="col-sm-12">

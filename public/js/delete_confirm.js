@@ -7,9 +7,9 @@ let token = document.getElementsByName("csrf-token")[0];
 yes.addEventListener("click",delete_post);
 
 function delete_post(){
-    var getUrl = window.location;
-    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-    var request = new XMLHttpRequest();
+    const getUrl = window.location;
+    const baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+    let request = new XMLHttpRequest();
     request.open('delete', baseUrl+'/' + id.innerText, true);
     request.onload = function (){
         console.log(baseUrl+"/" + request.responseText);

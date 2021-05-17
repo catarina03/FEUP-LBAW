@@ -32,15 +32,16 @@
 
 <script src="{{ asset('js/ajax.js')}}" defer></script>
 <script src="{{ asset('js/script.js')}}" defer></script>
+<script src="{{ asset('js/ajax.js')}}" defer></script>
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 <script src="https://cdn.tiny.cloud/1/08t5y62wss6y2fzascz2trysrq487403jdb54o0kzk3nu9zq/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
 <script>
-tinymce.init({
-    selector: '#mytextarea',
-    plugins: ["advlist autolink lists link image charmap print preview anchor"],
-    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-    resize: false
-});
+    tinymce.init({
+        selector: '#mytextarea',
+        plugins: ["advlist autolink lists link image charmap print preview anchor"],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        resize: false
+    });
 </script>
