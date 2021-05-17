@@ -19,7 +19,11 @@
             <div class="row justify-content-center">
                 <div class="col-12 d-block">
 
-                    @include('partials.profilephoto')
+                    <div class="row justify-content-center d-flex my-3 position-relative ">
+                        <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center profile-photo-section">
+                            @include('partials.profilephoto')
+                        </div>
+                    </div>
 
                     <div class="row mt-1 d-flex justify-content-center">
                         <div class="card card-profile col-lg-12 col-xl-12 col-sm-9 mb-5 pb-5" style="border-radius:2%;">

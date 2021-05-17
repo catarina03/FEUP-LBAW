@@ -1,5 +1,5 @@
-<div class="row justify-content-center d-flex my-3 position-relative ">
-    <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center ">
+{{-- <div class="row justify-content-center d-flex my-3 position-relative ">
+    <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center "> --}}
         @if(Auth::user()->profile_photo != null)
             <img class="rounded-circle profile-avatar"
                  src="{{ URL::asset('images/users/'.$photo) }}"
@@ -44,5 +44,6 @@
                 <input type="text" class="page-info user_id" name="user_id" value="{{ Auth::user()->id }}" hidden>
             </div>
         </form>
-    </div>
+{{--    </div>
 </div>
+--}}

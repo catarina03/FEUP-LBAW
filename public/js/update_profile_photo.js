@@ -2,6 +2,7 @@ let photo = document.querySelector("img.rounded-circle.profile-avatar").getAttri
 let user_id = document.querySelector("input.page-info.user_id");
 let form_photo = document.querySelector("input.form-control-file");
 let token = document.getElementsByName("csrf-token")[0];
+let photo_container = document.querySelector("div.profile-photo-section");
 
 if(form_photo != null){
     form_photo.addEventListener("change", function (e){
@@ -34,14 +35,15 @@ function makeRequest(id, photo){
                 console.log("REQUEST")
                 console.log(photoRequest)
                 console.log(photoResponse)
+
                 updateProfilePhoto(photoResponse)
                 //displaySpinner(true, type)
             }
             else alert('Error fetching api: ' +  photoRequest.status)
         }
     }
-    console.log(getUrl .protocol + '//' + getUrl.host + '/' + 'api/user/' + id + '/edit_photo');
-    console.log(photo)
+    //console.log(getUrl .protocol + '//' + getUrl.host + '/' + 'api/user/' + id + '/edit_photo');
+    //console.log(photo)
    // photoRequest.open('post', getUrl .protocol + "//" + getUrl.host + "/" + "api/post/" + id.innerText + "/add_comment", true);
     photoRequest.open('PUT',  getUrl .protocol + '//' + getUrl.host + '/' + 'api/user/' + id + '/edit_photo', true)
     photoRequest.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
@@ -49,13 +51,14 @@ function makeRequest(id, photo){
     photoRequest.send(JSON.stringify({
         avatar: photo
     }));
-    console.log(photoRequest);
+    //console.log(photoRequest);
     // photoRequest.send()
 }
 
 function updateProfilePhoto(photoResponse){
     console.log("UPDATE")
     console.log(photo)
+    photo_container.innerHTML = photoResponse;
     /* let pag = document.querySelector('.homepage .pagination')
      if(pag != null)
          pag.parentNode.removeChild(pag)
@@ -69,5 +72,5 @@ function updateProfilePhoto(photoResponse){
      addLoadMore(postDiv)
 
      */
-    photo.src = photoResponse;
+   // photo.src = photoResponse;
 }

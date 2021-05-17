@@ -44,7 +44,7 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request,$post_id)
-    {   
+    {
         $validator = Validator::make($request->all(),
             [
                 'content' => ['required', 'string', 'max:1000','min:1'],
@@ -56,7 +56,7 @@ class CommentController extends Controller
                 'user_id.numeric' => 'UserID must be a number',
                 'user_id.required' => 'UserID must be a number',
                 'post_id.numeric' => 'PostID must be a number',
-                'posst_id.required' => 'PostID must be a number',
+                'post_id.required' => 'PostID must be a number',
                 'content.max' => 'Content is too big, max of 1000 characters',
                 'content.min' => 'Content is too short, max of 1000 characters'
             ]);
@@ -131,7 +131,7 @@ class CommentController extends Controller
                 return json_encode($comment);
             }
         }
-        return ""; 
+        return "";
     }
 
     public function editAction(Request $request,$comment_id){//update?
@@ -144,10 +144,10 @@ class CommentController extends Controller
             'content.max' => 'Content is too big, max of 1000 characters',
             'content.min' => 'Content is too short, min of 1 characters'
         ]);
-        
+
         if($validator->fails())
             return "";
-        
+
         if(Auth::check()){
             $comment = Comment::find($comment_id);
             $comment->timestamps = false;
@@ -158,7 +158,7 @@ class CommentController extends Controller
                 return "";
             }
         }
-        return ""; 
+        return "";
     }
 
 
