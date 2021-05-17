@@ -4,7 +4,7 @@
 @section('content')
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/comments_aux.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/delete_confirm.js') }}" defer></script>
-<script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
+<!--<script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>-->
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/add_thread.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/add_comment.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/delete_comment.js') }}" defer></script>
@@ -12,6 +12,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/sort_comments.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/show_threads.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/load_more.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/vote.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>
@@ -63,17 +64,17 @@
                             <h3 class="post-page-post-interactions">{{$metadata['views']}} <i class="far fa-eye"></i></h3>
                         </div>
                         <div class="pe-3">
-                            <h3 class="post-page-post-interactions">{{$metadata['likes']}} <i class="far fa-thumbs-up"></i></h3>
+                            <h3 class="post-page-post-interactions"><span class="up">{{$metadata['likes']}}</span> <i class="far fa-thumbs-up"></i></h3>
                         </div>
                         <div class="pe-3">
-                            <h3 class="post-page-post-interactions">0 <i class="far fa-thumbs-down"></i></h3>
+                            <h3 class="post-page-post-interactions"><span class="down">{{$metadata['dislikes']}}</span> <i class="far fa-thumbs-down"></i></h3>
                         </div>
                         <div class="pe-3">
                             <h3 class="post-page-post-interactions" id="post_comment_count">{{$metadata['comment_count']}} <i class="far fa-comments"></i></h3>
                         </div>
                     </div>
                 </div>
-            
+
             <div class="container-fluid d-flex col-10 justify-content-left mt-2">
                 <p class="post-page-post-text">{{$post['content']}}
                 </p>
@@ -94,7 +95,7 @@
                                 <a class="post-page-post-tag" href="advanced_search.php">{{$tag->name}}</a>
                             </div>
                         @endforeach
-                        
+
                     </div>
                 </div>
             </div>
@@ -103,15 +104,33 @@
             <div class="row justify-content-center mt-3 px-4 mx-1">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-start align-items-center px-0 mx-0">
-                        <div class="col-auto px-0 mx-0">
-                            <button class="post-page-post-thumbs-up-button btn ms-0 me-4 px-0"><i title="Like post" class="far fa-thumbs-up m-0"></i></button>
-                        </div>
-                        <div class="col-auto px-0 mx-0">
-                            <button class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0"><i title="Dislike post" class="far fa-thumbs-down m-0"></i></button>
-                        </div>
+                        @auth
+                            @if($metadata['liked'] == 2)
+                                <div class="col-auto px-0 mx-0">
+                                    <button class="post-page-post-thumbs-up-button  btn ms-0 me-4 px-0 post-up-vote"><i title="Like post" class="fas fa-thumbs-up"></i></button>
+                                </div>
+                            @else
+                                <div class="col-auto px-0 mx-0">
+                                    <button class="post-page-post-thumbs-up-button btn ms-0 me-4 px-0 post-up-vote"><i title="Like post" class="far fa-thumbs-up"></i></button>
+                                </div>
+                            @endif
+                            @if($metadata['liked'] == 1)
+                                <div class="col-auto px-0 mx-0">
+                                    <button class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0 post-down-vote"><i title="Dislike post" class="fas fa-thumbs-down m-0"></i></button>
+                                </div>
+                            @else
+                                <div class="col-auto px-0 mx-0">
+                                    <button class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0 post-down-vote"><i title="Dislike post" class="far fa-thumbs-down m-0"></i></button>
+                                </div>
+                            @endif
+
                         <div class="col-auto px-0 mx-0 ms-auto">
                             <button class="post-page-post-report-button btn ms-0 me-0 py-0 px-0"><i title="Report post" class="fas fa-ban m-0"></i></button>
                         </div>
+                            @endauth
+                        @guest
+                            <p>TO DO: add links to login/register</p>
+                            @endguest
                     </div>
 
                 </div>
@@ -168,9 +187,9 @@
                         </div>
                         <div class="col-auto p-0 m-0 ms-auto">
                             <span class="comment_id COMMENTID" hidden>{{$comment['comment']->id}}</span>
-                            
-                               
-                            
+
+
+
                             @if($user_id==$comment['comment']->user_id)
                             <div class="dropdown comment_settings">
                                 <a class="btn fa-cog-icon"   data-bs-toggle="dropdown" aria-expanded="false">
@@ -185,7 +204,7 @@
                                 </ul>
                             </div>
                             @endif
-                            
+
                         </div>
                     </div>
                     <div class="row align-items-end px-2 py-1">
@@ -202,16 +221,16 @@
                                     @endif
                                     <h3 class="post-page-comment-interactions my-0">{{$comment['thread_count']}} <i class="far fa-comments"></i></h3>
                                     <h3 class="post-page-comment-interactions my-0 px-3 show-hide-replies"> <i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show</h3>
-                            
+
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                 </div>
-               
+
             </div>
             <span class="comment_thread_section">
             @foreach($comment['threads'] as $thread)
@@ -228,7 +247,7 @@
                                             <span class="comment_id THREADID" hidden>{{$thread['comment']->id}}</span>
                                             <span class="parent_id" hidden>{{$comment['comment']->id}}</span>
                                             @if($user_id==$thread['comment']->user_id)
-                                            
+
                                             <div class="dropdown">
                                                 <a class="btn fa-cog-icon"  style="font-size:30%;" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>
@@ -282,7 +301,7 @@
                                     <button class="post-page-comment-button btn-sm btn-block m-0 mt-0 add_thread_button">Comment</button>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -290,7 +309,7 @@
             @endauth
             </span>
             @endforeach
-        
+
             @endif
             @if(count($metadata['comments']) == 0)
                 <div  class="container-fluid d-flex col-10 justify-content-center mt-3">
@@ -299,7 +318,7 @@
             @endif
             </span>
 
-            
+
             @if($metadata['comment_count']>5)
             <div class="row justify-content-center px-4 mx-1">
                 <div class="row justify-content-center mt-4 mb-2 mx-0 p-0">
