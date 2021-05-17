@@ -201,9 +201,11 @@ class PostController extends Controller
 
         //Verify if user is authenticated and if user is owner of post
         $user_id = null;
+        $isSaved = false;
         if(Auth::check()){
             $user_id = Auth::user()->id;
             $isOwner = $user_id == $post->user_id? true : false;
+            $isSaved = DB::table("saves")->where("user_id",$user_id)->where("post_id",$id)->get()->count() > 0;
             if(!PostPolicy::show_post(Auth::user(),$post))
                 return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
         }
@@ -224,7 +226,7 @@ class PostController extends Controller
         $temp = $votes->get()->count();
         $likes = $votes->where("like",true)->get()->count();
         $dislikes = $temp - $likes;
-
+        
         //Get tags associated with current post
         $tags = DB::select(DB::raw("select t.name
         FROM post_tag,tag as t
@@ -236,7 +238,7 @@ class PostController extends Controller
 
         //Generate metadata to send to view
         $metadata = ['comment_count'=>$comment_count,'author'=>$USER,'views' => $post->n_views,
-                     'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments];
+                     'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments,"isSaved" => $isSaved];
 
 
         return view('pages.post', ['isOwner' => $isOwner, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id] );
@@ -495,7 +497,7 @@ class PostController extends Controller
             if(Auth::user()->id != $post->user_id){
                 if($post != null){
                     DB::table("saves")->insert([
-                        'user_id' => 1,
+                        'user_id' => Auth::user()->id,
                         'post_id' => $id
                     ]);
                     return 'SUCCESS';
@@ -511,8 +513,8 @@ class PostController extends Controller
         if(!is_numeric($route->parameter('id')))
             return '';
         if(Auth::check()){
-            $post = Post::find($post_id);
-            $save = DB::table("save")->where("post_id",$post_id)->where("user_id",Auth::user()->id);
+            $post = Post::find($id);
+            $save = DB::table("saves")->where("post_id",$id)->where("user_id",Auth::user()->id);
             if($post != null && $save != null){
                 if($save->delete())
                     return 'SUCCESS';

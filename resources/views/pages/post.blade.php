@@ -35,7 +35,7 @@
                 </div>
                 @else
                     <div class="post-page-save-post-bookmark savePost">
-                        <i class="bi bi-bookmark-plus-fill" title="Save/unsave post" style="font-size:3em; cursor:pointer;"></i>
+                        <i class="bi {{$metadata['isSaved']?"bi-bookmark-check-fill":"bi-bookmark-plus-fill"}}" title="Save/unsave post" style="font-size:3em; cursor:pointer;"></i>
                     </div>
                 @endif
             @endauth
