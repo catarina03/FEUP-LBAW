@@ -27,11 +27,14 @@ function deleteComment(comment_id,container){
     request.onload = function (){
         result = "";
         if(request.responseText == "SUCCESS"){
-            container.innerHTML = "";
+            container.remove();
             if(comment_id.classList.contains("THREADID")){
                 let l = comment_id.parentNode.getElementsByClassName("parent_id")[0];
                 updateThreadsNo(-1,l.innerText);
+                
 
+            }else{
+                updateCommentCount(-1);
             }
         }
         else{

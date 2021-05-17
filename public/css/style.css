@@ -1200,3 +1200,12 @@ h3.post-page-comment-reply-interactions{
   padding-top:0;
 }
 
+.btn-sm.post-page-comment-button{
+  background-color: #0C1D1C;
+  color: #EFF9FA;
+  font-family: 'Roboto', sans-serif;
+  border-style: none;
+  box-shadow:none;
+  
+}
+

@@ -3,11 +3,17 @@ addEditListeners();
 function addEditListeners(){
     for(let i = 0;i<edit_comment_buttons.length;i++){
         let element = edit_comment_buttons[i];
-        let comment_id = element.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0].innerText;
-        let container = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        let container;
+        let aux = element.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0];
+        let comment_id = aux.innerText;
+        if(aux.classList.contains("COMMENTID"))
+            container = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        else if(aux.classList.contains("THREADID")){
+            container = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        }
         element.addEventListener("click",function(e){
-            e.preventDefault();
-            editForm(comment_id,container);
+        e.preventDefault();
+        editForm(comment_id,container);
         });
     }
 }
@@ -80,13 +86,13 @@ function confirmEdit(comment_id,container){
             if(comment['comment']['post_id'] != null){
                 result+=`<span class="comment-container">
                 <div class="row justify-content-center px-4 mx-1">
-                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2 show-hide-replies\" style="cursor:pointer">
+                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2\">
                     <div class="row px-2 py-0">
                         <div class="col-auto p-0 m-0">
                             <h3 class="post-page-comment-body m-0">`+ escapeHtml(comment['comment']['content'])+ `</h3>
                         </div>    
                             <div class="col-auto p-0 m-0 ms-auto">
-                                <span class="comment_id" hidden>` + escapeHtml(comment['comment']['id'].toString()) + `</span>` +
+                                <span class="comment_id COMMENTID" hidden>` + escapeHtml(comment['comment']['id'].toString()) + `</span>` +
                                 
                                 (userID.innerText==comment['comment']['user_id']?
                                 `<div class="dropdown">
@@ -115,15 +121,18 @@ function confirmEdit(comment_id,container){
                             <div class="row">
                                 <div class="d-flex">
                                     <h3 class="post-page-comment-interactions pe-3 my-0">` +escapeHtml( comment['likes'].toString()) + ` <i title="Like comment" class="far fa-thumbs-up"></i></h3>
-                                    <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
-                                    <i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>
-                                    <h3 class="post-page-comment-interactions my-0">` + escapeHtml(comment['thread_count'].toString()) + ` <i class="far fa-comments"></i></h3>
+                                    <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>`
+                                    +
+                                    (userID.innerText!=comment['comment']['user_id']?`<i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>`:"")
+                                    +
+                                    `<h3 class="post-page-comment-interactions my-0">${comment['thread_count']} <i class="far fa-comments"></i></h3>
+                                    <h3 class="post-page-comment-interactions my-0 px-3 show-hide-replies"> <i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show</h3>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>\n`;
+            </div>\n<span class="comment_thread_section">`;
             
             for(let j = 0;j< comment['threads'].length;j++){
                 let thread = comment['threads'][j];
@@ -162,10 +171,11 @@ function confirmEdit(comment_id,container){
                                     <div class="row">
                                         <div class="d-flex">
                                             <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(thread['likes'].toString()) + ` <i title="Like comment" class="far fa-thumbs-up"></i></h3>
-                                            <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(thread['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
-                                            <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
-                                            <h3 class="post-page-comment-interactions pe-3 my-0 show-hide-replies" style="white-space:pre;">    <i style="color:black;"title="Show/Hide replies" class="fas fa-chevron-down"></i></h3>
-                                        </div>
+                                            <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(thread['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>`
+                                            +
+                                            (userID.innerText!=thread['comment']['user_id']?`<i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>`:"")
+                                            +
+                                            `</div>
                                     </div>
                                 </div>
                             </div>
@@ -174,20 +184,18 @@ function confirmEdit(comment_id,container){
                 </div>
             </div></span>`;
             }
-            result += `<div class="row justify-content-center px-4 mx-1 thread-reply">
+            result += `</span><div class="row justify-content-center px-4 mx-1 thread-reply">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
                             <div class="row px-0 mx-0">
-                                <div class="d-flex mx-0 px-0">
-                                        <textarea class="container form-control post-page-add-comment-reply w-100 add-thread" id="add-comment" rows="1"
-                                                placeholder="Answer in thread"></textarea>
+                                <div class="col-11 d-flex mx-0 px-0">
+                                    <textarea class="container form-control post-page-add-comment-reply w-100 add-thread" id="add-comment" rows="1"
+                                      placeholder="Answer in thread"></textarea>
                                 </div>
-                            </div>
-                            <div class="row px-0 mx-0 justify-content-end">
-                                <div class="col-auto px-0">
-                                    <span class="thread_comment_id" hidden>` + escapeHtml(comment['comment']['id'].toString()) +`</span>
-                                    <button class="post-page-comment-button btn m-0 mt-1 add_thread_button">Comment</button>
+                                <div class=\"col-1 d-flex mx-0 px-0\">
+                                    <span class=\"thread_comment_id\" hidden>` + escapeHtml(comment['comment']['id'].toString()) +`</span>
+                                    <button class=\"post-page-comment-button btn-sm btn-block m-0 mt-0 add_thread_button\">Comment</button>
                                 </div>
                             </div>
                         </div>
@@ -206,6 +214,8 @@ function confirmEdit(comment_id,container){
                     deleteComment(local_cid,comment_container);
                 });
             }
+            addShowThreadListeners();
+        
             
         }
         else{
@@ -243,9 +253,11 @@ function confirmEdit(comment_id,container){
                                 <div class="row">
                                     <div class="d-flex">
                                         <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['likes'].toString()) + ` <i title="Like comment" class="far fa-thumbs-up"></i></h3>
-                                        <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
-                                        <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
-                                    </div>
+                                        <h3 class="post-page-comment-interactions pe-3 my-0">` + escapeHtml(comment['dislikes'].toString()) + ` <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>`
+                                        +
+                                        (userID.innerText!=comment['comment']['user_id']?`<i title="Report comment" class="fas fa-ban my-0 pe-3 post-page-report-comment"></i>`:"")
+                                        +
+                                        `</div>
                                 </div>
                             </div>
                         </div>
@@ -253,7 +265,7 @@ function confirmEdit(comment_id,container){
                 </div>
             </div>
         </div>`;
-        container.parentNode.parentNode.innerHTML = result;
+        container.innerHTML = result;
         let new_elements = container.getElementsByClassName("delete_comment_button");
         for(let k = 0;k<new_elements.length;k++){
             let temp = new_elements[k];
@@ -270,6 +282,7 @@ function confirmEdit(comment_id,container){
         addDeleteCommentListeners();
         addListeners();
         addEditListeners();
+        updateSortedBy("Sort by");
         }
         else{
             alert("Error editing comment!");
