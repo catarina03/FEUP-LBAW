@@ -1,15 +1,15 @@
 let roles = document.getElementsByClassName("role-item")
 if (roles != null) {
-    for (let i = 0; i < roles.length; i++)
-        roles[i].addEventListener("click", edit_role)
+    for (let i = 0; i < roles.length; i++) roles[i].addEventListener("click", edit_role)
 }
 
 function edit_role(event) {
     event.preventDefault()
-    let row = event.target.closest('.role-row')
+
+    let row = event.target.closest('.role-user')
     const person_id = row.dataset.id
     const new_role = event.target.innerText
-    let old_role = row.getElementsByClassName("roles-role")[0]
+    let old_role = row.querySelector(".edit-roles")
 
     let request = new XMLHttpRequest()
     const url = window.location.protocol + "//" + window.location.host + '/api/administration/roles/' + person_id + '/edit_role'
@@ -20,7 +20,13 @@ function edit_role(event) {
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.onreadystatechange = function () {
         if (request.readyState === XMLHttpRequest.DONE) {
-            if (request.status === 200) old_role.innerText = new_role
+            if (request.status === 200) {
+                old_role.innerHTML = JSON.parse(this.responseText)
+                let roles = document.getElementsByClassName("role-item")
+                if (roles != null) {
+                    for (let i = 0; i < roles.length; i++) roles[i].addEventListener("click", edit_role)
+                }
+            }
             else alert("Sorry! There was an error " + request.status)
         }
     }
@@ -51,11 +57,10 @@ function sendRequest(url) {
     request.setRequestHeader('Accept', 'application/json')
     request.onreadystatechange = function () {
         if (request.readyState === XMLHttpRequest.DONE) {
-            if (request.status === 200) {
+            if (request.status === 200)
                 updateRolesList(this.responseText)
-            } else {
+            else
                 alert("something happen " + request.status)
-            }
         }
     }
     request.send()
@@ -66,10 +71,9 @@ function updateRolesList(response) {
     let spinner = document.querySelector(".spinner")
     spinner.classList.add("d-none")
     spinner.classList.remove("d-flex")
-    if(roles === "") {
+    if (roles === "") {
         alert("There is no match!")
-    }
-    else {
+    } else {
         roles_list.innerHTML = roles
         let roles_items = document.getElementsByClassName("role-item")
         if (roles_items != null) {

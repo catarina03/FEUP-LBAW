@@ -409,30 +409,7 @@ hr.solid {
     text-align: center;
 }
 
-.pagination {
-    display: inline-block;
-    margin-top: 1em;
-}
 
-.pagination a {
-    color: #0c1d1c;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-    border: 1px solid #0c1d1c;
-    margin: 0 4px;
-}
-
-.pagination a.active {
-    background-color: #0c1d1c;
-    color: white;
-    border: 1px solid #0c1d1c;
-}
-
-.pagination a:hover:not(.active) {
-    background-color: #ddd;
-}
 
 /*********************** HOMEPAGE ************************************/
 .homepage-navbar {
@@ -752,13 +729,12 @@ a.footer-link:hover {
     font-size: 1.5em;
 }
 
-.edit-roles:hover {
+.roles-table i.edit-role:hover {
     cursor: pointer;
     font-weight: bold;
 }
 
 .roles-username a {
-    text-decoration: none;
     cursor: pointer;
     color: black;
 }
@@ -767,6 +743,40 @@ a.footer-link:hover {
     font-weight: bold;
 }
 
+.edit-roles-button  {
+    background-color: transparent;
+    color: black;
+    border: none;
+    margin: 0;
+}
+
+.manage_roles-pagination {
+    margin-top: 2em;
+    padding-bottom: 1em;
+    justify-content: center;
+}
+
+.manage_roles-pagination .pagination {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.manage_roles-pagination .pagination > li > a,
+.manage_roles-pagination .pagination > li > span {
+    color: black;
+}
+
+.manage_roles-pagination .pagination > .active > a,
+.manage_roles-pagination .pagination > .active > a:focus,
+.manage_roles-pagination .pagination > .active > a:hover,
+.manage_roles-pagination .pagination > .active > span,
+.manage_roles-pagination .pagination > .active > span:focus,
+.manage_roles-pagination .pagination > .active > span:hover {
+    background-color: #fcf3ee;
+    color: black;
+    border-color: black;
+}
 
 /*POST DASHBOARD*/
 

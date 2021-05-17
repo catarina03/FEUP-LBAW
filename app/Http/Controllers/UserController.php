@@ -89,9 +89,9 @@ class UserController extends Controller
         $search = $request->input("query");
 
         if (!empty($search))
-            $roles = AuthenticatedUser::query()->select("id", "username", "authenticated_user_type")->where('username', 'LIKE', $search.'%')->orderBy("authenticated_user_type")->get();
+            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->where('username', 'LIKE', $search.'%')->orderBy("authenticated_user_type")->paginate(20);
         else
-            $roles = AuthenticatedUser::query()->select("id", "username", "authenticated_user_type")->orderBy("authenticated_user_type")->get();
+            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
 
         $view = view('partials.roles_list', ['roles' => $roles])->render();
         return response()->json($view);
@@ -120,9 +120,10 @@ class UserController extends Controller
         //
     }
 
-    public function roles(Request $request)
+    public function roles()
     {
-        $roles = DB::table("authenticated_user")->select("id", "username", "authenticated_user_type")->orderBy("authenticated_user_type")->get();
+        $roles = DB::table("authenticated_user")->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
+
         return view('pages.manage_roles', ['needsFilter' => 0, 'roles' => $roles]);
     }
 
@@ -132,8 +133,12 @@ class UserController extends Controller
             'new_role' => 'required'
         ]);
 
-        if (!$validatedData->fails())
-            DB::table("authenticated_user")->where("id", $user_id)->update(["authenticated_user_type" => $request["new_role"]]);
+        if (!$validatedData->fails()) {
+            $type = $request["new_role"];
+            DB::table("authenticated_user")->where("id", $user_id)->update(["authenticated_user_type" => $type]);
+            $view = view('partials.roles_types', ['type' => $type])->render();
+            return response()->json($view);
+        }
     }
 
     /**
