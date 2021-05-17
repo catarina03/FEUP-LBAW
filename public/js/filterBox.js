@@ -196,7 +196,7 @@ function checkDates(startDate, endDate){
 
 function addLoadMoreAdvancedSearch(postDiv){
     let pagination = document.createElement('div')
-    pagination.className = "pagination d-flex justify-content-center"
+    pagination.className = "pagination-loadmore d-flex justify-content-center"
 
     let load = document.createElement('a')
     load.className = "loadmore"

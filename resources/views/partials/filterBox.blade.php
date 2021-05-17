@@ -54,8 +54,8 @@
     </div>
     <div>
         <div style="margin-top:800px;">
-            <button class="d-flex btn mx-auto py-0 px-0 btn-lg" style="float:right;" id="go-top"><i
-                    class="fas fa-arrow-circle-up m-0 p-5"></i></button>
+            <button class="d-flex btn mx-auto p-0 btn-lg" style="float:right;outline:none; box-shadow: none;" id="go-top"><i
+                    class="fas fa-arrow-circle-up m-0 p-0"></i></button>
         </div>
     </div>
 

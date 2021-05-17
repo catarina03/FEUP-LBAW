@@ -60,7 +60,7 @@ function loadHandlerCategory(e){
 
 function addLoadMoreCategory(postDiv){
     let pagination = document.createElement('div')
-    pagination.className = "pagination d-flex justify-content-center"
+    pagination.className = "pagination-loadmore d-flex justify-content-center"
 
     let load = document.createElement('a')
     load.className = "loadmore"
