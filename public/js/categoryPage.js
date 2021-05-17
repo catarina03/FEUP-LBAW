@@ -13,9 +13,11 @@ if(loadMoreCategory != null) loadMoreCategory.addEventListener('click', loadHand
 })*/
 
 let top_button = document.querySelector("#go-top")
-top_button.addEventListener('click', function(){
-    window.scrollTo(0,0)
-})
+if(top_button != null){
+    top_button.addEventListener('click', function(){
+        window.scrollTo(0,0)
+    })
+}
 
 function loadHandlerCategory(e){
     e.preventDefault()

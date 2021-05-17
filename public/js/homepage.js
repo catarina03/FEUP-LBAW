@@ -6,9 +6,12 @@ let loadH = document.querySelector(".homepage-navbar .hotLoad")
 let new_filter = document.querySelector(".homepage-navbar #new")
 let loadN = document.querySelector(".homepage-navbar .newLoad")
 let top_button = document.querySelector("#go-top")
-top_button.addEventListener('click', function(){
-    window.scrollTo(0,0)
-})
+if(top_button != null){
+    top_button.addEventListener('click', function(){
+        window.scrollTo(0,0)
+    })
+}
+
 
 
 
