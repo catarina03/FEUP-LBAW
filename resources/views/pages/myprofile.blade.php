@@ -22,7 +22,7 @@
                                 <img class="rounded-circle profile-avatar"
                                      src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-4.jpg"
                                      width="200" height="200" alt="avatar">
-                                <form action="#" method="post" data-toggle="tooltip" data-placement="bottom"
+                                <form action="#" method="post"
                                       title="Update Profile Photo">
                                     <div class="form-group">
                                         <label for="avatar" class="position-absolute d-inline corner-icons"
@@ -51,7 +51,7 @@
                                         <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
                                         <a href="./settings.php"
                                            class="position-absolute d-inline corner-icons d-xl-none"
-                                           data-toggle="tooltip" data-placement="bottom" title="Settings"
+                                           title="Settings"
                                            style="transform:translate(-4em, -1em);"><i class="bi bi-gear-fill pe-2"
                                                                                        style="font-size:2.2em;"></i></a>
                                     </div>
@@ -82,8 +82,7 @@
                                     </div>
                                     <div class="row justify-content-center">
                                         <div class="card col-lg-6 col-sm-12 d-flex justify-content-center bio">
-                                            <div class="row position-relative" data-toggle="tooltip"
-                                                 data-placement="bottom"
+                                            <div class="row position-relative"
                                                  title="Edit Bio">
                                                 <a
                                                     class="position-absolute top-0 end-0 translate-middle-y d-inline corner-icons pencil-icon">

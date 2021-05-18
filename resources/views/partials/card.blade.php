@@ -14,7 +14,7 @@
                 </a>
         </div>
         @auth
-            <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
+            <div class="savePost" title="Save/Unsave Post">
                 @if($post->saved == false)
                     <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                 @else

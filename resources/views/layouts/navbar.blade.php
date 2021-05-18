@@ -33,7 +33,7 @@
             <ul class="navbar-nav d-flex">
                 @auth
                     <li class="nav-item d-lg-block d-none ms-lg-3">
-                        <a class="nav-link" data-togle="tooltip" data-placement="bottom" title="Create Post"
+                        <a class="nav-link" title="Create Post"
                            href="{{url('/addpost')}}" role="button" aria-expanded="false">
                             <i class="bi bi-plus-square-dotted navbar-icon"></i>
                         </a>
@@ -42,8 +42,7 @@
                     @if(Auth::user()->authenticated_user_type == "Moderator" || (Auth::user()->authenticated_user_type == "System Manager"))
                         <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link"
                                                                           href="{{ url('/moderator/reports') }}"
-                                                                          role="button" data-togle="tooltip"
-                                                                          data-placement="bottom" title="Manage Reports"
+                                                                          role="button" title="Manage Reports"
                                                                           aria-expanded="false">
                                 <i class="bi bi-list-task navbar-icon"></i>
                             </a>
@@ -53,8 +52,7 @@
                     @if(Auth::user()->authenticated_user_type == "System Manager")
                         <li class="nav-item d-lg-block d-none ms-lg-3"><a class="nav-link"
                                                                           href="{{url('/administration/roles')}}"
-                                                                          role="button" data-togle="tooltip"
-                                                                          data-placement="bottom" title="Manage Roles"
+                                                                          role="button" title="Manage Roles"
                                                                           aria-expanded="false">
                                 <i class="bi bi-people-fill navbar-icon"></i>
                             </a>
@@ -63,7 +61,7 @@
 
                     <li class="nav-item d-lg-block d-none dropdown ms-lg-3">
                         <a class="nav-link" href="" id="notificationsDropdown" role="button" data-bs-toggle="dropdown"
-                           data-toggle="tooltip" data-placement="bottom" title="Notifications" aria-expanded="false">
+                           title="Notifications" aria-expanded="false">
                             <i class="bi bi-bell navbar-icon"></i>
                         </a>
 
