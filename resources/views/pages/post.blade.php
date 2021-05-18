@@ -86,13 +86,16 @@
                         <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Tags: </h2>
                         <div class="col-auto post-page-tag-container px-2 m-1">
                             <a class="post-page-post-tag" href="advanced_search.php">{{$post->type}}</a>
+                            <i class="far fa-star"></i>
                         </div>
                         <div class="col-auto post-page-tag-container px-2 m-1">
                             <a class="post-page-post-tag" href="advanced_search.php">{{$post->category}}</a>
+                            <i class="far fa-star"></i>
                         </div>
                         @foreach($metadata['tags'] as $tag)
                             <div class="col-auto post-page-tag-container px-2 m-1">
                                 <a class="post-page-post-tag" href="advanced_search.php">{{$tag->name}}</a>
+                                <i class="fas fa-star"></i>
                             </div>
                         @endforeach
                         
