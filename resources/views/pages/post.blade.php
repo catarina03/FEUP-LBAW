@@ -86,19 +86,19 @@
                     <div class="row justify-content-start align-items-center">
                         <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Tags: </h2>
                         <div class="col-auto post-page-tag-container px-2 m-1">
-                            <a class="post-page-post-tag" href="advanced_search.php">{{$post->type}}</a>
-                            <i class="far fa-star"></i>
+                            <a class="post-page-post-tag" href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "type=" . rawurlencode($post->type)}}">{{$post->type}}</a>
+                            <i class="fas fa-square-full" style="color:transparent;"></i>
                         </div>
                         <div class="col-auto post-page-tag-container px-2 m-1">
-                            <a class="post-page-post-tag" href="advanced_search.php">{{$post->category}}</a>
-                            <i class="far fa-star"></i>
+                            <a class="post-page-post-tag" href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "category=" . rawurlencode($post->category)}}">{{$post->category}}</a>
+                            <i class="fas fa-square-full" style="color:transparent;"></i>
                         </div>
                         @foreach($metadata['tags'] as $tag)
                             <div class="col-auto post-page-tag-container px-2 m-1">
                                 <span hidden class="tag_id">{{$tag->id}}</span>
-                                <a class="post-page-post-tag" href="advanced_search.php">{{$tag->name}}</a>
+                                <a class="post-page-post-tag" href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "search=" . rawurlencode($tag->name)}}">{{$tag->name}}</a>
                                 @auth
-                                <i class="{{$tag->isSaved?"fas":"far"}} fa-star follow_tag_icon"></i>
+                                <i class="{{$tag->isSaved?"fas":"far"}} fa-star follow_tag_icon" style="cursor:pointer;"></i>
                                 @endauth
                             </div>
                         @endforeach

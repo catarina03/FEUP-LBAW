@@ -16,7 +16,7 @@ Route::get('/', 'Auth\LoginController@home');
 // Route::get('/', 'Auth\LoginController@home');
 
 // Pages
-Route::get('/', 'PagesController@home');
+Route::get('/', 'PagesController@home')->name("homepage");
 Route::get('/about', 'PagesController@about');
 Route::get('/faq', 'PagesController@faq');
 Route::get('/support', 'PagesController@support');
