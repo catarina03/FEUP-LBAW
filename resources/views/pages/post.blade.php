@@ -87,11 +87,15 @@
                         <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Tags: </h2>
                         <div class="col-auto post-page-tag-container px-2 m-1">
                             <a class="post-page-post-tag" href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "type=" . rawurlencode($post->type)}}">{{$post->type}}</a>
+                            @auth
                             <i class="fas fa-square-full" style="color:transparent;"></i>
+                            @endauth
                         </div>
                         <div class="col-auto post-page-tag-container px-2 m-1">
                             <a class="post-page-post-tag" href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "category=" . rawurlencode($post->category)}}">{{$post->category}}</a>
+                            @auth
                             <i class="fas fa-square-full" style="color:transparent;"></i>
+                            @endauth
                         </div>
                         @foreach($metadata['tags'] as $tag)
                             <div class="col-auto post-page-tag-container px-2 m-1">
