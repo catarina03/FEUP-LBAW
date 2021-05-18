@@ -1,7 +1,13 @@
-let roles = document.getElementsByClassName("role-item")
-if (roles != null) {
-    for (let i = 0; i < roles.length; i++) roles[i].addEventListener("click", edit_role)
+addRolesListener()
+
+function addRolesListener() {
+    let roles_items = document.getElementsByClassName("role-item")
+    if (roles_items != null) {
+        for (let i = 0; i < roles_items.length; i++)
+            roles_items[i].addEventListener("click", edit_role)
+    }
 }
+
 
 function edit_role(event) {
     event.preventDefault()
@@ -29,8 +35,7 @@ function edit_role(event) {
             if (request.status === 200) {
                 old_role.innerHTML = JSON.parse(this.responseText)
                 addRolesListener()
-            }
-            else alert("Sorry! There was an error " + request.status)
+            } else alert("Sorry! There was an error " + request.status)
         }
     }
 
@@ -78,13 +83,5 @@ function updateRolesList(response) {
     } else {
         roles_list.innerHTML = roles
         addRolesListener()
-    }
-}
-
-function addRolesListener() {
-    let roles_items = document.getElementsByClassName("role-item")
-    if (roles_items != null) {
-        for (let i = 0; i < roles_items.length; i++)
-            roles_items[i].addEventListener("click", edit_role)
     }
 }
