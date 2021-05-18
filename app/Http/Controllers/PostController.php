@@ -228,9 +228,13 @@ class PostController extends Controller
         $dislikes = $temp - $likes;
         
         //Get tags associated with current post
-        $tags = DB::select(DB::raw("select t.name
+        $tags = DB::select(DB::raw("select t.name,t.id
         FROM post_tag,tag as t
         WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
+        foreach($tags as $tag){
+            $tag->isSaved = false;
+            $tag->isSaved = Db::table("follow_tag")->where("user_id",$user_id)->where("tag_id",$tag->id)->get()->count() > 0;
+        }
 
         //Get date and thumbnail path
         $date = date("F j, Y", strtotime($post['created_at']));

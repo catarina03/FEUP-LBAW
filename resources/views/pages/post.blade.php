@@ -12,6 +12,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/sort_comments.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/show_threads.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/load_more.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/post_comments/follow_tag.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>
@@ -94,8 +95,11 @@
                         </div>
                         @foreach($metadata['tags'] as $tag)
                             <div class="col-auto post-page-tag-container px-2 m-1">
+                                <span hidden class="tag_id">{{$tag->id}}</span>
                                 <a class="post-page-post-tag" href="advanced_search.php">{{$tag->name}}</a>
-                                <i class="fas fa-star"></i>
+                                @auth
+                                <i class="{{$tag->isSaved?"fas":"far"}} fa-star follow_tag_icon"></i>
+                                @endauth
                             </div>
                         @endforeach
                         

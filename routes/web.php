@@ -105,3 +105,7 @@ Route::get('api/post/{post_id}/newer_comments','PostController@newerComments');
 Route::get('api/post/{post_id}/older_comments','PostController@olderComments');
 Route::get('api/post/{post_id}/load_more/{page}','PostController@loadMore');
 
+//Api
+Route::post('api/tag/{tag_id}/follow','TagController@followTag');
+Route::delete('api/tag/{tag_id}/follow','TagController@unfollowTag');
+
