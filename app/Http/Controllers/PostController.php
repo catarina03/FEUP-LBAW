@@ -491,7 +491,7 @@ class PostController extends Controller
 
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
-            return '';
+            return 'F';
         if(Auth::check()){
             $post = Post::find($id);
             if(Auth::user()->id != $post->user_id){
@@ -504,14 +504,14 @@ class PostController extends Controller
                 }
             }
         }
-        return '';
+        return 'A';
     }
 
     public function deleteSave($id){
         $route = \Route::current();
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
-            return '';
+            return 'F';
         if(Auth::check()){
             $post = Post::find($id);
             $save = DB::table("saves")->where("post_id",$id)->where("user_id",Auth::user()->id);
@@ -520,7 +520,7 @@ class PostController extends Controller
                     return 'SUCCESS';
             }
         }
-        return '';
+        return 'A';
     }
 
     public function popularComments(Request $request, $post_id){

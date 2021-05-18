@@ -1,4 +1,4 @@
-let savePosts = document.querySelectorAll(".card .savePost");
+/*let savePosts = document.querySelectorAll(".card .savePost");
 
 savePosts.forEach((item) =>
   item.addEventListener("click", function () {
@@ -19,4 +19,4 @@ var tooltipTriggerList = [].slice.call(
 );
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl);
-});
+});*/

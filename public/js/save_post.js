@@ -5,46 +5,37 @@ function addSavePostListeners(){
     for(let i =0;i<s.length;i++){
       let element = s[i];
       element.addEventListener("click",function (e) {
-
           e.stopImmediatePropagation();
           let listClass = element.querySelector("i").classList;
           let aux = element.getElementsByClassName("save_post_id")[0];
           let post_id = aux.innerText;
-          let inverted = aux.classList.contains("homepage");
-          if (listClass.contains(!inverted?"bi-bookmark-check-fill":"bi-bookmark-plus-fill")) {
-            save_post("post",element.querySelector("i").classList,post_id,inverted);
+          if (listClass.contains("bi-bookmark-plus-fill")) {
+            save_post("post",element.querySelector("i").classList,post_id);
           } else {
-            save_post("delete",element.querySelector("i").classList,post_id,inverted);
+            save_post("delete",element.querySelector("i").classList,post_id);
           }
         });
     }
   }
 }
 
-  function save_post(type,listClass,post_id,inverted){
+  function save_post(type,listClass,post_id){
     let token = document.getElementsByName("csrf-token")[0];
     var getUrl = window.location;
     var request = new XMLHttpRequest();
+    console.log(getUrl.protocol + "//" + getUrl.host + "/api/post"+'/' + post_id + "/save");
     request.open(type, getUrl.protocol + "//" + getUrl.host + "/api/post"+'/' + post_id + "/save", true);
     request.onload = function (){
+      console.log(request.responseText);
         if(request.responseText!="SUCCESS"){
           if(type=="delete"){
-            
-            listClass.remove(!inverted?"bi-bookmark-plus-fill":"bi-bookmark-check-fill");
-            listClass.add(!inverted?"bi-bookmark-check-fill":"bi-bookmark-plus-fill");
-            
             alert("Error removing post from favorites!");
           }
           else if(type=="post"){
-            
-            listClass.remove(!inverted?"bi-bookmark-check-fill":"bi-bookmark-plus-fill");
-            listClass.add(!inverted?"bi-bookmark-plus-fill":"bi-bookmark-check-fill");
-            
             alert("Error saving post!");
           }  
         }
         else{
-          if(inverted){
             if(type=="post"){
               listClass.remove("bi-bookmark-plus-fill");
               listClass.add("bi-bookmark-check-fill");
@@ -53,8 +44,6 @@ function addSavePostListeners(){
               listClass.remove("bi-bookmark-check-fill");
               listClass.add("bi-bookmark-plus-fill");
             }
-
-          }
         }    
     };
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
