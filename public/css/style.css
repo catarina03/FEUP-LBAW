@@ -849,7 +849,7 @@ a.footer-link:hover {
   font-family: 'Roboto', sans-serif;
   font-size: small;
   font-weight:400;
-  text-decoration: none;
+  text-decoration: underline;
 }
 .post-page-tag-container:hover{
   background-color: #ffc2ad;
