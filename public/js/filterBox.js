@@ -15,6 +15,28 @@ let myPostsCheck = document.querySelector('#checkMyPosts')
 let filters = {}
 let pageAdv = 2
 
+window.addEventListener('scroll', function(){
+    let scrollY = this.scrollY;
+    let divScroll = document.querySelector('.go-top-scroll')
+    if(scrollY > 560 ){
+        if(divScroll.classList.contains('d-none')){
+            divScroll.classList.remove('d-none')
+            divScroll.classList.add('d-flex')
+        }
+    }
+    else{
+        if(divScroll.classList.contains('d-flex')){
+            divScroll.classList.remove('d-flex')
+            divScroll.classList.add('d-none')
+        }
+    }
+})
+
+
+
+
+
+
 if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', (e) => loadHandlerAdvancedSearch(e))
 
 if(homepageFilter != null) homepageFilter.addEventListener('click', (e) => redirectWithFilters(e))
