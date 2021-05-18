@@ -13,6 +13,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/show_threads.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/load_more.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/follow_tag.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/vote.js') }}" defer></script>
 <div class="container post">
     <p hidden id="post_ID">{{$post->id}}</p>
     <p hidden id="user_ID">{{$user_id}}</p>
@@ -62,18 +63,22 @@
 
                     <div class="container-fluid d-flex col-2 mt-1">
                         <div class="pe-3">
-                            <h3 class="post-page-post-interactions">{{$metadata['views']}} <i class="far fa-eye"></i></h3>
+                            <h3 class="post-page-post-interactions">{{$metadata['views']}} <i class="far fa-eye"></i>
+                            </h3>
                         </div>
                         <div class="pe-3">
-                            <h3 class="post-page-post-interactions">{{$metadata['likes']}} <i class="far fa-thumbs-up"></i></h3>
+                            <h3 class="post-page-post-interactions"><span class="up">{{$metadata['likes']}}</span> <i class="far fa-thumbs-up"></i></h3>
                         </div>
                         <div class="pe-3">
-                            <h3 class="post-page-post-interactions">0 <i class="far fa-thumbs-down"></i></h3>
+                            <h3 class="post-page-post-interactions"><span class="down">{{$metadata['dislikes']}}</span> <i class="far fa-thumbs-down"></i></h3>
                         </div>
                         <div class="pe-3">
-                            <h3 class="post-page-post-interactions" id="post_comment_count">{{$metadata['comment_count']}} <i class="far fa-comments"></i></h3>
+                            <h3 class="post-page-post-interactions"
+                                id="post_comment_count">{{$metadata['comment_count']}} <i class="far fa-comments"></i>
+                            </h3>
                         </div>
                     </div>
+
                 </div>
             
             <div class="container-fluid d-flex col-10 justify-content-left mt-2">
@@ -111,24 +116,43 @@
                 </div>
             </div>
 
-                @if(!$isOwner) {{-- User is not the owner of the post --}}
+            @if(!$isOwner) {{-- User is not the owner of the post --}}
             <div class="row justify-content-center mt-3 px-4 mx-1">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-start align-items-center px-0 mx-0">
-                        <div class="col-auto px-0 mx-0">
-                            <button class="post-page-post-thumbs-up-button btn ms-0 me-4 px-0"><i title="Like post" class="far fa-thumbs-up m-0"></i></button>
-                        </div>
-                        <div class="col-auto px-0 mx-0">
-                            <button class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0"><i title="Dislike post" class="far fa-thumbs-down m-0"></i></button>
-                        </div>
+                        @auth
+                            @if($metadata['liked'] == 2)
+                                <div class="col-auto px-0 mx-0">
+                                    <button class="post-page-post-thumbs-up-button  btn ms-0 me-4 px-0 post-up-vote"><i title="Like post" class="fas fa-thumbs-up"></i></button>
+                                </div>
+                            @else
+                                <div class="col-auto px-0 mx-0">
+                                    <button class="post-page-post-thumbs-up-button btn ms-0 me-4 px-0 post-up-vote"><i title="Like post" class="far fa-thumbs-up"></i></button>
+                                </div>
+                            @endif
+                            @if($metadata['liked'] == 1)
+                                <div class="col-auto px-0 mx-0">
+                                    <button class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0 post-down-vote"><i title="Dislike post" class="fas fa-thumbs-down m-0"></i></button>
+                                </div>
+                            @else
+                                <div class="col-auto px-0 mx-0">
+                                    <button class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0 post-down-vote"><i title="Dislike post" class="far fa-thumbs-down m-0"></i></button>
+                                </div>
+                            @endif
+
                         <div class="col-auto px-0 mx-0 ms-auto">
                             <button class="post-page-post-report-button btn ms-0 me-0 py-0 px-0"><i title="Report post" class="fas fa-ban m-0"></i></button>
                         </div>
+                            @endauth
+                        @guest
+                            <p>TO DO: add links to login/register</p>
+                            @endguest
                     </div>
 
+                    </div>
                 </div>
-            </div>
                 @endif
+
 
             <div class="row justify-content-center mt-5 px-4 mx-1">
                 <div class="col-10 post-comment-indicator">

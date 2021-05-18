@@ -11,15 +11,23 @@
                             <i class="fas fa-search"></i>
                         </span>
             </div>
+            <select class="form-select mt-4" id="category" aria-label="Select a category" style="cursor:pointer;">
+                <option value="" selected>Select a category</option>
+                <option value="Music">Music</option>
+                <option value="Cinema">Cinema</option>
+                <option value="TvShow">TV Show</option>
+                <option value="Theatre">Theatre</option>
+                <option value="Literature">Literature</option>
+            </select>
             <select class="form-select mt-4" id="type" aria-label="Select a type" style="cursor:pointer;">
                 <option selected value="">Select a type</option>
                 <option value="News">News</option>
                 <option value="Article">Article</option>
                 <option value="Review">Review</option>
             </select>
-            <input type="date" class="form-control mt-4" id="startDate1" style="cursor:pointer;">
+            <input type="date" class="form-control mt-4" id="startDate2" style="cursor:pointer;">
             <p class="text-center mt-1 mb-1">to</p>
-            <input type="date" class="form-control mt-0" id="endDate1" style="cursor:pointer;">
+            <input type="date" class="form-control mt-0" id="endDate2" style="cursor:pointer;">
             @auth
                 <div class="form-check mt-4">
                     <input class="form-check-input" type="checkbox" value="" id="checkPeople"
@@ -50,13 +58,11 @@
             </div>
 
         </form>
-
     </div>
     <div>
         <div class ="d-none go-top-scroll" style="position: fixed">
-            <button class="d-flex btn mx-auto p-0 btn-lg" style="float:right;outline:none; box-shadow: none;" id="go-top"><i
+            <button class="d-flex btn mx-auto p-0 btn-lg" style="float:right;outline:none; box-shadow: none;" id="advanced-search-go-top"><i
                     class="fas fa-arrow-circle-up m-0 p-0"></i></button>
         </div>
     </div>
-
 </div>

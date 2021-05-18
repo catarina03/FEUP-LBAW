@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\AuthenticatedUser;
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +19,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -25,7 +29,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -36,8 +40,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -47,39 +51,58 @@ class UserController extends Controller
     /**
      * Display the User profile
      *
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Application|Factory|View|Response
      */
     public function show($id)
     {
         //verifica se é o dono do perfil se sim -> my profile, se nao userprofile
         $posts = Post::where('user_id', $id)->get();
-        foreach($posts as $post){
+        foreach ($posts as $post) {
             $post->author = AuthenticatedUser::find($post->user_id)->name;
-            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
+            $post->likes = DB::table("vote_post")->where("post_id", $post->id)->where("like", true)->get()->count();
         }
 
-        return view('pages.myprofile', ['needsFilter' => 0, 'posts' => $posts] );
+        return view('pages.myprofile', ['needsFilter' => 0, 'posts' => $posts]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Application|Factory|View|Response
      */
     public function edit(AuthenticatedUser $authenticatedUser)
     {
         //view de settings
-        return view('pages.settings', ['needsFilter' => 0] );
+        return view('pages.settings', ['needsFilter' => 0]);
+    }
+
+    /**
+     * Search users by username
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function searchRoles(Request $request): JsonResponse
+    {
+        $search = $request->input("query");
+
+        if (!empty($search))
+            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->where('username', 'LIKE', $search.'%')->orderBy("authenticated_user_type")->paginate(20);
+        else
+            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
+
+        $view = view('partials.roles_list', ['roles' => $roles])->render();
+        return response()->json($view);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function update(Request $request, AuthenticatedUser $authenticatedUser)
     {
@@ -89,96 +112,107 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function destroy(AuthenticatedUser $authenticatedUser)
     {
         //
     }
 
-    public function roles(Request $request){
-        DB::table("authenticated_user")->select("id","username","authenticated_user_type")->get();
+    public function roles()
+    {
+        $roles = DB::table("authenticated_user")->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
+
+        return view('pages.manage_roles', ['needsFilter' => 0, 'roles' => $roles]);
     }
 
-    public function editRole(Request $request,$user_id){
-        $validatedData = $request->validate([
+    public function editRole(Request $request, $user_id)
+    {
+        $validatedData = Validator::make($request->all(), [
             'new_role' => 'required'
         ]);
-        DB::table("authenticated_user")->where("id",$user_id)->update(["authenticated_user_type" => $validatedData["new_role"]]);
+
+        if (!$validatedData->fails()) {
+            $type = $request["new_role"];
+            DB::table("authenticated_user")->where("id", $user_id)->update(["authenticated_user_type" => $type]);
+            $view = view('partials.roles_types', ['type' => $type])->render();
+            return response()->json($view);
+        }
     }
+
     /**
      * Follow a user
      *
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function follow($id)
     {
         $user = Auth::user();
-        if(!Auth::check()) return; //mandar para login ou sem permissoes
+        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
         $followed_user = AuthenticatedUser::find($id);
-        if($followed_user != null)
-            $user->follow_user()->create(['followed_user'=> $id, 'following_user' => $user->id]);
+        if ($followed_user != null)
+            $user->follow_user()->create(['followed_user' => $id, 'following_user' => $user->id]);
     }
 
 
     /**
      * Unfollow a user
      *
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function unfollow($id)
     {
         $user = Auth::user();
-        if(!Auth::check()) return; //mandar para login ou sem permissoes
+        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
         $followed_user = AuthenticatedUser::find($id);
-        if($followed_user != null)
-            $user->follow_user()->delete(['followed_user'=> $id, 'following_user' => $user->id]);
+        if ($followed_user != null)
+            $user->follow_user()->delete(['followed_user' => $id, 'following_user' => $user->id]);
 
     }
 
     /**
      * Block a user
      *
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function block($id)
     {
         $user = Auth::user();
-        if(!Auth::check()) return; //mandar para login ou sem permissoes
+        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
         $blocked_user = AuthenticatedUser::find($id);
-        if($blocked_user != null)
-            $user->block_user()->create(['blocked_user'=> $id, 'blocking_user' => $user->id]);
+        if ($blocked_user != null)
+            $user->block_user()->create(['blocked_user' => $id, 'blocking_user' => $user->id]);
     }
 
     /**
      * Unblock a user
      *
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function unblock($id)
     {
         $user = Auth::user();
-        if(!Auth::check()) return; //mandar para login ou sem permissoes
+        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
         $blocked_user = AuthenticatedUser::find($id);
-        if($blocked_user != null)
-            $user->block_user()->delete(['blocked_user'=> $id, 'blocking_user' => $user->id]);
+        if ($blocked_user != null)
+            $user->block_user()->delete(['blocked_user' => $id, 'blocking_user' => $user->id]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function update_photo(Request $request, AuthenticatedUser $authenticatedUser)
     {
@@ -189,24 +223,24 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function edit_account(Request $request, AuthenticatedUser $authenticatedUser)
     {
         $user = Auth::check();
-        if(!Auth::check()) return;
+        if (!Auth::check()) return;
 
         //
         $data = Validator::make($request->all(),
-        [
-            "name" => ["string", "max:50"],
-            "username" => ["string", "max:50", "unique:authenticated_user"],
-            "email" => ["string", "email", "max:50"],
-        ]);
+            [
+                "name" => ["string", "max:50"],
+                "username" => ["string", "max:50", "unique:authenticated_user"],
+                "email" => ["string", "email", "max:50"],
+            ]);
 
-        if($data->fails()){
+        if ($data->fails()) {
             return; //redirect
         }
 
@@ -216,31 +250,30 @@ class UserController extends Controller
         $user->save();
 
 
-
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function edit_social_networks(Request $request, AuthenticatedUser $authenticatedUser)
     {
         $user = Auth::check();
-        if(!Auth::check()) return;
+        if (!Auth::check()) return;
 
         //
         $data = Validator::make($request->all(),
-        [
-            "twitter" => ["string", "max:50"],
-            "facebook" => ["string", "max:50"],
-            "instagram" => ["string", "max:50"],
-            "linkedin" => ["string", "max:50"]
-        ]);
+            [
+                "twitter" => ["string", "max:50"],
+                "facebook" => ["string", "max:50"],
+                "instagram" => ["string", "max:50"],
+                "linkedin" => ["string", "max:50"]
+            ]);
 
-        if($data->fails()){
+        if ($data->fails()) {
             return; //redirect
         }
 
@@ -255,27 +288,28 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function edit_preferences(Request $request, AuthenticatedUser $authenticatedUser)
     {
         $user = Auth::check();
-        if(!Auth::check()) return;
+        if (!Auth::check()) return;
 
         //
         $data = Validator::make($request->all(),
-        [
-            "show_people_i_follow" => ["boolean"],
-            "show_tags_i_follow" => ["string", "max:50"]
-        ]);
+            [
+                "show_people_i_follow" => ["boolean"],
+                "show_tags_i_follow" => ["string", "max:50"]
+            ]);
 
-        if($data->fails()){
+        if ($data->fails()) {
             return; //redirect
         }
 
         $user->show_people_i_follow = $data['show_people_i_follow'];
+        $user->show_tags_i_follow = $data['show_tags_i_follow'];
         $user->show_tags_i_follow = $data['show_tags_i_follow'];
         $user->save();
 
@@ -285,24 +319,24 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AuthenticatedUser  $authenticatedUser
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param AuthenticatedUser $authenticatedUser
+     * @return Response
      */
     public function change_password(Request $request, AuthenticatedUser $authenticatedUser)
     {
         $user = Auth::check();
-        if(!Auth::check()) return;
+        if (!Auth::check()) return;
 
         //
         $data = Validator::make($request->all(),
-        [
-            'password' => 'required|string|min:6|confirmed',
-            'new_password' => 'required|string|min:6|confirmed',
-            'confirmation_password' => 'required|string|min:6|confirmed',
-        ]);
+            [
+                'password' => 'required|string|min:6|confirmed',
+                'new_password' => 'required|string|min:6|confirmed',
+                'confirmation_password' => 'required|string|min:6|confirmed',
+            ]);
 
-        if($data->fails()){
+        if ($data->fails()) {
             return; //redirect
         }
 
@@ -316,12 +350,9 @@ class UserController extends Controller
         }
 
 
-
         //inserir password
         $user->save();
     }
-
-
 
 
 }

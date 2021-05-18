@@ -185,7 +185,7 @@ class PostController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function show($id)
     {
@@ -208,6 +208,11 @@ class PostController extends Controller
             $isSaved = DB::table("saves")->where("user_id",$user_id)->where("post_id",$id)->get()->count() > 0;
             if(!PostPolicy::show_post(Auth::user(),$post))
                 return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
+            $like = DB::table("vote_post")->where("post_id",$id)->where('user_id', $user_id)->value('like');
+            if($like === true) $liked = 2;
+            else if($like === false) $liked = 1;
+            else $liked = 0;
+
         }
         else
             $isOwner = false;
@@ -240,12 +245,14 @@ class PostController extends Controller
         $date = date("F j, Y", strtotime($post['created_at']));
         $thumbnail = "/images/".$post->thumbnail;
 
+
+
         //Generate metadata to send to view
         $metadata = ['comment_count'=>$comment_count,'author'=>$USER,'views' => $post->n_views,
-                     'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments,"isSaved" => $isSaved];
+                     'likes' => $likes, 'dislikes' => $dislikes, 'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments, 'liked' => $liked,"isSaved"=>$isSaved];
 
 
-        return view('pages.post', ['isOwner' => $isOwner, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id] );
+        return view('pages.post', ['isOwner' => $isOwner, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id]);
 
     }
 
@@ -490,7 +497,7 @@ class PostController extends Controller
     }
 
     public function addSave($id){
-        
+
         $route = \Route::current();
 
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
@@ -583,5 +590,62 @@ class PostController extends Controller
             $user_id = Auth::user()->id;
         $comments = Comment::getPostComments($post_id,"desc",$page);
         return Comment::commentsAsHtml($comments,$user_id);
+    }
+
+
+    public function addVote(Request $request, $id){
+        $vote = $request["vote"] === "true";
+        if(!is_bool($vote))
+            return 'error';
+        if(Auth::check()){
+            $post = Post::find($id);
+            if(Auth::user()->id != $post->user_id){
+                if($post != null){
+                    DB::table("vote_post")->insert([
+                        'user_id' => Auth::user()->id,
+                        'post_id' => $id,
+                        'like' => $vote
+                    ]);
+                    return 'SUCCESS';
+                }
+            }
+        }
+        return 'error';
+    }
+
+    public function editVote(Request $request, $id){
+        $vote = $request["vote"] === "true";
+        if(!is_bool($vote))
+            return 'error';
+        if(Auth::check()){
+            $post = Post::find($id);
+            if(Auth::user()->id != $post->user_id){
+                if($post != null){
+                    DB::table("vote_post")
+                        ->where('user_id', Auth::user()->id)
+                        ->where('post_id', $id)
+                        ->update(['like' => $vote]);
+                    return 'SUCCESS';
+                }
+            }
+        }
+        return 'error';
+
+    }
+    public function deleteVote($id){
+        if(Auth::check()){
+            $post = Post::find($id);
+            if(Auth::user()->id != $post->user_id){
+                if($post != null){
+                    $vote = DB::table("vote_post")
+                        ->where('user_id', Auth::user()->id)
+                        ->where('post_id', $id);
+                    if($vote != null){
+                        if($vote->delete()) return 'SUCCESS';
+                    }
+                }
+            }
+        }
+        return 'error';
     }
 }

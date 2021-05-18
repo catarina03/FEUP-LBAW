@@ -1,5 +1,4 @@
-
-    <div class="col-12 col-md-6 col-xl-4 mb-4">
+<div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card h-100" onclick="window.location = '/post/{{$post->id}}'">
 
             <img src="{{URL::asset($post->thumbnail)}}" height="200" class="card-img-top" alt="...">
@@ -36,7 +35,4 @@
                 </div>
         </div>
     </div>
-
-
-
 

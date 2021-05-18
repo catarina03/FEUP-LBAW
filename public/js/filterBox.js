@@ -2,7 +2,7 @@ let homepageFilter = document.querySelector('.homepage .filterButton')
 let categoryFilter = document.querySelector('.category .filterButton')
 let advancedSearchFilter = document.querySelector('.advanced_search .filterButton')
 let advancedSearch = document.querySelector('.advanced_search')
-let loadMoreAdv = document.querySelector('.advanced_search .pagination .loadmore')
+let loadMoreAdv = document.querySelector('.advanced_search .pagination-loadmore .loadmore')
 let searchElem = document.querySelector('#search')
 let categorySelect = document.querySelector('#category')
 let typeSelect = document.querySelector('#type')
@@ -14,6 +14,28 @@ let myPostsCheck = document.querySelector('#checkMyPosts')
 
 let filters = {}
 let pageAdv = 2
+
+window.addEventListener('scroll', function(){
+    let scrollY = this.scrollY;
+    let divScroll = document.querySelector('.go-top-scroll')
+    if(scrollY > 560 ){
+        if(divScroll.classList.contains('d-none')){
+            divScroll.classList.remove('d-none')
+            divScroll.classList.add('d-flex')
+        }
+    }
+    else{
+        if(divScroll.classList.contains('d-flex')){
+            divScroll.classList.remove('d-flex')
+            divScroll.classList.add('d-none')
+        }
+    }
+})
+
+
+
+
+
 
 if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', (e) => loadHandlerAdvancedSearch(e))
 
@@ -31,6 +53,14 @@ if(advancedSearchFilter != null){
         removeSpinner(s)
     })
 }
+
+let top_button_advanced = document.querySelector("#advanced-search-go-top")
+if(top_button_advanced != null){
+    top_button_advanced.addEventListener('click', function(){
+        window.scrollTo(0,0)
+    })
+}
+
 
 
 function getFilters(){
@@ -61,7 +91,11 @@ function getFilters(){
     if(tagFollow !== "") filters['tagFollow'] = tagFollow
     if(myPosts !== "") filters['myPosts'] = myPosts
 
-    if(category == null) category = (new URL(window.location.href)).searchParams.get('category')
+    if(category == null){
+        let path = window.location.pathname
+        const pages = path.split('/')
+        if(pages[2] !== null) category = pages[2]
+    }
     if(category !== "" && category !== null) filters['category'] = category
 }
 
@@ -76,7 +110,7 @@ function redirectWithFilters(e){
 function updateAdvancedSearch(adding, posts, number_res, page){
     const n_res = document.querySelector('.number-res')
     n_res.innerText = number_res + " results found!"
-    let pag = document.querySelector('.pagination')
+    let pag = document.querySelector('.pagination-loadmore')
     if(pag != null) pag.parentNode.removeChild(pag)
     let postDiv = document.querySelector('.advanced_search .postsCards')
     let newDiv = document.createElement('div')
@@ -115,7 +149,7 @@ function onLoad(){
 
 function loadHandlerAdvancedSearch(e){
     e.preventDefault()
-    let pag = document.querySelector('.advanced_search .pagination')
+    let pag = document.querySelector('.advanced_search .pagination-loadmore')
     let parent = pag.parentNode
     parent.removeChild(pag)
 
@@ -189,7 +223,7 @@ function checkDates(startDate, endDate){
 
 function addLoadMoreAdvancedSearch(postDiv){
     let pagination = document.createElement('div')
-    pagination.className = "pagination d-flex justify-content-center"
+    pagination.className = "pagination-loadmore d-flex justify-content-center"
 
     let load = document.createElement('a')
     load.className = "loadmore"
@@ -197,7 +231,7 @@ function addLoadMoreAdvancedSearch(postDiv){
 
     pagination.appendChild(load)
     postDiv.appendChild(pagination)
-    let loadMore = document.querySelector('.advanced_search .pagination .loadmore')
+    let loadMore = document.querySelector('.advanced_search .pagination-loadmore .loadmore')
     if(loadMore != null){
         loadMore.addEventListener('click', loadHandlerAdvancedSearch)
     }

@@ -5,6 +5,15 @@ let hot = document.querySelector(".homepage-navbar #hot");
 let loadH = document.querySelector(".homepage-navbar .hotLoad")
 let new_filter = document.querySelector(".homepage-navbar #new")
 let loadN = document.querySelector(".homepage-navbar .newLoad")
+let top_button = document.querySelector("#go-top")
+if(top_button != null){
+    top_button.addEventListener('click', function(){
+        window.scrollTo(0,0)
+    })
+}
+
+
+
 
 if(t != null && loadT != null){
     t.addEventListener("click", function(e){
@@ -54,6 +63,7 @@ function makeRequest(type){
                 const response = JSON.parse(postsRequest.responseText)
                 let posts = response['posts']
                 let n_posts = response['n_posts']
+                window.scrollTo(0,0)
                 updateHomepage(posts, n_posts)
                 displaySpinner(false, type)
                 enableLinks(type)
@@ -66,7 +76,7 @@ function makeRequest(type){
 }
 
 function updateHomepage(posts, n_posts){
-    let pag = document.querySelector('.homepage .pagination')
+    let pag = document.querySelector('.homepage .pagination-loadmore')
     if(pag != null)
         pag.parentNode.removeChild(pag)
     let postDiv = document.querySelector('.postsCards')
@@ -113,14 +123,14 @@ function displaySpinner(display, type){
 }
 
 
-let loadMore = document.querySelector('.homepage .pagination .loadmore')
+let loadMore = document.querySelector('.homepage .pagination-loadmore .loadmore')
 let page = 2
 
 if(loadMore != null) loadMore.addEventListener('click', loadHandlerHomepage)
 
 function loadHandlerHomepage(e){
     e.preventDefault()
-    let pag = document.querySelector('.homepage .pagination')
+    let pag = document.querySelector('.homepage .pagination-loadmore')
     let parent = pag.parentNode
     parent.removeChild(pag)
 
@@ -160,7 +170,7 @@ function loadHandlerHomepage(e){
 
 function addLoadMoreHomepage(postDiv){
     let pagination = document.createElement('div')
-    pagination.className = "pagination d-flex justify-content-center"
+    pagination.className = "pagination-loadmore d-flex justify-content-center"
 
     let load = document.createElement('a')
     load.className = "loadmore"
@@ -168,7 +178,7 @@ function addLoadMoreHomepage(postDiv){
 
     pagination.appendChild(load)
     postDiv.appendChild(pagination)
-    let loadMore = document.querySelector('.homepage .pagination .loadmore')
+    let loadMore = document.querySelector('.homepage .pagination-loadmore .loadmore')
     if(loadMore != null) loadMore.addEventListener('click', loadHandlerHomepage)
 }
 
