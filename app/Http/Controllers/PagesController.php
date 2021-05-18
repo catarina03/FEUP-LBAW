@@ -38,8 +38,8 @@ class PagesController extends Controller
         //TODO
     }
 
-    public function category(Request $request){
-        $category = $request->input('category');
+    public function category($category){
+
         if($category == "Music") $posts = Post::where('category', 'music')->paginate(15,'*', 'page', 1);
         else if($category == "TVShow") $posts = Post::where('category', 'tv show')->paginate(15,'*', 'page', 1);
         else if($category == "Cinema") $posts = Post::where('category', 'cinema')->paginate(15,'*', 'page', 1);

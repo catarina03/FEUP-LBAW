@@ -69,7 +69,11 @@ function getFilters(){
     if(tagFollow !== "") filters['tagFollow'] = tagFollow
     if(myPosts !== "") filters['myPosts'] = myPosts
 
-    if(category == null) category = (new URL(window.location.href)).searchParams.get('category')
+    if(category == null){
+        let path = window.location.pathname
+        const pages = path.split('/')
+        if(pages[2] !== null) category = pages[2]
+    }
     if(category !== "" && category !== null) filters['category'] = category
 }
 
