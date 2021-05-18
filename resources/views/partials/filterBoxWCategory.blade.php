@@ -1,7 +1,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/utils.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/filterBox.js') }}" defer></script>
 <div class="custom-filterBox filterbox col-md-3  d-flex justify-content-center">
-    <div class="container  ">
+    <div class="container  col-md-3">
         <h4 class="text-center"> Search </h4>
         <form class="pt-2" action="" method="get">
             <div class="input-group rounded">
@@ -60,8 +60,8 @@
         </form>
     </div>
     <div>
-        <div style="margin-top:800px;">
-            <button class="d-flex btn mx-auto btn-lg p-0" style="float:right;outline:none; box-shadow: none;" id="advanced-search-go-top"><i
+        <div class ="d-none go-top-scroll" style="position: fixed">
+            <button class="d-flex btn mx-auto p-0 btn-lg" style="float:right;outline:none; box-shadow: none;" id="advanced-search-go-top"><i
                     class="fas fa-arrow-circle-up m-0 p-0"></i></button>
         </div>
     </div>

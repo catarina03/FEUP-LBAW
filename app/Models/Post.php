@@ -52,19 +52,21 @@ class Post extends Model
             $user_id = $user->id;
         }
         else $user_id = 0;
-
-        $query_order = "";
-        if($order == "top")  $query_order = "order by n_views desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
-
-        else if($order == "hot") $query_order = "order by id desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
-
-        else if($order == "new") $query_order = "order by created_at desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
-
-        return DB::select(
-            DB::raw("select * from post where not exists
+        $query = "";
+        if($order == "hot")
+            $query= "select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))".$query_order)
-            ,['user' => $user_id, 'offset' => $offset]);
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user)) order by n_views desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+
+        else{
+            $aux = "select * from post where not exists
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))";
+            if($order == "top") $query = $aux."order by id desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+            else if($order == "new") $query = $aux."order by created_at desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+        }
+
+        return DB::select(DB::raw($query),['user' => $user_id, 'offset' => $offset]);
     }
 
     public static function getSlideShowPosts(){
