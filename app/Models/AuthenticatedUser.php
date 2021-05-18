@@ -63,7 +63,7 @@ class AuthenticatedUser extends Authenticatable
         return $this->hasMany(Comment::class, "authenticatedUser_id");
     }
 
-    /** 
+    /**
     * Reports assigned to the user
     */
     public function assigned_reports(){
@@ -103,6 +103,4 @@ class AuthenticatedUser extends Authenticatable
         return $this->belongsToMany(Post::class, 'saves', 'authenticatedUser_id', 'post_id');
     }
 
-    //notification on follow and vote?
-   
 }

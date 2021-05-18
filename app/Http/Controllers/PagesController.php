@@ -2,153 +2,140 @@
 
 namespace App\Http\Controllers;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use App\Models\AuthenticatedUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Auth;
+
 
 class PagesController extends Controller
 {
-    public function home()
-    {
-        /*
-        $posts = Post::getTopPosts(0);
-        foreach($posts as $post){
-            $post->thumbnail = "/images/".$post->thumbnail;
-            $post->author = AuthenticatedUser::find($post->user_id)->name;
-            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
-
-        }
-        $slideshow = $this->slideshow();
-        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow]);
-        */
-
-        $p = Post::getTopPosts(1);
+    public function home(){
+        $p = Post::getPostsOrdered("top", 1);
         $posts = $this->getPostsInfo($p);
         $slideshow = $this->slideshow();
-
-        return view('pages.homepage', ['user' => 'system_manager', 'needsFilter' => 0, 'posts'=>$posts,'slideshow'=>$slideshow]);
+        $n_posts = Post::count();
+        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow, 'n_posts' => $n_posts]);
     }
 
     public function slideshow(){
-        $posts = Post::getSlideShowPosts();
-        return $this->getPostsInfo($posts);
+        return $posts = $this->getPostsInfo(Post::getSlideShowPosts());
     }
 
     public function about(){
-        return view('pages.about', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.about', ['needsFilter' => 0] );
     }
 
     public function faq(){
-        return view('pages.faq', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.faq', ['needsFilter' => 0] );
     }
 
     public function support(){
-        return view('pages.support', ['user' => 'visitor', 'needsFilter' => 0] );
+        return view('pages.support', ['needsFilter' => 0] );
     }
 
     public function supportRequest(){
         //TODO
     }
 
-    public function category(Request $request){
-        $category = $request->input('category');
-        if($category == "Music") $posts = Post::where('category', 'music')->forPage(1,15)->get();
-        else if($category == "TVShow") $posts = Post::where('category', 'tv show')->forPage(1,15)->get();
-        else if($category == "Cinema") $posts = Post::where('category', 'cinema')->forPage(1,15)->get();
-        else if($category == "Theatre") $posts = Post::where('category', 'theatre')->forPage(1,15)->get();
-        else if($category == "Literature") $posts = Post::where('category', 'literature')->forPage(1,15)->get();
+    public function category($category){
 
+        if($category == "Music") $posts = Post::where('category', 'music')->paginate(15,'*', 'page', 1);
+        else if($category == "TVShow") $posts = Post::where('category', 'tv show')->paginate(15,'*', 'page', 1);
+        else if($category == "Cinema") $posts = Post::where('category', 'cinema')->paginate(15,'*', 'page', 1);
+        else if($category == "Theatre") $posts = Post::where('category', 'theatre')->paginate(15,'*', 'page', 1);
+        else if($category == "Literature") $posts = Post::where('category', 'literature')->paginate(15,'*', 'page', 1);
+
+        $n_posts = $posts->total();
         $posts = $this->getPostsInfo($posts);
-        if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts]);
+        if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts, 'n_posts' => $n_posts]);
 
-        return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => $category, 'posts' =>$posts]);
+        return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts, 'n_posts' => $n_posts]);
 
     }
 
     public function list($homepageFilters){
-        if($homepageFilters == "new") $p = Post::getNewPosts(1);
-        else if($homepageFilters == "hot") $p = Post::getHotPosts(1);
-        else $p = Post::getTopPosts(1);
-
+        $p = Post::getPostsOrdered($homepageFilters, 1);
         $posts = $this->getPostsInfo($p);
-
-        return view('partials.allcards', ['posts' => $posts]);
-
+        $n_posts = Post::count();
+        return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts, 'n_posts' => $n_posts])->render(),'n_posts' => $n_posts));
     }
 
     public function loadMoreHomepage($filters, $page){
-        if($filters == "new") $p = Post::getNewPosts($page);
-        else if($filters == "hot") $p = Post::getHotPosts($page);
-        else $p = Post::getTopPosts($page);
-
+        $p = Post::getPostsOrdered($filters, $page);
         $posts = $this->getPostsInfo($p);
-
-        return view('partials.allcards', ['posts' => $posts]);
+        $n_posts = Post::count();
+        return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts])->render(), 'n_posts'=> $n_posts));
     }
 
     public function loadMoreCategoryPage($category, $page){
-        if($category == "Music") $posts = Post::where('category', 'music')->forPage($page,15)->get();
-        else if($category == "TVShow") $posts = Post::where('category', 'tv show')->forPage($page,15)->get();
-        else if($category == "Cinema") $posts = Post::where('category', 'cinema')->forPage($page,15)->get();
-        else if($category == "Theatre") $posts = Post::where('category', 'theatre')->forPage($page,15)->get();
-        else if($category == "Literature") $posts = Post::where('category', 'literature')->forPage($page,15)->get();
+        if($category == "Music") $p = Post::where('category', 'music')->paginate(15,'*', 'page', $page);
+        else if($category == "TVShow") $p = Post::where('category', 'tv show')->paginate(15,'*', 'page', $page);
+        else if($category == "Cinema") $p = Post::where('category', 'cinema')->paginate(15,'*', 'page', $page);
+        else if($category == "Theatre") $p = Post::where('category', 'theatre')->paginate(15,'*', 'page', $page);
+        else if($category == "Literature") $p = Post::where('category', 'literature')->paginate(15,'*', 'page', $page);
 
-        $posts = $this->getPostsInfo($posts);
-        return view('partials.allcards', ['posts' => $posts]);
+        $posts = $this->getPostsInfo($p);
+        return response()->json(array('posts'=> view('partials.allcards', ['posts' => $posts])->render(), 'number_res'=> $p->total()));
     }
 
 
     public function advancedSearch(Request $request){
-        //thinking about calling this function everytime a advanced search is made
-       /* $filters = json_decode($f);
+        $p = $this->filter($request,1);
+        $posts = $this->getPostsInfo($p);
 
-        if(isset($filters['search'])) $final_filters['search'] = $filters['search'];
-        else $final_filters['search']  = "";
-        if(isset($filters['type'])) $final_filters['type'] = $filters['type'];
-        else $final_filters['type']  = "";
-        if(isset($filters['startDate'])) $final_filters['startDate'] = $filters['startDate'];
-        else $final_filters['startDate']  = "";
-        if(isset($filters['endDate'])) $final_filters['endDate'] = $filters['endDate'];
-        else $final_filters['endDate']  = "";
-        if(isset($filters['peopleFollow'])) $final_filters['peopleFollow'] = $filters['endDate'];
-        else $final_filters['peopleFollow']  = "";
-        if(isset($filters['tagFollow'])) $final_filters['$tagFollow'] = $filters['tagFollow'];
-        else $final_filters['tagFollow']  = "";
-        if(isset($filters['category'])) $final_filters['category'] = $filters['category'];
-        else $final_filters['category']  = "";
-
-
-        return json_encode($final_filters);*/
-
-        $posts = Post::where('category', 'music')->forPage(0,15)->get();
-        $posts = $this->getPostsInfo($posts);
-
-        return  json_encode(array('posts'=> view('partials.allcards', ['posts' => $posts]), 'number_res'=>count($posts)));
+        return view('pages.advanced_search', ['needsFilter'=> 1,'posts' => $posts, 'number_res'=> $p->total()])->render();
     }
 
-    public function showAdvancedSearch(Request $request){
-        $posts = [];
-        $type = $request->input('type');
-        $search = $request->input('search');
-        if(!empty($search)){
-           // $posts
-        }
-       /* if(!empty($type)){
-            $posts = DB::table('post')->where('type', $type)->get();
-        }
+    public function loadMoreAdvancedSearch(Request $request){
+        $p = $this->filter($request);
+        $posts = $this->getPostsInfo($p);
 
-        if(!empty($search)){
-            //query to search
-        }*/
+        return response()->json(array('posts'=> view('partials.allcards', ['posts' => $posts])->render(), 'number_res'=> $p->total()));
+    }
 
-        //query para filtrar
-        //contar o n de resultados
-        //coloacar nos filtros os filtros recebidos
-        //fazer cena do load
-        $posts = Post::orderBy('n_views', 'desc')->get();
-        $posts = $this->getPostsInfo($posts);
-        return view('pages.advanced_search', ['user' => 'visitor', 'needsFilter' => 0, 'posts' => $posts]);
+    public function filter(Request $request){
+        $date = date("m/d/Y", time());
+        $query = Post::where('created_at', '<=', $date);
+
+        if($request->has('search')){
+            $s = trim($request->input('search'));
+            $query->when(!empty($s), function($q) use ($s){
+                return $q->whereRaw('search @@ plainto_tsquery(\'english\', ?)', [$s])
+                    ->orderByRaw('ts_rank(search, plainto_tsquery(\'english\', ?)) DESC', [$s]);
+            });
+        }
+        if($request->has('type')){
+            $query->where('type', strtolower($request->input('type')));
+        }
+        if($request->has('category')){
+            $query->where('category', strtolower($request->input('category')));
+        }
+        if($request->has('startDate')){
+            $query->where('created_at', '>=',date("m/d/Y", strtotime($request->input('startDate'))));
+        }
+        if($request->has('endDate')){
+            $query->where('created_at', '<=',date("m-d-Y", strtotime($request->input('endDate'))));
+        }
+        if($request->has('peopleFollow')){
+            if($request->input('peopleFollow') == "true"){
+                $ids = DB::table("follow_user")->where("following_user",Auth::user()->id)->value('followed_user');
+                $query->whereIn('user_id', $ids);
+            }
+        }
+        if($request->has('tagFollow')){
+            if($request->input('tagFollow') == "true") {
+                $tags = DB::table("follow_tag")->where("authenticatedUser_id", Auth::user()->id)->value('tag_id');
+                $posts = DB::table('post_tag')->whereIn('tag_id', $tags)->value('post_id');
+                $query->whereIn('id', $posts);
+            }
+        }
+        if($request->has('myPosts')){
+            if($request->input('tagFollow') == "true") {
+                $query->where('user_id', Auth::user()->id);
+            }
+        }
+        return $query->paginate(15,'*', 'page', $request->input('page'));
     }
 
     public function getPostsInfo($posts){
@@ -156,6 +143,13 @@ class PagesController extends Controller
             $post->thumbnail = "/images/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
+            if(Auth::check()){
+                //$save = DB::table("saved_by")->where("post_id",$post->id)->where("authenticatedUser_id", Auth::user()->id)->get();
+                //if($save != null) $post->saved = true;
+                //else
+                $post->saved = false;
+            }
+            else $post->saved = false;
         }
         return $posts;
     }

@@ -740,14 +740,11 @@ CREATE TRIGGER delete_unused_tag
 
 CREATE OR REPLACE FUNCTION post_search() RETURNS TRIGGER AS
 $BODY$
-DECLARE
-    author varchar(255);
 BEGIN
-    SELECT username INTO author FROM authenticated_user WHERE  New.user_id = id;
     IF TG_OP = 'INSERT' THEN
-        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', author), 'C'));
+        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));--(SELECT STRING_AGG(name, ',')FROM tag JOIN post_tag ON tag.id = post_tag.tag_id WHERE  post_id = New.id)
     ELSEIF TG_OP = 'UPDATE' AND (New.title <> OLD.title OR NEW.content <> OLD.content) THEN
-        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', author), 'C'));
+        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));
     END IF;
     RETURN NEW;
 END;
