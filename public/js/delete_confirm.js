@@ -1,7 +1,7 @@
 let currentPage = 1;
 
 let confirm = document.getElementById("confirm");
-let yes = confirm.getElementsByClassName("col-2 btn custom-button")[0];
+let yes = confirm.getElementsByClassName("confirm_button")[0];
 let id = document.getElementById("post_ID");
 let token = document.getElementsByName("csrf-token")[0];
 yes.addEventListener("click",delete_post);

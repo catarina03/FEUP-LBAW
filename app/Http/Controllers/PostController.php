@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 //use Auth;
 
 class PostController extends Controller
@@ -202,6 +203,7 @@ class PostController extends Controller
         //Verify if user is authenticated and if user is owner of post
         $user_id = null;
         $isSaved = false;
+        $liked = 0;
         if(Auth::check()){
             $user_id = Auth::user()->id;
             $isOwner = $user_id == $post->user_id? true : false;
@@ -482,16 +484,16 @@ class PostController extends Controller
             return Redirect::back()->withErrors($validator->errors())->withInput();
         }
         $post = Post::find($post_id);
-        if($post != null){
+        if(($post != null) && Auth::check() && (Auth::user()->id != $post->user_id)){
             $report = new Report();
             $report->motive = $request->input('motive');
             $report->user_reporting = Auth::user()->id;
             $report->post_reported = $post->id;
             $report->save();
 
-            return; //redirect para a pagina do post
+            return response()->json(['status' => "Post reported!"]);
         }
-        else return; //nao sei para onde vai
+        else return response()->json(['status' => "Error encountered when trying to report post!"]);
 
 
     }
@@ -499,10 +501,8 @@ class PostController extends Controller
     public function addSave($id){
 
         $route = \Route::current();
-
-        //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
-            return 'F';
+            return '';
         if(Auth::check()){
             $post = Post::find($id);
             if(Auth::user()->id != $post->user_id){
@@ -515,7 +515,7 @@ class PostController extends Controller
                 }
             }
         }
-        return 'A';
+        return '';
     }
 
     public function deleteSave($id){

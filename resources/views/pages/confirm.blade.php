@@ -12,7 +12,7 @@
             </div>
             <div class="row justify-content-end d-flex me-3 mb-3 ">
                 <button type="submit" class="col-2 btn btn-secondary me-4" data-bs-dismiss="modal">No</button>
-                <button type="submit" class="col-2 btn custom-button" data-bs-dismiss="modal">Yes</button>
+                <button type="submit" class="col-2 btn custom-button confirm_button" data-bs-dismiss="modal">Yes</button>
             </div>
         </div>
     </div>

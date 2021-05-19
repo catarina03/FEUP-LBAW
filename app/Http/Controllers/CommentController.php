@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use \Response;
 
 class CommentController extends Controller
 {
@@ -214,21 +215,19 @@ class CommentController extends Controller
 
     public function reportComment(Request $request,$comment_id){
         $validatedData = $request->validate([
-            'motive' => 'required',
-            'user_reporting' => 'required|numeric',
-            'comment_reported' => 'required|numeric'
+            'motive' => 'required'
         ]);
-
-        DB::table('report')->insert([
-            'reported_date' => 'DEFAULT',
-            'accepted' => 'NULL',
-            'closed_date' => 'NULL',
-            'motive' => $validatedData->motive,
-            'user_reporting' => $validatedData->user_reporting,
-            'user_assigned' => 'NULL',
-            'comment_reported' => $validatedData->comment_reported,
-            'post_reported' => 'NULL'
-        ]);
+        
+        $comment = Comment::find($comment_id);
+        if($comment!=null && Auth::check() && Auth::user()->id != $comment->user_id){
+            DB::table('report')->insert([
+                'motive' => $validatedData['motive'],
+                'user_reporting' => Auth::user()->id,
+                'comment_reported' => $comment_id
+            ]);
+            return response()->json(['status' => "Comment reported!"]);
+        }
+        return response()->json(['status' => "Error encountered when reporting post!"]);
     }
 
     public function vote(Request $request,$comment_id){

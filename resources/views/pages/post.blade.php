@@ -5,6 +5,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/comments_aux.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/delete_confirm.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
+<script type="text/javascript" src="{{ URL::asset('js/report_content.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/add_thread.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/add_comment.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/post_comments/delete_comment.js') }}" defer></script>
@@ -234,7 +235,8 @@
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['likes']}} <i title="Like comment"  class="far fa-thumbs-up XD"></i></h3>
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment['dislikes']}} <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
                                     @if($user_id != $comment['comment']->user_id)
-                                    <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3"></i>
+                                    <span hidden class="content_id comment_content">{{$comment['comment']->id}}</span>
+                                    <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3 report_action" data-bs-toggle="modal" data-bs-target="#report"></i>
                                     @endif
                                     <h3 class="post-page-comment-interactions my-0">{{$comment['thread_count']}} <i class="far fa-comments"></i></h3>
                                     <h3 class="post-page-comment-interactions my-0 px-3 show-hide-replies"> <i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show</h3>
@@ -290,7 +292,8 @@
                                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$thread['likes']}} <i title="Like comment" class="far fa-thumbs-up"></i></h3>
                                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$thread['dislikes']}} <i title="Dislike comment" class="far fa-thumbs-down"></i></h3>
                                                     @if($user_id != $thread['comment']->user_id)
-                                                        <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment"></i>
+                                                        <span hidden class="content_id comment_content">{{$thread['comment']->id}}</span>
+                                                        <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment report_action"></i>
                                                     @endif
                                                 </div>
                                             </div>
@@ -354,3 +357,4 @@
 
 @endsection
 @include('pages.confirm')
+@include('partials.report_modal')

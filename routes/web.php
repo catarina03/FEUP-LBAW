@@ -90,7 +90,7 @@ Route::put('reports/{report_id}/assign_report', 'ReportController@assign');
 Route::put('reports/{report_id}/process', 'ReportController@process');
 
 // Comment
-Route::put('comment/{comment_id}/report', 'CommentController@reportComment');
+Route::post('comment/{comment_id}/report', 'CommentController@reportComment');
 
 // Sort comments
 Route::get('api/post/{post_id}/popular_comments','PostController@popularComments');
