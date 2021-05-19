@@ -225,9 +225,9 @@ class CommentController extends Controller
                 'user_reporting' => Auth::user()->id,
                 'comment_reported' => $comment_id
             ]);
-            return response()->json(['status' => "Comment reported!"]);
+            return response()->json(['status' => "Comment reported!"])->setStatusCode(200);
         }
-        return response()->json(['status' => "Error encountered when reporting post!"]);
+        return response()->json(['status' => "Error encountered when reporting post!"])->setStatusCode(404);
     }
 
     public function vote(Request $request,$comment_id){

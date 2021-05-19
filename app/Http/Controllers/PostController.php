@@ -491,9 +491,9 @@ class PostController extends Controller
             $report->post_reported = $post->id;
             $report->save();
 
-            return response()->json(['status' => "Post reported!"]);
+            return response()->json(['status' => "Post reported!"])->setStatusCode(200);
         }
-        else return response()->json(['status' => "Error encountered when trying to report post!"]);
+        else return response()->json(['status' => "Error encountered when trying to report post!"])->setStatusCode(404);
 
 
     }

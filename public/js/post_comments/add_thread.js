@@ -54,7 +54,7 @@ function addThread(comment_id,content){
         addListeners();
         addDeleteCommentListeners();
         addEditListeners();
-        //addShowThreadListeners();
+        addReportListeners();
         updateSortedBy("Sort by");
         openThreads(comment_id);
         

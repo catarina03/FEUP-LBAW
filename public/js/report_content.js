@@ -5,6 +5,7 @@ function addReportListeners(){
         for(let i = 0;i<report_buttons.length;i++){
             let element = report_buttons[i];
             element.addEventListener("click",function(e){
+                e.stopImmediatePropagation();
                 let list = element.classList;
                 let aux = element.parentNode.getElementsByClassName("content_id")[0];
                 let type = aux.classList.contains("comment_content")? "comment" : "post";
@@ -49,6 +50,9 @@ function report_content(type,id,value){
             let text = JSON.parse(request.responseText);
             if(request.status === 200){
                 console.log(text['status']);
+                if(type=="comment"){
+                    hideReportButtonFromComment(id);
+                }
             }
             else{
                 console.log(text['status']);
@@ -73,4 +77,19 @@ function getMotive(value){
     else if(value == "other")
         return "Other";
     return null;
+}
+
+
+function hideReportButtonFromComment(id){
+    let comments = document.querySelectorAll(".content_id.comment_content");
+    if(comments.length>0){
+        for(let i = 0;i<comments.length;i++){
+            let element = comments[i];
+            if(element.innerText == id){
+                element.parentNode.getElementsByClassName("report_action")[0].setAttribute("hidden",true);
+                return;
+            }
+        }
+    }
+    return;
 }

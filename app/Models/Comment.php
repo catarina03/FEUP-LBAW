@@ -101,32 +101,30 @@ class Comment extends Model
         $likes = $votes->where("like",true)->get()->count();
         $dislikes = $temp - $likes;
         $threads = Comment::getCommentThreads($comment->id);
-        $temp_array = array();
-        $temp_array["comment"] = $comment;
-        $temp_array["likes"] = $likes;
-        $temp_array["dislikes"] = $dislikes;
-        $temp_array["date"] = date("F j, Y", strtotime($comment['comment_date']));
-        $temp_array["author"] = AuthenticatedUser::find($comment->user_id)->name;
-        $temp_array["threads"] = $threads;
-        $temp_array["thread_count"] = count($threads);
-        return $temp_array;
+        //$temp_array = array();
+        //$temp_array["comment"] = $comment;
+        $comment->likes = $likes;
+        $comment->dislikes = $dislikes;
+        $comment->comment_date = date("F j, Y", strtotime($comment['comment_date']));
+        $comment->author = AuthenticatedUser::find($comment->user_id)->name;
+        $comment->threads = $threads;
+        $comment->thread_count = count($threads);
+        return $comment;
     }
 
     public static function getThreadInfo($thread_id){
         $result = Comment::getCommentInfo($thread_id);
-        unset($result["threads"]);
-        unset($result["thread_count"]);
+        unset($result->threads);
+        unset($result->thread_count);
         return $result;
     }
 
     public static function commentsAsHtml($comments,$user_id){
-        $result = "";
-        $metadata = ["comments"=>$comments];
-        return view("partials.comments",["user_id"=> $user_id,"metadata"=> $metadata]);
+        return view("partials.comments",["user_id"=> $user_id,"comments"=> $comments]);
     }
 
     public static function single_commentAsHtml($comment_id,$user_id){
         $comment = Comment::getCommentInfo($comment_id);
-        return view("partials.single_comment",["user_id"=>$user_id,"comment"=>$comment,"isThread" => $comment['comment']->comment_id==null?false:true]);
+        return view("partials.single_comment",["user_id"=>$user_id,"comment"=>$comment]);
     }
 }
