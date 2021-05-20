@@ -219,7 +219,6 @@ class PostController extends Controller
         else
             $isOwner = false;
 
-        //Set timestamps to false(updated_at column doesnt exist) and increment views
         $post->timestamps = false;
         $post->increment('n_views');
 
@@ -228,6 +227,7 @@ class PostController extends Controller
 
         //Get comment count,likes and dislikes
         $comments = Comment::getPostComments($id,"desc",1);
+        $comments = Comment::checkReported($comments,$user_id);
         $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
         $temp = $votes->get()->count();

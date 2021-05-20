@@ -40,8 +40,10 @@
                                             title="Dislike comment" class="far fa-thumbs-down"></i></h3>
                                     @auth
                                     @if($user_id != $comment->user_id)
-                                    <span hidden class="content_id comment_content">{{$comment->id}}</span>
-                                    <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3 report_action" data-bs-toggle="modal" data-bs-target="#report"></i>
+                                        @if(!$comment->reported)
+                                            <span hidden class="content_id comment_content">{{$comment->id}}</span>
+                                            <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3 report_action" data-bs-toggle="modal" data-bs-target="#report"></i>
+                                        @endif
                                     @endif
                                     @endauth
                                     <h3 class="post-page-comment-interactions my-0">{{$comment->thread_count}} <i
@@ -131,8 +133,10 @@
                                                             title="Dislike comment" class="far fa-thumbs-down"></i></h3>
                                                             @auth
                                                             @if($user_id != $comment->user_id)
-                                                            <span hidden class="content_id comment_content">{{$comment->id}}</span>
-                                                            <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3 report_action" data-bs-toggle="modal" data-bs-target="#report"></i>
+                                                                @if(!$comment->reported)
+                                                                <span hidden class="content_id comment_content">{{$comment->id}}</span>
+                                                                <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3 report_action" data-bs-toggle="modal" data-bs-target="#report"></i>
+                                                                @endif                                                           
                                                             @endif
                                                             @endauth
                                                 </div>
