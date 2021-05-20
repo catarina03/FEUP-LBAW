@@ -140,10 +140,12 @@
                                     <button class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0 post-down-vote"><i title="Dislike post" class="far fa-thumbs-down m-0"></i></button>
                                 </div>
                             @endif
-
-                        <div class="col-auto px-0 mx-0 ms-auto">
-                            <button class="post-page-post-report-button btn ms-0 me-0 py-0 px-0"><i title="Report post" class="fas fa-ban m-0"></i></button>
-                        </div>
+                                @if(!$post->reported)
+                                    <div class="col-auto px-0 mx-0 ms-auto">
+                                        <span hidden class="content_id post_content">{{$post->id}}</span>
+                                        <button class="post-page-post-report-button btn ms-0 me-0 py-0 px-0 report_action report_post_button" data-bs-toggle="modal" data-bs-target="#report"><i title="Report post" class="fas fa-ban m-0"></i></button>
+                                    </div>
+                                @endif    
                             @endauth
                         @guest
                             <p>TO DO: add links to login/register</p>

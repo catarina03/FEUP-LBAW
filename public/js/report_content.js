@@ -8,7 +8,15 @@ function addReportListeners(){
                 e.stopImmediatePropagation();
                 let list = element.classList;
                 let aux = element.parentNode.getElementsByClassName("content_id")[0];
-                let type = aux.classList.contains("comment_content")? "comment" : "post";
+                let type = null;
+                if(aux.classList.contains("comment_content"))
+                    type = "comment";
+                else if(aux.classList.contains("post_content"))
+                    type = "post";
+                if(type == null){
+                    alert("Something went wrong with this button!");
+                    return;
+                }
                 let content_id = aux.innerText;
                 document.getElementById("report").getElementsByClassName("content_id")[0].innerText = content_id;
                 document.getElementById("report").getElementsByClassName("content_type")[0].innerText = type;
@@ -53,6 +61,8 @@ function report_content(type,id,value){
                 if(type=="comment"){
                     hideReportButtonFromComment(id);
                 }
+                else
+                    hideReportButtonFromPost();
             }
             else{
                 console.log(text['status']);
@@ -91,5 +101,11 @@ function hideReportButtonFromComment(id){
             }
         }
     }
+    return;
+}
+
+function hideReportButtonFromPost(){
+    let post_button = document.getElementsByClassName("report_post_button")[0];
+    post_button.setAttribute("hidden",true);
     return;
 }

@@ -134,8 +134,8 @@ class Comment extends Model
         $new_comments = array();
         foreach($comments as $comment){
             $comment->reported=false;
-            $report = Report::where("user_reporting",$user_id)->where("comment_reported",$comment->id);
-            if($report!=null)
+            $report = Report::where("user_reporting",$user_id)->where("comment_reported",$comment->id)->get()->count();
+            if($report>0)
                 $comment->reported=true;
             if($comment->post_id != null && $comment->thread_count > 0){
                 $comment->threads = Comment::checkReported($comment->threads,$user_id);

@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\AuthenticatedUser;
 use App\Models\Comment;
 use App\Policies\PostPolicy;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -164,7 +165,7 @@ class PostController extends Controller
             $photo->save();
         }
 */
-
+        
         $user = 'authenticated_user';
         //Get tags associated with current post TODO:: Use Tag Model
         $tags = DB::select(DB::raw("select t.name
@@ -246,7 +247,10 @@ class PostController extends Controller
         //Get date and thumbnail path
         $date = date("F j, Y", strtotime($post['created_at']));
         $thumbnail = "/images/".$post->thumbnail;
-
+        $report = Report::where("user_reporting",$user_id)->where("post_reported",$post->id)->get()->count();
+        $post->reported = false;
+        if($report>0)
+            $post->reported = true;
 
 
         //Generate metadata to send to view
@@ -486,6 +490,7 @@ class PostController extends Controller
         $post = Post::find($post_id);
         if(($post != null) && Auth::check() && (Auth::user()->id != $post->user_id)){
             $report = new Report();
+            $report->timestamps = false;
             $report->motive = $request->input('motive');
             $report->user_reporting = Auth::user()->id;
             $report->post_reported = $post->id;
