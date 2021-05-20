@@ -6,7 +6,7 @@ function addReportListeners(){
             let element = report_buttons[i];
             element.addEventListener("click",function(e){
                 e.stopImmediatePropagation();
-                let list = element.classList;
+                //let list = element.classList;
                 let aux = element.parentNode.getElementsByClassName("content_id")[0];
                 let type = null;
                 if(aux.classList.contains("comment_content"))

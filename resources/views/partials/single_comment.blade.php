@@ -68,8 +68,8 @@
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
-                            <div class="row px-0 mx-0">
-                                <div class="col-11 d-flex mx-0 px-0">
+                            <div class="row px-0 mx-0 reply_textarea_container">
+                                <div class="col-11 d-flex mx-0 px-0 reply_textarea">
                                         <textarea
                                             class="container form-control post-page-add-comment-reply w-100 add-thread"
                                             id="add-comment" rows="1"

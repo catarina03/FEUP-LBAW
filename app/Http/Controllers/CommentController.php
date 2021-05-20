@@ -62,7 +62,7 @@ class CommentController extends Controller
                 'content.min' => 'Content is too short, max of 1000 characters'
             ]);
         if($validator->fails())
-                return "";
+            return response()->setStatusCode(400);
         if(Auth::check()){
             $post = Post::find($request->input('post_id'));
             if($post != null && Auth::user()->id != $post->user_id){
@@ -75,7 +75,7 @@ class CommentController extends Controller
                 return Comment::single_commentAsHtml($cid,Auth::user()->id);
             }
         }
-        return "";
+        return response()->json(['status' => "Error encountered when adding commment!"])->setStatusCode(400);
     }
 
     /**
@@ -196,7 +196,7 @@ class CommentController extends Controller
             'content.min' => 'Content is too short, max of 1000 characters'
         ]);
         if($validator->fails())
-            return "";
+            return response()->setStatusCode(400);
         if(Auth::check()){
             $comment = Comment::find($request->input('comment_id'));
             if($comment != null && Auth::user()->id == $request->input('user_id')){
@@ -209,7 +209,7 @@ class CommentController extends Controller
                 return Comment::single_commentAsHtml($cid,Auth::user()->id);
             }
         }
-        return "";
+        return response()->setStatusCode(400);
 
     }
 

@@ -9,8 +9,8 @@ function addListeners(){
                 element.parentNode.replaceChild(elementClone,element);
                 let parent = elementClone.parentNode;
                 let comment_id = parent.getElementsByClassName("thread_comment_id")[0].innerText;
-                let content = parent.parentNode.parentNode.getElementsByClassName("row px-0 mx-0")[0].
-                getElementsByClassName("d-flex mx-0 px-0")[0].getElementsByClassName("add-thread")[0];
+                let content = parent.parentNode.parentNode.getElementsByClassName("reply_textarea_container")[0].
+                getElementsByClassName("reply_textarea")[0].getElementsByClassName("add-thread")[0];
                 elementClone.addEventListener("click",function(e){
                     e.preventDefault();
                     addThread(comment_id,content);
@@ -30,33 +30,35 @@ function addThread(comment_id,content){
     request.open('post', getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id +"/add_comment", true);
     request.onload = function (){
         result = "";
-        if(request.responseText==""){
+        if(request.status==400){
             alert("Error adding comment");
             return;
         }
-        let containers = document.getElementsByClassName("comment-container");
-        //let tempK = request.responseText;
-        for(let i = 0;i<containers.length;i++){
-            let temp = containers[i];
-            let text = temp.getElementsByClassName("COMMENTID")[0].innerText;
-            if(text)
-                if(text == comment_id){
-                    let temp_threads = request.responseText;
-                    let cont = containers[i].getElementsByClassName("comment_thread_section")[0];
-                    temp_threads += cont.innerHTML;
-                    cont.innerHTML = temp_threads;
-                    break;
-                }
+        else if(request.status==200){
+            let containers = document.getElementsByClassName("comment-container");
+            //let tempK = request.responseText;
+            for(let i = 0;i<containers.length;i++){
+                let temp = containers[i];
+                let text = temp.getElementsByClassName("COMMENTID")[0].innerText;
+                if(text)
+                    if(text == comment_id){
+                        let temp_threads = request.responseText;
+                        let cont = containers[i].getElementsByClassName("comment_thread_section")[0];
+                        temp_threads += cont.innerHTML;
+                        cont.innerHTML = temp_threads;
+                        break;
+                    }
+            }
+            //document.getElementById("comment-section").innerHTML = request.responseText;
+            content.value = "";
+            updateThreadsNo(1,comment_id);
+            addListeners();
+            addDeleteCommentListeners();
+            addEditListeners();
+            addReportListeners();
+            updateSortedBy("Sort by");
+            openThreads(comment_id);
         }
-        //document.getElementById("comment-section").innerHTML = request.responseText;
-        content.value = "";
-        updateThreadsNo(1,comment_id);
-        addListeners();
-        addDeleteCommentListeners();
-        addEditListeners();
-        addReportListeners();
-        updateSortedBy("Sort by");
-        openThreads(comment_id);
         
     };
     if(content.value=="" || content.value.match("^\\s+$")){

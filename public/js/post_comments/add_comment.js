@@ -17,21 +17,23 @@ function addComment(){
     request.open('post', getUrl .protocol + "//" + getUrl.host + "/" + "api/post/" + id.innerText + "/add_comment", true);
     request.onload = function (){
         result = "";
-        if(request.responseText==""){
+        if(request.status==400){
             alert("Error adding comment");
             return;
         }
-        let temp = request.responseText;
-        temp+=document.getElementById("comment-section").innerHTML;
-        document.getElementById("comment-section").innerHTML = temp;
-        content.value = "";
-        addListeners();
-        addDeleteCommentListeners();
-        addEditListeners();
-        addShowThreadListeners();
-        updateSortedBy("Sort by");
-        updateCommentCount(1);
-        EmptyCommentsVisibility(true);
+        else if(request.status==200){
+            let temp = request.responseText;
+            temp+=document.getElementById("comment-section").innerHTML;
+            document.getElementById("comment-section").innerHTML = temp;
+            content.value = "";
+            addListeners();
+            addDeleteCommentListeners();
+            addEditListeners();
+            addShowThreadListeners();
+            updateSortedBy("Sort by");
+            updateCommentCount(1);
+            EmptyCommentsVisibility(true);
+        }
         
         
     };
