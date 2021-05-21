@@ -15,7 +15,7 @@ function addShowThreadListeners(){
 }
 
 function show_replies(element){
-    let parent = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("thread-section");
+    /*let parent = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("thread-section");
     let reply = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("thread-reply")[0];
     for(let j = 0;j<parent.length;j++){
             let temp = parent[j];
@@ -36,5 +36,23 @@ function show_replies(element){
         else{
             reply.setAttribute("hidden","");
             element.innerHTML = `<i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show`;
+        }*/
+        let aux = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        let temp = aux.getElementsByClassName("comment_thread_section")[0];
+        if(temp.classList.contains("d-none")){
+            temp.classList.remove("d-none");
+            element.innerHTML = `<i class="fas fa-chevron-down my-0" style="cursor:pointer;"></i>Hide`;
         }
+        else{
+            temp.classList.add("d-none");
+            element.innerHTML = `<i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show`;
+        }
+        let reply = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("thread-reply")[0];
+        if(reply.classList.contains("d-none")){
+            reply.classList.remove("d-none");
+        }
+        else{
+            reply.classList.add("d-none");
+        }
+    
 }

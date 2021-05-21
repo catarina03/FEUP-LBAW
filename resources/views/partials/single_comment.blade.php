@@ -58,13 +58,13 @@
                     </div>
                 </div>
             </div>
-            <span class="comment_thread_section">
+            <span class="comment_thread_section d-none" >
                 @foreach($comment->threads as $thread)
                     @include('partials.single_comment',["comment"=>$thread,'user_id'=>$user_id])
                 @endforeach
             </span>
             @auth
-            <div class="row justify-content-center px-4 mx-1 thread-reply" hidden>
+            <div class="row justify-content-center px-4 mx-1 thread-reply d-none">
                 <div class="col-10 mx-0 px-0">
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
@@ -90,7 +90,7 @@
             </span>
 @else
     <span class="thread-container">
-                    <div hidden class="row justify-content-center px-4 mx-1 thread-section">
+                    <div class="row justify-content-center px-4 mx-1 thread-section">
                         <div class="col-10 mx-0 px-0 comment_box">
                             <div class="row justify-content-end comment-replies mx-0 px-0">
                                 <div class="col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1">
