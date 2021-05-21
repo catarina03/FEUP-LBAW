@@ -120,7 +120,7 @@ class Comment extends Model
     }
 
     public static function commentsAsHtml($comments,$user_id){
-        $comments = Comment::checkReported($comments);
+        $comments = Comment::checkReported($comments,$user_id);
         return view("partials.comments",["user_id"=> $user_id,"comments"=> $comments]);
     }
 

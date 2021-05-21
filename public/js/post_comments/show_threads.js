@@ -41,11 +41,11 @@ function show_replies(element){
         let temp = aux.getElementsByClassName("comment_thread_section")[0];
         if(temp.classList.contains("d-none")){
             temp.classList.remove("d-none");
-            element.innerHTML = `<i class="fas fa-chevron-down my-0" style="cursor:pointer;"></i>Hide`;
+            element.innerHTML = `<i class="fas fa-chevron-down my-0" style="cursor:pointer;"></i>&nbspHide`;
         }
         else{
             temp.classList.add("d-none");
-            element.innerHTML = `<i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show`;
+            element.innerHTML = `<i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>&nbspShow`;
         }
         let reply = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("thread-reply")[0];
         if(reply.classList.contains("d-none")){

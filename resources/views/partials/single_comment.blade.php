@@ -49,7 +49,7 @@
                                     <h3 class="post-page-comment-interactions my-0">{{$comment->thread_count}} <i
                                             class="far fa-comments"></i></h3>
                                     <h3 class="post-page-comment-interactions my-0 px-3 show-hide-replies"> <i
-                                            class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show</h3>
+                                            class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>{!! "&nbsp;" !!}Show</h3>
 
 
                                 </div>
