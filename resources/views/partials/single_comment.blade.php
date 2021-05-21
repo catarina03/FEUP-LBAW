@@ -1,10 +1,10 @@
 @if(!($comment->comment_id==null?false:true))
     <span class="comment-container">
                 <div class="row justify-content-center px-4 mx-1">
-                <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2">
+                    <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2 comment_box">
                     <div class="row px-2 py-0">
-                        <div class="col-auto p-0 m-0">
-                            <h3 class="post-page-comment-body m-0">{!! nl2br(e($comment->content)) !!}</h3>
+                        <div class="col-11 p-0 m-0 d-flex comment_content_container align-items-end">
+                            <h3 class="post-page-comment-body m-0 comment_content">{!! nl2br(e($comment->content)) !!}</h3>
                         </div>
                         <div class="col-auto p-0 m-0 ms-auto">
                             <span class="comment_id COMMENTID" hidden>{{$comment->id}}</span>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                             <div class="row">
-                                <div class="d-flex">
+                                <div class="d-flex comment_interactions">
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment->likes}} <i
                                             title="Like comment" class="far fa-thumbs-up"></i></h3>
                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment->dislikes}} <i
@@ -91,12 +91,12 @@
 @else
     <span class="thread-container">
                     <div hidden class="row justify-content-center px-4 mx-1 thread-section">
-                        <div class="col-10 mx-0 px-0">
+                        <div class="col-10 mx-0 px-0 comment_box">
                             <div class="row justify-content-end comment-replies mx-0 px-0">
                                 <div class="col-11 post-page-comment-reply reply py-2 pt-2 pb-1 mt-1">
                                     <div class="row px-2 py-0">
-                                        <div class="col-auto p-0 m-0">
-                                            <h3 class="post-page-comment-reply-body m-0">{{$comment->content}}</h3>
+                                        <div class="col-11 p-0 m-0 d-flex comment_content_container align-items-end">
+                                            <h3 class="post-page-comment-reply-body m-0 comment_content">{{$comment->content}}</h3>
                                         </div>
                                         <div class="col-auto p-0 m-0 ms-auto">
                                             <span class="comment_id THREADID" hidden>{{$comment->id}}</span>
@@ -126,7 +126,7 @@
                                         </div>
                                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                                             <div class="row">
-                                                <div class="d-flex">
+                                                <div class="d-flex comment_interactions">
                                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment->likes}} <i
                                                             title="Like comment" class="far fa-thumbs-up"></i></h3>
                                                     <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment->dislikes}} <i

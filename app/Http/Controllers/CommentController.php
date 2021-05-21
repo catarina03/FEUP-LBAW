@@ -147,7 +147,7 @@ class CommentController extends Controller
         ]);
         
         if($validator->fails())
-            return "";
+            return response()->setStatusCode(400);
         
         if(Auth::check()){
             $comment = Comment::find($comment_id);
@@ -155,11 +155,11 @@ class CommentController extends Controller
             if($comment!=null && Auth::user()->id == $comment->user_id){
                 $comment->content = $request['content'];
                 if($comment->save())
-                    return json_encode(Comment::getCommentInfo($comment_id));
-                return "";
+                    return response()->json(["comment_view" => Comment::single_commentAsHtml($comment_id,Auth::user()->id)->render(),"isThread"=>$comment->comment_id!=null])->setStatusCode(200);
+                return response()->setStatusCode(400);
             }
         }
-        return ""; 
+        return response()->setStatusCode(400); 
     }
 
 
