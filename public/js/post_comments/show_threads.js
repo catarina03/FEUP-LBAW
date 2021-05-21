@@ -37,7 +37,8 @@ function show_replies(element){
             reply.setAttribute("hidden","");
             element.innerHTML = `<i class="fas fa-chevron-right my-0" style="cursor:pointer;"></i>Show`;
         }*/
-        let aux = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        let aux = element.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+        console.log(aux);
         let temp = aux.getElementsByClassName("comment_thread_section")[0];
         if(temp.classList.contains("d-none")){
             temp.classList.remove("d-none");
