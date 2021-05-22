@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -25,7 +27,7 @@ class ReportController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -36,18 +38,24 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Report  $report
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Report $report)
     {
-        //
+        if(!Auth::check() || (Auth::check() && !Auth::user()->isAdmin())) {
+            return view('pages.nopermission', ['needsFilter'=>0]);
+        }
+
+
+        $reports = DB::table("report")->paginate(25);
+        return view('pages.moderator_dashboard', ['needsFilter'=> 0, 'reports' => $reports]);
     }
 
     /**
