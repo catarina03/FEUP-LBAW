@@ -73,165 +73,165 @@ CREATE TYPE frequency_types AS ENUM ('Rarely', 'Often', 'Very Often');
 CREATE TYPE notification_types AS ENUM ('publish', 'follow', 'vote', 'comment', 'report');
 
 CREATE TABLE tag(
-    id SERIAL PRIMARY KEY,
-    name text UNIQUE NOT NULL
+                    id SERIAL PRIMARY KEY,
+                    name text UNIQUE NOT NULL
 );
 
 CREATE TABLE authenticated_user (
-    id SERIAL PRIMARY KEY,
-    username text UNIQUE NOT NULL,
-    name text NOT NULL,
-    email text UNIQUE NOT NULL ,
-    password text NOT NULL,
-    birthdate DATE NOT NULL,
-    bio TEXT NOT NULL DEFAULT 'Welcome to my profile',
-    instagram text,
-    twitter text,
-    facebook text,
-    linkedin text,
-    show_people_i_follow boolean DEFAULT FALSE NOT NULL,
-    show_tags_i_follow boolean DEFAULT FALSE NOT NULL,
-    authenticated_user_type user_types NOT NULL DEFAULT 'Regular',
-    profile_photo text default 'default.png',
-    CONSTRAINT min_age CHECK (birthdate <= (CURRENT_DATE - interval '13' year ))
+                                    id SERIAL PRIMARY KEY,
+                                    username text UNIQUE NOT NULL,
+                                    name text NOT NULL,
+                                    email text UNIQUE NOT NULL ,
+                                    password text NOT NULL,
+                                    birthdate DATE NOT NULL,
+                                    bio TEXT NOT NULL DEFAULT 'Welcome to my profile',
+                                    instagram text,
+                                    twitter text,
+                                    facebook text,
+                                    linkedin text,
+                                    show_people_i_follow boolean DEFAULT FALSE NOT NULL,
+                                    show_tags_i_follow boolean DEFAULT FALSE NOT NULL,
+                                    authenticated_user_type user_types NOT NULL DEFAULT 'Regular',
+                                    profile_photo text default 'default.png',
+                                    CONSTRAINT min_age CHECK (birthdate <= (CURRENT_DATE - interval '13' year ))
 );
 
 CREATE TABLE post(
-    id SERIAL PRIMARY KEY,
-    title text NOT NULL,
-    thumbnail text NOT NULL,
-    content text NOT NULL,
-    is_spoiler boolean DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP DEFAULT NOW(),
-    n_views integer NOT NULL DEFAULT 0,
-    type post_types NOT NULL,
-    category category_types NOT NULL,
-    user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    search TSVECTOR
+                     id SERIAL PRIMARY KEY,
+                     title text NOT NULL,
+                     thumbnail text NOT NULL,
+                     content text NOT NULL,
+                     is_spoiler boolean DEFAULT FALSE,
+                     created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+                     updated_at TIMESTAMP DEFAULT NOW(),
+                     n_views integer NOT NULL DEFAULT 0,
+                     type post_types NOT NULL,
+                     category category_types NOT NULL,
+                     user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                     search TSVECTOR
 );
 
 CREATE TABLE photo(
-    id SERIAL PRIMARY KEY,
-    photo text NOT NULL,
-    post_id integer NOT NULL REFERENCES post(id) ON DELETE CASCADE
+                      id SERIAL PRIMARY KEY,
+                      photo text NOT NULL,
+                      post_id integer NOT NULL REFERENCES post(id) ON DELETE CASCADE
 );
 
 CREATE TABLE post_tag(
-    post_id integer REFERENCES post(id) ON DELETE CASCADE,
-    tag_id integer REFERENCES tag(id) ON DELETE CASCADE,
-    CONSTRAINT pk_post_tag PRIMARY KEY (post_id, tag_id)
+                         post_id integer REFERENCES post(id) ON DELETE CASCADE,
+                         tag_id integer REFERENCES tag(id) ON DELETE CASCADE,
+                         CONSTRAINT pk_post_tag PRIMARY KEY (post_id, tag_id)
 );
 
 CREATE TABLE "comment"(
-    id SERIAL PRIMARY KEY,
-    content text NOT NULL,
-    user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    comment_date TIMESTAMP DEFAULT NOW() NOT NULL,
-    post_id integer REFERENCES post(id) ON DELETE CASCADE,
-    comment_id integer REFERENCES "comment"(id) ON DELETE CASCADE,
-    CHECK ((post_id is not null and comment_id is null) or (comment_id is not null and post_id is null))
+                          id SERIAL PRIMARY KEY,
+                          content text NOT NULL,
+                          user_id integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                          comment_date TIMESTAMP DEFAULT NOW() NOT NULL,
+                          post_id integer REFERENCES post(id) ON DELETE CASCADE,
+                          comment_id integer REFERENCES "comment"(id) ON DELETE CASCADE,
+                          CHECK ((post_id is not null and comment_id is null) or (comment_id is not null and post_id is null))
 );
 
 
 CREATE TABLE saves(
-    user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    post_id integer REFERENCES post(id) ON DELETE CASCADE,
-    CONSTRAINT pk_save_post PRIMARY KEY (user_id, post_id)
+                      user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                      post_id integer REFERENCES post(id) ON DELETE CASCADE,
+                      CONSTRAINT pk_save_post PRIMARY KEY (user_id, post_id)
 );
 
 CREATE TABLE support(
-    id SERIAL PRIMARY KEY,
-    problem text NOT NULL,
-    browser text NOT NULL,
-    frequency frequency_types NOT NULL,
-    impact integer NOT NULL CHECK (impact > 0 AND impact < 6),
-    email text UNIQUE NOT NULL
+                        id SERIAL PRIMARY KEY,
+                        problem text NOT NULL,
+                        browser text NOT NULL,
+                        frequency frequency_types NOT NULL,
+                        impact integer NOT NULL CHECK (impact > 0 AND impact < 6),
+                        email text UNIQUE NOT NULL
 );
 
 CREATE TABLE faq(
-    id SERIAL PRIMARY KEY,
-    question text NOT NULL,
-    answer text NOT NULL
+                    id SERIAL PRIMARY KEY,
+                    question text NOT NULL,
+                    answer text NOT NULL
 );
 
 CREATE TABLE follow_tag (
-    user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    tag_id integer REFERENCES tag(id) ON DELETE CASCADE,
-    CONSTRAINT pk_user_tag PRIMARY KEY (user_id, tag_id)
+                            user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                            tag_id integer REFERENCES tag(id) ON DELETE CASCADE,
+                            CONSTRAINT pk_user_tag PRIMARY KEY (user_id, tag_id)
 );
 
 CREATE TABLE vote_post (
-    user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    post_id integer REFERENCES post(id) ON DELETE CASCADE,
-    "like" boolean NOT NULL,
-    CONSTRAINT pk_user_post PRIMARY KEY (user_id, post_id)
+                           user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                           post_id integer REFERENCES post(id) ON DELETE CASCADE,
+                           "like" boolean NOT NULL,
+                           CONSTRAINT pk_user_post PRIMARY KEY (user_id, post_id)
 );
 
 CREATE TABLE vote_comment (
-    user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    comment_id integer REFERENCES "comment"(id) ON DELETE CASCADE,
-    "like" boolean NOT NULL,
-    CONSTRAINT pk_vote_comment PRIMARY KEY (user_id, comment_id)
+                              user_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                              comment_id integer REFERENCES "comment"(id) ON DELETE CASCADE,
+                              "like" boolean NOT NULL,
+                              CONSTRAINT pk_vote_comment PRIMARY KEY (user_id, comment_id)
 );
 
 CREATE TABLE block_user(
-    blocking_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    blocked_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    CONSTRAINT pk_blocking_blocked PRIMARY KEY (blocking_user, blocked_user),
-    CHECK (blocking_user  IS DISTINCT FROM blocked_user)
-);
+                           blocking_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                           blocked_user integer REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                           CONSTRAINT pk_blocking_blocked PRIMARY KEY (blocking_user, blocked_user),
+                           CHECK (blocking_user  IS DISTINCT FROM blocked_user)
+    );
 
 CREATE TABLE follow_user(
-    following_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    followed_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    CONSTRAINT pk_following_followed PRIMARY KEY (following_user, followed_user),
-    CHECK (following_user IS DISTINCT FROM followed_user)
-);
+                            following_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                            followed_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                            CONSTRAINT pk_following_followed PRIMARY KEY (following_user, followed_user),
+                            CHECK (following_user IS DISTINCT FROM followed_user)
+    );
 
 CREATE TABLE report(
-    id SERIAL PRIMARY KEY,
-    reported_date DATE NOT NULL DEFAULT NOW(),
-    accepted BOOLEAN,
-    closed_date DATE,
-    motive report_motives NOT NULL,
-    user_reporting integer REFERENCES authenticated_user(id),
-    user_assigned integer REFERENCES authenticated_user(id),
-    comment_reported integer REFERENCES "comment"(id) ON DELETE CASCADE,
-    post_reported integer  REFERENCES post(id) ON DELETE CASCADE,
-    CHECK(user_reporting IS DISTINCT FROM user_assigned),
+                       id SERIAL PRIMARY KEY,
+                       reported_date DATE NOT NULL DEFAULT NOW(),
+                       accepted BOOLEAN,
+                       closed_date DATE,
+                       motive report_motives NOT NULL,
+                       user_reporting integer REFERENCES authenticated_user(id),
+                       user_assigned integer REFERENCES authenticated_user(id),
+                       comment_reported integer REFERENCES "comment"(id) ON DELETE CASCADE,
+                       post_reported integer  REFERENCES post(id) ON DELETE CASCADE,
+                       CHECK(user_reporting IS DISTINCT FROM user_assigned),
     CHECK((comment_reported IS NULL AND post_reported IS NOT NULL) OR (comment_reported IS NOT NULL AND post_reported IS NULL)),
     CHECK(reported_date < closed_date)
 );
 
 CREATE TABLE notification(
-    id SERIAL PRIMARY KEY,
-    created_date TIMESTAMP DEFAULT NOW() NOT NULL,
-    notificated_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
-    read BOOLEAN DEFAULT FALSE NOT NULL,
-    type notification_types NOT NULL,
-    post_id integer REFERENCES post(id) ON DELETE CASCADE, --> publish notification
-    follower_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE, --> follow notification
-    comment_id integer REFERENCES "comment"(id) ON DELETE CASCADE, --> comment notification
-    voted_comment integer, --> vote comment notification
-    voted_post integer, --> vote post notification
-    voted_user integer, --> vote notification
-    CONSTRAINT pk_vote_post_not FOREIGN KEY (voted_user, voted_post) REFERENCES vote_post(user_id, post_id) ON DELETE CASCADE, --> vote post notification
-    CONSTRAINT pk_vote_comment_not FOREIGN KEY (voted_user, voted_comment) REFERENCES vote_comment(user_id, comment_id) ON DELETE CASCADE, --> vote comment notification
-    report_id integer REFERENCES report(id) ON DELETE CASCADE, --> report notification
-    CHECK(
-        (type = 'publish' AND post_id is not null AND follower_id is null AND comment_id is null AND voted_comment is null AND voted_post is null AND voted_user is null AND report_id is null) --> publish notification
-        OR
-        (type = 'follow' AND post_id is null AND follower_id is not null AND comment_id is null AND voted_comment is null AND voted_post is null AND voted_user is null AND report_id is null) --> follow notification
-        OR
-        (type = 'vote' AND post_id is null AND follower_id is null AND comment_id is null AND voted_comment is not null AND voted_post is null AND voted_user is not null AND report_id is null) --> vote comment notification
-        OR
-        (type = 'vote' AND post_id is null AND follower_id is null AND comment_id is null AND voted_comment is null AND voted_post is not null AND voted_user is not null AND report_id is null) --> vote post notification
-        OR
-        (type = 'comment' AND post_id is null AND follower_id is null AND comment_id is not null AND voted_comment is null AND voted_post is null AND voted_user is null AND report_id is null) --> comment notification
-        OR
-        (type = 'report' AND post_id is null AND follower_id is null AND comment_id is null AND voted_comment is null AND voted_post is null AND voted_user is null AND report_id is not null) --> report notification
-    )
+                             id SERIAL PRIMARY KEY,
+                             created_date TIMESTAMP DEFAULT NOW() NOT NULL,
+                             notificated_user integer NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE,
+                             read BOOLEAN DEFAULT FALSE NOT NULL,
+                             type notification_types NOT NULL,
+                             post_id integer REFERENCES post(id) ON DELETE CASCADE, --> publish notification
+                             follower_id integer REFERENCES authenticated_user(id) ON DELETE CASCADE, --> follow notification
+                             comment_id integer REFERENCES "comment"(id) ON DELETE CASCADE, --> comment notification
+                             voted_comment integer, --> vote comment notification
+                             voted_post integer, --> vote post notification
+                             voted_user integer, --> vote notification
+                             CONSTRAINT pk_vote_post_not FOREIGN KEY (voted_user, voted_post) REFERENCES vote_post(user_id, post_id) ON DELETE CASCADE, --> vote post notification
+                             CONSTRAINT pk_vote_comment_not FOREIGN KEY (voted_user, voted_comment) REFERENCES vote_comment(user_id, comment_id) ON DELETE CASCADE, --> vote comment notification
+                             report_id integer REFERENCES report(id) ON DELETE CASCADE, --> report notification
+                             CHECK(
+                                     (type = 'publish' AND post_id is not null AND follower_id is null AND comment_id is null AND voted_comment is null AND voted_post is null AND voted_user is null AND report_id is null) --> publish notification
+                                     OR
+                                     (type = 'follow' AND post_id is null AND follower_id is not null AND comment_id is null AND voted_comment is null AND voted_post is null AND voted_user is null AND report_id is null) --> follow notification
+                                     OR
+                                     (type = 'vote' AND post_id is null AND follower_id is null AND comment_id is null AND voted_comment is not null AND voted_post is null AND voted_user is not null AND report_id is null) --> vote comment notification
+                                     OR
+                                     (type = 'vote' AND post_id is null AND follower_id is null AND comment_id is null AND voted_comment is null AND voted_post is not null AND voted_user is not null AND report_id is null) --> vote post notification
+                                     OR
+                                     (type = 'comment' AND post_id is null AND follower_id is null AND comment_id is not null AND voted_comment is null AND voted_post is null AND voted_user is null AND report_id is null) --> comment notification
+                                     OR
+                                     (type = 'report' AND post_id is null AND follower_id is null AND comment_id is null AND voted_comment is null AND voted_post is null AND voted_user is null AND report_id is not null) --> report notification
+                                 )
 
 );
 
@@ -250,28 +250,28 @@ CREATE INDEX search_post ON post USING GIN(
 
 -- BLOCK USER
 CREATE FUNCTION block_user() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
-	DELETE
-	FROM follow_user
-	WHERE NEW.blocked_user = following_user AND NEW.blocking_user = followed_user
-    OR NEW.blocking_user = following_user AND NEW.blocked_user = followed_user;
+DELETE
+FROM follow_user
+WHERE NEW.blocked_user = following_user AND NEW.blocking_user = followed_user
+   OR NEW.blocking_user = following_user AND NEW.blocked_user = followed_user;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER block_user
-	AFTER INSERT ON block_user
-	FOR EACH ROW
-	EXECUTE PROCEDURE block_user();
+    AFTER INSERT ON block_user
+    FOR EACH ROW
+    EXECUTE PROCEDURE block_user();
 
 
 
 -- CHECK VOTE POST AUTHOR
 CREATE FUNCTION check_vote_post() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
     IF EXISTS (
 		    SELECT *
@@ -280,9 +280,9 @@ BEGIN
         )
 		THEN
 			RAISE EXCEPTION 'The author of a post cant like/dislike their own post.';
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
@@ -296,7 +296,7 @@ CREATE TRIGGER check_vote_post
 
 -- CHECK VOTE COMMENT AUTHOR
 CREATE FUNCTION check_vote_comment() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
    IF EXISTS (
             SELECT *
@@ -305,9 +305,9 @@ BEGIN
         )
 		THEN
 			RAISE EXCEPTION 'The author of a comment cant like/dislike their own comment.';
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
@@ -321,7 +321,7 @@ CREATE TRIGGER check_vote_comment
 
 -- CHECK COMMENT AUTHOR
 CREATE FUNCTION check_post_comment_author() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
    IF EXISTS (
             SELECT NEW.id
@@ -330,9 +330,9 @@ BEGIN
         )
 		THEN
 			RAISE EXCEPTION 'The author cannot comment on their own post.';
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
@@ -346,7 +346,7 @@ CREATE TRIGGER check_post_comment_author
 
 -- CHECK COMMENT DATE
 CREATE FUNCTION check_comment_date() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
    IF EXISTS (
             SELECT *
@@ -356,23 +356,23 @@ BEGIN
         )
 	    THEN
 		   RAISE EXCEPTION 'The comment has to be made more recently than the post.';
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER check_comment_date
-   AFTER INSERT ON comment
-   FOR EACH ROW
-   EXECUTE PROCEDURE check_comment_date();
+    AFTER INSERT ON comment
+    FOR EACH ROW
+    EXECUTE PROCEDURE check_comment_date();
 
 
 
 -- CHECK THREAD COMMENT DATE
 CREATE FUNCTION check_thread_comment_date() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
    IF EXISTS (
 		SELECT *
@@ -381,9 +381,9 @@ BEGIN
         )
 		THEN
 			RAISE EXCEPTION 'The thread comment % has to be made more recently than the main comment % .', NEW.id, NEW.comment_id;
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
@@ -397,7 +397,7 @@ CREATE TRIGGER check_thread_comment_date
 
 -- CHECK THERE ARE ONLY 2 LEVELS OF COMMENTS
 CREATE FUNCTION check_thread_comment() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
     IF EXISTS (
             SELECT *
@@ -406,9 +406,9 @@ BEGIN
         )
 		THEN
 			RAISE EXCEPTION 'Comments can only have 2 levels.';
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
@@ -422,7 +422,7 @@ CREATE TRIGGER check_thread_comment
 
 -- CHECK POST REPORT AUTHOR
 CREATE FUNCTION check_post_report_author() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
     IF NEW.post_reported IS NOT NULL AND EXISTS (
         SELECT *
@@ -431,23 +431,23 @@ BEGIN
         )
 		THEN
 			RAISE EXCEPTION 'An authenticated user cannot report their own post.';
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER check_post_report_author
-   AFTER INSERT ON report
-   FOR EACH ROW
-   EXECUTE PROCEDURE check_post_report_author();
+    AFTER INSERT ON report
+    FOR EACH ROW
+    EXECUTE PROCEDURE check_post_report_author();
 
 
 
 -- CHECK COMMENT REPORT AUTHOR
 CREATE FUNCTION check_comment_report_author() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
     IF NEW.comment_reported IS NOT NULL AND EXISTS (
             SELECT *
@@ -456,23 +456,23 @@ BEGIN
         )
         THEN
             RAISE EXCEPTION 'An authenticated user cannot report their own comment.';
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER check_comment_report_author
-   AFTER INSERT ON report
-   FOR EACH ROW
-   EXECUTE PROCEDURE check_comment_report_author();
+    AFTER INSERT ON report
+    FOR EACH ROW
+    EXECUTE PROCEDURE check_comment_report_author();
 
 
 
 -- CHECK POST REPORT ASSIGNMENT
 CREATE FUNCTION check_post_report_assignment() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
     IF NEW.post_reported IS NOT NULL AND EXISTS (
             SELECT *
@@ -481,23 +481,23 @@ BEGIN
         )
         THEN
             RAISE EXCEPTION 'A moderator/system manager cannot be assigned to their own post.';
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER check_post_report_assignment
-   AFTER INSERT ON report
-   FOR EACH ROW
-   EXECUTE PROCEDURE check_post_report_assignment();
+    AFTER INSERT ON report
+    FOR EACH ROW
+    EXECUTE PROCEDURE check_post_report_assignment();
 
 
 
 -- CHECK COMMENT REPORT ASSIGNMENT
 CREATE FUNCTION check_comment_report_assignment() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
     IF NEW.comment_reported IS NOT NULL AND EXISTS (
             SELECT *
@@ -507,227 +507,227 @@ BEGIN
         )
         THEN
             RAISE EXCEPTION 'A moderator/system manager cannot be assigned to their own comment.';
-	END IF;
+END IF;
 
-	RETURN NEW;
+RETURN NEW;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER check_comment_report_assignment
-   AFTER INSERT ON report
-   FOR EACH ROW
-   EXECUTE PROCEDURE check_comment_report_assignment();
+    AFTER INSERT ON report
+    FOR EACH ROW
+    EXECUTE PROCEDURE check_comment_report_assignment();
 
 
 
 -- GENERATES FOLLOW NOTIFICATION
 CREATE FUNCTION generate_follow_notification() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 BEGIN
-   INSERT INTO notification (notificated_user, type, follower_id)
-   VALUES (NEW.followed_user, 'follow', NEW.following_user);
+INSERT INTO notification (notificated_user, type, follower_id)
+VALUES (NEW.followed_user, 'follow', NEW.following_user);
 
-   RETURN NULL;
+RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER generate_follow_notification
-   AFTER INSERT ON follow_user
-   FOR EACH ROW
-   EXECUTE PROCEDURE generate_follow_notification();
+    AFTER INSERT ON follow_user
+    FOR EACH ROW
+    EXECUTE PROCEDURE generate_follow_notification();
 
 
 
 -- GENERATE VOTE POST NOTIFICATION
 CREATE FUNCTION generate_vote_post_notification() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 declare
-   notification_receiver_id integer;
+notification_receiver_id integer;
 BEGIN
     IF NEW.like = true THEN
-        SELECT user_id INTO notification_receiver_id
-        FROM post
-        WHERE NEW.post_id = post.id;
+SELECT user_id INTO notification_receiver_id
+FROM post
+WHERE NEW.post_id = post.id;
 
-        INSERT INTO notification (notificated_user, type, voted_post, voted_user)
-        VALUES (notification_receiver_id, 'vote', NEW.post_id, NEW.user_id);
-    END IF;
+INSERT INTO notification (notificated_user, type, voted_post, voted_user)
+VALUES (notification_receiver_id, 'vote', NEW.post_id, NEW.user_id);
+END IF;
 
-	RETURN NULL;
+RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER generate_vote_post_notification
-   AFTER INSERT ON vote_post
-   FOR EACH ROW
-   EXECUTE PROCEDURE generate_vote_post_notification();
+    AFTER INSERT ON vote_post
+    FOR EACH ROW
+    EXECUTE PROCEDURE generate_vote_post_notification();
 
 
 
 -- GENERATES VOTE COMMENT NOTIFICATION
 CREATE FUNCTION generate_vote_comment_notification() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 declare
-   notification_receiver_id integer;
+notification_receiver_id integer;
 BEGIN
     IF NEW.like = true THEN
-        SELECT user_id INTO notification_receiver_id
-        FROM comment
-        WHERE NEW.comment_id = comment.id;
+SELECT user_id INTO notification_receiver_id
+FROM comment
+WHERE NEW.comment_id = comment.id;
 
-        INSERT INTO notification (notificated_user, type, voted_comment, voted_user)
-        VALUES (notification_receiver_id, 'vote', NEW.comment_id, NEW.user_id);
-    END IF;
+INSERT INTO notification (notificated_user, type, voted_comment, voted_user)
+VALUES (notification_receiver_id, 'vote', NEW.comment_id, NEW.user_id);
+END IF;
 
-	RETURN NULL;
+RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER generate_vote_comment_notification
-   AFTER INSERT ON vote_comment
-   FOR EACH ROW
-   EXECUTE PROCEDURE generate_vote_comment_notification();
+    AFTER INSERT ON vote_comment
+    FOR EACH ROW
+    EXECUTE PROCEDURE generate_vote_comment_notification();
 
 
 
 -- GENERATES REPORT NOTIFICATION
 CREATE FUNCTION generate_report_notification() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 declare
-   notification_user_id integer;
+notification_user_id integer;
 BEGIN
     IF New.post_reported IS NOT NULL THEN
-        SELECT post.user_id INTO notification_user_id
-        FROM post
-        WHERE new.post_reported = post.id;
+SELECT post.user_id INTO notification_user_id
+FROM post
+WHERE new.post_reported = post.id;
 
-        INSERT INTO notification (notificated_user, type, report_id)
-        VALUES (notification_user_id, 'report', NEW.id);
-    END IF;
+INSERT INTO notification (notificated_user, type, report_id)
+VALUES (notification_user_id, 'report', NEW.id);
+END IF;
 
     IF New.comment_reported IS NOT NULL THEN
-        SELECT comment.user_id INTO notification_user_id
-        FROM comment
-        WHERE new.comment_reported = comment.id;
+SELECT comment.user_id INTO notification_user_id
+FROM comment
+WHERE new.comment_reported = comment.id;
 
-        INSERT INTO notification (notificated_user, type, report_id)
-        VALUES (notification_user_id, 'report', NEW.id);
-    END IF;
+INSERT INTO notification (notificated_user, type, report_id)
+VALUES (notification_user_id, 'report', NEW.id);
+END IF;
 
-	RETURN NULL;
+RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER generate_report_notification
-   AFTER INSERT ON report
-   FOR EACH ROW
-   EXECUTE PROCEDURE generate_report_notification();
+    AFTER INSERT ON report
+    FOR EACH ROW
+    EXECUTE PROCEDURE generate_report_notification();
 
 
 
 -- GENERATES COMMENT COMMENT NOTIFICATION
 CREATE FUNCTION generate_comment_notification() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 declare
-   notification_user_id integer;
+notification_user_id integer;
 BEGIN
     IF New.comment_id IS NULL THEN
-        SELECT post.user_id INTO notification_user_id
-        FROM "comment" INNER JOIN post
-        ON "comment".post_id = post.id
-        WHERE post.id = NEW.post_id;
+SELECT post.user_id INTO notification_user_id
+FROM "comment" INNER JOIN post
+                          ON "comment".post_id = post.id
+WHERE post.id = NEW.post_id;
 
-        INSERT INTO notification (notificated_user, type, comment_id)
-        VALUES (notification_user_id, 'comment', NEW.id);
-    END IF;
+INSERT INTO notification (notificated_user, type, comment_id)
+VALUES (notification_user_id, 'comment', NEW.id);
+END IF;
 
-	RETURN NULL;
+RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER generate_comment_notification
-   AFTER INSERT ON "comment"
-   FOR EACH ROW
-   EXECUTE PROCEDURE generate_comment_notification();
+    AFTER INSERT ON "comment"
+    FOR EACH ROW
+    EXECUTE PROCEDURE generate_comment_notification();
 
 
 
 -- GENERATES THREAD COMMENT NOTIFICATION
 CREATE FUNCTION generate_thread_comment_notification() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 declare
-   notification_user_id integer;
+notification_user_id integer;
 BEGIN
     IF New.comment_id IS NOT NULL THEN
-        SELECT comment.user_id INTO notification_user_id
-        FROM comment
-        WHERE NEW.comment_id = comment.id;
+SELECT comment.user_id INTO notification_user_id
+FROM comment
+WHERE NEW.comment_id = comment.id;
 
-        INSERT INTO notification (notificated_user, type, comment_id)
-        VALUES (notification_user_id, 'comment', NEW.id);
-    END IF;
+INSERT INTO notification (notificated_user, type, comment_id)
+VALUES (notification_user_id, 'comment', NEW.id);
+END IF;
 
-	RETURN NULL;
+RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER generate_thread_comment_notification
-   AFTER INSERT ON "comment"
-   FOR EACH ROW
-   EXECUTE PROCEDURE generate_thread_comment_notification();
+    AFTER INSERT ON "comment"
+    FOR EACH ROW
+    EXECUTE PROCEDURE generate_thread_comment_notification();
 
 
 
 -- GENERATES PUBLISH NOTIFICATION
 CREATE FUNCTION generate_publish_notification() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 declare
-   to_notify record;
+to_notify record;
 BEGIN
-    for to_notify IN
-        SELECT following_user AS user_to_notify
-        FROM follow_user
-        WHERE new.user_id = follow_user.followed_user
-        loop
-            INSERT INTO notification (notificated_user, type, post_id)
-        VALUES (to_notify.user_to_notify, 'publish', NEW.id);
-	end loop;
+for to_notify IN
+SELECT following_user AS user_to_notify
+FROM follow_user
+WHERE new.user_id = follow_user.followed_user
+    loop
+INSERT INTO notification (notificated_user, type, post_id)
+VALUES (to_notify.user_to_notify, 'publish', NEW.id);
+end loop;
 
-	RETURN NULL;
+RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER generate_publish_notification
-   AFTER INSERT ON post
-   FOR EACH ROW
-   EXECUTE PROCEDURE generate_publish_notification();
+    AFTER INSERT ON post
+    FOR EACH ROW
+    EXECUTE PROCEDURE generate_publish_notification();
 
 
 
 -- CHECKS IF TAG IS USED, IF NOT DELETES IT
 CREATE FUNCTION delete_unused_tag() RETURNS TRIGGER AS
-$BODY$
+    $BODY$
 DECLARE
-    post_tag_count integer;
+post_tag_count integer;
 BEGIN
-    SELECT COUNT(*) INTO post_tag_count
-    FROM tag INNER JOIN post_tag ON tag.id = post_tag.tag_id
-    WHERE OLD.tag_id = tag.id;
+SELECT COUNT(*) INTO post_tag_count
+FROM tag INNER JOIN post_tag ON tag.id = post_tag.tag_id
+WHERE OLD.tag_id = tag.id;
 
-    IF (post_tag_count = 0) THEN
-        DELETE FROM tag
-        WHERE tag.id = OLD.tag_id;
-    END IF;
+IF (post_tag_count = 0) THEN
+DELETE FROM tag
+WHERE tag.id = OLD.tag_id;
+END IF;
 
-    RETURN NULL;
+RETURN NULL;
 END
 $BODY$
 LANGUAGE plpgsql;
@@ -745,18 +745,18 @@ BEGIN
         NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));-- || setweight(to_tsvector('english', (SELECT STRING_AGG(name, ' ')FROM tag JOIN post_tag ON tag.id = post_tag.tag_id WHERE  post_id = New.id)), 'D'));
     ELSEIF TG_OP = 'UPDATE' AND (New.title <> OLD.title OR NEW.content <> OLD.content) THEN
         NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));
-    END IF;
-    RETURN NEW;
+END IF;
+RETURN NEW;
 END;
 $BODY$
-    LANGUAGE 'plpgsql';
+LANGUAGE 'plpgsql';
 
 CREATE TRIGGER post_search
     BEFORE INSERT OR UPDATE ON post
-    FOR EACH ROW
-    EXECUTE PROCEDURE post_search();
+                         FOR EACH ROW
+                         EXECUTE PROCEDURE post_search();
 
-    --TAG
+--TAG
 insert into tag (name) values ('uniform');
 insert into tag (name) values ('Realigned');
 insert into tag (name) values ('Robust');
@@ -860,106 +860,106 @@ insert into tag (name) values ('Persistent');
 
 
 --USER
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('vpaulazzi0', 'Veronike', 'vcowburn0@virginia.edu','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/19/1990', 'Hello!', null, 'twitter.com/vpaulazzi0', null, null, true, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ssmoote1', 'Stevana', 'sfrean1@mail.ru','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/11/1988', 'Hello!', 'www.instagram.com/ssmoote1/', null, 'www.facebook.com/ssmoote1', null, true, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('abaldi2', 'Alene', 'alequeux2@zdnet.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/7/1988', 'Welcome to my profile', null, null, null, null, true, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('scleator3', 'Say', 'shutchason3@soup.io','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '7/28/1980', 'Welcome to my profile', null, 'twitter.com/scleator3', null, null, false, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dhastilow4', 'Dulcinea', 'dfalkner4@ucla.edu','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/10/2003', 'Hello!', 'www.instagram.com/dhastilow4/', null, 'www.facebook.com/dhastilow4', null, false, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('uregglar5', 'Upton', 'ulearmonth5@senate.gov','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/31/1988', 'Welcome to my profile', null, 'twitter.com/uregglar5', null, null, true, true, 'System Manager', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dmcfadin6', 'Dianemarie', 'dspiers6@npr.org','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/25/1982', 'Hello!', 'www.instagram.com/dmcfadin6/', null, 'www.facebook.com/dmcfadin6', null, false, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gfarnie7', 'Gipsy', 'gdavie7@google.nl','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/21/1998', 'Hello!', null, 'twitter.com/gfarnie7', null, null, true, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kmackimm8', 'Katrine', 'kdimmer8@usda.gov','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/6/2004', 'Welcome to my profile', null, 'twitter.com/kmackimm8', null, null, false, true, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('njennions9', 'Noni', 'nmcquaid9@dagondesign.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/28/1985', 'Hello!', null, null, null, null, true, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rsigharda', 'Risa', 'rchatfielda@1und1.de','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/23/2001', 'Welcome to my profile', 'www.instagram.com/rsigharda/', null, 'www.facebook.com/rsigharda', null, false, true, 'Moderator', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('bhandrickb', 'Bondy', 'bmussettib@unicef.org','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '8/18/2006', 'Hello!', 'www.instagram.com/bhandrickb/', null, 'www.facebook.com/bhandrickb', null, false, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('thehnkec', 'Tabbie', 'trossonic@imageshack.us','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '8/1/1987', 'Welcome to my profile', 'www.instagram.com/thehnkec/', 'twitter.com/thehnkec', 'www.facebook.com/thehnkec', null, true, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ddonnelland', 'Davy', 'dplettsd@paginegialle.it','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '2/3/1985', 'Hello!', 'www.instagram.com/ddonnelland/', 'twitter.com/ddonnelland', 'www.facebook.com/ddonnelland', null, true, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('styrere', 'Steffie', 'seydene@answers.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/6/1983', 'Hello!', null, 'twitter.com/styrere', null, null, false, false, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ddomeneyf', 'Davey', 'dmullearyf@paginegialle.it','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/26/1992', 'Hello!', null, 'twitter.com/ddomeneyf', null, null, false, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('nellicombeg', 'Noell', 'nbrogiottig@twitpic.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/31/1985', 'Hello!', null, null, null, null, false, true, 'System Manager', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kturlh', 'Kristos', 'kbercerosh@geocities.jp','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/12/1987', 'Welcome to my profile', 'www.instagram.com/kturlh/', 'twitter.com/kturlh', 'www.facebook.com/kturlh', null, true, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ckimberi', 'Codi', 'cmccasteri@ustream.tv','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/19/2000', 'Hello!', 'www.instagram.com/ckimberi/', 'twitter.com/ckimberi', 'www.facebook.com/ckimberi', null, false, true, 'Moderator', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gbloxholmj', 'Ganny', 'gmcguckenj@youku.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/20/2003', 'Welcome to my profile', null, 'twitter.com/gbloxholmj', null, null, false, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gdirobertok', 'Gavra', 'ghanleyk@yahoo.co.jp','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/11/1988', 'Welcome to my profile', 'www.instagram.com/gdirobertok/', null, 'www.facebook.com/gdirobertok', null, false, false, 'System Manager', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gsprowelll', 'Garrett', 'glandl@census.gov','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/16/2001', 'Hello!', 'www.instagram.com/gsprowelll/', 'twitter.com/gsprowelll', 'www.facebook.com/gsprowelll', null, true, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ahoutbym', 'Andrea', 'arosencrantzm@hubpages.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '8/24/1988', 'Welcome to my profile', 'www.instagram.com/ahoutbym/', 'twitter.com/ahoutbym', 'www.facebook.com/ahoutbym', null, true, true, 'System Manager', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cmcneiln', 'Carline', 'cduntonn@w3.org','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '11/13/1980', 'Hello!', null, null, null, null, false, false, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('seilhertseno', 'Stacee', 'sguytono@scientificamerican.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '7/29/1995', 'Welcome to my profile', null, 'twitter.com/seilhertseno', null, null, true, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hkeartonp', 'Harli', 'hgallardp@ft.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/6/1980', 'Welcome to my profile', null, 'twitter.com/hkeartonp', null, 'linkedin.com/in/hkeartonp', false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hmacaleesq', 'Hermione', 'hgosselinq@dropbox.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/12/2003', 'Welcome to my profile', null, null, null, null, false, true, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('sdominettir', 'Sollie', 'smechicr@kickstarter.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '11/3/1991', 'Hello!', null, null, null, null, false, false, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ibaggarleys', 'Irina', 'igeralds@odnoklassniki.ru','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/7/1981', 'Hello!', 'www.instagram.com/ibaggarleys/', 'twitter.com/ibaggarleys', 'www.facebook.com/ibaggarleys', null, false, false, 'System Manager', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('bupshallt', 'Brita', 'bebbottst@vinaora.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/17/1987', 'Hello!', null, null, null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('jballantyneu', 'Jacquelyn', 'jseinu@hao123.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '5/4/2004', 'Hello!', 'www.instagram.com/jballantyneu/', null, 'www.facebook.com/jballantyneu', null, true, false, 'Moderator', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('eferrariov', 'Eb', 'efarndonv@arizona.edu','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '5/17/1983', 'Hello!', null, 'twitter.com/eferrariov', null, null, true, true, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cdockreayw', 'Cathyleen', 'cgrzegorczykw@fda.gov','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/8/1982', 'Hello!', null, null, null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gwaistellx', 'Gustavo', 'grutgersx@dedecms.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/2/1998', 'Welcome to my profile', null, 'twitter.com/gwaistellx', null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kmccaddeny', 'Ki', 'kbarrasy@yale.edu','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/10/1992', 'Hello!', null, 'twitter.com/kmccaddeny', null, null, true, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('wsagez', 'Wilhelm', 'wburnz@nationalgeographic.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/7/1987', 'Welcome to my profile', null, null, null, null, true, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dcockshut10', 'Deanne', 'dboarer10@huffingtonpost.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/21/1981', 'Welcome to my profile', 'www.instagram.com/dcockshut10/', null, 'www.facebook.com/dcockshut10', null, true, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hmccarter11', 'Harbert', 'hfrancomb11@icio.us','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/7/2003', 'Welcome to my profile', 'www.instagram.com/hmccarter11/', null, 'www.facebook.com/hmccarter11', 'linkedin.com/in/hmccarter11', false, false, 'Moderator', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mhunstone12', 'Mabel', 'mfolbige12@marriott.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '2/1/1987', 'Welcome to my profile', null, null, null, null, false, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cclemintoni13', 'Cecile', 'czelland13@smugmug.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/17/1986', 'Hello!', null, 'twitter.com/cclemintoni13', null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dpembridge14', 'Delilah', 'dtonsley14@yolasite.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/31/1997', 'Welcome to my profile', null, 'twitter.com/dpembridge14', null, null, true, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('vcarvell15', 'Valle', 'vpennell15@cbslocal.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/9/2000', 'Hello!', null, null, null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kvandevelde16', 'Kori', 'kpighills16@ovh.net','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '7/30/1989', 'Hello!', 'www.instagram.com/kvandevelde16/', null, 'www.facebook.com/kvandevelde16', null, true, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mhincks17', 'Mordecai', 'mbearfoot17@foxnews.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/7/2006', 'Welcome to my profile', null, null, null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rdives18', 'Rebeca', 'rproudler18@opera.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '8/31/1998', 'Welcome to my profile', 'www.instagram.com/rdives18/', null, 'www.facebook.com/rdives18', null, true, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dandriessen19', 'Donia', 'drosbrough19@devhub.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '7/28/1980', 'Hello!', null, 'twitter.com/dandriessen19', null, null, true, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('msterrie1a', 'Michele', 'mfancott1a@php.net','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/24/1980', 'Welcome to my profile', 'www.instagram.com/msterrie1a/', 'twitter.com/msterrie1a', 'www.facebook.com/msterrie1a', 'linkedin.com/in/msterrie1a', true, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lwhitear1b', 'Lowe', 'lmessiter1b@tuttocitta.it','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/24/1987', 'Hello!', 'www.instagram.com/lwhitear1b/', null, 'www.facebook.com/lwhitear1b', null, false, true, 'System Manager', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('amcginley1c', 'Anatol', 'asirmon1c@ox.ac.uk','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/20/1996', 'Welcome to my profile', 'www.instagram.com/amcginley1c/', null, 'www.facebook.com/amcginley1c', null, true, true, 'Moderator', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lmaulden1d', 'Leonard', 'lanthonies1d@github.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/9/1986', 'Welcome to my profile', null, 'twitter.com/lmaulden1d', null, null, false, false, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hseiter1e', 'Hendrika', 'hchristensen1e@engadget.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/25/2001', 'Welcome to my profile', null, 'twitter.com/hseiter1e', null, null, true, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hroutham1f', 'Harbert', 'htreverton1f@seattletimes.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '5/6/1983', 'Hello!', null, 'twitter.com/hroutham1f', null, null, true, true, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('eionesco1g', 'Edlin', 'eauden1g@multiply.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '9/22/1987', 'Welcome to my profile', null, 'twitter.com/eionesco1g', null, 'linkedin.com/in/eionesco1g', true, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dlaven1h', 'Dorella', 'dsiddons1h@google.es','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/21/1994', 'Welcome to my profile', null, 'twitter.com/dlaven1h', null, null, true, true, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mmaccafferky1i', 'Monica', 'mcheek1i@sciencedaily.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '5/26/2001', 'Welcome to my profile', null, null, null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hlaxtonne1j', 'Hewitt', 'hhassin1j@wp.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/13/1991', 'Welcome to my profile', null, 'twitter.com/hlaxtonne1j', null, null, true, false, 'System Manager', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dslixby1k', 'Debor', 'dleak1k@nyu.edu','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/18/2006', 'Welcome to my profile', null, 'twitter.com/dslixby1k', null, null, false, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('msaffen1l', 'Marline', 'mcroster1l@mit.edu','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '9/15/2004', 'Hello!', null, 'twitter.com/msaffen1l', null, null, false, true, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kmielnik1m', 'Kylila', 'kmoyer1m@hatena.ne.jp','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/15/1999', 'Welcome to my profile', null, null, null, null, false, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('srobertshaw1n', 'Sherlock', 'sgabbatt1n@unesco.org','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '5/1/2004', 'Hello!', null, 'twitter.com/srobertshaw1n', null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lkershow1o', 'Lauritz', 'ldench1o@marriott.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/5/1992', 'Welcome to my profile', 'www.instagram.com/lkershow1o/', null, 'www.facebook.com/lkershow1o', null, false, false, 'Moderator', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lmelville1p', 'Lyell', 'ldyhouse1p@theglobeandmail.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/31/2006', 'Welcome to my profile', null, null, null, null, true, true, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('jwallhead1q', 'Jordan', 'jrevett1q@eventbrite.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/11/1986', 'Welcome to my profile', null, 'twitter.com/jwallhead1q', null, null, true, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('etrelease1r', 'Enos', 'ereyes1r@360.cn','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/3/1995', 'Welcome to my profile', 'www.instagram.com/etrelease1r/', null, 'www.facebook.com/etrelease1r', null, false, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('tscarlin1s', 'Tiebold', 'thayne1s@bigcartel.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/8/1989', 'Welcome to my profile', null, 'twitter.com/tscarlin1s', null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ptomley1t', 'Penrod', 'phowles1t@163.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/5/2000', 'Hello!', 'www.instagram.com/ptomley1t/', 'twitter.com/ptomley1t', 'www.facebook.com/ptomley1t', null, false, true, 'System Manager', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ggrosier1u', 'Griffie', 'gcourtney1u@columbia.edu','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/7/2000', 'Hello!', null, null, null, null, true, false, 'System Manager', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('wcrozier1v', 'Wayland', 'wrothon1v@diigo.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '10/29/2006', 'Welcome to my profile', 'www.instagram.com/wcrozier1v/', null, 'www.facebook.com/wcrozier1v', null, false, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cpegg1w', 'Collin', 'ccornish1w@samsung.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '7/7/1993', 'Welcome to my profile', null, 'twitter.com/cpegg1w', null, null, false, false, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('nstrut1x', 'Nick', 'njills1x@weebly.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '5/24/2001', 'Hello!', null, 'twitter.com/nstrut1x', null, null, true, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gkilmary1y', 'Gunilla', 'gnicholl1y@tinyurl.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '7/11/1989', 'Welcome to my profile', 'www.instagram.com/gkilmary1y/', null, 'www.facebook.com/gkilmary1y', null, false, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lyude1z', 'Lorri', 'lentreis1z@technorati.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '2/2/2003', 'Hello!', 'www.instagram.com/lyude1z/', null, 'www.facebook.com/lyude1z', null, false, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ldanne20', 'Leanor', 'lqueyeiro20@moonfruit.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/29/2000', 'Hello!', 'www.instagram.com/ldanne20/', 'twitter.com/ldanne20', 'www.facebook.com/ldanne20', null, false, false, 'System Manager', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('sbevir21', 'Seth', 'svanniekerk21@disqus.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/24/1987', 'Hello!', 'www.instagram.com/sbevir21/', null, 'www.facebook.com/sbevir21', null, false, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mmcginley22', 'Meyer', 'melders22@dailymotion.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/15/1994', 'Welcome to my profile', null, null, null, 'linkedin.com/in/mmcginley22', false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('jelcome23', 'Jerrome', 'jtanswill23@acquirethisname.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/21/2002', 'Hello!', 'www.instagram.com/jelcome23/', null, 'www.facebook.com/jelcome23', null, false, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('egerdes24', 'Estell', 'elampard24@cocolog-nifty.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/13/1999', 'Hello!', null, 'twitter.com/egerdes24', null, null, false, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('droddick25', 'Dorotea', 'doldknow25@sourceforge.net','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/10/2000', 'Hello!', 'www.instagram.com/droddick25/', 'twitter.com/droddick25', 'www.facebook.com/droddick25', 'linkedin.com/in/droddick25', true, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lclementi26', 'Lion', 'lflancinbaum26@altervista.org','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/13/1987', 'Hello!', 'www.instagram.com/lclementi26/', 'twitter.com/lclementi26', 'www.facebook.com/lclementi26', null, true, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('wgreenhalf27', 'Willie', 'wnend27@princeton.edu','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/14/1992', 'Welcome to my profile', 'www.instagram.com/wgreenhalf27/', null, 'www.facebook.com/wgreenhalf27', null, true, false, 'System Manager', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('djosilevich28', 'Debee', 'dcummins28@webnode.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/25/1981', 'Hello!', null, 'twitter.com/djosilevich28', null, null, true, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rcroom29', 'Rayna', 'rrapelli29@cbc.ca','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '7/4/1994', 'Welcome to my profile', 'www.instagram.com/rcroom29/', null, 'www.facebook.com/rcroom29', null, true, false, 'System Manager', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('blever2a', 'Billie', 'bdeviney2a@constantcontact.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/5/1996', 'Welcome to my profile', null, 'twitter.com/blever2a', null, 'linkedin.com/in/blever2a', false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('sgyorgy2b', 'Sandye', 'szotto2b@posterous.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/15/2000', 'Hello!', 'www.instagram.com/sgyorgy2b/', null, 'www.facebook.com/sgyorgy2b', null, true, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gnyles2c', 'Ginni', 'gleadbitter2c@usatoday.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '11/16/1983', 'Hello!', 'www.instagram.com/gnyles2c/', 'twitter.com/gnyles2c', 'www.facebook.com/gnyles2c', null, false, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rwinsor2d', 'Raeann', 'rlaughtisse2d@engadget.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/27/1989', 'Welcome to my profile', null, null, null, 'linkedin.com/in/rwinsor2d', true, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cprall2e', 'Carlin', 'cjaggi2e@wp.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/11/1987', 'Hello!', null, 'twitter.com/cprall2e', null, null, false, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lsuero2f', 'Layla', 'lfurphy2f@pbs.org','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '4/7/1983', 'Welcome to my profile', null, null, null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dgarrold2g', 'Donna', 'dgater2g@nydailynews.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '9/6/1993', 'Welcome to my profile', null, 'twitter.com/dgarrold2g', null, null, false, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('nlazonby2h', 'Niall', 'ntranmer2h@bloglines.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/30/1986', 'Welcome to my profile', 'www.instagram.com/nlazonby2h/', 'twitter.com/nlazonby2h', 'www.facebook.com/nlazonby2h', null, true, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mtrevon2i', 'Malena', 'mhyndley2i@epa.gov','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '9/30/1988', 'Hello!', 'www.instagram.com/mtrevon2i/', null, 'www.facebook.com/mtrevon2i', null, false, false, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rtanti2j', 'Ralph', 'rwaeland2j@free.fr','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '9/28/2000', 'Welcome to my profile', null, null, null, null, true, true, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('bnesey2k', 'Bearnard', 'brubury2k@google.com.au','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '6/27/1986', 'Welcome to my profile', null, null, null, null, false, false, 'Moderator', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rmowett2l', 'Rosina', 'rgill2l@tinypic.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '2/8/2001', 'Welcome to my profile', null, 'twitter.com/rmowett2l', null, null, true, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('wmannie2m', 'Wendi', 'whorwell2m@indiegogo.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/13/1993', 'Hello!', 'www.instagram.com/wmannie2m/', null, 'www.facebook.com/wmannie2m', null, true, true, 'System Manager', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('chousden2n', 'Calvin', 'ccanape2n@npr.org','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '1/31/1993', 'Welcome to my profile', 'www.instagram.com/chousden2n/', 'twitter.com/chousden2n', 'www.facebook.com/chousden2n', null, true, false, 'Moderator', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('slathwell2o', 'Sherm', 'ssancraft2o@diigo.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '2/28/2007', 'Welcome to my profile', 'www.instagram.com/slathwell2o/', 'twitter.com/slathwell2o', 'www.facebook.com/slathwell2o', null, false, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rchidlow2p', 'Riannon', 'rhaynes2p@reference.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '12/1/1997', 'Welcome to my profile', null, 'twitter.com/rchidlow2p', null, null, false, false, 'Regular', null);
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('jwyllie2q', 'Jocko', 'jmotherwell2q@hp.com','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '3/18/2005', 'Hello!', 'www.instagram.com/jwyllie2q/', 'twitter.com/jwyllie2q', 'www.facebook.com/jwyllie2q', null, true, true, 'Regular', 'abs.jpeg');
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dbatram2r', 'Davidson', 'dashburner2r@yahoo.co.jp','$2a$10$UqgTuI/JPwjC96xrcdIU1uPH38M9KbHI1gEb144yquZBEGDi.6sQG', '8/6/1992', 'Hello!', 'www.instagram.com/dbatram2r/', null, 'www.facebook.com/dbatram2r', null, true, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('vpaulazzi0', 'Veronike', 'vcowburn0@virginia.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/19/1990', 'Hello!', null, 'twitter.com/vpaulazzi0', null, null, true, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ssmoote1', 'Stevana', 'sfrean1@mail.ru','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/11/1988', 'Hello!', 'www.instagram.com/ssmoote1/', null, 'www.facebook.com/ssmoote1', null, true, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('abaldi2', 'Alene', 'alequeux2@zdnet.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/7/1988', 'Welcome to my profile', null, null, null, null, true, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('scleator3', 'Say', 'shutchason3@soup.io','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '7/28/1980', 'Welcome to my profile', null, 'twitter.com/scleator3', null, null, false, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dhastilow4', 'Dulcinea', 'dfalkner4@ucla.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/10/2003', 'Hello!', 'www.instagram.com/dhastilow4/', null, 'www.facebook.com/dhastilow4', null, false, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('uregglar5', 'Upton', 'ulearmonth5@senate.gov','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/31/1988', 'Welcome to my profile', null, 'twitter.com/uregglar5', null, null, true, true, 'System Manager', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dmcfadin6', 'Dianemarie', 'dspiers6@npr.org','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/25/1982', 'Hello!', 'www.instagram.com/dmcfadin6/', null, 'www.facebook.com/dmcfadin6', null, false, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gfarnie7', 'Gipsy', 'gdavie7@google.nl','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/21/1998', 'Hello!', null, 'twitter.com/gfarnie7', null, null, true, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kmackimm8', 'Katrine', 'kdimmer8@usda.gov','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/6/2004', 'Welcome to my profile', null, 'twitter.com/kmackimm8', null, null, false, true, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('njennions9', 'Noni', 'nmcquaid9@dagondesign.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/28/1985', 'Hello!', null, null, null, null, true, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rsigharda', 'Risa', 'rchatfielda@1und1.de','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/23/2001', 'Welcome to my profile', 'www.instagram.com/rsigharda/', null, 'www.facebook.com/rsigharda', null, false, true, 'Moderator', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('bhandrickb', 'Bondy', 'bmussettib@unicef.org','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '8/18/2006', 'Hello!', 'www.instagram.com/bhandrickb/', null, 'www.facebook.com/bhandrickb', null, false, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('thehnkec', 'Tabbie', 'trossonic@imageshack.us','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '8/1/1987', 'Welcome to my profile', 'www.instagram.com/thehnkec/', 'twitter.com/thehnkec', 'www.facebook.com/thehnkec', null, true, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ddonnelland', 'Davy', 'dplettsd@paginegialle.it','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '2/3/1985', 'Hello!', 'www.instagram.com/ddonnelland/', 'twitter.com/ddonnelland', 'www.facebook.com/ddonnelland', null, true, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('styrere', 'Steffie', 'seydene@answers.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/6/1983', 'Hello!', null, 'twitter.com/styrere', null, null, false, false, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ddomeneyf', 'Davey', 'dmullearyf@paginegialle.it','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/26/1992', 'Hello!', null, 'twitter.com/ddomeneyf', null, null, false, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('nellicombeg', 'Noell', 'nbrogiottig@twitpic.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/31/1985', 'Hello!', null, null, null, null, false, true, 'System Manager', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kturlh', 'Kristos', 'kbercerosh@geocities.jp','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/12/1987', 'Welcome to my profile', 'www.instagram.com/kturlh/', 'twitter.com/kturlh', 'www.facebook.com/kturlh', null, true, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ckimberi', 'Codi', 'cmccasteri@ustream.tv','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/19/2000', 'Hello!', 'www.instagram.com/ckimberi/', 'twitter.com/ckimberi', 'www.facebook.com/ckimberi', null, false, true, 'Moderator', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gbloxholmj', 'Ganny', 'gmcguckenj@youku.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/20/2003', 'Welcome to my profile', null, 'twitter.com/gbloxholmj', null, null, false, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gdirobertok', 'Gavra', 'ghanleyk@yahoo.co.jp','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/11/1988', 'Welcome to my profile', 'www.instagram.com/gdirobertok/', null, 'www.facebook.com/gdirobertok', null, false, false, 'System Manager', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gsprowelll', 'Garrett', 'glandl@census.gov','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/16/2001', 'Hello!', 'www.instagram.com/gsprowelll/', 'twitter.com/gsprowelll', 'www.facebook.com/gsprowelll', null, true, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ahoutbym', 'Andrea', 'arosencrantzm@hubpages.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '8/24/1988', 'Welcome to my profile', 'www.instagram.com/ahoutbym/', 'twitter.com/ahoutbym', 'www.facebook.com/ahoutbym', null, true, true, 'System Manager', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cmcneiln', 'Carline', 'cduntonn@w3.org','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '11/13/1980', 'Hello!', null, null, null, null, false, false, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('seilhertseno', 'Stacee', 'sguytono@scientificamerican.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '7/29/1995', 'Welcome to my profile', null, 'twitter.com/seilhertseno', null, null, true, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hkeartonp', 'Harli', 'hgallardp@ft.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/6/1980', 'Welcome to my profile', null, 'twitter.com/hkeartonp', null, 'linkedin.com/in/hkeartonp', false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hmacaleesq', 'Hermione', 'hgosselinq@dropbox.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/12/2003', 'Welcome to my profile', null, null, null, null, false, true, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('sdominettir', 'Sollie', 'smechicr@kickstarter.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '11/3/1991', 'Hello!', null, null, null, null, false, false, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ibaggarleys', 'Irina', 'igeralds@odnoklassniki.ru','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/7/1981', 'Hello!', 'www.instagram.com/ibaggarleys/', 'twitter.com/ibaggarleys', 'www.facebook.com/ibaggarleys', null, false, false, 'System Manager', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('bupshallt', 'Brita', 'bebbottst@vinaora.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/17/1987', 'Hello!', null, null, null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('jballantyneu', 'Jacquelyn', 'jseinu@hao123.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '5/4/2004', 'Hello!', 'www.instagram.com/jballantyneu/', null, 'www.facebook.com/jballantyneu', null, true, false, 'Moderator', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('eferrariov', 'Eb', 'efarndonv@arizona.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '5/17/1983', 'Hello!', null, 'twitter.com/eferrariov', null, null, true, true, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cdockreayw', 'Cathyleen', 'cgrzegorczykw@fda.gov','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/8/1982', 'Hello!', null, null, null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gwaistellx', 'Gustavo', 'grutgersx@dedecms.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/2/1998', 'Welcome to my profile', null, 'twitter.com/gwaistellx', null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kmccaddeny', 'Ki', 'kbarrasy@yale.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/10/1992', 'Hello!', null, 'twitter.com/kmccaddeny', null, null, true, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('wsagez', 'Wilhelm', 'wburnz@nationalgeographic.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/7/1987', 'Welcome to my profile', null, null, null, null, true, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dcockshut10', 'Deanne', 'dboarer10@huffingtonpost.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/21/1981', 'Welcome to my profile', 'www.instagram.com/dcockshut10/', null, 'www.facebook.com/dcockshut10', null, true, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hmccarter11', 'Harbert', 'hfrancomb11@icio.us','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/7/2003', 'Welcome to my profile', 'www.instagram.com/hmccarter11/', null, 'www.facebook.com/hmccarter11', 'linkedin.com/in/hmccarter11', false, false, 'Moderator', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mhunstone12', 'Mabel', 'mfolbige12@marriott.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '2/1/1987', 'Welcome to my profile', null, null, null, null, false, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cclemintoni13', 'Cecile', 'czelland13@smugmug.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/17/1986', 'Hello!', null, 'twitter.com/cclemintoni13', null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dpembridge14', 'Delilah', 'dtonsley14@yolasite.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/31/1997', 'Welcome to my profile', null, 'twitter.com/dpembridge14', null, null, true, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('vcarvell15', 'Valle', 'vpennell15@cbslocal.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/9/2000', 'Hello!', null, null, null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kvandevelde16', 'Kori', 'kpighills16@ovh.net','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '7/30/1989', 'Hello!', 'www.instagram.com/kvandevelde16/', null, 'www.facebook.com/kvandevelde16', null, true, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mhincks17', 'Mordecai', 'mbearfoot17@foxnews.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/7/2006', 'Welcome to my profile', null, null, null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rdives18', 'Rebeca', 'rproudler18@opera.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '8/31/1998', 'Welcome to my profile', 'www.instagram.com/rdives18/', null, 'www.facebook.com/rdives18', null, true, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dandriessen19', 'Donia', 'drosbrough19@devhub.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '7/28/1980', 'Hello!', null, 'twitter.com/dandriessen19', null, null, true, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('msterrie1a', 'Michele', 'mfancott1a@php.net','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/24/1980', 'Welcome to my profile', 'www.instagram.com/msterrie1a/', 'twitter.com/msterrie1a', 'www.facebook.com/msterrie1a', 'linkedin.com/in/msterrie1a', true, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lwhitear1b', 'Lowe', 'lmessiter1b@tuttocitta.it','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/24/1987', 'Hello!', 'www.instagram.com/lwhitear1b/', null, 'www.facebook.com/lwhitear1b', null, false, true, 'System Manager', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('amcginley1c', 'Anatol', 'asirmon1c@ox.ac.uk','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/20/1996', 'Welcome to my profile', 'www.instagram.com/amcginley1c/', null, 'www.facebook.com/amcginley1c', null, true, true, 'Moderator', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lmaulden1d', 'Leonard', 'lanthonies1d@github.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/9/1986', 'Welcome to my profile', null, 'twitter.com/lmaulden1d', null, null, false, false, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hseiter1e', 'Hendrika', 'hchristensen1e@engadget.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/25/2001', 'Welcome to my profile', null, 'twitter.com/hseiter1e', null, null, true, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hroutham1f', 'Harbert', 'htreverton1f@seattletimes.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '5/6/1983', 'Hello!', null, 'twitter.com/hroutham1f', null, null, true, true, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('eionesco1g', 'Edlin', 'eauden1g@multiply.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '9/22/1987', 'Welcome to my profile', null, 'twitter.com/eionesco1g', null, 'linkedin.com/in/eionesco1g', true, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dlaven1h', 'Dorella', 'dsiddons1h@google.es','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/21/1994', 'Welcome to my profile', null, 'twitter.com/dlaven1h', null, null, true, true, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mmaccafferky1i', 'Monica', 'mcheek1i@sciencedaily.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '5/26/2001', 'Welcome to my profile', null, null, null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('hlaxtonne1j', 'Hewitt', 'hhassin1j@wp.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/13/1991', 'Welcome to my profile', null, 'twitter.com/hlaxtonne1j', null, null, true, false, 'System Manager', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dslixby1k', 'Debor', 'dleak1k@nyu.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/18/2006', 'Welcome to my profile', null, 'twitter.com/dslixby1k', null, null, false, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('msaffen1l', 'Marline', 'mcroster1l@mit.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '9/15/2004', 'Hello!', null, 'twitter.com/msaffen1l', null, null, false, true, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('kmielnik1m', 'Kylila', 'kmoyer1m@hatena.ne.jp','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/15/1999', 'Welcome to my profile', null, null, null, null, false, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('srobertshaw1n', 'Sherlock', 'sgabbatt1n@unesco.org','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '5/1/2004', 'Hello!', null, 'twitter.com/srobertshaw1n', null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lkershow1o', 'Lauritz', 'ldench1o@marriott.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/5/1992', 'Welcome to my profile', 'www.instagram.com/lkershow1o/', null, 'www.facebook.com/lkershow1o', null, false, false, 'Moderator', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lmelville1p', 'Lyell', 'ldyhouse1p@theglobeandmail.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/31/2006', 'Welcome to my profile', null, null, null, null, true, true, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('jwallhead1q', 'Jordan', 'jrevett1q@eventbrite.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/11/1986', 'Welcome to my profile', null, 'twitter.com/jwallhead1q', null, null, true, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('etrelease1r', 'Enos', 'ereyes1r@360.cn','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/3/1995', 'Welcome to my profile', 'www.instagram.com/etrelease1r/', null, 'www.facebook.com/etrelease1r', null, false, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('tscarlin1s', 'Tiebold', 'thayne1s@bigcartel.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/8/1989', 'Welcome to my profile', null, 'twitter.com/tscarlin1s', null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ptomley1t', 'Penrod', 'phowles1t@163.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/5/2000', 'Hello!', 'www.instagram.com/ptomley1t/', 'twitter.com/ptomley1t', 'www.facebook.com/ptomley1t', null, false, true, 'System Manager', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ggrosier1u', 'Griffie', 'gcourtney1u@columbia.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/7/2000', 'Hello!', null, null, null, null, true, false, 'System Manager', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('wcrozier1v', 'Wayland', 'wrothon1v@diigo.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '10/29/2006', 'Welcome to my profile', 'www.instagram.com/wcrozier1v/', null, 'www.facebook.com/wcrozier1v', null, false, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cpegg1w', 'Collin', 'ccornish1w@samsung.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '7/7/1993', 'Welcome to my profile', null, 'twitter.com/cpegg1w', null, null, false, false, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('nstrut1x', 'Nick', 'njills1x@weebly.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '5/24/2001', 'Hello!', null, 'twitter.com/nstrut1x', null, null, true, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gkilmary1y', 'Gunilla', 'gnicholl1y@tinyurl.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '7/11/1989', 'Welcome to my profile', 'www.instagram.com/gkilmary1y/', null, 'www.facebook.com/gkilmary1y', null, false, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lyude1z', 'Lorri', 'lentreis1z@technorati.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '2/2/2003', 'Hello!', 'www.instagram.com/lyude1z/', null, 'www.facebook.com/lyude1z', null, false, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ldanne20', 'Leanor', 'lqueyeiro20@moonfruit.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/29/2000', 'Hello!', 'www.instagram.com/ldanne20/', 'twitter.com/ldanne20', 'www.facebook.com/ldanne20', null, false, false, 'System Manager', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('sbevir21', 'Seth', 'svanniekerk21@disqus.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/24/1987', 'Hello!', 'www.instagram.com/sbevir21/', null, 'www.facebook.com/sbevir21', null, false, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mmcginley22', 'Meyer', 'melders22@dailymotion.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/15/1994', 'Welcome to my profile', null, null, null, 'linkedin.com/in/mmcginley22', false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('jelcome23', 'Jerrome', 'jtanswill23@acquirethisname.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/21/2002', 'Hello!', 'www.instagram.com/jelcome23/', null, 'www.facebook.com/jelcome23', null, false, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('egerdes24', 'Estell', 'elampard24@cocolog-nifty.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/13/1999', 'Hello!', null, 'twitter.com/egerdes24', null, null, false, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('droddick25', 'Dorotea', 'doldknow25@sourceforge.net','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/10/2000', 'Hello!', 'www.instagram.com/droddick25/', 'twitter.com/droddick25', 'www.facebook.com/droddick25', 'linkedin.com/in/droddick25', true, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lclementi26', 'Lion', 'lflancinbaum26@altervista.org','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/13/1987', 'Hello!', 'www.instagram.com/lclementi26/', 'twitter.com/lclementi26', 'www.facebook.com/lclementi26', null, true, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('wgreenhalf27', 'Willie', 'wnend27@princeton.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/14/1992', 'Welcome to my profile', 'www.instagram.com/wgreenhalf27/', null, 'www.facebook.com/wgreenhalf27', null, true, false, 'System Manager', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('djosilevich28', 'Debee', 'dcummins28@webnode.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/25/1981', 'Hello!', null, 'twitter.com/djosilevich28', null, null, true, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rcroom29', 'Rayna', 'rrapelli29@cbc.ca','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '7/4/1994', 'Welcome to my profile', 'www.instagram.com/rcroom29/', null, 'www.facebook.com/rcroom29', null, true, false, 'System Manager', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('blever2a', 'Billie', 'bdeviney2a@constantcontact.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/5/1996', 'Welcome to my profile', null, 'twitter.com/blever2a', null, 'linkedin.com/in/blever2a', false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('sgyorgy2b', 'Sandye', 'szotto2b@posterous.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/15/2000', 'Hello!', 'www.instagram.com/sgyorgy2b/', null, 'www.facebook.com/sgyorgy2b', null, true, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('gnyles2c', 'Ginni', 'gleadbitter2c@usatoday.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '11/16/1983', 'Hello!', 'www.instagram.com/gnyles2c/', 'twitter.com/gnyles2c', 'www.facebook.com/gnyles2c', null, false, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rwinsor2d', 'Raeann', 'rlaughtisse2d@engadget.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/27/1989', 'Welcome to my profile', null, null, null, 'linkedin.com/in/rwinsor2d', true, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('cprall2e', 'Carlin', 'cjaggi2e@wp.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/11/1987', 'Hello!', null, 'twitter.com/cprall2e', null, null, false, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('lsuero2f', 'Layla', 'lfurphy2f@pbs.org','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/7/1983', 'Welcome to my profile', null, null, null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dgarrold2g', 'Donna', 'dgater2g@nydailynews.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '9/6/1993', 'Welcome to my profile', null, 'twitter.com/dgarrold2g', null, null, false, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('nlazonby2h', 'Niall', 'ntranmer2h@bloglines.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/30/1986', 'Welcome to my profile', 'www.instagram.com/nlazonby2h/', 'twitter.com/nlazonby2h', 'www.facebook.com/nlazonby2h', null, true, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('mtrevon2i', 'Malena', 'mhyndley2i@epa.gov','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '9/30/1988', 'Hello!', 'www.instagram.com/mtrevon2i/', null, 'www.facebook.com/mtrevon2i', null, false, false, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rtanti2j', 'Ralph', 'rwaeland2j@free.fr','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '9/28/2000', 'Welcome to my profile', null, null, null, null, true, true, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('bnesey2k', 'Bearnard', 'brubury2k@google.com.au','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '6/27/1986', 'Welcome to my profile', null, null, null, null, false, false, 'Moderator', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rmowett2l', 'Rosina', 'rgill2l@tinypic.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '2/8/2001', 'Welcome to my profile', null, 'twitter.com/rmowett2l', null, null, true, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('wmannie2m', 'Wendi', 'whorwell2m@indiegogo.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/13/1993', 'Hello!', 'www.instagram.com/wmannie2m/', null, 'www.facebook.com/wmannie2m', null, true, true, 'System Manager', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('chousden2n', 'Calvin', 'ccanape2n@npr.org','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/31/1993', 'Welcome to my profile', 'www.instagram.com/chousden2n/', 'twitter.com/chousden2n', 'www.facebook.com/chousden2n', null, true, false, 'Moderator', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('slathwell2o', 'Sherm', 'ssancraft2o@diigo.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '2/28/2007', 'Welcome to my profile', 'www.instagram.com/slathwell2o/', 'twitter.com/slathwell2o', 'www.facebook.com/slathwell2o', null, false, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('rchidlow2p', 'Riannon', 'rhaynes2p@reference.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/1/1997', 'Welcome to my profile', null, 'twitter.com/rchidlow2p', null, null, false, false, 'Regular', null);
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('jwyllie2q', 'Jocko', 'jmotherwell2q@hp.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '3/18/2005', 'Hello!', 'www.instagram.com/jwyllie2q/', 'twitter.com/jwyllie2q', 'www.facebook.com/jwyllie2q', null, true, true, 'Regular', 'abs.jpeg');
+insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('dbatram2r', 'Davidson', 'dashburner2r@yahoo.co.jp','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '8/6/1992', 'Hello!', 'www.instagram.com/dbatram2r/', null, 'www.facebook.com/dbatram2r', null, true, true, 'Regular', 'abs.jpeg');
 
 --POST
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Writers in culture war over rules of the imagination', 'abs.jpeg', 'It is a venerable global cultural institution, dedicated to freedom of expression and set to celebrate its centenary this year. Yet the writers’ association PEN is being drawn into dispute over a declaration claiming the right of authors to imagination, allowing them to describe the world from the point of view of characters from other cultural backgrounds.
@@ -1819,11 +1819,11 @@ Crofton is the only one who doesn’t get it. He trudges around the house and gr
 By the time you’ve heard all this you are beginning to tire of his odd-job life, his misogynistic, unproductive fantasies about women and his comically failed outings in His Master’s Ferrari, with its deliciously “curved, bulbous rear”. He has too many memories of triumphs not his own, while all you want to know is what – if anything – is going to happen next. How will his confinement be broken open? What new form of life might emerge? But Warner is a merciless jailer and Kitchenly 434 a gleeful satire about owning and being owned – by places, people, ideas and economic systems. Crofton, we sense, must serve his full sentence before the author, with visible reluctance, releases him.
 Meanwhile, perhaps not content to be seen solely as the metaphor of Marko Morell’s waning cultural influence, Kitchenly Mill develops a rich character of its own. Warner’s quiet parodies of heritage writing are abetted by Mark Edward Geyer’s illustrations of the building and its environs, and include an extended “quote” from Nikolaus Pevsner himself, that obsessive recorder of the English country house. On a visit during the 1950s, we’re told, Pevsner praised the “strange clerestory of the roof atrium” at Kitchenly, the “horizontal parades of lattice window screens” that “flood the interiors with a generous light”; going on, in his classic Buildings of England, to describe the house as “a summation of England’s history in solid form”. In the end, Kitchenly Mill is almost exactly that – a late-1970s version of Mervyn Peake’s Gormenghast, a sardonic mirror of the historical entrapment of its inhabitants in which the character of Flay the Butler has been reimagined by a team including Jonathan Meades and Will Self.
 This is a gristly, enjoyably intractable book, which concentrates 20 years of cultural change. As well as drugs and rock’n’roll – and, perhaps more importantly, money’n’status – it covers everything from sexual politics to the curious asexual male-groupie syndrome that reached its peak in the figure of the 70s roadie. If you want to know anything, indeed everything, about the general history of the music, Kitchenly 434 is your manual. But one of its most interesting features is the way in which Warner uses the image of the house itself as an air bridge between the cultural hollowness of the pre-Thatcherian interlude and the retrofitted fantasy of England that would soon emerge: Albion as a sort of giant walled garden littered with unachieved futures and the beautiful houses of the past.',
-true, TIMESTAMP '2020-01-06 07:53:25', 139, 'news', 'literature', 77);
+                                                                                                               true, TIMESTAMP '2020-01-06 07:53:25', 139, 'news', 'literature', 77);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Harvest by Georgina Harding – unearthing the secrets of the past', 'abs.jpeg', 'Since her debut novel, The Solitude of Thomas Cave, in 2007, Georgina Harding’s fiction has ranged widely, from a 17th-century whaling boat in the Arctic to communist Romania in the 1950s. For all their differences, her books are profoundly connected, each one in its own way a meditation on survival and the aftershocks of trauma. Again and again they return to the implacability of memory, the intolerable weight of bearing witness, the struggle to build – or rebuild – a present-tense self on the ruins of the past. Like memory, they unspool in loops, the clouded silences of the present parting briefly to expose glimpses of secrets that can never be spoken, that can barely even be thought.
 Harvest is the third in Harding’s cycle of novels about the Ashe family. Their very name summons aftermath, something irrevocably lost. The first, The Gun Room, tells the story of Jonathan Ashe, a young photojournalist responsible for one of the defining images of the Vietnam war. He moves to Tokyo, seeking refuge in the city’s anonymity. Instead a much older trauma begins to surface. The second, The Land of the Living, steps back 30 years to Jonathan’s father Charlie’s shattering experiences in the remote jungles of Assam during the second world war, and his struggle, as a newly married farmer after the war, to unshackle himself from their horror. In both novels place is vividly, viscerally evoked, the exotic strangeness of the Asian landscapes contrasting sharply with the windswept fields and flat wide skies of Norfolk. But while the latter is profoundly familiar to both men, that familiarity does not bring safety or peace.
 Harvest takes us back to the 70s, picking up Jonathan’s story as he returns to Norfolk from Japan. Little has changed since he left. His brother Richard still lives with their mother Claire in their childhood home. Richard runs the family farm; Claire tends her garden. No one talks about Charlie’s violent death 20 years earlier. When Jonathan’s Japanese girlfriend Kumiko joins him on an extended visit, Claire walks with her outside, showing her the roses. It is a perfect summer’s day, perhaps the one day in the year, Claire said, “when the garden was at its best. And Kumiko said then that she was lucky to be there.”',
- true, TIMESTAMP '2019-01-10 22:43:55', 136, 'news', 'literature', 7);
+                                                                                                               true, TIMESTAMP '2019-01-10 22:43:55', 136, 'news', 'literature', 7);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Spooks watch along, series one finale: bombs, barneys and a wicked cliffhanger', 'abs.jpeg', 'Hello and welcome to the final watchalong episode of the first series of Spooks.
 My apologies for missing so much due to health reasons; thanks again to Jack Seale for doing such a fantastic job standing in for me.
 This is the one in which the personal really does become political as Tom moves into Ellie’s house, bringing all manner of trouble with him – we all knew that IT cover was going to collapse sometime …
@@ -1835,7 +1835,7 @@ Layla AlAmmar is a writer who understands trauma, how it fragments the memory an
 At times, the reader shares the editor’s feelings of frustration: just tell us what happened, you want to say. This is cleverly deployed; are we being unreasonable in demanding an organized narrative? AlAmmar offers trickles of information that are just enough to hint at the terrors of war (“The smell of meat and burning is strong in the air, but nothing is cooking”) woven in with shrewd observations about Britain and immigration. Some people respond to the narrator with kindness, including the bookshop owner who lets her take books for free. Others are racist and aggressive. She feels the pressure to be a “good” immigrant. “Everyone here wants a story,” she says, “a nice little packet of memories.”
 AlAmmar is pursuing a PhD on “the intersection of Arab women’s fiction and literary trauma theory”. If you know about literary trauma theory, you’ll know that it examines how psychological trauma challenges the limits of language. This and other theoretical threads (collective experience, disassociation and fragmentation) can be traced through the novel, meaning that at times it feels like a work constructed to respond to the theory of trauma, rather than trauma itself. To readers, this choice may manifest in a certain failure of characterization. The picture of this woman, like her memories, is cloudy.
 Despite this, the use of several cliches and some dialogue that doesn’t ring true, I admire this book. It is an intelligent, insightful novel that asks vital questions about how we can begin to express trauma, and in what form. It faces up to its linguistic challenges. It doesn’t quite meet them, but perhaps no words, however they are deployed, truly can. That, after all, is the nature of trauma.',
-false, TIMESTAMP '2020-08-25 15:11:12', 237, 'review', 'literature', 47);
+                                                                                                               false, TIMESTAMP '2020-08-25 15:11:12', 237, 'review', 'literature', 47);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Jessica Walter, star of Arrested Development, dies aged 80', 'abs.jpeg', 'Actor Jessica Walter has died at the age of 80.
 Walter, best known for her Emmy-winning role as Lucille Bluth in Arrested Development, died in her sleep at her New York home.
 “It is with a heavy heart that I confirm the passing of my beloved mom Jessica,” said daughter Brooke Bowman in a statement. “A working actor for over six decades, her greatest pleasure was bringing joy to others through her storytelling both on screen and off. While her legacy will live on through her body of work, she will also be remembered by many for her wit, class and overall joie de vivre.”
@@ -1858,7 +1858,7 @@ Inferno: A Memoir of Motherhood and Madness
 Catherine Cho
 Bloomsbury, £9.99, pp272
 When Cho’s son was three months old, she and her husband James travelled from London to the US to introduce their baby to family and friends. There, relatives questioned Cho’s decision not to observe Korean traditions about newborns, compounding the anxiety and insecurity of her early motherhood. What followed was a period of postpartum psychosis, including a 12-day stay on a psychiatric ward. Cho weaves fractured memoir with Korean history and culture in a raw exploration of mental illness.' ,
-false, TIMESTAMP '2020-08-18 22:30:30', 248, 'review', 'literature', 97);
+                                                                                                               false, TIMESTAMP '2020-08-18 22:30:30', 248, 'review', 'literature', 97);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Dropbear by Evelyn Araluen – a stunning scalpel wielded through Australian myths', 'abs.jpeg', 'Some 200 years after invasion, in 1991, a vision of Australia was offered by poetry: Robert Gray and Geoffrey Lehmann’s Australian Poetry in the Twentieth Century.
 The anthology was typified not only by the complete absence of Black poets, but the glowing approval of Les Murray on the cover and dutiful inclusion of Barry Humphries’ smiling zinc cream kitsch in Edna’s Hymn, whose balancing act of “mockery and affectionate nostalgia” (“All things bright and beautiful – Pavlovas that we bake,/All things wise and wonderful – Australia takes the cake”) apparently meant no room could be found for Oodgeroo Noonuccal or Lionel Fogarty.
 In Dropbear, her debut collection of poetry, Evelyn Araluen wields a scalpel through twinkly visions and phantasma that treat the Australian landscape as empty necropolis: the Peters ice-cream white suburbs and grey-lapel metropolises; the interior as vacant object of “sunburnt” affection; women quietly tending logpiles at the homestead while men trek across the frontier and sheep and rabbits destroy the topsoil.
@@ -1958,12 +1958,12 @@ Miss Benson’s Beetle
 Rachel Joyce
 Penguin, £16.99, pp400
 Rachel Joyce is a great chronicler of journeys and quests, and the one that her protagonist Margery Benson undergoes here, travelling to New Caledonia in order to discover a hitherto unknown species of golden beetle, is as delicately and exquisitely portrayed as in her other books. Joyce takes Benson and her pink-suited friend Enid Pretty on an adventure that both amuses and stirs, and the 50s setting allows her to leaven the humour with a vein of melancholy about how the after-effects of war did not produce the emancipation many women hoped for.',
-true, TIMESTAMP '2020-08-07 06:55:11', 258, 'review', 'literature', 74);
+                                                                                                               true, TIMESTAMP '2020-08-07 06:55:11', 258, 'review', 'literature', 74);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Children’s books roundup – the best new picture books and novels', 'abs.jpeg', 'World Book Day tie-in titles are especially strong this year, from Katherine Rundell’s Skysteppers (Bloomsbury), a nail-biting scramble across the skyline of Paris (and prequel to the bestselling Rooftoppers), to the crazed fun of Humza Arshad and Henry White’s Little Badman and the Radioactive Samosa (Puffin), illustrated by Aleksei Bitskoff, in which a box of irradiated triangular treats confers superpowers on a trio of kids.
 Other brilliant books for eight-year-olds and up this month include Show Us Who You Are (Knights Of) by Elle McNicoll. Cora, who is autistic, loves hanging out with Adrien, son of the CEO of Pomegranate Technologies – until an accident leaves Adrien in a coma. Pomegranate makes holograms of people, preserving memories for grieving families. But what modifications might be made to the holograms in a spurious quest for “perfection”? This is a startlingly original speculative novel, and a moving, passionate interrogation of prejudice against neurodiversity.
 Two Sisters: A Story of Freedom (Scholastic) by Kereen Getten features inseparable 18th-century half-sisters Ruth and Anna, who are sent on a voyage from Jamaica to England. Anna’s almost white skin means she is always treated differently, while Ruth must fight for what should be hers. Told from both girls’ perspectives, this is a hard-hitting, gripping read, full of fierce courage in the face of injustice.
 Meanwhile, Mort the Meek and the Ravens’ Revenge (Stripes) by Rachel Delahaye, illustrated by George Ermos, is the tale of hapless Mort, the only pacifist in a distinctly brutal kingdom, who’s just been made Royal Executioner – and told to bump off his best friend. Crammed with wisecracking corvids and outrageous wordplay, it’s engagingly light-hearted, Pratchettesque comic fantasy.',
-true, TIMESTAMP '2020-11-09 03:02:30', 286, 'article', 'literature', 61);
+                                                                                                               true, TIMESTAMP '2020-11-09 03:02:30', 286, 'article', 'literature', 61);
 insert into post (title, thumbnail, content, is_spoiler, created_at, n_views, type, category, user_id) values ('Tracks of the week reviewed: Cardi B, Finneas, and Foo Fighters', 'abs.jpeg', 'Cardi B - Up
 It is an oft-quoted “fact” that Inuit people have more than 50 words for snow, but Cardi B has 5,000 ways to describe sex, and all of them are horrifically filthy. Up is Cardi’s follow-up to her mega-smut smash WAP, and is basically a list of sex acts and reasons you’d want to shag her, rapped over a trap beat, with Cardi insisting “if it’s up then it’s stuck”. Should we call an ambulance, hun? That doesn’t sound right.
 Finneas - American Cliche
