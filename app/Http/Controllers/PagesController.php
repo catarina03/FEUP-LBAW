@@ -15,7 +15,9 @@ class PagesController extends Controller
         $posts = $this->getPostsInfo($p);
         $slideshow = $this->slideshow();
         $n_posts = Post::count();
-        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow, 'n_posts' => $n_posts]);
+        $user = null;
+        if(Auth::check()) $user = Auth::user();
+        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow, 'n_posts' => $n_posts, 'user'=> $user]);
     }
 
     public function slideshow(){
@@ -39,7 +41,8 @@ class PagesController extends Controller
     }
 
     public function category($category){
-
+        $user = null;
+        if(Auth::check()) $user = Auth::user();
         if($category == "Music") $posts = Post::where('category', 'music')->paginate(15,'*', 'page', 1);
         else if($category == "TVShow") $posts = Post::where('category', 'tv show')->paginate(15,'*', 'page', 1);
         else if($category == "Cinema") $posts = Post::where('category', 'cinema')->paginate(15,'*', 'page', 1);
@@ -50,14 +53,16 @@ class PagesController extends Controller
         $posts = $this->getPostsInfo($posts);
         if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts, 'n_posts' => $n_posts]);
 
-        return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts, 'n_posts' => $n_posts]);
+        return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts, 'n_posts' => $n_posts, 'user'=>$user]);
 
     }
 
     public function list($homepageFilters){
+        $user = null;
         $p = Post::getPostsOrdered($homepageFilters, 1);
         $posts = $this->getPostsInfo($p);
         $n_posts = Post::count();
+
         return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts, 'n_posts' => $n_posts])->render(),'n_posts' => $n_posts));
     }
 
@@ -81,10 +86,12 @@ class PagesController extends Controller
 
 
     public function advancedSearch(Request $request){
+        $user = null;
+        if(Auth::check()) $user = Auth::user();
         $p = $this->filter($request,1);
         $posts = $this->getPostsInfo($p);
 
-        return view('pages.advanced_search', ['needsFilter'=> 1,'posts' => $posts, 'number_res'=> $p->total()])->render();
+        return view('pages.advanced_search', ['needsFilter'=> 1,'posts' => $posts, 'number_res'=> $p->total(), 'user' => $user])->render();
     }
 
     public function loadMoreAdvancedSearch(Request $request){

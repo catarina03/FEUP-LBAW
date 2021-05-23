@@ -8,8 +8,8 @@
                 <input type="text" id="search" class="form-control" placeholder="Search" aria-label="Search"
                        aria-describedby="search-addon"/>
                 <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
-                            <i class="fas fa-search"></i>
-                        </span>
+                    <i class="fas fa-search"></i>
+                </span>
             </div>
             <select class="form-select mt-4" id="type" aria-label="Select a type" style="cursor:pointer;">
                 <option selected value="">Select a type</option>
@@ -22,14 +22,22 @@
             <input type="date" class="form-control mt-0" id="endDate1" style="cursor:pointer;">
             @auth
                 <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" value="" id="checkPeople"
+                    <input class="form-check-input" type="checkbox"
+                           @if($user->show_people_i_follow)
+                           checked
+                           @endif
+                            id="checkPeople"
                            style="cursor:pointer;">
                     <label class="form-check-label" style="margin-left: 10px;" for="checkPeople">
                         Only people I follow
                     </label>
                 </div>
                 <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" value="" id="checkTags" style="cursor:pointer;">
+                    <input class="form-check-input" type="checkbox"
+                        @if($user->show_tags_i_follow)
+                            checked
+                        @endif
+                        id="checkTags" style="cursor:pointer;">
                     <label class="form-check-label" style="margin-left: 10px;" for="checkTags">
                         Only tags I follow
                     </label>

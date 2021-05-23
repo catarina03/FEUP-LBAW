@@ -275,8 +275,8 @@ hr.solid {
 }
 
 .switch:checked {
-    border-color: black;
-    background-color: #ffc2ad;
+    border-color: white;
+    background-color: #307371;
     box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important;
 }
 
