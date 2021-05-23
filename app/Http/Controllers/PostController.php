@@ -165,7 +165,7 @@ class PostController extends Controller
             $photo->save();
         }
 */
-        
+
         $user = 'authenticated_user';
         //Get tags associated with current post TODO:: Use Tag Model
         $tags = DB::select(DB::raw("select t.name
@@ -229,12 +229,20 @@ class PostController extends Controller
         //Get comment count,likes and dislikes
         $comments = Comment::getPostComments($id,"desc",1);
         $comments = Comment::checkReported($comments,$user_id);
+        foreach ($comments as $c){
+            $like = DB::table("vote_comment")->where("comment_id",$c->id)->where('user_id', $user_id)->value('like');
+            if($like === true) $liked = 2;
+            else if($like === false) $liked = 1;
+            else $liked = 0;
+            $c->liked = $liked;
+        }
+
         $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
         $temp = $votes->get()->count();
         $likes = $votes->where("like",true)->get()->count();
         $dislikes = $temp - $likes;
-        
+
         //Get tags associated with current post
         $tags = DB::select(DB::raw("select t.name,t.id
         FROM post_tag,tag as t

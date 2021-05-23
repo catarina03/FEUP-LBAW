@@ -39,8 +39,9 @@ Route::put('api/comment/{comment_id}/edit','CommentController@editAction');
 Route::delete('api/comment/{comment_id}','CommentController@destroyComment');
 Route::get('api/comment/{comment_id}/thread','CommentController@threads');
 Route::post('api/comment/{comment_id}/add_comment','CommentController@addThread');
-Route::post('api/comment/{comment_id}/vote','CommentController@vote');
+Route::post('api/comment/{comment_id}/vote','CommentController@addVote');
 Route::put('api/comment/{comment_id}/vote', 'CommentController@editVote');
+Route::delete('api/comment/{comment_id}/vote', 'CommentController@deleteVote');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

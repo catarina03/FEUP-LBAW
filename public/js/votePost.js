@@ -66,10 +66,10 @@ function makeRequest(type, vote){
             else alert('Error in vote: ' +  voteRequest.response)
         }
     }
+
     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    if(type === "DELETE")
-        voteRequest.open(type, window.location.protocol +"//" + window.location.host + '/api/post/'+ post_id +'/vote', true)
-    else voteRequest.open(type, window.location.protocol +"//" + window.location.host + '/api/post/'+ post_id +'/vote', true)
+    if(type === "DELETE") voteRequest.open(type, '/api/post/'+ post_id +'/vote', true)
+    else voteRequest.open(type, '/api/post/'+ post_id +'/vote', true)
     voteRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     voteRequest.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     voteRequest.setRequestHeader("X-CSRF-TOKEN", token);

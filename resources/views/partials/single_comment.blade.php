@@ -34,10 +34,30 @@
                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                             <div class="row">
                                 <div class="d-flex comment_interactions">
-                                    <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment->likes}} <i
-                                            title="Like comment" class="far fa-thumbs-up"></i></h3>
-                                    <h3 class="post-page-comment-interactions pe-3 my-0">{{$comment->dislikes}} <i
-                                            title="Dislike comment" class="far fa-thumbs-down"></i></h3>
+                                     @if($comment->liked == 2)
+                                        <h3 class="post-page-comment-interactions  pe-3 my-0"><span class ="up">{{$comment->likes}}</span>
+                                             <button class="post-page-comment-thumbs-up-button btn ">
+                                                <i class="fas fa-thumbs-up"></i></button>
+                                        </h3>
+                                     @else
+                                        <h3 class="post-page-comment-interactions pe-3 my-0"><span class ="up">{{$comment->likes}}</span>
+                                             <button class="post-page-comment-thumbs-up-button btn ">
+                                                <i class="far fa-thumbs-up"></i></button>
+                                        </h3>
+                                    @endif
+                                    @if($comment->liked == 1)
+                                        <h3 class="post-page-comment-interactions  pe-3 my-0"><span class ="down">{{$comment->dislikes}}</span>
+                                            <button class="post-page-comment-thumbs-down-button btn m-0 ">
+                                                <i class="fas fa-thumbs-down"></i>
+                                            </button>
+                                        </h3>
+                                    @else
+                                         <h3 class="post-page-comment-interactions pe-3 my-0"><span class ="down">{{$comment->dislikes}}</span>
+                                            <button class="post-page-comment-thumbs-down-button btn m-0 ">
+                                                <i class="far fa-thumbs-down"></i>
+                                            </button>
+                                        </h3>
+                                    @endif
                                     @auth
                                     @if($user_id != $comment->user_id)
                                         @if(!$comment->reported)
@@ -136,7 +156,7 @@
                                                                 @if(!$comment->reported)
                                                                 <span hidden class="content_id comment_content">{{$comment->id}}</span>
                                                                 <i title="Report comment" class="fas fa-ban my-0 post-page-report-comment pe-3 report_action" data-bs-toggle="modal" data-bs-target="#report"></i>
-                                                                @endif                                                           
+                                                                @endif
                                                             @endif
                                                             @endauth
                                                 </div>

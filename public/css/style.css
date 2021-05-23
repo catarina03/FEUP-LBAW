@@ -1032,7 +1032,6 @@ a.footer-link:hover {
 
 .post-page-comment-interactions .fa-thumbs-up:hover {
     font-size: medium;
-    color: green;
 }
 
 .post-page-comment-interactions .fa-thumbs-down {
@@ -1042,7 +1041,6 @@ a.footer-link:hover {
 
 .post-page-comment-interactions .fa-thumbs-down:hover {
     font-size: medium;
-    color: darkred;
 }
 
 .post-page-comment-interactions i.fa-comments {
