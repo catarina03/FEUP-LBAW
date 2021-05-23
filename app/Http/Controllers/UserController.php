@@ -14,11 +14,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Types\Integer;
 use Illuminate\Support\Facades\Hash;
+use App\Policies\UserPolicy;
 
 class UserController extends Controller
 {
@@ -80,22 +80,16 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user_id = null;
-        if(Auth::check()){
-            $user_id = Auth::user()->id;
-        }
-        else{
-            return redirect('/');
-        }
-        if($id == $user_id){
-            $tag_ids = DB::table('follow_tag')->where('user_id', $user_id)->pluck('tag_id');
-            if(empty($tag_ids)) $tags = null;
-            else if(is_object($tag_ids)) $tags = Tag::whereIn('id', $tag_ids)->get();
-            else $tags = Tag::where('id', $tag_ids)->get();
+        if(!UserPolicy::edit($id)) return redirect('/');
 
-            return view('pages.settings', ['needsFilter' => 0, 'user'=>Auth::user(), 'tags'=>$tags]);
-        }
-        return redirect('/');
+
+        $tag_ids = DB::table('follow_tag')->where('user_id', $id)->pluck('tag_id');
+        if(empty($tag_ids)) $tags = null;
+        else if(is_object($tag_ids)) $tags = Tag::whereIn('id', $tag_ids)->get();
+        else $tags = Tag::where('id', $tag_ids)->get();
+
+        return view('pages.settings', ['needsFilter' => 0, 'user'=>Auth::user(), 'tags'=>$tags]);
+
     }
 
     /**
@@ -232,6 +226,7 @@ class UserController extends Controller
         $blocked_user = AuthenticatedUser::find($id);
         if ($blocked_user != null)
             $user->block_user()->delete(['blocked_user' => $id, 'blocking_user' => $user->id]);
+            $user->block_user()->delete(['blocked_user' => $id, 'blocking_user' => $user->id]);
     }
 
     /**
@@ -256,11 +251,8 @@ class UserController extends Controller
      */
     public function edit_account(Request $request, $id)
     {
-        //fazer policy
-        if (!Auth::check()) return;//nao tem permissoes
+        if(!UserPolicy::edit($id)) return redirect('/');
         $user = Auth::user();
-
-        if($id != $user->id) return; //nao tem permissoes
 
         $validator = Validator::make($request->all(),
             [
@@ -293,11 +285,8 @@ class UserController extends Controller
      */
     public function edit_social_networks(Request $request, $id)
     {
-        //policy
-        if (!Auth::check()) return;//nao tem permissoes
+        if(!UserPolicy::edit($id)) return redirect('/');
         $user = Auth::user();
-
-        if($id != $user->id) return; //nao tem permissoes
 
         $validator = Validator::make($request->all(),
             [
@@ -332,11 +321,8 @@ class UserController extends Controller
      */
     public function edit_preferences(Request $request, $id)
     {
-        //fazer policy
-        if (!Auth::check()) return;//nao tem permissoes
+        if(!UserPolicy::edit($id)) return redirect('/');
         $user = Auth::user();
-
-        if($id != $user->id) return; //nao tem permissoes
 
         $validator = Validator::make($request->all(),
             [
@@ -397,12 +383,8 @@ class UserController extends Controller
      */
     public function change_password(Request $request, $id)
     {
-        //fazer policy
-        if (!Auth::check()) return;//nao tem permissoes
-
+        if(!UserPolicy::edit($id)) return redirect('/');
         $user = Auth::user();
-
-        if($id != $user->id) return; //nao tem permissoes
 
         $validator = Validator::make($request->all(),
             [
