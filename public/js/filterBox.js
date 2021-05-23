@@ -78,7 +78,7 @@ function getFilters(){
     let peopleFollow = false
     let tagFollow = false
     let myPosts = false
-    if(peopleFollowCheck!=null) peopleFollow = peopleFollowCheck.checked
+    if(peopleFollowCheck != null) peopleFollow = peopleFollowCheck.checked
     if(tagFollowCheck != null) tagFollow = tagFollowCheck.checked
     if(myPostsCheck != null) myPosts = myPostsCheck.checked
 
@@ -96,7 +96,8 @@ function getFilters(){
         const pages = path.split('/')
         if(pages[2] !== null) category = pages[2]
     }
-    if(category !== "" && category !== null) filters['category'] = category
+
+    if(category !== "" && category !== null && category !== undefined) filters['category'] = category
 }
 
 function redirectWithFilters(e){
