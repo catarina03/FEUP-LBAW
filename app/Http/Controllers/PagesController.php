@@ -109,7 +109,8 @@ class PagesController extends Controller
             $query->where('type', strtolower($request->input('type')));
         }
         if($request->has('category')){
-            $query->where('category', strtolower($request->input('category')));
+            if($request->input('category') == "TVShow") $query->where('category', strtolower("tv show"));
+            else $query->where('category', strtolower($request->input('category')));
         }
         if($request->has('startDate')){
             $query->where('created_at', '>=',date("m/d/Y", strtotime($request->input('startDate'))));
