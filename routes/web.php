@@ -57,10 +57,11 @@ Route::put('api/user/{id}/edit_bio', 'UserController@edit_bio');
 
 
 Route::get('user/{id}/settings', 'UserController@edit');
-Route::put('user/{id}/settings/edit_account', 'UserController@edit_account');
-Route::put('user/{id}/settings/edit_social_networks', 'UserController@edit_social_networks');
-Route::put('user/{id}/settings/edit_preferences', 'UserController@edit_preferences');
-Route::put('user/{id}/settings/change_password', 'UserController@change_password');
+Route::put('user/{id}/settings/edit_account', 'UserController@edit_account')->name('edit_account');
+Route::put('user/{id}/settings/edit_social_networks', 'UserController@edit_social_networks')->name('edit_social_networks');
+Route::put('user/{id}/settings/change_password', 'UserController@change_password')->name('change_password');
+Route::put('user/{id}/settings/edit_preferences', 'UserController@edit_preferences')->name('edit_preferences');
+
 
 Route::post('/api/user/{id}/follow', 'UserController@follow');
 Route::delete('/api/user/{id}/follow', 'UserController@unfollow');
