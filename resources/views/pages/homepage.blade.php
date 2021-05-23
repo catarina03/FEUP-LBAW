@@ -4,6 +4,7 @@
 @section('content')
     <script type="text/javascript" src="{{ URL::asset('js/utils.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/homepage.js') }}" defer></script>
+    <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
     <div class="homepage row g-0" style="margin-top: 5em; margin-bottom:7em;">
         <div class="homepage-view col-lg-2 col-12 pt-lg-5 pt-2 ps-lg-5">
             <nav class="nav homepage-navbar w-100 d-lg-block d-flex justify-content-center">

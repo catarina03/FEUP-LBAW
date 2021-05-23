@@ -895,14 +895,13 @@ a.footer-link:hover {
     background-color: #0C1D1C;
     color: #EFF9FA;
 }
-
-.post-page-post-tag:hover {
-    color: inherit;
-    background-color: transparent;
-    font-family: 'Roboto', sans-serif;
-    font-size: small;
-    font-weight: 400;
-    text-decoration: none;
+.post-page-post-tag:hover{
+  color: inherit;
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  font-weight:400;
+  text-decoration: underline;
 }
 
 .post-page-tag-container:hover {
@@ -1033,7 +1032,6 @@ a.footer-link:hover {
 
 .post-page-comment-interactions .fa-thumbs-up:hover {
     font-size: medium;
-    color: green;
 }
 
 .post-page-comment-interactions .fa-thumbs-down {
@@ -1043,7 +1041,6 @@ a.footer-link:hover {
 
 .post-page-comment-interactions .fa-thumbs-down:hover {
     font-size: medium;
-    color: darkred;
 }
 
 .post-page-comment-interactions i.fa-comments {
@@ -1274,5 +1271,11 @@ h3.post-page-comment-reply-interactions {
     border-style: none;
     box-shadow: none;
 
+}
+
+
+.report_content_select{
+    color:grey;
+    width: 70%;
 }
 

@@ -69,3 +69,37 @@ function EmptyCommentsVisibility(isV){
     else
         j.removeAttribute("hidden");
 }
+
+
+function displayEditElements(container,hide){
+    let drop = container.getElementsByClassName("dropdown")[0];
+    if(drop){
+        if(hide){
+            drop.classList.add("d-none");
+        }
+        else{
+            drop.classList.remove("d-none");
+        }
+    }
+    let name = container.getElementsByClassName("post-page-comment-author-date")[0];
+    if(!name)
+        name = container.getElementsByClassName("post-page-comment-reply-author-date")[0];
+    if(name){
+        if(hide){
+            name.classList.add("d-none");
+        }
+        else{
+            name.classList.remove("d-none");
+        }
+    }
+    let int = container.getElementsByClassName("comment_interactions")[0];
+    if(int){
+        if(hide){
+            int.classList.add("d-none");
+        }
+        else{
+            int.classList.remove("d-none");
+        }
+    }
+
+}

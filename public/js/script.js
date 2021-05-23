@@ -1,4 +1,4 @@
-let savePosts = document.querySelectorAll(".card .savePost");
+/*let savePosts = document.querySelectorAll(".card .savePost");
 
 savePosts.forEach((item) =>
   item.addEventListener("click", function () {
@@ -12,4 +12,4 @@ savePosts.forEach((item) =>
       listClass.add("bi-bookmark-plus-fill");
     }
   })
-);
+);*/
