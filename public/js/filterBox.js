@@ -105,7 +105,7 @@ function redirectWithFilters(e){
     addSpinner()
     startDateElem = document.querySelector('input[type="date"]#startDate1')
     endDateElem = document.querySelector('input[type="date"]#endDate1')
-    if(getFilters() !== -1) window.location = (window.location.protocol + "//" + window.location.host + "/search/filters?" + encodeForAjax(filters))
+    if(getFilters() !== -1) window.location = ("/search/filters?" + encodeForAjax(filters))
 }
 
 function updateAdvancedSearch(adding, posts, number_res, page){
@@ -170,7 +170,7 @@ function loadHandlerAdvancedSearch(e){
             else alert('Error fetching api: ' +  filterRequest.status)
         }
     }
-    filterRequest.open('GET', window.location.protocol + "//" + window.location.host + '/api/search?'+ encodeForAjax(filters), true)
+    filterRequest.open('GET', '/api/search?'+ encodeForAjax(filters), true)
     filterRequest.send()
 }
 
@@ -184,17 +184,6 @@ function addSpinner(){
     s.classList.remove('d-none')
     s.classList.add('d-inline-block')
 }
-
-/*function removeSpinner(){
-    let searchspan = document.querySelector('.search-span')
-    searchspan.classList.remove('d-none')
-    searchspan.classList.add('d-inline-block')
-
-    let s = document.querySelector('.search-spinner')
-    s.classList.remove('d-inline-block')
-    s.classList.add('d-none')
-}*/
-
 
 function checkDates(startDate, endDate){
     let errorSpan = document.querySelector('.error-span')

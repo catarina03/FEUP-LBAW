@@ -6,12 +6,6 @@ if(category == null) category = "Music"
 
 if(loadMoreCategory != null) loadMoreCategory.addEventListener('click', loadHandlerCategory)
 
-/*window.addEventListener('scroll', function(){
-    if((document.body.offsetHeight + document.body.scrollTop) >= document.body._scrollHeight){
-        loadHandlerCategory()
-    }
-})*/
-
 let top_button = document.querySelector("#go-top")
 if(top_button != null){
     top_button.addEventListener('click', function(){
@@ -54,7 +48,7 @@ function loadHandlerCategory(e){
             else alert('Error fetching api: ' +  loadRequest.status)
         }
     }
-    loadRequest.open('GET',window.location.protocol +"//" + window.location.host +'/api/category/loadMore/'+ category + '/' + page , true)
+    loadRequest.open('GET','/api/category/loadMore/'+ category + '/' + page , true)
     loadRequest.send()
 }
 
