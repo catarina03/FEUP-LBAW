@@ -130,15 +130,15 @@ class UserController extends Controller
      * @return
      */
     public function destroy($id){
-        //policy
-        if(Auth::check()){
-            $user = AuthenticatedUser::find($id);
-            if($user != null){
-                if ($user->delete())
-                    return response()->json( '/');
-            }
+        if(!UserPolicy::edit($id))  return response()->json( 'user/'.$id.'/settings#delete-account', 400);
+
+        $user = AuthenticatedUser::find($id);
+        if($user != null){
+            if ($user->delete())
+                return response()->json( '/');
         }
-        return response()->json( 'user/'.$id.'/settings', 400);
+
+        return response()->json( 'user/'.$id.'/settings#delete-account', 400);
     }
 
     public function roles()
@@ -261,7 +261,7 @@ class UserController extends Controller
                 "email" => ["filled", "email", "max:50", Rule::unique('authenticated_user')->ignore($user->id)],
             ]);
 
-        if ($validator->fails()) return redirect()->back()->withErrors($validator)->withInput();
+        if ($validator->fails()) return redirect('user/'.$id.'/settings#edit-account')->withErrors($validator)->withInput();
 
        if($request->has('name') &&  trim($request->input('name')) !== $user->name)
            $user->name = trim($request->input('name'));
@@ -272,7 +272,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect(url()->previous())->with('success-account', 'Account updated successfully!');
+        return redirect('user/'.$id.'/settings#edit-account')->with('success-account', 'Account updated successfully!');
 
     }
 
@@ -296,7 +296,7 @@ class UserController extends Controller
                 "linkedin" => ["present ", "max:100"]
             ]);
 
-        if ($validator->fails()) return redirect()->back()->withErrors($validator)->withInput();
+        if ($validator->fails()) return redirect('user/'.$id.'/settings#edit-social-networks')->withErrors($validator)->withInput();
 
         if($request->has('twitter') &&  trim($request->input('twitter')) !== $user->twitter)
             $user->twitter = trim($request->input('twitter'));
@@ -308,7 +308,7 @@ class UserController extends Controller
             $user->linkedin = trim($request->input('linkedin'));
 
         $user->save();
-        return redirect(url()->previous())->with('success-social-networks', 'Social networks updated successfully!');
+        return redirect('user/'.$id.'/settings#edit-social-networks')->with('success-social-networks', 'Social networks updated successfully!');
     }
 
 
@@ -330,7 +330,7 @@ class UserController extends Controller
                 "show_tags_i_follow" => ["boolean"]
             ]);
 
-        if ($validator->fails()) return redirect()->back()->withErrors($validator)->withInput();
+        if ($validator->fails()) return redirect('user/'.$id.'/settings#edit-preferences')->withErrors($validator)->withInput();
 
 
         if($request->has('peopleFollow')) $user->show_people_i_follow = true;
@@ -355,9 +355,9 @@ class UserController extends Controller
             }
         }
 
-        $existing = DB::table('follow_tag')->where('user_id',$user->id)->whereIn('tag_id', $tags)->value('tag_id');
+        $existing = DB::table('follow_tag')->where('user_id',$user->id)->whereIn('tag_id', $tags)->pluck('tag_id');
 
-        if(($existing != null) && is_object($existing)) $to_add = array_diff($tags, $existing);
+        if(($existing != null) && is_array($existing->all())) $to_add = array_diff($tags, $existing->all());
         else if ($existing){
             if (($key = array_search($existing, $tags)) !== false) {
                 unset($tags[$key]);
@@ -370,7 +370,7 @@ class UserController extends Controller
             DB::table('follow_tag')->insert(['user_id' => $user->id, 'tag_id' => $t]);
         }
 
-        return redirect()->back()->with('success-preferences', 'Preferences updated successfully!');
+        return redirect('user/'.$id.'/settings#edit-preferences')->with('success-preferences', 'Preferences updated successfully!');
     }
 
 
@@ -393,11 +393,11 @@ class UserController extends Controller
                 'confirmPassword' => 'required|same:newPassword',
             ]);
 
-        if ($validator->fails()) return redirect()->back()->withErrors($validator);
+        if ($validator->fails()) return redirect('user/'.$id.'/settings#change-password')->withErrors($validator);
 
         AuthenticatedUser::find($user->id)->update(['password'=> Hash::make($request->newPassword)]);
 
-        return redirect(url()->previous())->with('success-password', 'Password changed successfully!');
+        return redirect('user/'.$id.'/settings#change-password')->with('success-password', 'Password changed successfully!');
     }
 
 

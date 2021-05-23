@@ -19,14 +19,12 @@
 
                 <div class="row d-flex mt-2">
                     <div class="col-lg-12 col-8 pt-2">
-                        <h2>Edit Account</h2>
+                        <h2 id ="edit-account">Edit Account</h2>
                     </div>
                     <div class="d-lg-none col-4 pt-2">
                         <a href="{{ url('user/'.$user->id) }}" class="my-profile-settings go-profile"><i
                                 class="bi bi-person-circle fs-3 pe-2"></i>Profile</a>
                     </div>
-
-
                 </div>
                 <hr class="solid col-12">
                 <form  method="POST" action=" {{ route('edit_account', $user->id)}}" >
@@ -88,7 +86,7 @@
                 </form>
 
                 <div class="row d-flex mt-3">
-                    <h2> Social Networks </h2>
+                    <h2 id="edit-social-networks"> Social Networks </h2>
                 </div>
                 <hr class="solid col-12">
                 <form  method="POST" action=" {{ route('edit_social_networks', $user->id)}}">
@@ -168,7 +166,7 @@
                 </form>
 
                 <div class="row d-flex mt-3">
-                    <h2> Change Password </h2>
+                    <h2 id ="change-password"> Change Password </h2>
                 </div>
                 <hr class="solid col-12">
 
@@ -231,7 +229,7 @@
                 </form>
 
                 <div class="row d-flex mt-3">
-                    <h2>Preferences </h2>
+                    <h2 id="edit-preferences">Preferences </h2>
                 </div>
                 <hr class="solid col-12">
                 <form  method="POST" action=" {{ route('edit_preferences', $user->id)}}">
@@ -291,7 +289,7 @@
                     </div>
                 </form>
                 <div class="row d-flex mt-3">
-                    <h2>Delete Account</h2>
+                    <h2 id="delete-account">Delete Account</h2>
                 </div>
                 <hr class="solid col-12">
                 <div class="row mb-3 ms-lg-5 ">
