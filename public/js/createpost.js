@@ -3,7 +3,7 @@
 //let tags = document.getElementById("created-post-tags");
 let submitButton = document.getElementById("submit-button");
 //let tagInput = document.getElementById("tag-input");
-//let postForm = document.getElementById("create-post-form")
+let postForm = document.getElementById("create-post-form")
 
 /*
 submitButton.addEventListener("click", function (){
@@ -15,6 +15,10 @@ submitButton.addEventListener("click", function (){
     console.log(document.getElementById("tag-input-form"));
 });
  */
+
+submitButton.addEventListener("click", function(){
+   postForm.submit();
+});
 
 /*
 submitButton.onclick = function() {
@@ -90,7 +94,7 @@ function writeTag(tag){
 
 $('#select2-tags').select2({
     allowClear: false,
-    placeholder: "You're not following any tags, click on the star in the post tags to follow them",
+    placeholder: "You're haven't tagged your post yet, add at least 2 different tags",
     theme: 'classic',
     tags: true,
     tokenSeparators: [',', ' '],

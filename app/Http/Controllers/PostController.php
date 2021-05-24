@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\AuthenticatedUser;
 use App\Models\Comment;
 use App\Policies\PostPolicy;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -51,22 +52,18 @@ class PostController extends Controller
     {
         Validator::extend('minTags', function($attribute, $value, $parameters) {
             $min = (int) $parameters[0];
-            $tagList = explode(",", $value);
-            return count($tagList) >= $min;
+            return count($value) >= $min;
         });
 
         Validator::extend('maxTags', function($attribute, $value, $parameters) {
             $max = (int) $parameters[0];
-            $tagList = explode(",", $value);
-            return count($tagList) <= $max;
+            return count($value) <= $max;
         });
 
         Validator::extend('noDups', function($attribute, $value, $parameters) {
-            $tagList = explode(",", $value);
-            return count($tagList) === count(array_flip($tagList));
+            return count($value) === count(array_flip($value));
         });
 
-        //dd($request->input());
         //checkar se tem autorizaçao
         $validator = Validator::make($request->all(),
         [
@@ -78,7 +75,7 @@ class PostController extends Controller
             'category' => ['required', 'string'],
             'user_id' => ['required', 'int'],
             'photos' => ['array'],
-            'tag-input-form' => ['string', "minTags:2", "maxTags:10", "noDups"],
+            'tags' => ['array', "minTags:2", "maxTags:10", "noDups"],
         ],
         [
             'title.required' => 'Title can not be empty',
@@ -96,89 +93,58 @@ class PostController extends Controller
             'category.string' => 'Category must be string',
             'user_id.required' => 'User ID is required',
             'user_id.int' => 'User ID must be an integer',
-            'tag-input-form.min' => 'Must add at least 2 tags',
-            'tag-input-form.max' => 'Must add at maximum 10 tags',
+            'tags.min' => 'Must add at least 2 tags',
+            'tags.max' => 'Must add at maximum 10 tags',
         ]);
          if ($validator->fails()) {
-             //dd($validator->errors());
-             //dd($request->all());
              return redirect(url()->previous())->withErrors($validator)->withInput();
-
         }
 
-        $post = new Post();
-        $post->title = $request->input('title');
+        DB::beginTransaction();
+        try{
+            $post = new Post();
+            $post->title = $request->input('title');
 
-        // function assumes that the image is valid and verification was done before
-        $date = date('Y-m-d H:i:s');
-        $imageSalt = random_bytes(5);
-        $imageName = hash("sha256", $request->file('thumbnail')->getFilename() . $date . $imageSalt) . "." . $request->file('thumbnail')->getClientOriginalExtension();
-        // Generate filenames for original, small and medium files
-        //$request->file('thumbnail')->move(storage_path(public_path().'/images'), $imageName);
-        //$image_path = Storage::disk('public')->putFile('images', $request->file('thumbnail'));
-        $request->thumbnail->move(public_path('images'), $imageName);
+            $imageName = $request->file('thumbnail')->getClientOriginalName() . "_" . date('Y-m-d H:i:s') . rand(0,999) . "." .  $request->file('thumbnail')->getClientOriginalExtension();
+            $request->thumbnail->move(public_path('images/posts'), $imageName);
 
-        $post->thumbnail = $imageName;
-        $post->content = $request->input('content');
-        $post->is_spoiler = $request->input('is_spoiler');
-        $post->type = $request->input('type');
-        $post->category = $request->input('category');
-        $post->user_id =  1;
-        $post->save();
+            $post->thumbnail = $imageName;
+            $post->content = $request->input('content');
+            $post->is_spoiler = $request->input('is_spoiler');
+            $post->type = $request->input('type');
+            $post->category = $request->input('category');
+            $post->user_id =  $request->input('user_id');
+            $post->save();
 
-        //$post_id = Post::query()->where('user_id', Auth::id())->orderBy('id', 'desc')->first();
-        //Storage::put(public_path().'/images/'.$post->id.'_thumb', $post->thumbnail);
+            $tagArray = $request->input('tags');
 
-        $tagArray = explode(',', $request->input('tag-input-form'));
+            foreach($tagArray as $tag){
+                if(DB::table('tag')->select('id')->where('name', '=', $tag)->exists()){
+                    $t =  DB::table('tag')->where('name', '=', $tag)->first();
+                    DB::table('post_tag')->insert(['post_id' => $post->id, 'tag_id' => $t->id]);
+                }
+                else{
 
-        info($tagArray);
-
-        foreach($tagArray as $tag){
-            info($tag);
-            //inserir tag na tabela post_tags e na tag se nao existir ainda
-
-            //dd($t);
-            if(DB::table('tag')->select('id')->where('name', '=', $tag)->exists()){
-                $t =  DB::table('tag')->where('name', '=', $tag)->first();
-                //dd($t);
-                DB::table('post_tag')->insert(['post_id' => $post->id, 'tag_id' => $t->id]);
-                //$post->tags()->create(['post_id'=> $post->id, 'tag_id' => $t->id]);
-               // dd($t);
+                    $new_tag = new Tag();
+                    $new_tag->name = $tag;
+                    $new_tag->save();
+                    DB::table('post_tag')->insert(['post_id' => $post->id, 'tag_id' => $new_tag->id]);
+                }
             }
-            else{
-               // dd($tag);
-                $new_tag = new Tag();
-                $new_tag->name = $tag;
-                $new_tag->save();
-                DB::table('post_tag')->insert(['post_id' => $post->id, 'tag_id' => $new_tag->id]);
-                //$post->tags()->create(['post_id'=> $post->id, 'tag_id' => $new_tag->id]); TODO WHY NOT WORKING??
-            }
+
+            DB::commit();
+            
+            return redirect()->action([PostController::class, 'show'],['id'=>$post->id]);
+
+        } catch(QueryException $err){
+            DB::rollBack();
+            return abort(404, "Failed to commit transaction");
         }
 
-/*
-        foreach($request->input('photos') as $f){//add each photo to Photo table
-            $photo = new Photo();
-            $photo->photo = $f;
-            $photo->post_id = $post->post_id;
-            $photo->save();
-        }
-*/
-
-        $user = 'authenticated_user';
-        //Get tags associated with current post TODO:: Use Tag Model
-        $tags = DB::select(DB::raw("select t.name
-        FROM post_tag,tag as t
-        WHERE post_tag.post_id=$post->id AND t.id = post_tag.tag_id;"));
-        //Generate metadata to send to view
-        $metadata = ['comments'=>0,'author'=>AuthenticatedUser::find($post->user_id)['name'],'views' => 0,
-            'likes' => 0,'tags' => $tags,'date'=>$post->created_at,'thumbnail' => '/images/'.$post->thumbnail];
 
 
-        //return view('pages.post', ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]); //TODO, WRONG ROUTE
-        return redirect()->action([PostController::class, 'show'],['id'=>$post->id]);//'/post/'.$post->id, ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]);
-        //return redirect()->route("post/".$post->id, ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]);
-        //return \redirect()
-        //return this.show($post->id);
+
+
     }
 
     /**
@@ -238,7 +204,7 @@ class PostController extends Controller
 
         //Get date and thumbnail path
         $date = date("F j, Y", strtotime($post['created_at']));
-        $thumbnail = "/images/".$post->thumbnail;
+        $thumbnail = "/images/posts/".$post->thumbnail;
 
 
 
@@ -314,19 +280,19 @@ class PostController extends Controller
     {
         Validator::extend('minTags', function($attribute, $value, $parameters) {
             $min = (int) $parameters[0];
-            $tagList = explode(",", $value);
-            return count($tagList) >= $min;
+           // $tagList = explode(",", $value);
+            return count($value) >= $min;
         });
 
         Validator::extend('maxTags', function($attribute, $value, $parameters) {
             $max = (int) $parameters[0];
-            $tagList = explode(",", $value);
-            return count($tagList) <= $max;
+          //  $tagList = explode(",", $value);
+            return count($value) <= $max;
         });
 
         Validator::extend('noDups', function($attribute, $value, $parameters) {
-            $tagList = explode(",", $value);
-            return count($tagList) === count(array_flip($tagList));
+           // $tagList = explode(",", $value);
+            return count($value) === count(array_flip($value));
         });
 
         //dd($request->input());

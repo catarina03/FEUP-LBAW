@@ -150,8 +150,8 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="user_id" value="1" />
-                <input type="hidden" id="tag-input-form" name="tag-input-form" value="{{ old('tag-input-form') }}" />
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" />
+
                 <div class="row justify-content-center mt-5">
                     <div class="col-10">
                         <div class="row d-flex flex-row">
@@ -168,7 +168,7 @@
                                 };
                             </script>
                             <div class="col-md-auto col-12 text-center">
-                                <button type="submit" id="submit-button" class="btn publish-post px-5">Publish</button>
+                                <button type="button" id="submit-button" class="btn publish-post px-5">Publish</button>
                             </div>
                         </div>
                     </div>
