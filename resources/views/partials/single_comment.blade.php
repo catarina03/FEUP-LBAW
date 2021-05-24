@@ -34,32 +34,33 @@
                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                             <div class="row">
                                 <div class="d-flex comment_interactions align-items-end">
+
                                      @if($comment->liked == 2)
-                                        <h3 class="post-page-comment-interactions p-0 m-0" >
+                                        <h3 class="post-page-comment-interactions p-0 m-0">
                                             <span class="up  ">{{$comment->likes}}</span>
                                              <button class="post-page-comment-thumbs-up-button btn ">
                                                 <i class="fas fa-thumbs-up "></i></button>
                                         </h3>
                                     @else
-                                        <h3 class="post-page-comment-interactions p-0 m-0" >
+                                        <h3 class="post-page-comment-interactions p-0 m-0">
                                             <span class="up "
-                                                  >{{$comment->likes}}</span>
+                                            >{{$comment->likes}}</span>
                                              <button class="post-page-comment-thumbs-up-button btn ">
                                                 <i class="far fa-thumbs-up "></i></button>
                                         </h3>
                                     @endif
                                     @if($comment->liked == 1)
-                                        <h3 class="post-page-comment-interactions p-0 m-0" ><span
+                                        <h3 class="post-page-comment-interactions p-0 m-0"><span
                                                 class="down"
-                                              >{{$comment->dislikes}}</span>
+                                            >{{$comment->dislikes}}</span>
                                             <button class="post-page-comment-thumbs-down-button btn m-0 mr-2">
                                                 <i class="fas fa-thumbs-down"></i>
                                             </button>
                                         </h3>
                                     @else
-                                        <h3 class="post-page-comment-interactions p-0 m-0" ><span
+                                        <h3 class="post-page-comment-interactions p-0 m-0"><span
                                                 class="down"
-                                                >{{$comment->dislikes}}</span>
+                                            >{{$comment->dislikes}}</span>
                                             <button class="post-page-comment-thumbs-down-button btn m-0 mr-2">
                                                 <i class="far fa-thumbs-down"></i>
                                             </button>
@@ -127,6 +128,7 @@
                                         <div class="col-11 p-0 m-0 d-flex comment_content_container align-items-end">
                                             <h3 class="post-page-comment-reply-body m-0 comment_content">{{$comment->content}}</h3>
                                         </div>
+
                                         <div class="col-auto p-0 m-0 ms-auto">
                                             <span class="comment_id THREADID" hidden>{{$comment->id}}</span>
                                             <span class="parent_id" hidden>{{$comment->comment_id}}</span>
@@ -153,12 +155,13 @@
                                             <h3 class="post-page-comment-reply-author-date p-0 m-0">by <a
                                                     href="{{route('profile',['id'=>$comment->user_id])}}">{{$comment->author}}</a>, {{$comment->comment_date}}</h3>
                                         </div>
+
                                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                                             <div class="row">
                                                 <div class="d-flex comment_interactions">
                                                     @if($comment->liked == 2)
                                                         <h3 class="post-page-comment-interactions p-0 m-0"
-                                                            >
+                                                        >
                                             <span class="up ">{{$comment->likes}}</span>
                                              <button class="post-page-comment-thumbs-up-button btn ">
                                                 <i class="fas fa-thumbs-up"></i></button>
@@ -172,16 +175,16 @@
                                         </h3>
                                                     @endif
                                                     @if($comment->liked == 1)
-                                                        <h3 class="post-page-comment-interactions p-0 m-0"><span class="down"
-                                                                                              >{{$comment->dislikes}}</span>
+                                                        <h3 class="post-page-comment-interactions p-0 m-0">
+                                                            <span class="down">{{$comment->dislikes}}</span>
                                             <button class="post-page-comment-thumbs-down-button btn m-0 mr-2">
                                                 <i class="fas fa-thumbs-down"></i>
                                             </button>
                                         </h3>
                                                     @else
                                                         <h3 class="post-page-comment-interactions p-0 m-0"
-                                                            ><span class="down"
-                                                                                              style="margin-right:-0.7rem; margin-top:0.8rem;">{{$comment->dislikes}}</span>
+                                                        ><span class="down"
+                                                               style="margin-right:-0.7rem; margin-top:0.8rem;">{{$comment->dislikes}}</span>
                                             <button class="post-page-comment-thumbs-down-button btn m-0 mr-2">
                                                 <i class="far fa-thumbs-down"></i>
                                             </button>

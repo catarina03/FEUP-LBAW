@@ -1,16 +1,19 @@
 let comments = document.querySelectorAll('.comment-container')
+let thread_comments = document.querySelectorAll('.thread-container')
 
-if(comments != null){
-    comments.forEach((comment) =>{
-        let upVoteComment = comment.querySelector('.post-page-comment-thumbs-up-button')
-        let downVoteComment = comment.querySelector('.post-page-comment-thumbs-down-button')
-        if(upVoteComment != null) upVoteComment.addEventListener('click', handleUpVoteComment.bind(comment))
-        if(downVoteComment != null) downVoteComment.addEventListener('click',handleDownVoteComment.bind(comment))
-    })
+if(comments != null) comments.forEach((comment) => addCommentsEventListeners(comment))
+if(thread_comments != null) thread_comments.forEach((comment) => addCommentsEventListeners(comment))
+
+
+function addCommentsEventListeners(comment){
+    let upVoteComment = comment.querySelector('.post-page-comment-thumbs-up-button')
+    let downVoteComment = comment.querySelector('.post-page-comment-thumbs-down-button')
+    if(upVoteComment != null) upVoteComment.addEventListener('click', handleUpVoteComment.bind(comment))
+    if(downVoteComment != null) downVoteComment.addEventListener('click',handleDownVoteComment.bind(comment))
 }
 
 function handleUpVoteComment(){
-    const id = this.querySelector('comment_id').innerHTML
+    const id = this.querySelector('.comment_id').innerHTML
     let downVoteComment = this.querySelector('.post-page-comment-thumbs-down-button')
     let upVotesCountComment = this.querySelector('.post-page-comment-interactions .up')
     let downVotesCountComment = this.querySelector('.post-page-comment-interactions .down')

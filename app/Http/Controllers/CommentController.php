@@ -266,14 +266,14 @@ class CommentController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('comment_id', $id)->get();
 
-        $vote = $request["vote"] == true;
+        $vote = $request["vote"] == "true";
 
         if($vote == null && $vote_entry == null && !is_bool($vote)) return response()->json('Error in vote', 400);
 
         DB::table("vote_comment")->where('user_id', Auth::user()->id)
             ->where('comment_id', $id)->update(['like' => $vote]);
 
-        return response()->json('Success');
+        return response()->json($request["vote"]);
     }
 
 

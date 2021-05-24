@@ -33,7 +33,7 @@ class Comment extends Model
     {
         return $this->belongsTo(AuthenticatedUser::class, 'user_id');
     }
-    
+
     public function voted_by(){
         return $this->belongsToMany(AuthenticatedUser::class,"vote_comment","user_id","comment_id")->withPivot("like");
     }
@@ -51,8 +51,8 @@ class Comment extends Model
     }
 
     public static function getPostComments($post_id,$date_order,$offset){
-        
-            $comments = Comment::where("post_id",$post_id)->orderBy("comment_date",$date_order)->get()->forPage($offset,5)->all();
+
+        $comments = Comment::where("post_id",$post_id)->orderBy("comment_date",$date_order)->get()->forPage($offset,5)->all();
         $result = array();
         foreach($comments as $comment){
             $temp = Comment::getCommentInfo($comment->id);
@@ -74,7 +74,7 @@ class Comment extends Model
         foreach($comments as  $comment){
             $comment_ids[] = $comment->c_id;
         }
-        
+
         $result = array();
         foreach($comment_ids as $id){
             $temp = Comment::getCommentInfo($id);

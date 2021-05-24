@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\Photo;
 use App\Models\Tag;
 use App\Models\AuthenticatedUser;
 use App\Models\Comment;
@@ -11,12 +10,10 @@ use App\Policies\PostPolicy;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Response;
-//use Auth;
+
 
 class PostController extends Controller
 {
