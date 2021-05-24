@@ -5,7 +5,7 @@
     <div class="modal-dialog modal-dialog-centered justify-content-center d-flex">
         <div class="modal-content justify-content-center">
             <div class="modal-header" style="background-color:#307371; color:white;">
-                <h5 class="modal-title ">Confirm</h5>
+                <h5 class="modal-title justify-content-center">Report</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
@@ -16,7 +16,7 @@
 
             <div class="row justify-content-center pb-5 report-motives">
                 <select class="form-select report_content_select" aria-label="Select a report motive">
-                    <option selected>Select a motive:</option>
+                    <option selected>Select a motive</option>
                     <option value="fake">Fake News</option>
                     <option value="innapropriate">Innapropriate content</option>
                     <option value="abusive">Abusive content</option>

@@ -756,6 +756,33 @@ CREATE TRIGGER post_search
     FOR EACH ROW
     EXECUTE PROCEDURE post_search();
 
+CREATE OR REPLACE FUNCTION duplicate_reports() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF EXISTS(
+        SELECT * FROM report 
+        WHERE user_reporting=NEW.user_reporting AND post_reported=NEW.post_reported)
+    THEN
+        RAISE EXCEPTION 'This user has already reported this post!';
+    END IF;
+    
+    IF EXISTS(
+        SELECT * FROM report 
+        WHERE user_reporting=NEW.user_reporting AND comment_reported=NEW.comment_reported)
+    THEN
+        RAISE EXCEPTION 'This user has already reported this comment!';
+    END IF;
+    
+    RETURN NEW;
+END;
+$BODY$
+    LANGUAGE 'plpgsql';
+    
+CREATE TRIGGER duplicate_reports
+    BEFORE INSERT ON report
+    FOR EACH ROW
+    EXECUTE PROCEDURE duplicate_reports();
+
     --TAG
 insert into tag (name) values ('uniform');
 insert into tag (name) values ('Realigned');

@@ -250,7 +250,7 @@
             </div>
         </div>
     </div>
-
-@endsection
 @include('pages.confirm')
 @include('partials.report_modal')
+@endsection
+
