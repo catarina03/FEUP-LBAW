@@ -80,7 +80,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if(!UserPolicy::edit($id)) return redirect('/');
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
 
 
         $tag_ids = DB::table('follow_tag')->where('user_id', $id)->pluck('tag_id');
@@ -251,7 +251,7 @@ class UserController extends Controller
      */
     public function edit_account(Request $request, $id)
     {
-        if(!UserPolicy::edit($id)) return redirect('/');
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
         $user = Auth::user();
 
         $validator = Validator::make($request->all(),
@@ -285,7 +285,7 @@ class UserController extends Controller
      */
     public function edit_social_networks(Request $request, $id)
     {
-        if(!UserPolicy::edit($id)) return redirect('/');
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
         $user = Auth::user();
 
         $validator = Validator::make($request->all(),
@@ -321,7 +321,7 @@ class UserController extends Controller
      */
     public function edit_preferences(Request $request, $id)
     {
-        if(!UserPolicy::edit($id)) return redirect('/');
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
         $user = Auth::user();
 
         $validator = Validator::make($request->all(),
@@ -383,7 +383,7 @@ class UserController extends Controller
      */
     public function change_password(Request $request, $id)
     {
-        if(!UserPolicy::edit($id)) return redirect('/');
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
         $user = Auth::user();
 
         $validator = Validator::make($request->all(),

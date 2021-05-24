@@ -4,9 +4,9 @@
             <img src="{{URL::asset($post->thumbnail)}}" height="200" class="card-img-top" alt="...">
             <div>
                 @if($post->category == "tv show")
-                    <a class="black-link categoryTag" href="category/category?category=TVShow">
+                    <a class="black-link categoryTag" href="/category/TVShow">
                 @else
-                    <a class="black-link categoryTag" href="category/category?category={{ucfirst($post->category)}}">
+                    <a class="black-link categoryTag" href="/category/{{ucfirst($post->category)}}">
                 @endif
                         <h6>{{ucfirst($post->category)}}</h6>
                      </a>

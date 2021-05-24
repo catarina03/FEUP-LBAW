@@ -10,7 +10,7 @@ if(comments != null){
 }
 
 function handleUpVoteComment(){
-    const id = this.querySelector('.content_id.comment_content').innerHTML
+    const id = this.querySelector('comment_id').innerHTML
     let downVoteComment = this.querySelector('.post-page-comment-thumbs-down-button')
     let upVotesCountComment = this.querySelector('.post-page-comment-interactions .up')
     let downVotesCountComment = this.querySelector('.post-page-comment-interactions .down')
@@ -37,7 +37,7 @@ function handleUpVoteComment(){
 }
 
 function handleDownVoteComment(){
-    const id = this.querySelector('.content_id.comment_content').innerHTML
+    const id = this.querySelector('.comment_id').innerHTML
     let upVotesCountComment = this.querySelector('.post-page-comment-interactions .up')
     let downVotesCountComment = this.querySelector('.post-page-comment-interactions .down')
     let upVoteComment = this.querySelector('.post-page-comment-thumbs-up-button')

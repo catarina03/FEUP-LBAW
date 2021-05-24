@@ -919,6 +919,10 @@ a.footer-link:hover {
     color: #0c1d1c;
     font-size: xx-large;
 }
+.post-page-post-thumbs-up-button .fa-thumbs-up:hover {
+    color: green;
+    font-size: xx-large;
+}
 .post-page-post-thumbs-up-button:focus {
     outline: none;
     box-shadow: none;
@@ -926,6 +930,10 @@ a.footer-link:hover {
 
 .post-page-post-thumbs-down-button i {
     color: #0c1d1c;
+    font-size: xx-large;
+}
+.post-page-post-thumbs-down-button .fa-thumbs-down:hover {
+    color: darkred;
     font-size: xx-large;
 }
 .post-page-post-thumbs-down-button:focus {
@@ -1032,6 +1040,7 @@ a.footer-link:hover {
 
 .post-page-comment-interactions .fa-thumbs-up:hover {
     font-size: medium;
+    color: green;
 }
 
 .post-page-comment-interactions .fa-thumbs-down {
@@ -1041,6 +1050,7 @@ a.footer-link:hover {
 
 .post-page-comment-interactions .fa-thumbs-down:hover {
     font-size: medium;
+    color: darkred;
 }
 
 .post-page-comment-interactions i.fa-comments {
