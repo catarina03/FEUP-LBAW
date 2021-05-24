@@ -29,18 +29,20 @@ function makeRequest(id, photo){
     const getUrl = window.location;
     photoRequest.onreadystatechange = function(){
         if(photoRequest.readyState === XMLHttpRequest.DONE){
-            console.log("DONE")
-            if(photoRequest.status === 200){
-                let photoResponse = photoRequest.responseText
-                console.log("REQUEST")
-                console.log(photoRequest)
-                console.log(photoResponse)
+           // console.log("DONE")
+            window.alert("HERE1")
+           // if(photoRequest.status === 200){  TODO RETURN 200
+                window.alert("HERE2")
+              //  let photoResponse = photoRequest.responseText
+              //  console.log("REQUEST")
+                //console.log(photoRequest)
+                //console.log(photoResponse)
 
-                updateProfilePhoto(photoResponse)
+                updateProfilePhoto(photoRequest.responseText)
                 //displaySpinner(true, type)
             }
             else alert('Error fetching api: ' +  photoRequest.status)
-        }
+
     }
     //console.log(getUrl .protocol + '//' + getUrl.host + '/' + 'api/user/' + id + '/edit_photo');
     //console.log(photo)
@@ -56,21 +58,7 @@ function makeRequest(id, photo){
 }
 
 function updateProfilePhoto(photoResponse){
-    console.log("UPDATE")
-    console.log(photo)
+    window.alert("HERE3")
     photo_container.innerHTML = photoResponse;
-    /* let pag = document.querySelector('.homepage .pagination')
-     if(pag != null)
-         pag.parentNode.removeChild(pag)
-     let postDiv = document.querySelector('.postsCards')
-     let newDiv = document.createElement('div')
-     postDiv.innerHTML = ""
-     newDiv.innerHTML= posts
-     while (newDiv.firstChild) {
-         postDiv.appendChild(newDiv.firstChild)
-     }
-     addLoadMore(postDiv)
 
-     */
-   // photo.src = photoResponse;
 }

@@ -1,9 +1,9 @@
 'use strict'
 
-let tags = document.getElementById("created-post-tags");
+//let tags = document.getElementById("created-post-tags");
 let submitButton = document.getElementById("submit-button");
-let tagInput = document.getElementById("tag-input");
-let postForm = document.getElementById("create-post-form")
+//let tagInput = document.getElementById("tag-input");
+//let postForm = document.getElementById("create-post-form")
 
 /*
 submitButton.addEventListener("click", function (){
@@ -27,6 +27,10 @@ submitButton.onclick = function() {
 };
  */
 
+
+
+
+/*
 postForm.addEventListener("submit", function (){
     let inputArray = [];
     for (let i = 0; i < tags.children.length; i++){
@@ -75,3 +79,40 @@ function writeTag(tag){
         + tag
         + '<i class="bi bi-x ms-1 post-tag-remover"></i></a>';
 }
+
+
+ */
+
+
+
+
+
+
+$('#select2-tags').select2({
+    allowClear: false,
+    placeholder: "You're not following any tags, click on the star in the post tags to follow them",
+    theme: 'classic',
+    tags: true,
+    tokenSeparators: [',', ' '],
+
+    width: '100%'
+})
+
+
+/*
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+*/
+
+
+/*
+$(".js-example-tags").select2({
+    tags: true
+});
+
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-tags').select2();
+});
+*/

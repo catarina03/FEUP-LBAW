@@ -38,7 +38,7 @@ class PostController extends Controller
     {
         // ver se está autenticado
 
-        return view('pages.createpost', ['needsFilter' => 0]);
+        return view('pages.createpost', ['needsFilter' => 0, 'tags'=>[]]);
     }
 
     /**

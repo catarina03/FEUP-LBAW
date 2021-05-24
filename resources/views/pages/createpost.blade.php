@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="{{asset('js/createpost.js')}}" defer></script>
 <div class="createPost row g-0 pt-lg-5 pt-3" style="margin-top: 4em; margin-bottom: 7em;">
     <div class="createPost-icon col-12 col-lg-3 pt-lg-5 pt-3 pb-3 text-center justify-content-center">
         <i class="bi bi-plus-square-dotted d-lg-block d-none" style="font-size:8em;color:#0c1d1c;"></i>
@@ -130,43 +131,25 @@
                 <div class="container mx-0 px-0 mt-3 create-post-tags-container">
                     <div class="row justify-content-center">
                         <div class="col-10">
-                            <label for="tags" class="col-12 col-form-label">Tags</label>
-
-                            <div class="container bg-white rounded border d-flex align-items-center justify-content-center form-control" id="tags"
-                                 style="height:4em;">
-                                <div class="row d-flex justify-content-start tags" id="created-post-tags">
-                                   {{-- <a class="btn btn-secondary btn-sm  d-flex justify-content-center m-2">Music <i
-                                            class="bi bi-x ms-1"></i></a>
-                                            --}}
-                                </div>
-                                <input class="col-4 form-control w-100 create-post-tag-input" id="tag-input" name="tag-input" value="{{ old('tag-input') }}" >
-                            </div>
+                            <label for="select2-tags" class="col-12 col-form-label">Tags</label>
+                            <select id="select2-tags" class="form-control bg-white rounded border" multiple="multiple" name="tags[]" >
+                               @foreach($tags as $tag)
+                                    <option value="{{$tag->id}}" selected>{{$tag->name}}</option>
+                               @endforeach
+                            </select>
                             @error('tags')
-                            <div class="error">{{ $message }}</div>
+                                <div class="error">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
+
                     <div class="row justify-content-center mt-1">
                         <div class="col-10">
                             <p>Min: 2 tags - Max 10 tags</p>
                         </div>
                     </div>
                 </div>
-                {{--
-                      <div class="container mx-0 px-0 mt-3">
-                    <div class="row justify-content-center">
-                        <div class="col-10">
-                            <label for="tags" class="col-auto ">Add co-authors</label>
-                            <div class="bg-white rounded border justify-content-center form-control" id="tags"
-                                 style="height:4em;">
-                                <div class="d-flex justify-content-start tags">
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                --}}
                 <input type="hidden" name="user_id" value="1" />
                 <input type="hidden" id="tag-input-form" name="tag-input-form" value="{{ old('tag-input-form') }}" />
                 <div class="row justify-content-center mt-5">
@@ -194,5 +177,4 @@
         </div>
     </div>
 </div>
-<script src="{{asset('js/createpost.js')}}" defer></script>
 @endsection

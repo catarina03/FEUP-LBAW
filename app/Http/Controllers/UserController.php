@@ -265,16 +265,17 @@ class UserController extends Controller
         } //TODO: TEST SEM O FILE ABS.JPEG
 
 
-//        dd($request);
-
         $request->avatar->move(public_path('images/users'), $imageName);
-      //  $request->profile_photo->move($request->avatar, public_path('images/users').$imageName);
 
         AuthenticatedUser::where('id', $authenticatedUser->id)->update(['profile_photo'=>$imageName]);
         $authenticatedUser->profile_photo = $imageName;
 
+      //  dd(response()->json(view('partials.profilephoto', ['photo'=>$imageName]), 200));
+
         //return $authenticatedUser->profile_photo;
+        //return $response->ok();
         return view('partials.profilephoto', ['photo'=>$imageName]);
+        //return response()->json('ok', 200);
     }
 
 
