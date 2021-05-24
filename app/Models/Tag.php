@@ -33,7 +33,7 @@ class Tag extends Model
     {
         return $this->belongsToMany(AuthenticatedUser::class,'follow_tag','user_id','tag_id');
     }
-    
+
 
 
 }
