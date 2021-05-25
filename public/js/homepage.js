@@ -6,14 +6,12 @@ let loadH = document.querySelector(".homepage-navbar .hotLoad")
 let new_filter = document.querySelector(".homepage-navbar #new")
 let loadN = document.querySelector(".homepage-navbar .newLoad")
 let top_button = document.querySelector("#go-top")
+
 if(top_button != null){
     top_button.addEventListener('click', function(){
         window.scrollTo(0,0)
     })
 }
-
-
-
 
 if(t != null && loadT != null){
     t.addEventListener("click", function(e){
@@ -157,12 +155,13 @@ function loadHandlerHomepage(e){
                     }
                     else if(Math.floor(n_posts / 15 + 1) > page) addLoadMoreHomepage(postDiv)
                 }
-                page++
+                page++;
+                addSavePostListeners();
             }
             else alert('Error fetching api: ' +  loadRequest.status)
         }
     }
-    loadRequest.open('GET', 'api/loadMore/'+ filtering + '/' + page , true)
+    loadRequest.open('GET', '/api/loadMore/'+ filtering + '/' + page , true)
     loadRequest.send()
 }
 

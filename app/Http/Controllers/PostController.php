@@ -3,19 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\Photo;
 use App\Models\Tag;
 use App\Models\AuthenticatedUser;
 use App\Models\Comment;
 use App\Policies\PostPolicy;
+use App\Models\Report;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-//use Auth;
+
 
 class PostController extends Controller
 {
@@ -171,10 +170,12 @@ class PostController extends Controller
 
         //Verify if user is authenticated and if user is owner of post
         $user_id = null;
+        $isSaved = false;
         $liked = 0;
         if(Auth::check()){
             $user_id = Auth::user()->id;
-            $isOwner = $user_id === $post->user_id? true : false;
+            $isOwner = $user_id == $post->user_id? true : false;
+            $isSaved = DB::table("saves")->where("user_id",$user_id)->where("post_id",$id)->get()->count() > 0;
             if(!PostPolicy::show_post(Auth::user(),$post))
                 return view('pages.pagenotfound',['user' => 'visitor','needsFilter' => 0]);
             $like = DB::table("vote_post")->where("post_id",$id)->where('user_id', $user_id)->value('like');
@@ -186,7 +187,6 @@ class PostController extends Controller
         else
             $isOwner = false;
 
-        //Set timestamps to false(updated_at column doesnt exist) and increment views
         $post->timestamps = false;
         $post->increment('n_views');
 
@@ -195,6 +195,15 @@ class PostController extends Controller
 
         //Get comment count,likes and dislikes
         $comments = Comment::getPostComments($id,"desc",1);
+        $comments = Comment::checkReported($comments,$user_id);
+        foreach ($comments as $c){
+            $like = DB::table("vote_comment")->where("comment_id",$c->id)->where('user_id', $user_id)->value('like');
+            if($like === true) $liked = 2;
+            else if($like === false) $liked = 1;
+            else $liked = 0;
+            $c->liked = $liked;
+        }
+
         $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
         $temp = $votes->get()->count();
@@ -202,19 +211,26 @@ class PostController extends Controller
         $dislikes = $temp - $likes;
 
         //Get tags associated with current post
-        $tags = DB::select(DB::raw("select t.name
+        $tags = DB::select(DB::raw("select t.name,t.id
         FROM post_tag,tag as t
         WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
+        foreach($tags as $tag){
+            $tag->isSaved = false;
+            $tag->isSaved = Db::table("follow_tag")->where("user_id",$user_id)->where("tag_id",$tag->id)->get()->count() > 0;
+        }
 
         //Get date and thumbnail path
         $date = date("F j, Y", strtotime($post['created_at']));
         $thumbnail = "/images/posts/".$post->thumbnail;
-
+        $report = Report::where("user_reporting",$user_id)->where("post_reported",$post->id)->get()->count();
+        $post->reported = false;
+        if($report>0)
+            $post->reported = true;
 
 
         //Generate metadata to send to view
         $metadata = ['comment_count'=>$comment_count,'author'=>$USER,'views' => $post->n_views,
-                     'likes' => $likes, 'dislikes' => $dislikes, 'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments, 'liked' => $liked];
+                     'likes' => $likes, 'dislikes' => $dislikes, 'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments, 'liked' => $liked,"isSaved"=>$isSaved];
 
 
         return view('pages.post', ['isOwner' => $isOwner, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id]);
@@ -423,16 +439,17 @@ class PostController extends Controller
             return Redirect::back()->withErrors($validator->errors())->withInput();
         }
         $post = Post::find($post_id);
-        if($post != null){
+        if(($post != null) && Auth::check() && (Auth::user()->id != $post->user_id)){
             $report = new Report();
+            $report->timestamps = false;
             $report->motive = $request->input('motive');
             $report->user_reporting = Auth::user()->id;
             $report->post_reported = $post->id;
             $report->save();
 
-            return; //redirect para a pagina do post
+            return response()->json(['status' => "Post reported!"])->setStatusCode(200);
         }
-        else return; //nao sei para onde vai
+        else return response()->json(['status' => "Error encountered when trying to report post!"])->setStatusCode(404);
 
 
     }
@@ -440,8 +457,6 @@ class PostController extends Controller
     public function addSave($id){
 
         $route = \Route::current();
-
-        //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
             return '';
         if(Auth::check()){
@@ -449,7 +464,7 @@ class PostController extends Controller
             if(Auth::user()->id != $post->user_id){
                 if($post != null){
                     DB::table("saves")->insert([
-                        'user_id' => 1,
+                        'user_id' => Auth::user()->id,
                         'post_id' => $id
                     ]);
                     return 'SUCCESS';
@@ -463,16 +478,16 @@ class PostController extends Controller
         $route = \Route::current();
         //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
-            return '';
+            return 'F';
         if(Auth::check()){
-            $post = Post::find($post_id);
-            $save = DB::table("save")->where("post_id",$post_id)->where("user_id",Auth::user()->id);
+            $post = Post::find($id);
+            $save = DB::table("saves")->where("post_id",$id)->where("user_id",Auth::user()->id);
             if($post != null && $save != null){
                 if($save->delete())
                     return 'SUCCESS';
             }
         }
-        return '';
+        return 'A';
     }
 
     public function popularComments(Request $request, $post_id){

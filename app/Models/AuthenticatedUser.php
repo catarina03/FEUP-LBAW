@@ -33,12 +33,7 @@ class AuthenticatedUser extends Authenticatable
     ];
 
 
-
-
-
     /**                              Associations                           */
-
-
 
 
 
@@ -103,4 +98,13 @@ class AuthenticatedUser extends Authenticatable
         return $this->belongsToMany(Post::class, 'saves', 'authenticatedUser_id', 'post_id');
     }
 
+    public function isAdmin(): bool
+    {
+        return (($this->authenticated_user_type == "System Manager") || ($this->authenticated_user_type == "Moderator"));
+    }
+
+    public function isSM(): bool
+    {
+        return $this->authenticated_user_type == "System Manager";
+    }
 }

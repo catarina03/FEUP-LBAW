@@ -15,7 +15,9 @@ class PagesController extends Controller
         $posts = $this->getPostsInfo($p);
         $slideshow = $this->slideshow();
         $n_posts = Post::count();
-        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow, 'n_posts' => $n_posts]);
+        $user = null;
+        if(Auth::check()) $user = Auth::user();
+        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow, 'n_posts' => $n_posts, 'user'=> $user]);
     }
 
     public function slideshow(){
@@ -39,7 +41,8 @@ class PagesController extends Controller
     }
 
     public function category($category){
-
+        $user = null;
+        if(Auth::check()) $user = Auth::user();
         if($category == "Music") $posts = Post::where('category', 'music')->paginate(15,'*', 'page', 1);
         else if($category == "TVShow") $posts = Post::where('category', 'tv show')->paginate(15,'*', 'page', 1);
         else if($category == "Cinema") $posts = Post::where('category', 'cinema')->paginate(15,'*', 'page', 1);
@@ -50,14 +53,16 @@ class PagesController extends Controller
         $posts = $this->getPostsInfo($posts);
         if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts, 'n_posts' => $n_posts]);
 
-        return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts, 'n_posts' => $n_posts]);
+        return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts, 'n_posts' => $n_posts, 'user'=>$user]);
 
     }
 
     public function list($homepageFilters){
+        $user = null;
         $p = Post::getPostsOrdered($homepageFilters, 1);
         $posts = $this->getPostsInfo($p);
         $n_posts = Post::count();
+
         return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts, 'n_posts' => $n_posts])->render(),'n_posts' => $n_posts));
     }
 
@@ -81,10 +86,12 @@ class PagesController extends Controller
 
 
     public function advancedSearch(Request $request){
+        $user = null;
+        if(Auth::check()) $user = Auth::user();
         $p = $this->filter($request,1);
         $posts = $this->getPostsInfo($p);
 
-        return view('pages.advanced_search', ['needsFilter'=> 1,'posts' => $posts, 'number_res'=> $p->total()])->render();
+        return view('pages.advanced_search', ['needsFilter'=> 1,'posts' => $posts, 'number_res'=> $p->total(), 'user' => $user])->render();
     }
 
     public function loadMoreAdvancedSearch(Request $request){
@@ -109,7 +116,8 @@ class PagesController extends Controller
             $query->where('type', strtolower($request->input('type')));
         }
         if($request->has('category')){
-            $query->where('category', strtolower($request->input('category')));
+            if($request->input('category') == "TVShow") $query->where('category', strtolower("tv show"));
+            else $query->where('category', strtolower($request->input('category')));
         }
         if($request->has('startDate')){
             $query->where('created_at', '>=',date("m/d/Y", strtotime($request->input('startDate'))));
@@ -143,11 +151,12 @@ class PagesController extends Controller
             $post->thumbnail = "/images/posts/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
+            $post->isOwner = false;
             if(Auth::check()){
-                //$save = DB::table("saved_by")->where("post_id",$post->id)->where("authenticatedUser_id", Auth::user()->id)->get();
-                //if($save != null) $post->saved = true;
-                //else
-                $post->saved = false;
+                $post->isOwner = Auth::user()->id == $post->user_id;
+                $save = DB::table("saves")->where("post_id",$post->id)->where("user_id", Auth::user()->id)->get()->count();
+                if($save > 0) $post->saved = true;
+                else $post->saved = false;
             }
             else $post->saved = false;
         }

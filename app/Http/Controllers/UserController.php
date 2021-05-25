@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\AuthenticatedUser;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Policies\PostPolicy;
+use App\Rules\MatchOldPassword;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\Integer;
+use Illuminate\Support\Facades\Hash;
+use App\Policies\UserPolicy;
 
 class UserController extends Controller
 {
@@ -90,13 +100,21 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param AuthenticatedUser $authenticatedUser
+     * @param
      * @return Application|Factory|View|Response
      */
-    public function edit(AuthenticatedUser $authenticatedUser)
+    public function edit($id)
     {
-        //view de settings
-        return view('pages.settings', ['needsFilter' => 0]);
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
+
+
+        $tag_ids = DB::table('follow_tag')->where('user_id', $id)->pluck('tag_id');
+        if(empty($tag_ids)) $tags = null;
+        else if(is_object($tag_ids)) $tags = Tag::whereIn('id', $tag_ids)->get();
+        else $tags = Tag::where('id', $tag_ids)->get();
+
+        return view('pages.settings', ['needsFilter' => 0, 'user'=>Auth::user(), 'tags'=>$tags]);
+
     }
 
     /**
@@ -133,12 +151,19 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param Integer $id
+     * @return
      */
-    public function destroy(AuthenticatedUser $authenticatedUser)
-    {
-        //
+    public function destroy($id){
+        if(!UserPolicy::edit($id))  return response()->json( 'user/'.$id.'/settings#delete-account', 400);
+
+        $user = AuthenticatedUser::find($id);
+        if($user != null){
+            if ($user->delete())
+                return response()->json( '/');
+        }
+
+        return response()->json( 'user/'.$id.'/settings#delete-account', 400);
     }
 
     public function roles()
@@ -225,6 +250,7 @@ class UserController extends Controller
 
         $blocked_user = AuthenticatedUser::find($id);
         if ($blocked_user != null)
+            $user->block_user()->delete(['blocked_user' => $id, 'blocking_user' => $user->id]);
             $user->block_user()->delete(['blocked_user' => $id, 'blocking_user' => $user->id]);
     }
 
@@ -320,31 +346,33 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param Integer $id
+     * @return
      */
-    public function edit_account(Request $request, AuthenticatedUser $authenticatedUser)
+    public function edit_account(Request $request, $id)
     {
-        $user = Auth::check();
-        if (!Auth::check()) return;
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
+        $user = Auth::user();
 
-        //
-        $data = Validator::make($request->all(),
+        $validator = Validator::make($request->all(),
             [
-                "name" => ["string", "max:50"],
-                "username" => ["string", "max:50", "unique:authenticated_user"],
-                "email" => ["string", "email", "max:50"],
+                "name" => ["max:20", "filled"],
+                "username" => ["filled", "max:20",  Rule::unique('authenticated_user')->ignore($user->id)],
+                "email" => ["filled", "email", "max:50", Rule::unique('authenticated_user')->ignore($user->id)],
             ]);
 
-        if ($data->fails()) {
-            return; //redirect
-        }
+        if ($validator->fails()) return redirect('user/'.$id.'/settings#edit-account')->withErrors($validator)->withInput();
 
-        $user->name = $data['name'];
-        $user->username = $data['username'];
-        $user->email = $data['email'];
+       if($request->has('name') &&  trim($request->input('name')) !== $user->name)
+           $user->name = trim($request->input('name'));
+        if($request->has('username') &&  trim($request->input('username')) !== $user->username)
+            $user->username = trim($request->input('username'));
+        if($request->has('email') &&  trim($request->input('email')) !== $user->email)
+            $user->email = trim($request->input('email'));
+
         $user->save();
 
+        return redirect('user/'.$id.'/settings#edit-account')->with('success-account', 'Account updated successfully!');
 
     }
 
@@ -352,32 +380,35 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param Integer $id
+     * @return
      */
-    public function edit_social_networks(Request $request, AuthenticatedUser $authenticatedUser)
+    public function edit_social_networks(Request $request, $id)
     {
-        $user = Auth::check();
-        if (!Auth::check()) return;
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
+        $user = Auth::user();
 
-        //
-        $data = Validator::make($request->all(),
+        $validator = Validator::make($request->all(),
             [
-                "twitter" => ["string", "max:50"],
-                "facebook" => ["string", "max:50"],
-                "instagram" => ["string", "max:50"],
-                "linkedin" => ["string", "max:50"]
+                "twitter" => ["max:100", "present"],
+                "facebook" => ["present", "max:100"],
+                "instagram" => ["present", "max:100"],
+                "linkedin" => ["present ", "max:100"]
             ]);
 
-        if ($data->fails()) {
-            return; //redirect
-        }
+        if ($validator->fails()) return redirect('user/'.$id.'/settings#edit-social-networks')->withErrors($validator)->withInput();
 
-        $user->twitter = $data['twitter'];
-        $user->facebook = $data['facebook'];
-        $user->instagram = $data['instagram'];
-        $user->linkedin = $data['linkedin'];
+        if($request->has('twitter') &&  trim($request->input('twitter')) !== $user->twitter)
+            $user->twitter = trim($request->input('twitter'));
+        if($request->has('facebook') &&  trim($request->input('facebook')) !== $user->facebook)
+            $user->facebook = trim($request->input('facebook'));
+        if($request->has('instagram') &&  trim($request->input('instagram')) !== $user->instagram)
+            $user->instagram = trim($request->input('instagram'));
+        if($request->has('linkedin') &&  trim($request->input('linkedin')) !== $user->linkedin)
+            $user->linkedin = trim($request->input('linkedin'));
+
         $user->save();
+        return redirect('user/'.$id.'/settings#edit-social-networks')->with('success-social-networks', 'Social networks updated successfully!');
     }
 
 
@@ -385,30 +416,61 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param Integer $id
+     * @return
      */
-    public function edit_preferences(Request $request, AuthenticatedUser $authenticatedUser)
+    public function edit_preferences(Request $request, $id)
     {
-        $user = Auth::check();
-        if (!Auth::check()) return;
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
+        $user = Auth::user();
 
-        //
-        $data = Validator::make($request->all(),
+        $validator = Validator::make($request->all(),
             [
                 "show_people_i_follow" => ["boolean"],
-                "show_tags_i_follow" => ["string", "max:50"]
+                "show_tags_i_follow" => ["boolean"]
             ]);
 
-        if ($data->fails()) {
-            return; //redirect
-        }
+        if ($validator->fails()) return redirect('user/'.$id.'/settings#edit-preferences')->withErrors($validator)->withInput();
 
-        $user->show_people_i_follow = $data['show_people_i_follow'];
-        $user->show_tags_i_follow = $data['show_tags_i_follow'];
-        $user->show_tags_i_follow = $data['show_tags_i_follow'];
+
+        if($request->has('peopleFollow')) $user->show_people_i_follow = true;
+        else $user->show_people_i_follow = false;
+        if($request->has('tagsFollow')) $user->show_tags_i_follow = true;
+        else $user->show_tags_i_follow = false;
+
         $user->save();
 
+        $tags = [];
+        if($request->has('tags')){
+            foreach ($request->input('tags') as $a){
+                array_push($tags, $a);
+            }
+        }
+
+        $to_delete = DB::table('follow_tag')->where('user_id',$user->id)->whereNotIn('tag_id', $tags)->pluck('tag_id');
+        if(!is_object($to_delete))  DB::table('follow_tag')->where('tag_id', $to_delete)->delete();
+        else{
+            foreach ($to_delete as $t){
+                DB::table('follow_tag')->where('tag_id', $t)->delete();
+            }
+        }
+
+        $existing = DB::table('follow_tag')->where('user_id',$user->id)->whereIn('tag_id', $tags)->pluck('tag_id');
+
+        if(($existing != null) && is_array($existing->all())) $to_add = array_diff($tags, $existing->all());
+        else if ($existing){
+            if (($key = array_search($existing, $tags)) !== false) {
+                unset($tags[$key]);
+            }
+            $to_add = $tags;
+        }
+        else $to_add = $tags;
+
+        foreach($to_add as $t){
+            DB::table('follow_tag')->insert(['user_id' => $user->id, 'tag_id' => $t]);
+        }
+
+        return redirect('user/'.$id.'/settings#edit-preferences')->with('success-preferences', 'Preferences updated successfully!');
     }
 
 
@@ -416,38 +478,26 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param Integer $id
+     * @return
      */
-    public function change_password(Request $request, AuthenticatedUser $authenticatedUser)
+    public function change_password(Request $request, $id)
     {
-        $user = Auth::check();
-        if (!Auth::check()) return;
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
+        $user = Auth::user();
 
-        //
-        $data = Validator::make($request->all(),
+        $validator = Validator::make($request->all(),
             [
-                'password' => 'required|string|min:6|confirmed',
-                'new_password' => 'required|string|min:6|confirmed',
-                'confirmation_password' => 'required|string|min:6|confirmed',
+                'currentPassword' => ['required', 'min:5', new MatchOldPassword],
+                'newPassword' => 'required|min:5',
+                'confirmPassword' => 'required|same:newPassword',
             ]);
 
-        if ($data->fails()) {
-            return; //redirect
-        }
+        if ($validator->fails()) return redirect('user/'.$id.'/settings#change-password')->withErrors($validator);
 
-        if (Hash::check($data['confirmation_password'], Hash::make($data['new_password'])) === false) {
-            return;
-        } else if (!Hash::check($data['password'], $user->password)) {
-            return response()->json(array(
-                'success' => false,
-                'errors' => array('password' => array('The password is incorrect.'))
-            ), 300);
-        }
+        AuthenticatedUser::find($user->id)->update(['password'=> Hash::make($request->newPassword)]);
 
-
-        //inserir password
-        $user->save();
+        return redirect('user/'.$id.'/settings#change-password')->with('success-password', 'Password changed successfully!');
     }
 
 

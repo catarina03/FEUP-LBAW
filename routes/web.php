@@ -14,7 +14,7 @@
 Route::get('/', 'Auth\LoginController@home');
 
 // Pages
-Route::get('/', 'PagesController@home');
+Route::get('/', 'PagesController@home')->name("homepage");
 Route::get('/about', 'PagesController@about');
 Route::get('/faq', 'PagesController@faq');
 Route::get('/support', 'PagesController@support');
@@ -39,8 +39,9 @@ Route::put('api/comment/{comment_id}/edit','CommentController@editAction');
 Route::delete('api/comment/{comment_id}','CommentController@destroyComment');
 Route::get('api/comment/{comment_id}/thread','CommentController@threads');
 Route::post('api/comment/{comment_id}/add_comment','CommentController@addThread');
-Route::post('api/comment/{comment_id}/vote','CommentController@vote');
+Route::post('api/comment/{comment_id}/vote','CommentController@addVote');
 Route::put('api/comment/{comment_id}/vote', 'CommentController@editVote');
+Route::delete('api/comment/{comment_id}/vote', 'CommentController@deleteVote');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -57,10 +58,11 @@ Route::put('api/user/{id}/edit_bio', 'UserController@edit_bio');
 
 
 Route::get('user/{id}/settings', 'UserController@edit');
-Route::put('user/{id}/settings/edit_account', 'UserController@edit_account');
-Route::put('user/{id}/settings/edit_social_networks', 'UserController@edit_social_networks');
-Route::put('user/{id}/settings/edit_preferences', 'UserController@edit_preferences');
-Route::put('user/{id}/settings/change_password', 'UserController@change_password');
+Route::put('user/{id}/settings/edit_account', 'UserController@edit_account')->name('edit_account');
+Route::put('user/{id}/settings/edit_social_networks', 'UserController@edit_social_networks')->name('edit_social_networks');
+Route::put('user/{id}/settings/change_password', 'UserController@change_password')->name('change_password');
+Route::put('user/{id}/settings/edit_preferences', 'UserController@edit_preferences')->name('edit_preferences');
+
 
 Route::post('/api/user/{id}/follow', 'UserController@follow');
 Route::delete('/api/user/{id}/follow', 'UserController@unfollow');
@@ -90,11 +92,15 @@ Route::put('reports/{report_id}/assign_report', 'ReportController@assign');
 Route::put('reports/{report_id}/process', 'ReportController@process');
 
 // Comment
-Route::put('comment/{comment_id}/report', 'CommentController@reportComment');
+Route::post('comment/{comment_id}/report', 'CommentController@reportComment');
 
 // Sort comments
 Route::get('api/post/{post_id}/popular_comments','PostController@popularComments');
 Route::get('api/post/{post_id}/newer_comments','PostController@newerComments');
 Route::get('api/post/{post_id}/older_comments','PostController@olderComments');
 Route::get('api/post/{post_id}/load_more/{page}','PostController@loadMore');
+
+//Api
+Route::post('api/tag/{tag_id}/follow','TagController@followTag');
+Route::delete('api/tag/{tag_id}/follow','TagController@unfollowTag');
 

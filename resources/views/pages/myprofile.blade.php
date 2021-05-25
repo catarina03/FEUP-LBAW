@@ -30,7 +30,7 @@
                                     <h5 class="card-title mt-5 profile-name">{{$user->name}}</h5>
                                         <a href="{{ url("user/".Auth::user()->id."/settings") }}"
                                            class="position-absolute d-inline corner-icons d-xl-none"
-                                           data-toggle="tooltip" data-placement="bottom" title="Settings"
+                                           title="Settings"
                                            style="transform:translate(-4em, -1em);"><i class="bi bi-gear-fill pe-2"
                                                                                        style="font-size:2.2em;"></i></a>
                                     </div>

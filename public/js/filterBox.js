@@ -15,6 +15,28 @@ let myPostsCheck = document.querySelector('#checkMyPosts')
 let filters = {}
 let pageAdv = 2
 
+window.addEventListener('scroll', function(){
+    let scrollY = this.scrollY;
+    let divScroll = document.querySelector('.go-top-scroll')
+    if(scrollY > 560 ){
+        if(divScroll.classList.contains('d-none')){
+            divScroll.classList.remove('d-none')
+            divScroll.classList.add('d-flex')
+        }
+    }
+    else{
+        if(divScroll.classList.contains('d-flex')){
+            divScroll.classList.remove('d-flex')
+            divScroll.classList.add('d-none')
+        }
+    }
+})
+
+
+
+
+
+
 if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', (e) => loadHandlerAdvancedSearch(e))
 
 if(homepageFilter != null) homepageFilter.addEventListener('click', (e) => redirectWithFilters(e))
@@ -56,7 +78,7 @@ function getFilters(){
     let peopleFollow = false
     let tagFollow = false
     let myPosts = false
-    if(peopleFollowCheck!=null) peopleFollow = peopleFollowCheck.checked
+    if(peopleFollowCheck != null) peopleFollow = peopleFollowCheck.checked
     if(tagFollowCheck != null) tagFollow = tagFollowCheck.checked
     if(myPostsCheck != null) myPosts = myPostsCheck.checked
 
@@ -74,7 +96,8 @@ function getFilters(){
         const pages = path.split('/')
         if(pages[2] !== null) category = pages[2]
     }
-    if(category !== "" && category !== null) filters['category'] = category
+
+    if(category !== "" && category !== null && category !== undefined) filters['category'] = category
 }
 
 function redirectWithFilters(e){
@@ -82,7 +105,7 @@ function redirectWithFilters(e){
     addSpinner()
     startDateElem = document.querySelector('input[type="date"]#startDate1')
     endDateElem = document.querySelector('input[type="date"]#endDate1')
-    if(getFilters() !== -1) window.location = (window.location.protocol + "//" + window.location.host + "/search/filters?" + encodeForAjax(filters))
+    if(getFilters() !== -1) window.location = ("/search/filters?" + encodeForAjax(filters))
 }
 
 function updateAdvancedSearch(adding, posts, number_res, page){
@@ -141,12 +164,13 @@ function loadHandlerAdvancedSearch(e){
                 parent.removeChild(outerDiv)
                 const response = JSON.parse(filterRequest.responseText)
                 updateAdvancedSearch(true, response['posts'], response['number_res'], pageAdv)
-                pageAdv++
+                pageAdv++;
+                addSavePostListeners();
             }
             else alert('Error fetching api: ' +  filterRequest.status)
         }
     }
-    filterRequest.open('GET', window.location.protocol + "//" + window.location.host + '/api/search?'+ encodeForAjax(filters), true)
+    filterRequest.open('GET', '/api/search?'+ encodeForAjax(filters), true)
     filterRequest.send()
 }
 
@@ -160,17 +184,6 @@ function addSpinner(){
     s.classList.remove('d-none')
     s.classList.add('d-inline-block')
 }
-
-/*function removeSpinner(){
-    let searchspan = document.querySelector('.search-span')
-    searchspan.classList.remove('d-none')
-    searchspan.classList.add('d-inline-block')
-
-    let s = document.querySelector('.search-spinner')
-    s.classList.remove('d-inline-block')
-    s.classList.add('d-none')
-}*/
-
 
 function checkDates(startDate, endDate){
     let errorSpan = document.querySelector('.error-span')

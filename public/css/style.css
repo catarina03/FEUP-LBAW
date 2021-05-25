@@ -275,8 +275,8 @@ hr.solid {
 }
 
 .switch:checked {
-    border-color: black;
-    background-color: #ffc2ad;
+    border-color: white;
+    background-color: #307371;
     box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important;
 }
 
@@ -906,14 +906,13 @@ a.footer-link:hover {
     background-color: #0C1D1C;
     color: #EFF9FA;
 }
-
-.post-page-post-tag:hover {
-    color: inherit;
-    background-color: transparent;
-    font-family: 'Roboto', sans-serif;
-    font-size: small;
-    font-weight: 400;
-    text-decoration: none;
+.post-page-post-tag:hover{
+  color: inherit;
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+  font-size: small;
+  font-weight:400;
+  text-decoration: underline;
 }
 
 .post-page-tag-container:hover {
@@ -931,6 +930,10 @@ a.footer-link:hover {
     color: #0c1d1c;
     font-size: xx-large;
 }
+.post-page-post-thumbs-up-button .fa-thumbs-up:hover {
+    color: green;
+    font-size: xx-large;
+}
 .post-page-post-thumbs-up-button:focus {
     outline: none;
     box-shadow: none;
@@ -938,6 +941,10 @@ a.footer-link:hover {
 
 .post-page-post-thumbs-down-button i {
     color: #0c1d1c;
+    font-size: xx-large;
+}
+.post-page-post-thumbs-down-button .fa-thumbs-down:hover {
+    color: darkred;
     font-size: xx-large;
 }
 .post-page-post-thumbs-down-button:focus {
@@ -1285,5 +1292,11 @@ h3.post-page-comment-reply-interactions {
     border-style: none;
     box-shadow: none;
 
+}
+
+
+.report_content_select{
+    color:grey;
+    width: 70%;
 }
 
