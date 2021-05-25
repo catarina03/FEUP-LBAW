@@ -68,7 +68,7 @@ class UserController extends Controller
         foreach($posts as $post){
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
-            $post->thumbnail = "/images/".$post->thumbnail;
+            $post->thumbnail = "/images/posts/".$post->thumbnail;
             $nLikes += $post->likes;
         }
 

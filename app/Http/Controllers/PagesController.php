@@ -140,7 +140,7 @@ class PagesController extends Controller
 
     public function getPostsInfo($posts){
         foreach($posts as $post){
-            $post->thumbnail = "/images/".$post->thumbnail;
+            $post->thumbnail = "/images/posts/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
             if(Auth::check()){
