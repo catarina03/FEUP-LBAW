@@ -38,6 +38,9 @@ class PostController extends Controller
     public function create()
     {
         // ver se está autenticado
+        if (!Auth::check()) {
+            return redirect('login');
+        }
 
         return view('pages.createpost', ['needsFilter' => 0, 'tags'=>[]]);
     }
@@ -50,6 +53,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+
         Validator::extend('minTags', function($attribute, $value, $parameters) {
             $min = (int) $parameters[0];
             return count($value) >= $min;
@@ -64,7 +71,6 @@ class PostController extends Controller
             return count($value) === count(array_flip($value));
         });
 
-        //checkar se tem autorizaçao
         $validator = Validator::make($request->all(),
         [
             'title' => ['required', 'string', 'max:120'],
@@ -133,7 +139,7 @@ class PostController extends Controller
             }
 
             DB::commit();
-            
+
             return redirect()->action([PostController::class, 'show'],['id'=>$post->id]);
 
         } catch(QueryException $err){
@@ -141,11 +147,9 @@ class PostController extends Controller
             return abort(404, "Failed to commit transaction");
         }
 
-
-
-
-
     }
+
+
 
     /**
      * Display the specified resource.
