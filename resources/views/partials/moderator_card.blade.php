@@ -1,6 +1,7 @@
 <div class="postsCards row justify-content-center">
+    @include('pages.confirm')
     @foreach($reports as $report)
-        <div class="col-12 col-md-6 col-xl-4 mb-4">
+        <div class="col-12 col-md-6 col-xl-4 mb-4 report-section" data-id="{{$report->content_id}}" data-type="{{$report->type}}">
             <div class="card h-100"> {{-- TODO: on click--}}
                 <img src="{{ URL::asset($report->thumbnail) }}" height="200" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -16,16 +17,7 @@
                         <li class="pt-1" id="inline-pdash-p"><strong>Reports:</strong> {{$report->n_reports}} </li>
                     </ul>
 
-                    <div class="text-center">
-                        @if($report->user_assigned == null)
-                            <p class="assign-button" style="font-weight:bold;" data-bs-toggle="modal"
-                               data-bs-target="#confirm">Assign to me</p>
-
-                        @else
-                            <p class="assign-button" style="font-weight:bold;" data-bs-toggle="modal"
-                               data-bs-target="#confirm">Action</p>
-                        @endif
-                    </div>
+                    @include('partials.moderator_card_actions', ['assigned' => !($report->user_assigned==null), 'type' => $report->type, 'content_id'=>$report->content_id])
                 </div>
             </div>
         </div>
