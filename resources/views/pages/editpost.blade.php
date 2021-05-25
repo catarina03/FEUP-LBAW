@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="{{asset('js/createeditpost.js')}}" defer></script>
+
     <div class="createPost row g-0 pt-lg-5 pt-3" style="margin-top: 4em; margin-bottom: 7em;">
         <div class="createPost-icon col-12 col-lg-3 pt-lg-5 pt-3 pb-3 text-center justify-content-center">
             <i class="bi bi-pencil-square d-lg-block d-none" style="font-size:8em;color:#0c1d1c;"></i>
@@ -9,21 +11,20 @@
         <div class="createPost-center col-12 col-lg-7">
             <div class="card create-post-page-post-card justify-content-center d-flex pt-5 pb-5"
                  style="border-radius:5px;">
-                <form id="create-post-form" enctype="multipart/form-data" action="{{ url('addpost') }}" method="POST">
+                <form id="create-post-form" enctype="multipart/form-data" action="{{ url('editpost/'.$post->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
 
-                    {{--TODO
                     @if($errors->any())
                         {!! implode('', $errors->all('<div>:message</div>')) !!}
                     @endif
-                    --}}
 
                     <div class="row justify-content-center">
                         <div class="col-10">
                             <div class="form-group post-comment-input mb-4">
                                 <label class="add-comment-label" for="edit-title">Post title</label>
                                 <input class="container form-control w-100" name="title" id="title"
-                                       value="{{$post['title']}}">
+                                       value="{{$post['title']}}" required>
                             </div>
                         </div>
                     </div>
@@ -33,9 +34,8 @@
                         <div class="col-10">
                             <div class="row px-0 mx-0">
                                 <div class="col-lg-6 col-12 form-group new-post-thumbnail p-0 m-0 me-lg-4">
-                                    <label class="form-label" for="postImage">Select post image</label>
-                                    <input type="file" class="form-control" name="thumbnail" id="postImage"
-                                           value="{{$post->thumbnail}}"/>
+                                    <label class="form-label" for="postImage">Change post image</label>
+                                    <input type="file" class="form-control" name="thumbnail" id="postImage"/>
                                 </div>
                                 <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1">
                                     <select class="form-select" id="category" name="category" style="cursor:pointer;">
@@ -128,20 +128,15 @@
                     <div class="container mx-0 px-0 mt-3 create-post-tags-container">
                         <div class="row justify-content-center">
                             <div class="col-10">
-                                <label for="tags" class="col-12 col-form-label">Tags</label>
-                                <div
-                                    class="bg-white rounded border d-flex align-items-center justify-content-center form-control"
-                                    id="tags"
-                                    style="height:4em;">
-                                    <div class="d-flex justify-content-start tags" id="edited-post-tags">
-                                        <a class="btn btn-secondary btn-sm  d-flex justify-content-center m-2">Music <i
-                                                class="bi bi-x ms-1"></i></a>
-                                        <a class="btn btn-secondary btn-sm  d-flex justify-content-center m-2">News <i
-                                                class="bi bi-x ms-1"></i></a>
-                                    </div>
-                                    <input class="container form-control w-100 create-post-tag-input" id="tag-input"
-                                           name="tag-input" value="{{ old('tag-input') }}">
-                                </div>
+                                <label for="select2-tags" class="col-12 col-form-label">Tags</label>
+                                <select id="select2-tags" class="form-control bg-white rounded border" multiple="multiple" name="tags[]" >
+                                    @foreach($tags as $tag)
+                                        <option value="{{$tag->id}}" selected>{{$tag->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('tags')
+                                <div class="error">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="row justify-content-center mt-1">

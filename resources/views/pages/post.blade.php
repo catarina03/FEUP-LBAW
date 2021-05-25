@@ -25,7 +25,7 @@
                                 <i class="fas fa-cog" style="font-size:3em;"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="editpost.php">Edit Post</a>
+                                <a class="dropdown-item" href="{{ url("editpost/".$post->id) }}">Edit Post</a>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

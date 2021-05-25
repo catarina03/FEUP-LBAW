@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <script src="{{asset('js/createpost.js')}}" defer></script>
-@auth
+    <script src="{{asset('js/createeditpost.js')}}" defer></script>
+
     <div class="createPost row g-0 pt-lg-5 pt-3" style="margin-top: 4em; margin-bottom: 7em;">
         <div class="createPost-icon col-12 col-lg-3 pt-lg-5 pt-3 pb-3 text-center justify-content-center">
             <i class="bi bi-plus-square-dotted d-lg-block d-none" style="font-size:8em;color:#0c1d1c;"></i>
@@ -10,10 +10,6 @@
         </div>
         <div class="createPost-center col-12 col-lg-7">
             <div class="card create-post-page-post-card d-flex justify-content-center pt-5 pb-5" style="border-radius:5px;">
-
-                @if($errors->any())
-                    {{ implode('', $errors->all('<div>:message</div>')) }}
-                @endif
 
                 <form id="create-post-form" enctype="multipart/form-data" action="{{ url('addpost') }}" method="POST">
                     <ul>
@@ -35,7 +31,7 @@
                             <div class="row px-0 mx-0">
                                 <div class="col-lg-6 col-12 form-group new-post-thumbnail p-0 m-0 me-lg-4">
                                     <label class="form-label" for="postImage">Select post image</label>
-                                    <input type="file" class="form-control" name="thumbnail" id="postImage" value="{{ old('thumbnail') }}" required />
+                                    <input type="file" class="form-control" name="thumbnail" id="postImage" value="{{ old('thumbnail') }}" />
                                     @error('thumbnail')
                                     <div class="error">{{ $message }}</div>
                                     @enderror
@@ -181,8 +177,4 @@
 
     @include('partials.postpreview')
 
-@elseauth
-    {{redirect('login')}}
-
-@endauth
 @endsection

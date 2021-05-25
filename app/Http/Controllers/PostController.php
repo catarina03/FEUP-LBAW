@@ -229,48 +229,34 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //Get currnt route
         $route = \Route::current();
 
-        //If route {id} isnt int or post doesnt exist, redirect to notfound.
         if(!is_numeric($route->parameter('id')))
             return view('pages.pagenotfound',['needsFilter' => 0]);
         $post = Post::find($id);
-        if(!$post )
+        if(!$post)
             return view('pages.pagenotfound',['needsFilter' => 0]);
 
-        //Verify if user is authenticated and if user is owner of post
+        $isAuthor = false;
         if(Auth::check())
-            $user = Auth::user()->id == $post->user_id? 'authenticated_owner' : 'authenticated_user';
+            $isAuthor = Auth::user()->id == $post->user_id;
         else
-            $user = 'visitor';
+            return redirect('login');
+
+        if(!$isAuthor) return \redirect('/');
 
         //Set timestamps to false(updated_at column doesnt exist) and increment views
         $post->timestamps = false;
-        //$post->increment('n_views');
-
-        //Get owner TODO:: Get owner only if user!=authenticated_owner' , otherwise the owner is Auth::user()
-        $USER = AuthenticatedUser::find($post->user_id);
 
         //Get tags associated with current post TODO:: Use Tag Model
-        $tags = DB::select(DB::raw("select t.name
+        $tags = DB::select(DB::raw("select *
         FROM post_tag,tag as t
         WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
 
         //Get date and thumbnail path
-        $thumbnail = "/images/".$post->thumbnail;
+        $thumbnail = "/images/posts/".$post->thumbnail;
 
-        /*
-        //Generate metadata to send to view
-        $metadata = ['comments'=>$comments,'author'=>$USER['name'],'views' => $post->n_views,
-            'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail];
-        //checkar se está autenticado e se é o dono
-        */
-
-
-        //$post = Post::find($id);
-        //chamar a view do edit post com esta informaçao
-        return view('pages.editpost', ['needsFilter' => 0, 'post'=>$post] ); //['post'=> $post]
+        return view('pages.editpost', ['needsFilter' => 0, 'post'=>$post, 'tags'=>$tags, 'thumbnail'=>$thumbnail] ); //['post'=> $post]
     }
 
     /**
@@ -282,42 +268,42 @@ class PostController extends Controller
      */
     public function update(Request $request, $post_id)
     {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+        //TODO: IF NOT AUTHOR
+
         Validator::extend('minTags', function($attribute, $value, $parameters) {
             $min = (int) $parameters[0];
-           // $tagList = explode(",", $value);
             return count($value) >= $min;
         });
 
         Validator::extend('maxTags', function($attribute, $value, $parameters) {
             $max = (int) $parameters[0];
-          //  $tagList = explode(",", $value);
             return count($value) <= $max;
         });
 
         Validator::extend('noDups', function($attribute, $value, $parameters) {
-           // $tagList = explode(",", $value);
             return count($value) === count(array_flip($value));
         });
 
-        //dd($request->input());
         //checkar se tem autorizaçao
         $validator = Validator::make($request->all(),
             [
                 'title' => ['required', 'string', 'max:120'],
-                'thumbnail' => ['required', 'image', 'mimes:jpeg,jpg,png,gif'],
+                'thumbnail' => ['image', 'mimes:jpeg,jpg,png,gif'],
                 'content' => ['required', 'string', 'max:5000'],
                 'is_spoiler' => ['boolean'],
                 'type' => ['required', 'string'],
                 'category' => ['required', 'string'],
                 'user_id' => ['required', 'int'],
                 'photos' => ['array'],
-                'tag-input' => ['string', "minTags:2", "maxTags:10", "noDups"],
+                'tags' => ['array', "minTags:2", "maxTags:10", "noDups"],
             ],
             [
                 'title.required' => 'Title can not be empty',
                 'title.string' => 'Title must be a string',
                 'title.max' => 'Title is too big, max of 120 characters',
-                'thumbnail.required' => 'A thumbnail must be uploaded',
                 'thumbnail.image' => 'A thumbnail must be a jpeg,jpg,png,gif image',
                 'content.required' => 'Content can not be empty',
                 'content.string' => 'Content must be a string',
@@ -329,74 +315,64 @@ class PostController extends Controller
                 'category.string' => 'Category must be string',
                 'user_id.required' => 'User ID is required',
                 'user_id.int' => 'User ID must be an integer',
-                'tag-input.min' => 'Must add at least 2 tags',
-                'tag-input.max' => 'Must add at maximum 10 tags',
+                'tags.min' => 'Must add at least 2 tags',
+                'tags.max' => 'Must add at maximum 10 tags',
             ]);
         if ($validator->fails()) {
             return redirect(url()->previous())->withErrors($validator)->withInput();
         }
 
-        $post = Post::find($post_id);
-        if($post != null){
-            $post->title = $request->input('title');
+        DB::beginTransaction();
+        try{
 
-            $date = date('Y-m-d H:i:s');
-            $imageSalt = random_bytes(5);
-            $imageName = hash("sha256", $request->file('thumbnail')->getFilename() . $date . $imageSalt) . "." . $request->file('thumbnail')->getClientOriginalExtension();
-            $request->thumbnail->move(public_path('images'), $imageName);
-            $post->thumbnail = $imageName;
+            $post = Post::find($post_id);
+            if($post != null){
+                $post->title = $request->input('title');
 
-            $post->content = $request->input('content');
-            $post->is_spoiler = $request->input('is_spoiler');
-            $post->type = $request->input('type');
-            $post->category = $request->input('category');
-            $post->user_id = Auth::user()->id;
-            $post->save();
-        }
+                if($request->file('thumbnail') != null){
+                    $imageName = $request->file('thumbnail')->getClientOriginalName() . "_" . date('Y-m-d H:i:s') . rand(0,999) . "." .  $request->file('thumbnail')->getClientOriginalExtension();
+                    $request->thumbnail->move(public_path('images/posts'), $imageName);
+                    $post->thumbnail = $imageName;
+                }
 
-        $tagArray = explode(',', $request->input('tag-input'));
-
-        info($tagArray);
-
-        foreach($tagArray as $tag){
-            if(DB::table('tag')->select('id')->where('name', '=', $tag)->exists()){
-                $t =  DB::table('tag')->where('name', '=', $tag)->first();
-                DB::table('post_tag')->insert(['post_id' => $post->id, 'tag_id' => $t->id]);
+                $post->content = $request->input('content');
+                $post->is_spoiler = $request->input('is_spoiler');
+                $post->type = $request->input('type');
+                $post->category = $request->input('category');
+                $post->user_id = Auth::user()->id;
+                $post->save();
             }
             else{
-                $new_tag = new Tag();
-                $new_tag->name = $tag;
-                $new_tag->save();
-                DB::table('post_tag')->insert(['post_id' => $post->id, 'tag_id' => $new_tag->id]);
-                //$post->tags()->create(['post_id'=> $post->id, 'tag_id' => $new_tag->id]); TODO WHY NOT WORKING??
+                return redirect('addpost');
             }
+
+            $oldTags = DB::table('tag')->join('post_tag', 'tag.id', '=', 'post_tag.tag_id')->where('post_tag.post_id', '=', $post->id)->get();
+            foreach($oldTags as $oldTag){
+                $t =  DB::table('tag')->where('name', '=', $oldTag->name)->first();
+                DB::table('post_tag')->where('post_id', '=', $post->id)->where('tag_id', '=', $t->id)->delete();
+            }
+
+            foreach($request->input('tags') as $tag){
+                if(DB::table('tag')->select('id')->where('name', '=', $tag)->exists()){
+                    $t =  DB::table('tag')->where('name', '=', $tag)->first();
+                    DB::table('post_tag')->insert(['post_id' => $post->id, 'tag_id' => $t->id]);
+                }
+                else{
+                    $new_tag = new Tag();
+                    $new_tag->name = $tag;
+                    $new_tag->save();
+                    DB::table('post_tag')->insert(['post_id' => $post->id, 'tag_id' => $new_tag->id]);
+                }
+            }
+
+            DB::commit();
+
+            return redirect()->action([PostController::class, 'show'],['id'=>$post_id]);
+
+        } catch(QueryException $err){
+            DB::rollBack();
+            return abort(404, "Failed to commit transaction");
         }
-
-        $user = 'authenticated_user';
-
-        //Get comment count,likes and dislikes
-        $comments = Comment::where('post_id',$id)->get()->count();
-        $votes = DB::table("vote_post")->where("post_id",$id); //Couldn't figure ut how to do it with pivot table
-        $temp = $votes->get()->count();
-        $likes = $votes->where("like",true)->get()->count();
-        $dislikes = $temp - $likes;
-
-        //Get tags associated with current post TODO:: Use Tag Model
-        $tags = DB::select(DB::raw("select t.name
-        FROM post_tag,tag as t
-        WHERE post_tag.post_id=$post->id AND t.id = post_tag.tag_id;"));
-        //Get date and thumbnail path
-        $date = date("F j, Y", strtotime($post['created_at']));
-        $thumbnail = "/images/".$post->thumbnail;;
-
-        //Generate metadata to send to view
-        $metadata = ['comments'=>$comments,'author'=>$USER['name'],'views' => $post->n_views,
-            'likes' => $likes,'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail];
-        //checkar se está autenticado e se é o dono
-
-        return redirect()->action([PostController::class, 'show'],['id'=>$post_id]);
-        //return \redirect()->route('post/'.$post_id, ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]);
-           // view('pages.post', ['user' => $user, 'needsFilter'=>0, 'post'=>$post, 'metadata'=>$metadata]); //TODO, WRONG ROUTE
 
     }
 
