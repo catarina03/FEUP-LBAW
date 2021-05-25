@@ -12,6 +12,7 @@ use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
 {
@@ -60,20 +61,20 @@ class ReportController extends Controller
 
         $user_id = Auth::user()->id;
 
-        $reports = DB::select(DB::raw("(SELECT post.id, title, created_at, thumbnail, name, post.user_id, user_id AS content_author, 'Post' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
+        $reports = DB::select(DB::raw("(SELECT post.id AS post_id, thumbnail, title, created_at, name, post.user_id, user_id AS content_author, post.id AS content_id, 'Post' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
                 FROM report, post, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive
                 WHERE authenticated_user.id = post.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.post_reported = post.id AND user_reporting <> " . $user_id . " AND (user_assigned = " . $user_id . " OR user_assigned is null)
-                GROUP BY post.id, title, user_id, most_frequent_motive.motive, user_assigned, name, thumbnail)
+                GROUP BY post.id, title, user_id, most_frequent_motive.motive, user_assigned, name, thumbnail, content_id)
                 union
-                (SELECT  post.id, title, created_at, thumbnail, name, post.user_id, comment.user_id AS content_author,'Comment' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
+                (SELECT post.id AS post_id, thumbnail, title, created_at, name, post.user_id, comment.user_id AS content_author, comment.id AS content_id, 'Comment' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
                 FROM report, post, comment, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive
                 WHERE authenticated_user.id = post.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.comment_reported = comment.id AND post.id = comment.post_id AND user_reporting <> " . $user_id . " AND (user_assigned = " . $user_id . " OR user_assigned is null)
-                GROUP BY post.id, title, comment.user_id, most_frequent_motive.motive, user_assigned, name, thumbnail)
+                GROUP BY post.id, title, comment.user_id, most_frequent_motive.motive, user_assigned, name, thumbnail, content_id)
                 ORDER BY n_reports DESC"));
 
         //print_r($reports);
         return view('pages.moderator_dashboard', ['needsFilter' => 0, 'reports' => $reports]);
-    } //preciso de : autor/titulo/data do post; author do content reportado, o que foi reportado; principal motivo, numeros de reports
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -123,10 +124,16 @@ class ReportController extends Controller
 
     public function assign(Request $request, $report_id)
     {
-        $validatedData = $request->validate([
+        $validatedData = Validator::make($request->all(), [
             'moderator_id' => 'required|numeric'
         ]);
-        DB::table('report')->where('id', $report_id)->update('user_assigned', $validatedData->moderator_id);
+
+        if (!$validatedData->fails()) {
+            DB::table('report')->where('id', $report_id)->update(array('user_assigned' => $request['moderator_id']));
+            $view = view('partials.moderator_card_actions', ['assigned' => true])->render();
+            return response()->json($view);
+        }
+        return response()->json();
     }
 
     public function process(Request $request, $report_id)

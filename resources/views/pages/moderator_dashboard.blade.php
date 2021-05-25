@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="{{ asset('js/reports.js')}}" defer></script>
     <div class="moderator row g-0" style="margin-top: 6em; margin-bottom: 7em;">
         <div class="moderator-icon col-12 col-lg-2 pt-lg-5 pt-2 pb-3 text-center justify-content-center">
             <i class="bi bi-people-fill d-lg-block d-none" style="font-size:8em;color:#0c1d1c;"></i>
@@ -61,5 +62,7 @@
             </div>
         </div>
     </div>
+
+{{--    @include('pages.report_action')--}}
 @endsection
-@include('pages.confirm')
+

@@ -22,10 +22,9 @@ function edit_role(event) {
     const text = document.createTextNode("Pending...")
     el.append(text)
     old_role.append(el)
-
+    //reports/{report_id}/assign_report
     let request = new XMLHttpRequest()
     const url = window.location.protocol + "//" + window.location.host + '/api/administration/roles/' + person_id + '/edit_role'
-    console.log(url)
 
     request.open('put', url, true)
     request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
