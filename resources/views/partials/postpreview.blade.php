@@ -1,6 +1,6 @@
 <div class="modal fade" id="preview-modal" data-bs-keyboard="false" tabindex="-1"
      aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered justify-content-center d-flex">
+    <div class="modal-dialog modal-xl modal-dialog-centered justify-content-center d-flex">
         <div class="modal-content">
             {{--
             <div class="modal-header" style="background-color:#307371; color:white;">

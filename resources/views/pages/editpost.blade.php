@@ -151,9 +151,8 @@
                         <div class="col-10">
                             <div class="row d-flex flex-row">
                                 <div class="col-md-auto col-12 me-auto text-center">
-                                    <button type="button" class="btn preview-post"><i class="far fa-eye"></i>
-                                        Preview
-                                    </button>
+                                    <button type="button" class="btn preview-post" data-bs-toggle="modal" data-bs-target="#preview-modal"><i class="far fa-eye"></i>
+                                        Preview</button>
                                 </div>
                                 <div class="col-md-auto col-12 text-center">
                                     <button type="button" id="edit-post-cancel-button" class="btn cancel-post">Cancel
@@ -175,5 +174,6 @@
             </div>
         </div>
     </div>
-    <script src="{{asset('js/editpost.js')}}" defer></script>
+
+    @include('partials.postpreview')
 @endsection
