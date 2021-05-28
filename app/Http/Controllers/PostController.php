@@ -182,7 +182,6 @@ class PostController extends Controller
             if($like === true) $liked = 2;
             else if($like === false) $liked = 1;
             else $liked = 0;
-
         }
         else
             $isOwner = false;
@@ -198,10 +197,10 @@ class PostController extends Controller
         $comments = Comment::checkReported($comments,$user_id);
         foreach ($comments as $c){
             $like = DB::table("vote_comment")->where("comment_id",$c->id)->where('user_id', $user_id)->value('like');
-            if($like === true) $liked = 2;
-            else if($like === false) $liked = 1;
-            else $liked = 0;
-            $c->liked = $liked;
+            if($like === true) $liked_c = 2;
+            else if($like === false) $liked_c = 1;
+            else $liked_c = 0;
+            $c->liked = $liked_c;
         }
 
         $comment_count = Comment::where('post_id',$id)->get()->count();
@@ -226,7 +225,6 @@ class PostController extends Controller
         $post->reported = false;
         if($report>0)
             $post->reported = true;
-
 
         //Generate metadata to send to view
         $metadata = ['comment_count'=>$comment_count,'author'=>$USER,'views' => $post->n_views,

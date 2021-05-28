@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\AuthenticatedUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 

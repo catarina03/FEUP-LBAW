@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AuthenticatedUser;
 use App\Models\Post;
 use App\Models\Tag;
-use App\Policies\PostPolicy;
+use App\Policies\UserPolicy;
 use App\Rules\MatchOldPassword;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -490,8 +490,8 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(),
             [
-                'currentPassword' => ['required', 'min:5', new MatchOldPassword],
-                'newPassword' => 'required|min:5',
+                'currentPassword' => ['required', 'min:6', new MatchOldPassword],
+                'newPassword' => 'required|min:6',
                 'confirmPassword' => 'required|same:newPassword',
             ]);
 

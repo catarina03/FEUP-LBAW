@@ -51,7 +51,7 @@ class PagesController extends Controller
 
         $n_posts = $posts->total();
         $posts = $this->getPostsInfo($posts);
-        if($category == "TVShow") return view('pages.categorypage', ['user' => 'visitor', 'needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts, 'n_posts' => $n_posts]);
+        if($category == "TVShow") return view('pages.categorypage', ['needsFilter' => 0, 'category' => 'TV Show', 'posts' =>$posts, 'n_posts' => $n_posts, 'user'=>$user]);
 
         return view('pages.categorypage', ['needsFilter' => 1, 'category' => $category, 'posts' =>$posts, 'n_posts' => $n_posts, 'user'=>$user]);
 

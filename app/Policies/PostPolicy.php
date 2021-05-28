@@ -44,6 +44,7 @@ class PostPolicy
     }
 
     public static function show_post(AuthenticatedUser $user, Post $post){
+        // Only users that are not blocked by the post author and have not blocked the post author can view the post
       $blocked_users = DB::table("block_user")->where('blocked_user',$post->user_id)->where("blocking_user",$user->id)->count();
       $blocking_users = DB::table("block_user")->where('blocked_user',$user->id)->where("blocking_user",$post->user_id)->count();
       return $blocked_users == 0 && $blocking_users == 0;

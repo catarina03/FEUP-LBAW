@@ -25,16 +25,16 @@ function handleUpVoteComment(){
         if(down.classList.contains('fas')){
             down.classList.remove('fas')
             down.classList.add('far')
-            makeRequestComment("PUT", true, id)
+            makeRequest("PUT", '/api/comment/'+ id +'/vote', handleVoteCommentResponse, encodeForAjax({vote: true}))
             downVotesCountComment.innerHTML = parseInt(downVotesCountComment.innerHTML) - 1
         }
-        else makeRequestComment("POST", true, id)
+        else makeRequest("POST", '/api/comment/'+ id +'/vote', handleVoteCommentResponse, encodeForAjax({vote: true}))
         upVotesCountComment.innerHTML = parseInt(upVotesCountComment.innerHTML) + 1
     }
     else if(icon.classList.contains('fas')){
         icon.classList.remove('fas')
         icon.classList.add('far')
-        makeRequestComment("DELETE", null, id)
+        makeRequest("DELETE", '/api/comment/'+ id +'/vote', handleVoteCommentResponse, null)
         upVotesCountComment.innerHTML = parseInt(upVotesCountComment.innerHTML) - 1
     }
 }
@@ -54,39 +54,23 @@ function handleDownVoteComment(){
         if(up.classList.contains('fas')){
             up.classList.remove('fas')
             up.classList.add('far')
-            makeRequestComment("PUT", false, id)
+            makeRequest("PUT", '/api/comment/'+ id +'/vote', handleVoteCommentResponse, encodeForAjax({vote: false}))
             upVotesCountComment.innerHTML = parseInt(upVotesCountComment.innerHTML) - 1
         }
-        else makeRequestComment("POST", false, id)
+        else makeRequest("POST", '/api/comment/'+ id +'/vote', handleVoteCommentResponse, encodeForAjax({vote: false}))
         downVotesCountComment.innerHTML = parseInt(downVotesCountComment.innerHTML) + 1
     }
     else if(icon.classList.contains('fas')){
         icon.classList.remove('fas')
         icon.classList.add('far')
-        makeRequestComment("DELETE", null, id)
+        makeRequest("DELETE", '/api/comment/'+ id +'/vote', handleVoteCommentResponse, null)
         downVotesCount.innerHTML = parseInt(downVotesCount.innerHTML) - 1
     }
 }
 
-function makeRequestComment(type, vote, comment_id){
-    const request = new XMLHttpRequest()
-    request.onreadystatechange = function(){
-        if(request.readyState === XMLHttpRequest.DONE){
-            if(request.status === 200){
-                console.log(request.responseText)
-            }
-            else alert('Error in vote comment: ' +  request.response)
-        }
-    }
-
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    if(type === "DELETE") request.open(type, '/api/comment/'+ comment_id +'/vote', true)
-    else request.open(type, '/api/comment/'+ comment_id +'/vote', true)
-    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    request.setRequestHeader("X-CSRF-TOKEN", token);
-    if(type === "DELETE") request.send()
-    else request.send(encodeForAjax({vote: vote}));
+function handleVoteCommentResponse(status, responseText){
+    if(status === 200) console.log(responseText)
+    else alert('Error in vote comment: ' +  responseText)
 }
 
 

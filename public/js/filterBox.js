@@ -33,11 +33,14 @@ window.addEventListener('scroll', function(){
 })
 
 
+if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', (e) => addLoadMoreEventListener(e))
 
-
-
-
-if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', (e) => loadHandlerAdvancedSearch(e))
+function addLoadMoreEventListener(e){
+    e.preventDefault()
+    getFilters()
+    filters['page'] = pageAdv
+    makeRequest('GET', '/api/search?'+ encodeForAjax(filters), loadHandlerAdvancedSearch, null)
+}
 
 if(homepageFilter != null) homepageFilter.addEventListener('click', (e) => redirectWithFilters(e))
 
@@ -148,30 +151,22 @@ function onLoad(){
     if(myPostsCheck != null) url.searchParams.get('myPosts') === "true"? myPostsCheck.checked = true: myPostsCheck.checked = false
 }
 
-function loadHandlerAdvancedSearch(e){
-    e.preventDefault()
+function loadHandlerAdvancedSearch(status, responseText){
     let pag = document.querySelector('.advanced_search .pagination-loadmore')
     let parent = pag.parentNode
     parent.removeChild(pag)
 
     let outerDiv = addLoadSpinner(parent)
-    getFilters()
-    filters['page'] = pageAdv
-    const filterRequest = new XMLHttpRequest()
-    filterRequest.onreadystatechange = function(){
-        if(filterRequest.readyState === XMLHttpRequest.DONE){
-            if(filterRequest.status === 200){
-                parent.removeChild(outerDiv)
-                const response = JSON.parse(filterRequest.responseText)
-                updateAdvancedSearch(true, response['posts'], response['number_res'], pageAdv)
-                pageAdv++;
-                addSavePostListeners();
-            }
-            else alert('Error fetching api: ' +  filterRequest.status)
-        }
+    if(status === 200){
+        parent.removeChild(outerDiv)
+        const response = JSON.parse(responseText)
+        updateAdvancedSearch(true, response['posts'], response['number_res'], pageAdv)
+        pageAdv++;
+        addSavePostListeners();
     }
-    filterRequest.open('GET', '/api/search?'+ encodeForAjax(filters), true)
-    filterRequest.send()
+    else alert('Error fetching api: ' +  status)
+
+
 }
 
 
@@ -223,6 +218,6 @@ function addLoadMoreAdvancedSearch(postDiv){
     postDiv.appendChild(pagination)
     let loadMore = document.querySelector('.advanced_search .pagination-loadmore .loadmore')
     if(loadMore != null){
-        loadMore.addEventListener('click', loadHandlerAdvancedSearch)
+        loadMore.addEventListener('click',  (e) => addLoadMoreEventListener(e))
     }
 }

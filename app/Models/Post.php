@@ -69,17 +69,32 @@ class Post extends Model
         }
         else $extra_query_2 = "";
 
-        $query = "";
-        if($order == "hot")
-            $query= "select * from post where not exists
-            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))".$extra_query_1.$extra_query_2." order by n_views desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
-        else{
-            $aux = "select * from post where not exists
+
+        $aux = "select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
             or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))";
-            if($order == "top") $query = $aux.$extra_query_1.$extra_query_2." order by id desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
-            else if($order == "new") $query = $aux.$extra_query_1.$extra_query_2."order by created_at desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+
+        if($order == "hot")
+            $query = $aux.$extra_query_1.$extra_query_2." order by n_views desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+        else if($order == "top"){
+            $query = "SELECT *, n_likes
+            FROM post, (SELECT post_id, COUNT(user_id) AS n_likes
+            FROM vote_post
+            WHERE vote_post.like
+            GROUP BY post_id
+            union
+            SELECT id AS post_id, 0 AS n_likes
+            FROM post
+            WHERE not exists (SELECT DISTINCT post_id from vote_post WHERE vote_post.like = true AND vote_post.post_id = post.id)) AS likes_post
+            WHERE likes_post.post_id = post.id and not exists
+            (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user)) ".$extra_query_1.$extra_query_2." order by n_likes desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+        }
+        else if($order == "new"){
+            $query = $aux.$extra_query_1.$extra_query_2."order by created_at desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+        }
+        else{
+            $query = $aux." order by n_views desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
         }
 
         return DB::select(DB::raw($query),['user' => $user_id, 'offset' => $offset]);
