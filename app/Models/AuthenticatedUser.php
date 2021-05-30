@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use App\Notifications\ResetPasswordNotification;
 
 class AuthenticatedUser extends Authenticatable
 {
     use Notifiable;
-
+    use CanResetPassword;
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
 
@@ -107,4 +109,6 @@ class AuthenticatedUser extends Authenticatable
     {
         return $this->authenticated_user_type == "System Manager";
     }
+
+
 }

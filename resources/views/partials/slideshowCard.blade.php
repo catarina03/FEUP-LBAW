@@ -21,7 +21,9 @@
                                     <div class="col-md-5">
                                         <div class="card-body">
                                             <h5 class="card-title mb-3">{{$posts[$i]->title}}</h5>
-                                            <p class="card-text d-inline">{{ Str::limit(wordwrap($posts[$i]->content, 25),200)}}</p>
+                                            <p class="card-text d-inline">
+                                                {{$limit = 220 - strlen($posts[$i]->title)}}
+                                                {{ Str::limit(wordwrap($posts[$i]->content, 25),$limit)}}</p>
                                             <strong> (read more)</strong>
                                             <p class="card-text mt-3"><small>by <a href='/user/{{$posts[1]->user_id}}'
                                                                                    id="authorName">{{$posts[$i]->author}}</a>,

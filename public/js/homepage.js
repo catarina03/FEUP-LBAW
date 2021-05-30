@@ -60,7 +60,7 @@ function receiveRequestHandler(status, responseText){
         window.scrollTo(0,0)
         updateHomepage(posts, n_posts)
         displaySpinner(false, filtering)
-        enableLinks(type)
+        enableLinks(filtering)
     }
     else if(status === 400){
         alert('Error fetching api: ' +  status)

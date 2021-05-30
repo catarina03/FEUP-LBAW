@@ -6,8 +6,8 @@
     <script type="text/javascript" src="{{ URL::asset('js/homepage.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
     <div class="homepage row g-0" style="margin-top: 5em; margin-bottom:7em;">
-        <div class="homepage-view col-lg-2 col-12 pt-lg-5 pt-2 ps-lg-5">
-            <nav class="nav homepage-navbar w-100 d-lg-block d-flex justify-content-center">
+        <div class="homepage-view col-xl-2 col-lg-1 col-12 pt-lg-5 pt-2 px-lg-3 px-xl-5">
+            <nav class="nav homepage-navbar  w-100 d-lg-block d-flex justify-content-center">
                 <a class="nav-link active fs-5 pe-5" id="top" href=''><img src="images/bar-chart.svg" height="25">
                     Top
                     <div class="spinner-border spinner-border-sm d-none topLoad m-0 p-0" role="status">
@@ -28,7 +28,7 @@
                 </a>
             </nav>
         </div>
-        <div class="homepage-center col-12 col-lg-7">
+        <div class="homepage-center col-12 col-xl-7 col-lg-8  ps-lg-5">
             @include('partials.slideshowCard', ['posts' => $slideshow])
             <div class="postsCards row">
                 @each('partials.card', $posts, 'post')

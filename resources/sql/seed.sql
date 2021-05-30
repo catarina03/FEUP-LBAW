@@ -14,6 +14,8 @@ DROP TABLE IF EXISTS block_user CASCADE;
 DROP TABLE IF EXISTS follow_user CASCADE;
 DROP TABLE IF EXISTS report CASCADE;
 DROP TABLE IF EXISTS notification CASCADE;
+DROP TABLE IF EXISTS password_resets CASCADE;
+
 
 DROP TYPE IF EXISTS category_types;
 DROP TYPE IF EXISTS post_types;
@@ -235,15 +237,25 @@ CREATE TABLE notification(
 
 );
 
+CREATE TABLE password_resets(
+    email      VARCHAR NOT NULL,
+    token      VARCHAR NOT NULL,
+    created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL
+);
+
+
+
 
 ---------------> INDEXES
 CREATE INDEX author_post ON post USING HASH(user_id);
 CREATE INDEX post_date ON post USING BTREE(created_at);
 CREATE INDEX user_tags ON follow_tag USING HASH(user_id);
 CREATE INDEX post_comments ON comment USING HASH(post_id);
-CREATE INDEX search_post ON post USING GIN(
-    (setweight(to_tsvector('english',title),'A') ||  setweight(to_tsvector('english',content),'B')));
-
+CREATE INDEX search_post ON post USING GIN((setweight(to_tsvector('english',title),'A') ||  setweight(to_tsvector('english',content),'B')));
+DROP INDEX IF EXISTS password_resets_email_index;
+DROP INDEX IF EXISTS password_resets_token_index;
+CREATE INDEX password_resets_email_index ON password_resets (email);
+create index password_resets_token_index ON password_resets (token);
 
 ---------------> TRIGGERS
 
@@ -760,24 +772,24 @@ CREATE OR REPLACE FUNCTION duplicate_reports() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF EXISTS(
-        SELECT * FROM report 
+        SELECT * FROM report
         WHERE user_reporting=NEW.user_reporting AND post_reported=NEW.post_reported)
     THEN
         RAISE EXCEPTION 'This user has already reported this post!';
     END IF;
-    
+
     IF EXISTS(
-        SELECT * FROM report 
+        SELECT * FROM report
         WHERE user_reporting=NEW.user_reporting AND comment_reported=NEW.comment_reported)
     THEN
         RAISE EXCEPTION 'This user has already reported this comment!';
     END IF;
-    
+
     RETURN NEW;
 END;
 $BODY$
     LANGUAGE 'plpgsql';
-    
+
 CREATE TRIGGER duplicate_reports
     BEFORE INSERT ON report
     FOR EACH ROW
@@ -887,7 +899,7 @@ insert into tag (name) values ('Persistent');
 
 
 --USER
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('vpaulazzi0', 'Veronike', 'vcowburn0@virginia.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/19/1990', 'Hello!', null, 'twitter.com/vpaulazzi0', null, null, true, false, 'Regular', null);
+    insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('vpaulazzi0', 'Veronike', 'vcowburn0@virginia.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/19/1990', 'Hello!', null, 'twitter.com/vpaulazzi0', null, null, true, false, 'Regular', null);
 insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ssmoote1', 'Stevana', 'sfrean1@mail.ru','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/11/1988', 'Hello!', 'www.instagram.com/ssmoote1/', null, 'www.facebook.com/ssmoote1', null, true, true, 'Regular', 'abs.jpeg');
 insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('abaldi2', 'Alene', 'alequeux2@zdnet.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/7/1988', 'Welcome to my profile', null, null, null, null, true, false, 'Regular', null);
 insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('scleator3', 'Say', 'shutchason3@soup.io','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '7/28/1980', 'Welcome to my profile', null, 'twitter.com/scleator3', null, null, false, false, 'Regular', null);

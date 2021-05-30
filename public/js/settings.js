@@ -4,7 +4,6 @@ $('#select2-tags').select2({
     theme: 'classic',
     tags: false,
     tokenSeparators: [',', ' '],
-
     width: '100%'
 })
 
