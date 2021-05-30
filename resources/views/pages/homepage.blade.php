@@ -31,11 +31,13 @@
         <div class="homepage-center col-12 col-xl-7 col-lg-8  ps-lg-5">
             @include('partials.slideshowCard', ['posts' => $slideshow])
             <div class="postsCards row">
-                @each('partials.card', $posts, 'post')
-                @if($n_posts > 15)
-                    @include('partials.pagination')
+                @if(count($posts) > 0)
+                    @each('partials.card', $posts, 'post')
+                    @if($n_posts > 15)
+                        @include('partials.pagination')
+                    @endif
                 @else
-                    <p>No posts</p>
+                    @include('partials.noposts', ['user'=>$user, 'homepage' => true])
                 @endif
             </div>
         </div>

@@ -111,7 +111,7 @@ class Post extends Model
             DB::raw("select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
             or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
-            limit 3;")
+            order by n_views limit 3;")
                ,['user' => $user_id] );
     }
 

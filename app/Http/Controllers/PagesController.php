@@ -59,11 +59,13 @@ class PagesController extends Controller
 
     public function list($homepageFilters){
         $user = null;
+        if(Auth::check()) $user = Auth::user();
         $p = Post::getPostsOrdered($homepageFilters, 1);
         $posts = $this->getPostsInfo($p);
         $n_posts = Post::count();
-
-        return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts, 'n_posts' => $n_posts])->render(),'n_posts' => $n_posts));
+        if(count($posts) != 0)
+            return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts, 'n_posts' => $n_posts])->render(),'n_posts' => $n_posts));
+        return response()->json(array('posts'=>view('partials.noposts', ['user'=>$user, 'homepage'=> true])->render(),'n_posts' => 0));
     }
 
     public function loadMoreHomepage($filters, $page){
