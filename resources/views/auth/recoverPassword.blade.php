@@ -32,9 +32,9 @@
                                 <div class="form-group col-8">
                                     <label for="password" class=" d-flex col-sm-12 col-form-label"  style="font-weight: 600;">New Password</label>
                                     <input type="password" class="form-control" id="password" name="password" placeholder="*******" required>
-                                    @if ($errors->has('newPassword'))
+                                    @if ($errors->has('password'))
                                         <span class="text-danger mt-0 mb-1" style="font-size:0.8rem;">
-                                            {{ $errors->first('newPassword') }}
+                                            {{ $errors->first('password') }}
                                         </span>
                                     @endif
                                 </div>
@@ -44,9 +44,9 @@
                                 <div class="form-group col-8">
                                     <label for="password_confirmation" class=" col-sm-12 col-form-label"  style="font-weight: 600;">Confirm New Password </label>
                                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="*******" required>
-                                    @if ($errors->has('confirmPassword'))
+                                    @if ($errors->has('password_confirmation'))
                                         <span class="text-danger mt-0 mb-1" style="font-size:0.8rem;">
-                                            {{ $errors->first('confirmPassword') }}
+                                            {{ $errors->first('password_confirmation') }}
                                         </span>
                                     @endif
                                 </div>
