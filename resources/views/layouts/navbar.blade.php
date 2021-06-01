@@ -122,7 +122,7 @@
         </div>
 
         @if($needsFilter == 1)
-            <div class="navbar-collapse collapse" id="navbar-filter" navbar>
+            <div class="navbar-collapse collapse d-sm-flex" id="navbar-filter" navbar>
                 <ul class="navbar-nav custom-filterBox">
                     <li class="nav-item d-lg-none container text-center w-100">
                         <form class="pt-2 " action="advanced_search.php" method="post">
@@ -162,14 +162,14 @@
                                 </label>
                             </div>
 
-                            <input type="submit" class="filterButton w-100 mt-4 p-1" value="Filter">
+                            <input type="submit" class="filterButton w-100 mt-4 p-1" value="Search">
                         </form>
 
                     </li>
                 </ul>
             </div>
         @elseif ($needsFilter == 2)
-            <div class="navbar-collapse collapse" id="navbar-filter" navbar>
+            <div class="navbar-collapse collapse d-sm-flex d-none " id="navbar-filter" navbar>
                 <ul class="navbar-nav custom-filterBox">
                     <li class="nav-item d-lg-none container text-center w-100">
                         <form class="pt-2 " action="#" method="post">

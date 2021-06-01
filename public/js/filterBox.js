@@ -42,14 +42,16 @@ function addLoadMoreEventListener(e){
     makeRequest('GET', '/api/search?'+ encodeForAjax(filters), loadHandlerAdvancedSearch, null)
 }
 
-if(homepageFilter != null) homepageFilter.addEventListener('click', (e) => redirectWithFilters(e))
+if(homepageFilter != null){
+    homepageFilter.addEventListener('submit', (e) => redirectWithFilters(e))
+}
 
-if(categoryFilter != null) categoryFilter.addEventListener('click', (e) => redirectWithFilters(e))
+if(categoryFilter != null) categoryFilter.addEventListener('submit', (e) => redirectWithFilters(e))
 
 if(advancedSearch != null) document.addEventListener('DOMContentLoaded', onLoad)
 
 if(advancedSearchFilter != null){
-    advancedSearchFilter.addEventListener('click', (e) => {
+    advancedSearchFilter.addEventListener('submit', (e) => {
         e.preventDefault()
         let s = addSpinner()
         if(getFilters() !== -1) window.location = "filters?" + encodeForAjax(filters)

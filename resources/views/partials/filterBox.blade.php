@@ -1,6 +1,6 @@
 <script type="text/javascript" src="{{ URL::asset('js/utils.js') }}" defer></script>
 <script type="text/javascript" src="{{ URL::asset('js/filterBox.js') }}" defer></script>
-<div class="custom-filterBox filterbox col-xl-lg-1 col-md-3 px-auto d-flex justify-content-center">
+<div class="custom-filterBox filterbox col-xl-lg-1 col-md-3 px-auto  d-lg-flex d-sm-none justify-content-center" style="margin-bottom: 10rem;">
     <div class="container  col-md-3">
         <h4 class="text-center"> Search </h4>
         <form class="pt-2" action="" method="get">
@@ -49,7 +49,7 @@
                     </label>
                 </div>
             @endauth
-            <button type="button" class="filterButton w-100 mt-4 p-1">
+            <button type="submit" class="filterButton w-100 mt-4 p-1">
                 <i class="fa fa-circle-notch fa-spin d-none search-spinner"></i>
                 <span class="search-span d-inline-block">Search</span>
             </button>
