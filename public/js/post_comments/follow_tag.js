@@ -29,10 +29,12 @@ function follow_tag(tag_id,element){
             if(followFlag){
                 list.remove("fas");
                 list.add("far");
+                show_toaster("Tag unfollowed successfully!");
             }
             else{
                 list.remove("far");
                 list.add("fas"); 
+                show_toaster("Tag followed successfully!");
             }
         }
         else{

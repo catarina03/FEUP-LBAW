@@ -106,31 +106,30 @@ function confirmEdit(comment_id,container,type){
                 }
                 addShowThreadListeners();
             }
-        else{
-            var div = document.createElement('div');
-            div.innerHTML = comment["comment_view"];
-            let child = div.firstChild;
-            container.parentNode.replaceChild(child,container);
-        let new_elements = container.getElementsByClassName("delete_comment_button");
-        for(let k = 0;k<new_elements.length;k++){
-            let temp = new_elements[k];
-            let comment_container = temp.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-            let local_cid = temp.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0];
-            temp.addEventListener("click",function(e){
-                e.preventDefault();
-                deleteComment(local_cid,comment_container);
-            });
-        }
-            
-        }
+            else{
+                var div = document.createElement('div');
+                div.innerHTML = comment["comment_view"];
+                let child = div.firstChild;
+                container.parentNode.replaceChild(child,container);
+                let new_elements = container.getElementsByClassName("delete_comment_button");
+                for(let k = 0;k<new_elements.length;k++){
+                    let temp = new_elements[k];
+                    let comment_container = temp.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+                    let local_cid = temp.parentNode.parentNode.parentNode.getElementsByClassName("comment_id")[0];
+                    temp.addEventListener("click",function(e){
+                        e.preventDefault();
+                        deleteComment(local_cid,comment_container);
+                    });
+                }
+            }
         
         addDeleteCommentListeners();
         addListeners();
         addEditListeners();
-        updateSortedBy("Sort by");
+        show_toaster("Comment edited sucessfully!");
         }
         else{
-            alert("Error editing comment!");
+            empty_warning.show();
             return;
         }
     };

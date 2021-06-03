@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\HelperController;
 use App\Models\Post;
 use App\Models\Photo;
 use App\Models\Tag;
@@ -73,7 +74,7 @@ class CommentController extends Controller
                     'post_id' => $request->input('post_id')
                 ]);
                 //$comments = Comment::getPostComments($post_id,"desc",1);
-                return Comment::single_commentAsHtml($cid, Auth::user()->id);
+                return HelperController::single_commentAsHtml($cid, Auth::user()->id);
             }
         }
         return response()->json(['status' => "Error encountered when adding commment!"])->setStatusCode(400);
@@ -158,7 +159,7 @@ class CommentController extends Controller
             if ($comment != null && Auth::user()->id == $comment->user_id) {
                 $comment->content = $request['content'];
                 if ($comment->save())
-                    return response()->json(["comment_view" => Comment::single_commentAsHtml($comment_id, Auth::user()->id)->render(), "isThread" => $comment->comment_id != null])->setStatusCode(200);
+                    return response()->json(["comment_view" => HelperController::single_commentAsHtml($comment_id, Auth::user()->id)->render()])->setStatusCode(200);
                 return response()->setStatusCode(400);
             }
         }
@@ -212,7 +213,7 @@ class CommentController extends Controller
                     'comment_id' => $request->input('comment_id')
                 ]);
                 //$comments = Comment::getPostComments($comment->post_id,"desc",1);
-                return Comment::single_commentAsHtml($cid, Auth::user()->id);
+                return HelperController::single_commentAsHtml($cid, Auth::user()->id);
             }
         }
         return response()->setStatusCode(400);
@@ -293,5 +294,10 @@ class CommentController extends Controller
 
         return response()->json('Error', 400);
     }
+
+
+
+    /*Auxiliar functions*/
+
 
 }

@@ -56,13 +56,13 @@ function addThread(comment_id,content){
             addDeleteCommentListeners();
             addEditListeners();
             addReportListeners();
-            updateSortedBy("Sort by");
             openThreads(comment_id);
         }
         
     };
     if(content.value=="" || content.value.match("^\\s+$")){
-        alert("Empty comments are not allowed!");
+        //alert("Empty comments are not allowed!");
+        empty_warning.show();
         return;
     }
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
