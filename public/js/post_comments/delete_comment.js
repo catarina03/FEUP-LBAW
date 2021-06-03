@@ -36,6 +36,7 @@ function deleteComment(comment_id,container){
             }else{
                 updateCommentCount(-1);
             }
+            show_toaster("Comment deleted succesfully!")
         }
         else{
             alert("Failed to delete comment!");

@@ -64,7 +64,7 @@ function handleDownVoteComment(){
         icon.classList.remove('fas')
         icon.classList.add('far')
         makeRequest("DELETE", '/api/comment/'+ id +'/vote', handleVoteCommentResponse, null)
-        downVotesCount.innerHTML = parseInt(downVotesCount.innerHTML) - 1
+        downVotesCountComment.innerHTML = parseInt(downVotesCountComment.innerHTML) - 1
     }
 }
 

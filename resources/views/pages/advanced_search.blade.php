@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <script type="text/javascript" src="{{ URL::asset('js/toaster.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
     <div class="advanced_search row g-0" style="margin-top: 6em; margin-bottom: 7em;">
         <div class="advanced_search-icon col-12 col-lg-2 pt-lg-5 pt-3 pb-3 text-center justify-content-center">
@@ -22,4 +23,5 @@
         </div>
         @include('partials.filterBoxWCategory')
     </div>
+@include('partials.postpage_toaster')
 @endsection

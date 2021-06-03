@@ -1305,3 +1305,25 @@ h3.post-page-comment-reply-interactions {
     width: 70%;
 }
 
+
+
+
+
+
+#liveToast .toast-header{
+    color:white;
+    background-color: black;
+    
+}
+
+#liveToast .toast-body{
+    color:black;
+    background-color: white;
+    
+}
+
+#liveToast .toaster-button{
+    background-color: white !important;
+    
+}
+
