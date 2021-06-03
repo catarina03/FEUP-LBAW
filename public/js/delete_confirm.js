@@ -1,18 +1,13 @@
-let currentPage = 1;
-
 let confirm = document.getElementById("confirm");
-let yes = confirm.getElementsByClassName("confirm-yes")[0];
+let yes = confirm.getElementsByClassName("col-2 btn custom-button")[0];
 let id = document.getElementById("post_ID");
 let token = document.getElementsByName("csrf-token")[0];
-let empty_warning = new bootstrap.Modal(document.getElementById('empty_comment_warning'));
-
-if(yes)
-    yes.addEventListener("click",delete_post);
+yes.addEventListener("click",delete_post);
 
 function delete_post(){
-    const getUrl = window.location;
-    const baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-    let request = new XMLHttpRequest();
+    var getUrl = window.location;
+    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+    var request = new XMLHttpRequest();
     request.open('delete', baseUrl+'/' + id.innerText, true);
     request.onload = function (){
         console.log(baseUrl+"/" + request.responseText);
@@ -21,5 +16,3 @@ function delete_post(){
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
     request.send();
 }
-
-

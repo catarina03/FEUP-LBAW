@@ -11,8 +11,8 @@ class Report extends Model
 
     protected $fillable = [
         'reported_date', 'accepted', ' closed_date',
-        'motive', 'user_reporting', 'user_assigned',
-        'comment_reported', 'post_reported'];
+        'motive', 'user_reporting', 'user_assigned', 
+        'comment_reported','post_reported'];
 
      /**
      * Get the user_reporting associated with the Report
@@ -54,6 +54,7 @@ class Report extends Model
     {
         return $this->hasOne(Comment::class, 'comment_reported');
     }
+    
 
-
+    //notification on report
 }
