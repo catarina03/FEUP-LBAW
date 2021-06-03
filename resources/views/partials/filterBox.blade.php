@@ -49,7 +49,7 @@
                     </label>
                 </div>
             @endauth
-            <button type="submit" class="filterButton w-100 mt-4 p-1">
+            <button type="button" class="filterButton w-100 mt-4 p-1">
                 <i class="fa fa-circle-notch fa-spin d-none search-spinner"></i>
                 <span class="search-span d-inline-block">Search</span>
             </button>

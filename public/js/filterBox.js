@@ -1,6 +1,9 @@
 let homepageFilter = document.querySelector('.homepage .filterButton')
 let categoryFilter = document.querySelector('.category .filterButton')
 let advancedSearchFilter = document.querySelector('.advanced_search .filterButton')
+let homepageSearch = document.querySelector('.homepage #search')
+let categorySearch = document.querySelector('.category #search')
+let advancedSearchSearch = document.querySelector('.advanced_search #search')
 let advancedSearch = document.querySelector('.advanced_search')
 let loadMoreAdv = document.querySelector('.advanced_search .pagination-loadmore .loadmore')
 let searchElem = document.querySelector('#search')
@@ -42,13 +45,34 @@ function addLoadMoreEventListener(e){
     makeRequest('GET', '/api/search?'+ encodeForAjax(filters), loadHandlerAdvancedSearch, null)
 }
 
-if(homepageFilter != null){
-    homepageFilter.addEventListener('submit', (e) => redirectWithFilters(e))
+if(homepageFilter != null) homepageFilter.addEventListener('click', (e) => redirectWithFilters(e) )
+if(homepageSearch != null){
+    homepageSearch.addEventListener("keyup", (e) => {
+        if(e.keyCode === 13){
+            redirectWithFilters(e)
+        }
+    })
 }
 
 if(categoryFilter != null) categoryFilter.addEventListener('submit', (e) => redirectWithFilters(e))
 
+if(categorySearch != null){
+    categorySearch.addEventListener("keyup", (e) => {
+        if(e.keyCode === 13){
+            redirectWithFilters(e)
+        }
+    })
+}
+
 if(advancedSearch != null) document.addEventListener('DOMContentLoaded', onLoad)
+
+if(advancedSearchSearch != null){
+    advancedSearchSearch.addEventListener("keyup", (e) => {
+        if(e.keyCode === 13){
+            redirectWithFilters(e)
+        }
+    })
+}
 
 if(advancedSearchFilter != null){
     advancedSearchFilter.addEventListener('submit', (e) => {
@@ -107,10 +131,11 @@ function getFilters(){
 
 function redirectWithFilters(e){
     e.preventDefault()
-    addSpinner()
+    let s = addSpinner()
     startDateElem = document.querySelector('input[type="date"]#startDate1')
     endDateElem = document.querySelector('input[type="date"]#endDate1')
     if(getFilters() !== -1) window.location = ("/search/filters?" + encodeForAjax(filters))
+    removeSpinner(s)
 }
 
 function updateAdvancedSearch(adding, posts, number_res, page){
@@ -180,6 +205,16 @@ function addSpinner(){
     let s = document.querySelector('.search-spinner')
     s.classList.remove('d-none')
     s.classList.add('d-inline-block')
+}
+
+function removeSpinner(){
+    let searchspan = document.querySelector('.search-span')
+    searchspan.classList.remove('d-none')
+    searchspan.classList.add('d-inline-block')
+
+    let s = document.querySelector('.search-spinner')
+    s.classList.remove('d-inline-block')
+    s.classList.add('d-none')
 }
 
 function checkDates(startDate, endDate){

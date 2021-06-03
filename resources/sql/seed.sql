@@ -754,7 +754,7 @@ CREATE OR REPLACE FUNCTION post_search() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF TG_OP = 'INSERT' THEN
-        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));-- || setweight(to_tsvector('english', (SELECT STRING_AGG(name, ' ')FROM tag JOIN post_tag ON tag.id = post_tag.tag_id WHERE  post_id = New.id)), 'D'));
+        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));
     ELSEIF TG_OP = 'UPDATE' AND (New.title <> OLD.title OR NEW.content <> OLD.content) THEN
         NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));
     END IF;
@@ -767,6 +767,7 @@ CREATE TRIGGER post_search
     BEFORE INSERT OR UPDATE ON post
     FOR EACH ROW
     EXECUTE PROCEDURE post_search();
+
 
 CREATE OR REPLACE FUNCTION duplicate_reports() RETURNS TRIGGER AS
 $BODY$
@@ -2740,6 +2741,189 @@ insert into post_tag (post_id, tag_id) values (99, 44);
 insert into post_tag (post_id, tag_id) values (99, 62);
 insert into post_tag (post_id, tag_id) values (100, 13);
 insert into post_tag (post_id, tag_id) values (100, 84);
+insert into post_tag (post_id, tag_id) values (101, 3);
+insert into post_tag (post_id, tag_id) values (102, 19);
+insert into post_tag (post_id, tag_id) values (103, 36);
+insert into post_tag (post_id, tag_id) values (104, 17);
+insert into post_tag (post_id, tag_id) values (105, 38);
+insert into post_tag (post_id, tag_id) values (106, 72);
+insert into post_tag (post_id, tag_id) values (107, 45);
+insert into post_tag (post_id, tag_id) values (108, 50);
+insert into post_tag (post_id, tag_id) values (103, 32);
+insert into post_tag (post_id, tag_id) values (104, 79);
+insert into post_tag (post_id, tag_id) values (105, 25);
+insert into post_tag (post_id, tag_id) values (106, 36);
+insert into post_tag (post_id, tag_id) values (107, 100);
+insert into post_tag (post_id, tag_id) values (108, 77);
+insert into post_tag (post_id, tag_id) values (109, 10);
+insert into post_tag (post_id, tag_id) values (110, 6);
+insert into post_tag (post_id, tag_id) values (111, 7);
+insert into post_tag (post_id, tag_id) values (112, 94);
+insert into post_tag (post_id, tag_id) values (113, 8);
+insert into post_tag (post_id, tag_id) values (114, 32);
+insert into post_tag (post_id, tag_id) values (115, 23);
+insert into post_tag (post_id, tag_id) values (116, 19);
+insert into post_tag (post_id, tag_id) values (117, 48);
+insert into post_tag (post_id, tag_id) values (118, 96);
+insert into post_tag (post_id, tag_id) values (119, 89);
+insert into post_tag (post_id, tag_id) values (120, 8);
+insert into post_tag (post_id, tag_id) values (121, 4);
+insert into post_tag (post_id, tag_id) values (122, 6);
+insert into post_tag (post_id, tag_id) values (123, 42);
+insert into post_tag (post_id, tag_id) values (124, 35);
+insert into post_tag (post_id, tag_id) values (125, 9);
+insert into post_tag (post_id, tag_id) values (126, 20);
+insert into post_tag (post_id, tag_id) values (127, 4);
+insert into post_tag (post_id, tag_id) values (128, 25);
+insert into post_tag (post_id, tag_id) values (129, 63);
+insert into post_tag (post_id, tag_id) values (130, 62);
+insert into post_tag (post_id, tag_id) values (131, 3);
+insert into post_tag (post_id, tag_id) values (132, 69);
+insert into post_tag (post_id, tag_id) values (133, 98);
+insert into post_tag (post_id, tag_id) values (134, 63);
+insert into post_tag (post_id, tag_id) values (134, 100);
+insert into post_tag (post_id, tag_id) values (135, 2);
+insert into post_tag (post_id, tag_id) values (135, 3);
+insert into post_tag (post_id, tag_id) values (135, 46);
+insert into post_tag (post_id, tag_id) values (136, 26);
+insert into post_tag (post_id, tag_id) values (137, 43);
+insert into post_tag (post_id, tag_id) values (137, 79);
+insert into post_tag (post_id, tag_id) values (137, 85);
+insert into post_tag (post_id, tag_id) values (137, 91);
+insert into post_tag (post_id, tag_id) values (138, 47);
+insert into post_tag (post_id, tag_id) values (139, 45);
+insert into post_tag (post_id, tag_id) values (140, 41);
+insert into post_tag (post_id, tag_id) values (140, 90);
+insert into post_tag (post_id, tag_id) values (141, 99);
+insert into post_tag (post_id, tag_id) values (142, 78);
+insert into post_tag (post_id, tag_id) values (143, 3);
+insert into post_tag (post_id, tag_id) values (143, 74);
+insert into post_tag (post_id, tag_id) values (143, 76);
+insert into post_tag (post_id, tag_id) values (143, 83);
+insert into post_tag (post_id, tag_id) values (143, 85);
+insert into post_tag (post_id, tag_id) values (144, 47);
+insert into post_tag (post_id, tag_id) values (145, 18);
+insert into post_tag (post_id, tag_id) values (146, 38);
+insert into post_tag (post_id, tag_id) values (146, 48);
+insert into post_tag (post_id, tag_id) values (146, 93);
+insert into post_tag (post_id, tag_id) values (147, 51);
+insert into post_tag (post_id, tag_id) values (147, 85);
+insert into post_tag (post_id, tag_id) values (148, 79);
+insert into post_tag (post_id, tag_id) values (149, 100);
+insert into post_tag (post_id, tag_id) values (150, 32);
+insert into post_tag (post_id, tag_id) values (151, 95);
+insert into post_tag (post_id, tag_id) values (152, 50);
+insert into post_tag (post_id, tag_id) values (152, 54);
+insert into post_tag (post_id, tag_id) values (152, 66);
+insert into post_tag (post_id, tag_id) values (153, 48);
+insert into post_tag (post_id, tag_id) values (153, 74);
+insert into post_tag (post_id, tag_id) values (154, 3);
+insert into post_tag (post_id, tag_id) values (154, 7);
+insert into post_tag (post_id, tag_id) values (154, 16);
+insert into post_tag (post_id, tag_id) values (154, 44);
+insert into post_tag (post_id, tag_id) values (154, 87);
+insert into post_tag (post_id, tag_id) values (155, 80);
+insert into post_tag (post_id, tag_id) values (156, 4);
+insert into post_tag (post_id, tag_id) values (156, 40);
+insert into post_tag (post_id, tag_id) values (156, 80);
+insert into post_tag (post_id, tag_id) values (157, 7);
+insert into post_tag (post_id, tag_id) values (157, 19);
+insert into post_tag (post_id, tag_id) values (158, 71);
+insert into post_tag (post_id, tag_id) values (158, 75);
+insert into post_tag (post_id, tag_id) values (158, 80);
+insert into post_tag (post_id, tag_id) values (159, 12);
+insert into post_tag (post_id, tag_id) values (159, 19);
+insert into post_tag (post_id, tag_id) values (159, 79);
+insert into post_tag (post_id, tag_id) values (160, 7);
+insert into post_tag (post_id, tag_id) values (160, 48);
+insert into post_tag (post_id, tag_id) values (161, 80);
+insert into post_tag (post_id, tag_id) values (162, 48);
+insert into post_tag (post_id, tag_id) values (163, 9);
+insert into post_tag (post_id, tag_id) values (164, 60);
+insert into post_tag (post_id, tag_id) values (165, 19);
+insert into post_tag (post_id, tag_id) values (165, 31);
+insert into post_tag (post_id, tag_id) values (165, 92);
+insert into post_tag (post_id, tag_id) values (165, 93);
+insert into post_tag (post_id, tag_id) values (166, 36);
+insert into post_tag (post_id, tag_id) values (166, 57);
+insert into post_tag (post_id, tag_id) values (167, 22);
+insert into post_tag (post_id, tag_id) values (167, 88);
+insert into post_tag (post_id, tag_id) values (167, 90);
+insert into post_tag (post_id, tag_id) values (168, 44);
+insert into post_tag (post_id, tag_id) values (169, 11);
+insert into post_tag (post_id, tag_id) values (169, 38);
+insert into post_tag (post_id, tag_id) values (170, 43);
+insert into post_tag (post_id, tag_id) values (170, 65);
+insert into post_tag (post_id, tag_id) values (171, 38);
+insert into post_tag (post_id, tag_id) values (172, 89);
+insert into post_tag (post_id, tag_id) values (173, 37);
+insert into post_tag (post_id, tag_id) values (173, 43);
+insert into post_tag (post_id, tag_id) values (173, 52);
+insert into post_tag (post_id, tag_id) values (173, 91);
+insert into post_tag (post_id, tag_id) values (174, 61);
+insert into post_tag (post_id, tag_id) values (174, 82);
+insert into post_tag (post_id, tag_id) values (175, 85);
+insert into post_tag (post_id, tag_id) values (176, 53);
+insert into post_tag (post_id, tag_id) values (176, 61);
+insert into post_tag (post_id, tag_id) values (176, 98);
+insert into post_tag (post_id, tag_id) values (177, 22);
+insert into post_tag (post_id, tag_id) values (177, 59);
+insert into post_tag (post_id, tag_id) values (177, 64);
+insert into post_tag (post_id, tag_id) values (178, 75);
+insert into post_tag (post_id, tag_id) values (178, 78);
+insert into post_tag (post_id, tag_id) values (179, 26);
+insert into post_tag (post_id, tag_id) values (179, 32);
+insert into post_tag (post_id, tag_id) values (179, 88);
+insert into post_tag (post_id, tag_id) values (179, 97);
+insert into post_tag (post_id, tag_id) values (179, 100);
+insert into post_tag (post_id, tag_id) values (180, 9);
+insert into post_tag (post_id, tag_id) values (180, 41);
+insert into post_tag (post_id, tag_id) values (181, 31);
+insert into post_tag (post_id, tag_id) values (180, 44);
+insert into post_tag (post_id, tag_id) values (182, 82);
+insert into post_tag (post_id, tag_id) values (183, 68);
+insert into post_tag (post_id, tag_id) values (184, 44);
+insert into post_tag (post_id, tag_id) values (184, 94);
+insert into post_tag (post_id, tag_id) values (185, 32);
+insert into post_tag (post_id, tag_id) values (185, 85);
+insert into post_tag (post_id, tag_id) values (186, 4);
+insert into post_tag (post_id, tag_id) values (186, 41);
+insert into post_tag (post_id, tag_id) values (186, 46);
+insert into post_tag (post_id, tag_id) values (187, 10);
+insert into post_tag (post_id, tag_id) values (187, 67);
+insert into post_tag (post_id, tag_id) values (188, 59);
+insert into post_tag (post_id, tag_id) values (189, 70);
+insert into post_tag (post_id, tag_id) values (189, 78);
+insert into post_tag (post_id, tag_id) values (190, 50);
+insert into post_tag (post_id, tag_id) values (190, 55);
+insert into post_tag (post_id, tag_id) values (191, 71);
+insert into post_tag (post_id, tag_id) values (191, 88);
+insert into post_tag (post_id, tag_id) values (192, 1);
+insert into post_tag (post_id, tag_id) values (193, 36);
+insert into post_tag (post_id, tag_id) values (193, 90);
+insert into post_tag (post_id, tag_id) values (193, 84);
+insert into post_tag (post_id, tag_id) values (194, 4);
+insert into post_tag (post_id, tag_id) values (194, 17);
+insert into post_tag (post_id, tag_id) values (194, 30);
+insert into post_tag (post_id, tag_id) values (195, 50);
+insert into post_tag (post_id, tag_id) values (195, 75);
+insert into post_tag (post_id, tag_id) values (196, 33);
+insert into post_tag (post_id, tag_id) values (196, 76);
+insert into post_tag (post_id, tag_id) values (197, 88);
+insert into post_tag (post_id, tag_id) values (198, 23);
+insert into post_tag (post_id, tag_id) values (198, 50);
+insert into post_tag (post_id, tag_id) values (199, 42);
+insert into post_tag (post_id, tag_id) values (199, 44);
+insert into post_tag (post_id, tag_id) values (199, 62);
+insert into post_tag (post_id, tag_id) values (200, 13);
+insert into post_tag (post_id, tag_id) values (200, 84);
+
+
+
+
+
+
+
 
 --COMMENT
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Agreed!', TIMESTAMP '2020-05-12 18:15:43', 44, 19, null);

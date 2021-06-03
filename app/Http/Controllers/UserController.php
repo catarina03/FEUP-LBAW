@@ -227,34 +227,50 @@ class UserController extends Controller
     /**
      * Block a user
      *
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param
+     * @return
      */
-    public function block($id)
+    public function block(Request $request, $id)
     {
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
         $user = Auth::user();
-        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
-        $blocked_user = AuthenticatedUser::find($id);
-        if ($blocked_user != null)
-            $user->block_user()->create(['blocked_user' => $id, 'blocking_user' => $user->id]);
+        $block = $request["id"];
+        if(!is_int($block)) return 'error';
+
+        $blocked_user = AuthenticatedUser::find($request->blocking);
+        if ($blocked_user != null){
+            DB::table("block_user")->insert([
+                'blocked_user' => $blocked_user,
+                'blocking_user' => $user->id
+            ]);
+            return 'SUCCESS';
+        }
+        return 'error';
     }
 
     /**
      * Unblock a user
      *
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param
+     * @return
      */
-    public function unblock($id)
+    public function unblock(Request $request, $id)
     {
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
         $user = Auth::user();
-        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
-        $blocked_user = AuthenticatedUser::find($id);
-        if ($blocked_user != null)
-            $user->block_user()->delete(['blocked_user' => $id, 'blocking_user' => $user->id]);
-        $user->block_user()->delete(['blocked_user' => $id, 'blocking_user' => $user->id]);
+        $blocked_user = $request["id"];
+        if(!is_int($blocked_user)) return 'error';
+        if ($blocked_user != null){
+            $b = DB::table("block_user")
+                ->where('blocked_user', $blocked_user)
+                ->where('blocking_user', $user->id);
+            if($b != null){
+                if($b->delete()) return 'SUCCESS';
+            }
+        }
+        return 'error';
     }
 
     /**
