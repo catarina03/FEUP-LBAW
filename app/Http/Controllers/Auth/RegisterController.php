@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'name' => 'string|max:255',
             'email' => 'string|email|max:255|unique:authenticated_user',
             'password' => 'string|min:5|confirmed',
-            'bithdate' => 'date|before_or_equal:' . now()->subYears(13),
+            'birthdate' => 'date|before_or_equal:' . now()->subYears(13),
             'username' => 'string|max:255|unique:authenticated_user',
         ],
         [
@@ -107,6 +107,6 @@ class RegisterController extends Controller
     }
 
     public function showRegistrationForm(){
-        return view('auth.register', ['user' => 'visitor', 'needsFilter' => 0]);
+        return view('auth.register', ['needsFilter' => 0]);
     }
 }

@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 class Comment extends Model
 {
 
@@ -32,7 +33,7 @@ class Comment extends Model
     {
         return $this->belongsTo(AuthenticatedUser::class, 'user_id');
     }
-    
+
     public function voted_by(){
         return $this->belongsToMany(AuthenticatedUser::class,"vote_comment","user_id","comment_id")->withPivot("like");
     }
@@ -49,5 +50,4 @@ class Comment extends Model
         return $this->hasOne(Comment::class,"comment_id");
     }
 
-    //notification on comment
 }
