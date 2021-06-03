@@ -1,5 +1,5 @@
 <div class="roles-table" style="overflow-x: scroll">
-    <table class="table mt-4 roles-list">
+    <table class="table mt-4 roles-list  align-middle">
         <thead>
         <tr>
             <th scope="col">Name</th>
@@ -29,7 +29,7 @@
         </tbody>
     </table>
 </div>
-<nav class="manage_roles-pagination">
+<nav class="table-pagination">
     <div class="pagination">
         {!! $roles->links() !!}
     </div>

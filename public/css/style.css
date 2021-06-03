@@ -663,10 +663,7 @@ a.footer-link:hover {
 /* FAQ */
 
 .faq-card {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5em;
-    margin-bottom: 7em;
+    margin: 5em auto 7em;
     padding-top: 2%;
     padding-bottom: 1%;
     font-size: 1.4em;
@@ -792,29 +789,29 @@ a.footer-link:hover {
     margin: 0;
 }
 
-.manage_roles-pagination {
+.table-pagination {
     margin-top: 2em;
     padding-bottom: 1em;
     justify-content: center;
 }
 
-.manage_roles-pagination .pagination {
+.table-pagination .pagination {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.manage_roles-pagination .pagination > li > a,
-.manage_roles-pagination .pagination > li > span {
+.table-pagination .pagination > li > a,
+.table-pagination .pagination > li > span {
     color: black;
 }
 
-.manage_roles-pagination .pagination > .active > a,
-.manage_roles-pagination .pagination > .active > a:focus,
-.manage_roles-pagination .pagination > .active > a:hover,
-.manage_roles-pagination .pagination > .active > span,
-.manage_roles-pagination .pagination > .active > span:focus,
-.manage_roles-pagination .pagination > .active > span:hover {
+.table-pagination .pagination > .active > a,
+.table-pagination .pagination > .active > a:focus,
+.table-pagination .pagination > .active > a:hover,
+.table-pagination .pagination > .active > span,
+.table-pagination .pagination > .active > span:focus,
+.table-pagination .pagination > .active > span:hover {
     background-color: #fcf3ee;
     color: black;
     border-color: black;
@@ -822,13 +819,15 @@ a.footer-link:hover {
 
 /*POST DASHBOARD*/
 
-.moderator-center .assign-button:hover {
-    color: #fcf3ee;
+.report-row a{
+    cursor: pointer;
+    color: black;
 }
 
-#pdash-action {
-    text-decoration: underline;
+.report-row a:hover{
+    color: rgb(79, 99, 96);
 }
+
 
 
 /*******************************************/
