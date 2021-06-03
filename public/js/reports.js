@@ -4,23 +4,28 @@ if (confirm != null) {
         confirm[i].addEventListener("click", assign_to_me_modal)
 }
 
+let action = document.querySelectorAll(".action-button")
+if (action != null) {
+    for (let i = 0; i < action.length; i++)
+        action[i].addEventListener("click", answerReport)
+}
+
 function assign_to_me_modal(event) {
     event.preventDefault()
 
-    let section = event.target.closest(".report-section")
+    let section = event.target.closest(".report-actions-section")
     let id = section.dataset.id
     let type = section.dataset.type
 
     let modal = document.querySelector('.confirm-modal')
-    modal.id = "confirm_" + id + "_" + type
+    modal.dataset.id = id
+    modal.dataset.type = type
 
     let nmodal = new bootstrap.Modal(modal, {})
     nmodal.show()
 
     let confirm_yes = document.querySelector('.confirm-yes')
-    if(confirm_yes != null) confirm_yes.addEventListener("click", assign_to_me)
-
-
+    if (confirm_yes != null) confirm_yes.addEventListener("click", assign_to_me)
 }
 
 function assign_to_me(event) {
@@ -28,26 +33,36 @@ function assign_to_me(event) {
     let section = event.target.closest(".confirm-modal")
     let id = section.dataset.id
     let type = section.dataset.type
-    console.log(id, type)
+
+    let el = document.querySelector(`.report-actions-section[data-id="${id}"][data-type="${type}"]`)
+    el.innerHTML = "Pending..."
 
 
-    let request = new XMLHttpRequest()
-    const url = window.location.protocol + "//" + window.location.host + '/reports/' +  + '/edit_role'
-    console.log(url)
-    //Route::put('reports/{report_id}/assign_report', 'ReportController@assign');
-    request.open('put', url, true)
-    request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').content);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.onreadystatechange = function () {
-        if (request.readyState === XMLHttpRequest.DONE) {
-            if (request.status === 200) {
-                old_role.innerHTML = JSON.parse(this.responseText)
-                addRolesListener()
-            } else alert("Sorry! There was an error " + request.status)
+    const url = window.location.protocol + "//" + window.location.host + '/api/reports/' + id + '/assign_report'
+    makeRequest("PUT", url, handleAssignReportResponse, encodeForAjax({content_type: type}))
+}
+
+function handleAssignReportResponse(status, responseText) {
+
+    if (status !== 200) alert("Error when assigning report")
+    else {
+        let res = JSON.parse(responseText)
+        let view = res['view']
+        let id = res['id']
+        let type = res['type']
+
+        let el = document.querySelector(`.report-actions-section[data-id="${id}"][data-type="${type}"]`)
+        el.innerHTML = view
+
+        let action = document.querySelector(`.report-actions-section[data-id="${id}"][data-type="${type}"] .action-button`)
+        if (action != null) {
+            action.addEventListener("click", answerReport)
         }
     }
 
+}
 
-    let confirm_yes = document.querySelector('.confirm-yes')
-    if(confirm_yes != null) confirm_yes.removeEventListener("click", assign_to_me)
+function answerReport(event) {
+    event.preventDefault()
+    console.log("hello")
 }

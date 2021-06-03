@@ -122,18 +122,27 @@ class ReportController extends Controller
 
     }
 
-    public function assign(Request $request, $report_id)
+    public function assign(Request $request, $reported_content)
     {
+
         $validatedData = Validator::make($request->all(), [
-            'moderator_id' => 'required|numeric'
+            'content_type' => 'required'
         ]);
 
+
         if (!$validatedData->fails()) {
-            DB::table('report')->where('id', $report_id)->update(array('user_assigned' => $request['moderator_id']));
+            $type = $request['content_type'];
+
+            if($type == "Post")
+                DB::table('report')->where('post_reported', $reported_content)->update(array('user_assigned' => Auth::user()->id));
+            else
+                DB::table('report')->where('comment_reported', $reported_content)->update(array('user_assigned' => Auth::user()->id));
+
+
             $view = view('partials.moderator_card_actions', ['assigned' => true])->render();
-            return response()->json($view);
+            return response()->json(array('view' => $view, 'id' => $reported_content, 'type' => $type));
         }
-        return response()->json();
+        return response()->json(404);
     }
 
     public function process(Request $request, $report_id)

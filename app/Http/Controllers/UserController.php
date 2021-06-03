@@ -183,7 +183,7 @@ class UserController extends Controller
             $type = $request["new_role"];
             DB::table("authenticated_user")->where("id", $user_id)->update(["authenticated_user_type" => $type]);
             $view = view('partials.roles_types', ['type' => $type])->render();
-            return response()->json($view);
+            return response()->json($view)->setStatusCode(200);
         }
 
         $type = DB::table("authenticated_user")->where("id", $user_id)->pluck('authenticated_user_type');
