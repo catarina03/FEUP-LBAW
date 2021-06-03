@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+    <script  src="{{ URL::asset('js/toaster.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/settings.js') }}" defer></script>
     <div class="settings container-fluid md-g-0 sm-g-0" style="margin-top:4em;margin-bottom:5em;">
         <div class="row justify-content-start profile settings g-0 mt-4">
@@ -316,6 +316,7 @@
 
     </div>
     @include('pages.confirm')
+    @include('partials.postpage_toaster')
 @endsection
 
 

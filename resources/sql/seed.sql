@@ -45,6 +45,7 @@ DROP FUNCTION IF EXISTS generate_vote_comment_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_vote_post_notification() CASCADE;
 DROP FUNCTION IF EXISTS delete_unused_tag() CASCADE;
 DROP FUNCTION IF EXISTS post_search() CASCADE;
+DROP FUNCTION IF EXISTS tags_search() CASCADE;
 
 DROP TRIGGER IF EXISTS block_user ON block_user;
 DROP TRIGGER IF EXISTS check_vote_post ON vote_post;
@@ -66,6 +67,7 @@ DROP TRIGGER IF EXISTS generate_thread_comment_notification ON comment;
 DROP TRIGGER IF EXISTS generate_publish_notification ON post;
 DROP TRIGGER IF EXISTS delete_unused_tag ON post_tag;
 DROP TRIGGER IF EXISTS post_search ON post;
+DROP TRIGGER IF EXISTS tags_search ON post_tag;
 
 CREATE TYPE category_types AS ENUM ('music', 'tv show', 'cinema', 'theatre', 'literature');
 CREATE TYPE post_types AS ENUM ('news', 'article','review');
@@ -757,16 +759,31 @@ BEGIN
         NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));
     ELSEIF TG_OP = 'UPDATE' AND (New.title <> OLD.title OR NEW.content <> OLD.content) THEN
         NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));
-    END IF;
-    RETURN NEW;
+END IF;
+RETURN NEW;
 END;
 $BODY$
-    LANGUAGE 'plpgsql';
-
+LANGUAGE 'plpgsql';
 CREATE TRIGGER post_search
     BEFORE INSERT OR UPDATE ON post
-    FOR EACH ROW
-    EXECUTE PROCEDURE post_search();
+                         FOR EACH ROW
+                         EXECUTE PROCEDURE post_search();
+
+
+
+CREATE OR REPLACE FUNCTION tags_search() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE post  set search = (SELECT setweight(to_tsvector('english', post.title), 'A') || setweight(to_tsvector('english',post.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = post.user_id)), 'C')|| (SELECT setweight( to_tsvector('english',(SELECT STRING_AGG(name, ' ')FROM tag JOIN post_tag ON tag.id = post_tag.tag_id WHERE  post_id = post.id)),'D'))) where id = new.post_id;
+RETURN NEW;
+END;
+
+$BODY$
+LANGUAGE 'plpgsql';
+CREATE TRIGGER tags_search
+     AFTER INSERT OR UPDATE ON post_tag
+     FOR EACH ROW
+     EXECUTE PROCEDURE tags_search();
 
 
 CREATE OR REPLACE FUNCTION duplicate_reports() RETURNS TRIGGER AS

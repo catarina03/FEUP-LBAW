@@ -54,7 +54,7 @@ if(homepageSearch != null){
     })
 }
 
-if(categoryFilter != null) categoryFilter.addEventListener('submit', (e) => redirectWithFilters(e))
+if(categoryFilter != null) categoryFilter.addEventListener('click', (e) => redirectWithFilters(e))
 
 if(categorySearch != null){
     categorySearch.addEventListener("keyup", (e) => {
@@ -75,7 +75,7 @@ if(advancedSearchSearch != null){
 }
 
 if(advancedSearchFilter != null){
-    advancedSearchFilter.addEventListener('submit', (e) => {
+    advancedSearchFilter.addEventListener('click', (e) => {
         e.preventDefault()
         let s = addSpinner()
         if(getFilters() !== -1) window.location = "filters?" + encodeForAjax(filters)
