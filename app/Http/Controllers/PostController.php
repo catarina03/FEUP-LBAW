@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\HelperController;
 
 
 class PostController extends Controller
@@ -399,7 +397,7 @@ class PostController extends Controller
                 if($post != null){
                     $this->authorize("delete",$post);
                     if ($post->delete()) {
-                        Session::put('deleted_post',true);
+                        session()->push('toaster', 'Post deleted successfully!');
                         return ''; //dar return da view da homepage
                     } else {
                         return 'post/' + $post_id; // dar return da view do post

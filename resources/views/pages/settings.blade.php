@@ -7,10 +7,10 @@
         <div class="row justify-content-start profile settings g-0 mt-4">
             <div class="col-3 col-lg-3 d-none d-lg-flex flex-column" style="padding-top:5%;">
                 <nav class="nav flex-lg-column ">
-                    <a href="{{url('user/'.$user->id)}}" class="my-profile-settings justify-content-center d-flex nav-link "><i
+                    <a href="{{url('user/'.$user->id)}}" class="my-profile-settings justify-content-center d-flex nav-link "><i title="profile"
                             class="bi bi-person-circle me-2"></i>Profile</a>
                     <a class="my-profile-settings justify-content-center d-flex nav-link active ms-3"><i
-                            class="bi bi-gear me-2"></i>
+                            class="bi bi-gear me-2" title="settings"></i>
                         Settings</a>
                 </nav>
             </div>
@@ -22,7 +22,7 @@
                         <h2 id ="edit-account">Edit Account</h2>
                     </div>
                     <div class="d-lg-none col-4 pt-2">
-                        <a href="{{ url('user/'.$user->id) }}" class="my-profile-settings go-profile"><i
+                        <a href="{{ url('user/'.$user->id) }}" class="my-profile-settings go-profile"><i title="profile"
                                 class="bi bi-person-circle fs-3 pe-2"></i>Profile</a>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                     @method('put')
 
                     <div class="mb-3 row">
-                        <label for="twitter" class="justify-content-center d-flex col-sm-2 col-form-label"><i
+                        <label for="twitter" class="justify-content-center d-flex col-sm-2 col-form-label"><i title="twitter"
                                 class="fa fa-twitter"></i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="twitter" name="twitter"
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="facebook" class="justify-content-center d-flex col-sm-2 col-form-label"><i
+                        <label for="facebook" class="justify-content-center d-flex col-sm-2 col-form-label"><i title="facebook"
                                 class="fa fa-facebook"></i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="facebook" name="facebook"
@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="instagram" class="justify-content-center d-flex col-sm-2 col-form-label"><i
+                        <label for="instagram" class="justify-content-center d-flex col-sm-2 col-form-label"><i title="instagram"
                                 class="fa fa-instagram"></i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="instagram" name="instagram"
@@ -133,7 +133,7 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="linkedin" class="justify-content-center d-flex col-sm-2 col-form-label"><i
+                        <label for="linkedin" class="justify-content-center d-flex col-sm-2 col-form-label"><i title="linkedin"
                                 class="fa fa-linkedin"></i></label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="linkedin" name="linkedin"
@@ -316,7 +316,7 @@
 
     </div>
     @include('pages.confirm')
-    @include('partials.postpage_toaster')
+    @include('partials.list_toasters')
 @endsection
 
 

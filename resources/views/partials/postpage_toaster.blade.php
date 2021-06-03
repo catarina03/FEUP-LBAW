@@ -5,7 +5,6 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close" style="background-color:white;"></button>
         </div>
         <div class="toast-body">
-        Post deleted successfully!{{--This is the default message, modify the body innerText with javascript for custom messages --}}
         </div>
     </div>
 </div>

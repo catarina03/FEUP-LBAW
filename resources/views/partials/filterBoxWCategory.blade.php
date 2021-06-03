@@ -8,7 +8,7 @@
                 <input type="text" id="search" class="form-control" placeholder="Search" aria-label="Search"
                        aria-describedby="search-addon"/>
                 <span class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
-                            <i class="fas fa-search"></i>
+                            <i title="Search" class="fas fa-search"></i>
                         </span>
             </div>
             <select class="form-select mt-4" id="category" aria-label="Select a category" style="cursor:pointer;">
@@ -50,7 +50,7 @@
                 </div>
             @endauth
             <button type="submit" class="filterButton w-100 mt-4 p-1">
-                <i class="fa fa-circle-notch fa-spin d-none search-spinner"></i>
+                <i title="Search" class="fa fa-circle-notch fa-spin d-none search-spinner"></i>
                 <span class="search-span d-inline-block">Search</span>
             </button>
             <div class="justify-content-center d-flex mt-1">
@@ -61,7 +61,7 @@
     </div>
     <div>
         <div class ="d-none go-top-scroll" style="position: fixed">
-            <button class="d-flex btn mx-auto p-0 btn-lg" style="float:right;outline:none; box-shadow: none;" id="advanced-search-go-top"><i
+            <button class="d-flex btn mx-auto p-0 btn-lg" style="float:right;outline:none; box-shadow: none;" id="advanced-search-go-top"><i title="Arrow up"
                     class="fas fa-arrow-circle-up m-0 p-0 fa-lg"></i></button>
         </div>
     </div>

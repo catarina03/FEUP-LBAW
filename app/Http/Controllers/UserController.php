@@ -162,7 +162,7 @@ class UserController extends Controller
             if ($user->delete())
                 return response()->json('/');
         }
-        Session::put('delete',true);
+        session()->push('toaster', 'Account deleted successfully!');
         return response()->json('user/' . $id . '/settings#delete-account', 400);
     }
 
@@ -390,7 +390,7 @@ class UserController extends Controller
             $user->email = trim($request->input('email'));
 
         $user->save();
-        Session::put('edit_account',true);
+        session()->push('toaster', 'Account edited successfully!');
         return redirect('user/' . $id . '/settings#edit-account')->with('success-account', 'Account updated successfully!');
 
     }
@@ -427,7 +427,7 @@ class UserController extends Controller
             $user->linkedin = trim($request->input('linkedin'));
 
         $user->save();
-        Session::put('edit_social_networks',true);
+        session()->push('toaster', 'Social networks edited successfully!');
         return redirect('user/' . $id . '/settings#edit-social-networks')->with('success-social-networks', 'Social networks updated successfully!');
     }
 
@@ -488,7 +488,7 @@ class UserController extends Controller
         foreach ($to_add as $t) {
             DB::table('follow_tag')->insert(['user_id' => $user->id, 'tag_id' => $t]);
         }
-        Session::put('edit_preferences',true);
+        session()->push('toaster', 'Preferences edited successfully!');
         return redirect('user/' . $id . '/settings#edit-preferences')->with('success-preferences', 'Preferences updated successfully!');
     }
 
@@ -516,7 +516,7 @@ class UserController extends Controller
 
         AuthenticatedUser::find($user->id)->update(['password' => Hash::make($request->newPassword)]);
 
-        Session::put('change_password',true);
+        session()->push('toaster', 'Password changed successfully!');
         return redirect('user/' . $id . '/settings#change-password')->with('success-password', 'Password changed successfully!');
     }
 
