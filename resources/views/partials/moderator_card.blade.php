@@ -1,4 +1,4 @@
-<div class="roles-table" style="overflow-x: scroll">
+<div class="reports-table" style="overflow-x: scroll">
     <table class="table mt-4 roles-list align-middle">
         <thead>
         <tr>
@@ -10,7 +10,7 @@
             <th scope="col" class="text-center ">Actions</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="reports-items">
         @if(count($reports) > 0)
             @include('pages.confirm')
             @include('pages.report_action')

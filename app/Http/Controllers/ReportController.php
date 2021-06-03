@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Http\Response;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -109,15 +108,30 @@ class ReportController extends Controller
     }
 
 
-    public function close(Request $request, $report_id)
+    public function close(Request $request, $reported_content)
     {
-        $validatedData = $request->validate([
-            'moderator_id' => 'required|numeric'
+        $validatedData = Validator::make($request->all(), [
+            'content_type' => 'required',
+            'accepted' => 'required'
         ]);
-        $date = Carbon::now();
-        $closed_date = $date->toDateString();
-        DB::table('report')->where('id', $report_id)->where('user_assigned', $validatedData->moderator_id)->update(["closed_date" => $closed_date]);
 
+        if (!$validatedData->fails()) {
+            $type = $request['content_type'];
+            $accepted = $request['accepted'];
+
+            $date = Carbon::now();
+            $closed_date = $date->toDateString();
+
+            if ($type == "Post")
+                DB::table('report')->where('post_reported', $reported_content)->update(['closed_date' => $closed_date, 'accepted' => $accepted]);
+            else
+                DB::table('report')->where('comment_reported', $reported_content)->update(['closed_date' => $closed_date, 'accepted' => $accepted]);
+
+            return response()->json(array('id' => $reported_content, 'type' => $type));
+        }
+
+        $view = view('partials.moderator_card_actions', ['assigned' => true])->render();
+        return response()->json(array('view' => $view, 'id' => $reported_content, 'type' => $request['content_type']), 400);
     }
 
     public function assign(Request $request, $reported_content)
@@ -129,7 +143,7 @@ class ReportController extends Controller
         if (!$validatedData->fails()) {
             $type = $request['content_type'];
 
-            if($type == "Post")
+            if ($type == "Post")
                 DB::table('report')->where('post_reported', $reported_content)->update(array('user_assigned' => Auth::user()->id));
             else
                 DB::table('report')->where('comment_reported', $reported_content)->update(array('user_assigned' => Auth::user()->id));
@@ -140,7 +154,8 @@ class ReportController extends Controller
         return response()->json()->setStatusCode(400);
     }
 
-    public function reportMotives(Request $request, $reported_content) {
+    public function reportMotives(Request $request, $reported_content)
+    {
         //select distinct motive from report where post_reported = 188 and closed_date is null
         $validatedData = Validator::make($request->all(), [
             'content_type' => 'required'
@@ -149,7 +164,7 @@ class ReportController extends Controller
         if (!$validatedData->fails()) {
             $type = $request['content_type'];
 
-            if($type == "Post")
+            if ($type == "Post")
                 $motives = DB::table('report')->select('motive')->where('post_reported', $reported_content)->whereNull('closed_date')->distinct()->get();
             else
                 $motives = DB::table('report')->select('motive')->where('comment_reported', $reported_content)->whereNull('closed_date')->distinct()->get();

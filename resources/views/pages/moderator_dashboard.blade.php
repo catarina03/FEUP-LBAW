@@ -17,7 +17,7 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-                <div class=" roles-list">
+                <div class="roles-list">
                     @include('partials.moderator_card', ['reports' => $reports])
                 </div>
             </div>
