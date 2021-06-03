@@ -39,10 +39,14 @@ function addSavePostListeners(){
             if(type=="post"){
               listClass.remove("bi-bookmark-plus-fill");
               listClass.add("bi-bookmark-check-fill");
+              show_toaster("Post successfully added to favorites!");
+              
             }
             if(type=="delete"){
               listClass.remove("bi-bookmark-check-fill");
               listClass.add("bi-bookmark-plus-fill");
+              show_toaster("Post successfully removed from favorites!");
+              
             }
         }    
     };
