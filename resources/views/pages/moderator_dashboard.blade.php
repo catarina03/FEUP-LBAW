@@ -17,11 +17,6 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-                <div class="spinner d-none justify-content-center pt-3">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
                 <div class=" roles-list">
                     @include('partials.moderator_card', ['reports' => $reports])
                 </div>

@@ -13,6 +13,7 @@
         <tbody>
         @if(count($reports) > 0)
             @include('pages.confirm')
+            @include('pages.report_action')
             @foreach($reports as $report)
                 <tr class="report-row">
                     <td class="col-md-4 title"><a href="{{ url('/post/'.$report->post_id) }}">{{ $report->title}}</a>

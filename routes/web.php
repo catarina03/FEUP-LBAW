@@ -97,6 +97,8 @@ Route::prefix('api/post/')->group(function () { //post api
 Route::get('moderator/reports', 'ReportController@show');
 Route::put('reports/{reported_content}/close', 'ReportController@close');
 Route::put('api/reports/{reported_content}/assign_report', 'ReportController@assign');
+Route::post('api/reports/{reported_content}/motives', 'ReportController@reportMotives');
+
 Route::put('reports/{reported_content}/process', 'ReportController@process');
 Route::get('api/report_filter', 'ReportController@reportFilter');
 Route::post('comment/{comment_id}/report', 'CommentController@reportComment');
