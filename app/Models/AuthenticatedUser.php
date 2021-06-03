@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use App\Notifications\ResetPasswordNotification;
 
 class AuthenticatedUser extends Authenticatable
 {
     use Notifiable;
-
+    use CanResetPassword;
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
 
@@ -33,12 +35,7 @@ class AuthenticatedUser extends Authenticatable
     ];
 
 
-
-
-
     /**                              Associations                           */
-
-
 
 
 
@@ -63,7 +60,7 @@ class AuthenticatedUser extends Authenticatable
         return $this->hasMany(Comment::class, "authenticatedUser_id");
     }
 
-    /** 
+    /**
     * Reports assigned to the user
     */
     public function assigned_reports(){
@@ -103,6 +100,15 @@ class AuthenticatedUser extends Authenticatable
         return $this->belongsToMany(Post::class, 'saves', 'authenticatedUser_id', 'post_id');
     }
 
-    //notification on follow and vote?
-   
+    public function isAdmin(): bool
+    {
+        return (($this->authenticated_user_type == "System Manager") || ($this->authenticated_user_type == "Moderator"));
+    }
+
+    public function isSM(): bool
+    {
+        return $this->authenticated_user_type == "System Manager";
+    }
+
+
 }

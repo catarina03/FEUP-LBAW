@@ -1,192 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container manage_moderators-card">
-    <section class="row d-flex justify-content-center" style="background-color:#8ab5b1;border-radius:2%;">
-        <div class="col-lg-9 col-11 justify-content-center mb-3">
-            <h1 class="text-center manage_moderators-title mt-1 m-3">Manage Moderators</h1>
-            <div class="card pt-2 row" style="background-color:#8ab5b1; border:none;">
+    <script src="{{ asset('js/edit_roles.js')}}" defer></script>
+    <div class="manageRoles row g-0 pt-lg-5 pt-3" style="margin-top: 4em; margin-bottom: 7em;">
+        <div class="manageRoles-icon col-12 col-lg-3 pt-lg-5 pt-3 pb-3 text-center justify-content-center">
+            <i class="bi bi-people-fill d-lg-block d-none" style="font-size:6em;color:#0c1d1c;"></i>
+            <h2 style="font-weight:bold;color:#307371;">Manage Roles</h2>
+        </div>
+        <div class="manageRoles-center col-12 col-lg-7">
+            <div class="card d-flex justify-content-center p-4" style="background-color:#8ab5b1;">
                 <div class="input-group rounded m-0 p-0">
-                    <input type="search" class="form-control"
-                        placeholder="Search a person to assign the moderator's role" aria-label="Search"
-                        aria-describedby="search-addon" />
+                    <input type="text" class="form-control" id="search"
+                           placeholder="Search a person by username to edit their role" aria-label="Search"
+                           aria-describedby="search-addon"/>
                     <button class="input-group-text border-0" id="search-addon" style="background-color:#fcf3ee;">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-                <ul class="container mt-4 overflow-auto"
-                    style="font-size:16px;background-color:#fcf3ee;max-height:30rem;">
-                    <li class="row pt-2">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                    <hr class="dropdown-divider">
-                    <li class="row pb-2">
-                        <ul class="col-8 ps-4 pt-1">
-                            @ana_sousa
-                        </ul>
-                        <ul class="remove-role col-4 text-center" style="border-left: 2px solid #8ab5b1;">
-                            <i class="bi bi-person-x-fill fs-5"></i>
-                            <p class="ps-2" style="text-decoration:none;color:#0c1d1c;display:inline;"
-                                data-bs-toggle="modal" data-bs-target="#confirm">
-                                Remove Role
-                            </p>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="spinner d-none justify-content-center pt-3">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div class=" roles-list">
+                    @include('partials.roles_list', ['roles' => $roles])
+                </div>
             </div>
         </div>
-    </section>
-</div>
+
+    </div>
+
+
 @endsection
