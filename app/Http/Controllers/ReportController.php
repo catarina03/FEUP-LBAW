@@ -187,33 +187,47 @@ class ReportController extends Controller
     public function filter(Request $request) {
 
         $user_id = Auth::user()->id;
-        $reports = DB::select(DB::raw("(SELECT post.id AS post_id, title, post.user_id, name AS content_author, post.id AS content_id, 'Post' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
-                FROM report, post, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive
-                WHERE authenticated_user.id = post.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.post_reported = post.id AND user_reporting <> " . $user_id . " AND (user_assigned = " . $user_id . " OR user_assigned is null)
-                GROUP BY post.id, title, name, most_frequent_motive.motive, user_assigned, content_id)
-                union
-                (SELECT post.id AS post_id, title, post.user_id, name AS content_author, comment.id AS content_id, 'Comment' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
-                FROM report, post, comment, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive
-                WHERE authenticated_user.id = comment.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.comment_reported = comment.id AND post.id = comment.post_id AND user_reporting <> " . $user_id . " AND (user_assigned = " . $user_id . " OR user_assigned is null)
-                GROUP BY post.id, title, name, most_frequent_motive.motive, user_assigned, content_id)
-                ORDER BY n_reports DESC"));
+
+        $posts = "SELECT post.id AS post_id, title, type as post_type, category, post.user_id, name AS content_author, post.id AS content_id, 'Post' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned";
+        $posts .= " FROM report, post, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive";
+        $posts .= " WHERE authenticated_user.id = post.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.post_reported = post.id AND user_reporting ".htmlspecialchars_decode('<>').$user_id." AND (user_assigned = ".$user_id." OR user_assigned is null)";
+
+        $comments = "SELECT post.id AS post_id, title, type as post_type, category, post.user_id, name AS content_author, comment.id AS content_id, 'Comment' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned";
+        $comments .= " FROM report, post, comment, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive";
+        $comments .= " WHERE authenticated_user.id = comment.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.comment_reported = comment.id AND post.id = comment.post_id AND user_reporting ".htmlspecialchars_decode('<>').$user_id." AND (user_assigned = ".$user_id." OR user_assigned is null)";
 
         if($request->has('category')) {
-
+            if($request->input('category') == "TvShow") $category = "tv show";
+            else $category = strtolower($request->input('category'));
+            $posts .= " AND category = '".$category."'";
+            $comments .= " AND category = '".$category."'";
         }
 
         if($request->has('type')) {
-
-        }
-
-        if($request->has('content_type')) {
-
+            $posts .= " AND type = '".strtolower($request->input('type'))."'";
+            $comments .= " AND type = '".strtolower($request->input('type'))."'";
         }
 
         if($request->has('assign')) {
-
+            if($request->input('assign') == "assign") $id = " = ".$user_id;
+            else $id = " is null";
+            $posts .= " AND user_assigned".$id;
+            $comments .= " AND user_assigned".$id;
         }
 
+        $posts .= " GROUP BY post.id, title, name, post_type, category, most_frequent_motive.motive, user_assigned, content_id";
+        $comments .= " GROUP BY post.id, title, name, post_type, category, most_frequent_motive.motive, user_assigned, content_id";
+
+        $posts = "(".$posts.")";
+        $comments = "(".$comments.")";
+        $total = $posts ." union ".$comments;
+
+        if($request->has('content_type')) {
+            if($request->input('content_type') == "Post") $total = $posts;
+            else $total = $comments;
+        }
+
+        $reports =  DB::select(DB::raw($total." ORDER BY n_reports DESC"));
         $view = view('partials.moderator_card', ['reports' => $reports])->render();
         return response()->json($view);
     }

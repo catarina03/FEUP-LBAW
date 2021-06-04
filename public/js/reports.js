@@ -228,18 +228,23 @@ function getReports(event) {
         spinner.classList.add("d-flex")
 
         const url = window.location.protocol + "//" + window.location.host + '/api/moderator/reports/filters?' + encodeForAjax(filters)
-
         makeRequest("get", url, handleFiltersResponse, null)
     }
 }
 
 function handleFiltersResponse(status, response_text) {
-    const res = JSON.parse(response_text)
-
-    let element = document.querySelector(".roles-list")
-    element.innerHTML = res
-    allListeners()
-
+    console.log(response_text)
+    if(status !== 200) {
+        clear_fields()
+        const url = window.location.protocol + "//" + window.location.host + '/api/moderator/reports/filters?' + encodeForAjax({})
+        makeRequest("get", url, handleFiltersResponse, null)
+    }
+    else {
+        const res = JSON.parse(response_text)
+        let element = document.querySelector(".roles-list")
+        element.innerHTML = res
+        allListeners()
+    }
 
     let spinner = document.querySelector(".spinner")
     spinner.classList.add("d-none")
