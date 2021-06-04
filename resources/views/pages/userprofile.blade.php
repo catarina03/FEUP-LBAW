@@ -4,6 +4,7 @@
     <script type="text/javascript" src="{{ URL::asset('js/update_bio.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/update_profile_photo.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/follow_user.js') }}" defer></script>
+    <script type="text/javascript" src="{{ URL::asset('js/user_profile.js') }}" defer></script>
 
     <input name="user_id" value="{{$user->id}}" class="user-id-value" hidden>
     <input name="isFollowing" value="{{$isFollowing}}" class="is-following" hidden>

@@ -335,8 +335,9 @@ class UserController extends Controller
             return response('Photo update error', 500);
         };
 
+        $user = Auth::user();
         $photo = 'storage/images/users/' . $imageName;
-        return response()->json(array('profilephoto' => view('partials.profilephoto', ['photo' => $photo])->render()));
+        return response()->json(array('profilephoto' => view('partials.profilephoto', ['photo' => $photo, 'user'=> $user])->render()));
     }
 
 
