@@ -92,12 +92,7 @@ class UserController extends Controller
 
         $photo = 'storage/images/users/'.Auth::user()->profile_photo;
 
-        if($user_id == $id){
-            return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0, 'user_id'=>$user_id, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
-        }
-        else {
-            return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
-        }
+        return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
     }
 
     /**

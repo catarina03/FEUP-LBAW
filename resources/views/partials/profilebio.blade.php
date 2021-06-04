@@ -1,4 +1,5 @@
 <div class="card col-lg-6 col-sm-12 d-flex justify-content-center bio">
+    @if(Auth::user()->id == $user->id)
     <div class="row position-relative" data-toggle="tooltip" data-placement="bottom"
          title="Edit Bio">
         <a
@@ -15,18 +16,29 @@
             </div>
         </div>
     </div>
-</div>
-<form action="{{ url("api/user/".Auth::user()->id."/edit_bio") }}" method="post" class=" col-lg-12 position-relative ">
-    @csrf
-    @method('PUT')
-    <div class="row position-relative d-none  justify-content-center bio-form">
-        <div class="form-group row col-lg-6 justify-content-end">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="bio"
-                      style="resize:none;"></textarea>
-            <input class="current-user-id" name="current-user-id" value="{{Auth::user()->id}}" hidden>
-            <button
-                    class="btn btn-sm col-2 me-2 mt-1 my-profile-features save-button save-form">Save</button>
+    @else
+        <div class="row position-relative">
+            <div class="row card-body bio">
+                <div class="col-12 d-flex justify-content-center">
+                    {{$user->bio}}
+                </div>
+            </div>
         </div>
-    </div>
-</form>
+    @endif
+</div>
 
+@if(Auth::user()->id == $user->id)
+    <form action="{{ url("api/user/".Auth::user()->id."/edit_bio") }}" method="post" class=" col-lg-12 position-relative ">
+        @csrf
+        @method('PUT')
+        <div class="row position-relative d-none  justify-content-center bio-form">
+            <div class="form-group row col-lg-6 justify-content-end">
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="bio"
+                          style="resize:none;"></textarea>
+                <input class="current-user-id" name="current-user-id" value="{{Auth::user()->id}}" hidden>
+                <button
+                        class="btn btn-sm col-2 me-2 mt-1 my-profile-features save-button save-form">Save</button>
+            </div>
+        </div>
+    </form>
+@endif
