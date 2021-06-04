@@ -11,7 +11,7 @@
                             <div class="comment_id COMMENTID" hidden>{{$comment->id}}</div>
 
                             @if($comment->isOwner)
-                                <div class="dropdown">
+                                <div class="dropdown" data-toggle="tooltip" data-placement="bottom" title="Actions">
                                 <b class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-cog ms-auto"></i>
                                 </b>
@@ -75,15 +75,15 @@
                                                    data-bs-toggle="modal" data-bs-target="#report"></i>
                                             @else
                                                 <div hidden class="content_id comment_content">{{$comment->id}}</div>
-                                                <i title="Report comment"
+                                                <i title="Reported comment"
                                                    class="fas fa-flag my-0 post-page-report-comment pe-3 reported report_action"
                                                     style="color:darkred;"></i>
                                             @endif
                                         @endif
                                     @endauth
-                                    <h3 class="post-page-comment-interactions my-0 thread_count">{{$comment->thread_count}} <i
+                                    <h3 class="post-page-comment-interactions my-0 thread_count" data-toggle="tooltip" data-placement="bottom" title="Thread count">{{$comment->thread_count}} <i
                                             class="far fa-comments"></i></h3>
-                                    <h3 class="post-page-comment-interactions my-0 px-3 show-hide-replies" style="cursor:pointer;width:fit-content;"> 
+                                    <h3 class="post-page-comment-interactions my-0 px-3 show-hide-replies" style="cursor:pointer;width:fit-content;" data-toggle="tooltip" data-placement="bottom" title="Show thread"> 
                                         <i class="fas fa-chevron-right my-0" ></i>{!! "&nbsp;" !!}Show thread
                                     </h3>
                                 </div>
@@ -112,7 +112,7 @@
                                 <div class="col-lg-1 col-md-12 col-sm-12 d-flex mx-0 px-0">
                                     <div class="thread_comment_id" hidden>{{$comment->id}}</div>
                                     <button
-                                        class="post-page-comment-button btn-sm btn-block m-0 mt-0 add_thread_button">Comment</button>
+                                        class="post-page-comment-button btn-sm btn-block m-0 mt-0 add_thread_button" data-toggle="tooltip" data-placement="bottom" title="Add comment">Comment</button>
                                 </div>
                             </div>
 
@@ -139,7 +139,7 @@
                                             <div class="parent_id" hidden>{{$comment->comment_id}}</div>
                                             @if($comment->isOwner)
 
-                                                <div class="dropdown">
+                                                <div class="dropdown" data-toggle="tooltip" data-placement="bottom" title="Actions">
                                                 <b class="btn fa-cog-icon" style="font-size:30%;"
                                                    data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>

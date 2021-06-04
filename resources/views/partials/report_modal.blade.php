@@ -15,7 +15,7 @@
 
 
             <div class="row justify-content-center pb-5 report-motives">
-                <select class="form-select report_content_select" aria-label="Select a report motive">
+                <select class="form-select report_content_select" aria-label="Select a report motive" style="width: 80%">
                     <option selected disabled>Select a motive</option>
                     <option value="fake">Fake News</option>
                     <option value="innapropriate">Innapropriate content</option>
@@ -24,10 +24,10 @@
                     <option value="other">Other</option>
                 </select>
             </div>
-        
+
             <div class="row justify-content-center d-flex pb-3">
                 <button class="col-4 btn btn-secondary me-4" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="col-4 btn custom-button me-4 report_button" data-bs-dismiss="modal">Report</button>
+                <button type="submit" class="col-4 btn custom-button ms-3 report_button" data-bs-dismiss="modal">Report</button>
             </div>
         </div>
     </div>

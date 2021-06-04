@@ -57,7 +57,7 @@ function handleDownVote(e){
 
 function handleVoteResponse(status, responseText){
     if(status === 200) console.log(responseText)
-    else alert('Error in vote: ' + response)
+    else show_generic_warning("Error in vote: " + responseText)
 }
 
 function getPostID(){

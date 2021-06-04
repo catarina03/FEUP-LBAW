@@ -13,7 +13,6 @@ if(add!=null){
 function addComment(){
     var getUrl = window.location;
     var request = new XMLHttpRequest();
-    console.log( getUrl .protocol + "//" + getUrl.host + "/" + "api/post/" + id.innerText + "/add_comment");
     request.open('post', getUrl .protocol + "//" + getUrl.host + "/" + "api/post/" + id.innerText + "/add_comment", true);
     request.onload = function (){
         result = "";
@@ -45,10 +44,12 @@ function addComment(){
     };
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    if(content.value=="" || content.value.match("^\\s+$")){
-        show_generic_warning("Empty comments are not allowed!");
+    if(content.value=="" || content.value.match("^\\s+$") || content.value.length>1000){
+        //show_generic_warning("Empty comments are not allowed!");
+        addCommentError(content);
         return;
     }
+    remove_error_messages();
     request.send(encodeForAjax({content:content.value,post_id:id.innerText,user_id:userID.innerText}));
 }
 

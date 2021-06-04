@@ -23,5 +23,7 @@
         </div>
         @include('partials.filterBoxWCategory')
     </div>
-@include('partials.postpage_toaster')
+
+    @include('partials.postpage_toaster')
+    @include('partials.error')
 @endsection

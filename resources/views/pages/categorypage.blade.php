@@ -20,5 +20,8 @@
         </div>
         @include('partials.filterBox')
     </div>
-@include('partials.postpage_toaster')
+
+    @include('partials.postpage_toaster')
+    @include('partials.error')
+
 @endsection

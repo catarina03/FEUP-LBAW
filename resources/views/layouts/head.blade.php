@@ -38,7 +38,7 @@
 <script src="{{ asset('js/ajax.js')}}" defer></script>
 <script src="{{ asset('js/script.js')}}" defer></script>
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
+<script  src="{{ URL::asset('js/generic_error_message.js') }}" defer></script>
 <script src="https://cdn.tiny.cloud/1/08t5y62wss6y2fzascz2trysrq487403jdb54o0kzk3nu9zq/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
 <script>

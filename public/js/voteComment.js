@@ -78,7 +78,7 @@ function handleDownVoteComment(){
 
 function handleVoteCommentResponse(status, responseText){
     if(status === 200) console.log(responseText)
-    else alert('Error in vote comment: ' +  responseText)
+    else show_generic_warning("Error in vote comment: " + responseText)
 }
 
 

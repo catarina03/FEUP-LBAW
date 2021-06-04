@@ -63,8 +63,7 @@ function receiveRequestHandler(status, responseText){
         enableLinks(filtering)
     }
     else if(status === 400){
-        alert('Error fetching api: ' +  status)
-        //add error page
+        show_generic_warning("Error filtering homepage: " + responseText)
     }
 }
 
@@ -118,46 +117,47 @@ function displaySpinner(display, type){
 
 let loadMore = document.querySelector('.homepage .pagination-loadmore .loadmore')
 let page = 2
+let outerDiv = null
+let parent = null
+if(loadMore != null){
+    loadMore.addEventListener('click', (e) => addEventListenersLoadHomepage(e))
+}
 
-if(loadMore != null) loadMore.addEventListener('click', loadHandlerHomepage)
 
-function loadHandlerHomepage(e){
+function addEventListenersLoadHomepage(e){
     e.preventDefault()
     let pag = document.querySelector('.homepage .pagination-loadmore')
-    let parent = pag.parentNode
+    parent = pag.parentNode
     parent.removeChild(pag)
 
-    let outterDiv = addLoadSpinner(parent)
+    outerDiv = addLoadSpinner(parent)
+    makeRequest('GET','/api/loadMore/'+ filtering + '/' + page , receiveLoadMoreHandler, null)
+}
 
-    const loadRequest = new XMLHttpRequest()
-    loadRequest.onreadystatechange = function(){
-        if(loadRequest.readyState === XMLHttpRequest.DONE){
-            if(loadRequest.status === 200){
-                parent.removeChild(outterDiv)
-                const response = JSON.parse(loadRequest.responseText)
-                const posts = response['posts']
-                const n_posts = response['n_posts']
-                let postDiv = document.querySelector('.postsCards')
-                let newDiv = document.createElement('div')
-                newDiv.innerHTML= posts
+function receiveLoadMoreHandler(status, responseText){
 
-                while (newDiv.firstChild)
-                    postDiv.appendChild(newDiv.firstChild)
+    if(status === 200){
+        parent.removeChild(outerDiv)
+        const response = JSON.parse(responseText)
+        const posts = response['posts']
+        const n_posts = response['n_posts']
+        let postDiv = document.querySelector('.postsCards')
+        let newDiv = document.createElement('div')
+        newDiv.innerHTML= posts
 
-                if(n_posts > 15){
-                    if(n_posts % 15 === 0) {
-                        if (Math.floor(n_posts) / 15 > page) addLoadMoreHomepage(postDiv)
-                    }
-                    else if(Math.floor(n_posts / 15 + 1) > page) addLoadMoreHomepage(postDiv)
-                }
-                page++;
-                addSavePostListeners();
+        while (newDiv.firstChild)
+            postDiv.appendChild(newDiv.firstChild)
+
+        if(n_posts > 15){
+            if(n_posts % 15 === 0) {
+                if (Math.floor(n_posts) / 15 > page) addLoadMoreHomepage(postDiv)
             }
-            else alert('Error fetching api: ' +  loadRequest.status)
+            else if(Math.floor(n_posts / 15 + 1) > page) addLoadMoreHomepage(postDiv)
         }
+        page++;
+        addSavePostListeners();
     }
-    loadRequest.open('GET', '/api/loadMore/'+ filtering + '/' + page , true)
-    loadRequest.send()
+    else show_generic_warning("Error fetching more posts: " + responseText)
 }
 
 
@@ -172,7 +172,9 @@ function addLoadMoreHomepage(postDiv){
     pagination.appendChild(load)
     postDiv.appendChild(pagination)
     let loadMore = document.querySelector('.homepage .pagination-loadmore .loadmore')
-    if(loadMore != null) loadMore.addEventListener('click', loadHandlerHomepage)
+    if(loadMore != null){
+        loadMore.addEventListener('click', (e) => addEventListenersLoadHomepage(e))
+    }
 }
 
 function enableLinks(type){
