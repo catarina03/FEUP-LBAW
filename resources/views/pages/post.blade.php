@@ -15,6 +15,7 @@
     <script  src="{{ URL::asset('js/post_comments/follow_tag.js') }}" defer></script>
     <script  src="{{ URL::asset('js/votePost.js') }}" defer></script>
     <script  src="{{ URL::asset('js/voteComment.js') }}" defer></script>
+    <script  src="{{ URL::asset('js/generic_error_message.js') }}" defer></script>
     <div class="container post">
         <p hidden id="post_ID">{{$post->id}}</p>
         <p hidden id="user_ID">{{$user_id}}</p>
@@ -49,7 +50,7 @@
                     <div class="mt-2 col-10 justify-content-center d-flex">
                         <div class="row thumbnail-image">
                             <img src="{{URL::asset($metadata['thumbnail'])}}"
-                                 class="justify-content-center" alt="Post thumbnail"  >
+                                 class="justify-content-center" alt="Post thumbnail" >
                         </div>
                     </div>
                 </div>
@@ -67,20 +68,20 @@
 
                     <div class="container-fluid d-flex col-2 mt-1">
                         <div class="pe-3">
-                            <h3 class="post-page-post-interactions">{{$metadata['views']}} <i class="far fa-eye"></i>
+                            <h3 class="post-page-post-interactions" data-toggle="tooltip" data-placement="bottom" title="Views">{{$metadata['views']}} <i class="far fa-eye"></i>
                             </h3>
                         </div>
                         <div class="pe-3">
-                            <h3 class="post-page-post-interactions"><span class="up">{{$metadata['likes']}}</span> <i
+                            <h3 class="post-page-post-interactions" data-toggle="tooltip" data-placement="bottom" title="Likes"><span class="up">{{$metadata['likes']}}</span> <i
                                     class="far fa-thumbs-up"></i></h3>
                         </div>
                         <div class="pe-3">
-                            <h3 class="post-page-post-interactions"><span class="down">{{$metadata['dislikes']}}</span>
+                            <h3 class="post-page-post-interactions" data-toggle="tooltip" data-placement="bottom" title="Dislikes"><span class="down">{{$metadata['dislikes']}}</span>
                                 <i class="far fa-thumbs-down"></i></h3>
                         </div>
                         <div class="pe-3">
                             <h3 class="post-page-post-interactions"
-                                id="post_comment_count">{{$metadata['comment_count']}} <i class="far fa-comments"></i>
+                                id="post_comment_count" data-toggle="tooltip" data-placement="bottom" title="Comments">{{$metadata['comment_count']}} <i class="far fa-comments"></i>
                             </h3>
                         </div>
                     </div>
@@ -98,15 +99,14 @@
                             <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Type: </h2>
                             <div class="col-auto px-2 m-1">
                                 <a style="color:#0C1D1C;font-weight:400;"
-                                   href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "type=" . rawurlencode(ucfirst($post->type))}}"><b>{{ucfirst($post->type)}}</b></a>
+                                   href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "type=" . rawurlencode(ucfirst($post->type))}}" data-toggle="tooltip" data-placement="bottom" title="Search post by type"><b>{{ucfirst($post->type)}}</b></a>
                                 
                             </div>
-                        </div>    
-                        <div class="row justify-content-start align-items-center">
+                    
                             <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Category: </h2>
                             <div class="col-auto  px-2 m-1">
                                 <a style="color:#0C1D1C;font-weight:400;"
-                                   href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "category=" . rawurlencode(ucfirst($post->category))}}"><b>{{ucfirst($post->category)}}</b></a>
+                                   href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "category=" . rawurlencode(ucfirst($post->category))}}" data-toggle="tooltip" data-placement="bottom" title="Search post by category"><b>{{ucfirst($post->category)}}</b></a>
                                
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                                 <div class="col-auto post-page-tag-container px-2 m-1">
                                     <span hidden class="tag_id">{{$tag->id}}</span>
                                     <a class="post-page-post-tag"
-                                       href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "search=" . rawurlencode($tag->name)}}">{{$tag->name}}</a>
+                                       href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "search=" . rawurlencode($tag->name)}}" data-toggle="tooltip" data-placement="bottom" title="Search post by tag">{{$tag->name}}</a>
                                     @auth
                                         <i class="{{$tag->isSaved?"fas":"far"}} fa-star follow_tag_icon"
                                            style="cursor:pointer;"
@@ -155,7 +155,7 @@
                                     <div class="col-auto px-0 mx-0">
                                         <button
                                             class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0 post-down-vote">
-                                            <i title="Dislike post" class="fas fa-thumbs-down m-0"></i></button>
+                                            <i title="Like post" class="fas fa-thumbs-down m-0"></i></button>
                                     </div>
                                 @else
                                     <div class="col-auto px-0 mx-0">
@@ -209,7 +209,6 @@
                         <div class="col-10 mx-0 px-0" style="border-radius:5px;">
                             <div class="row m-0 p-0">
                                 <div class="d-flex mx-0 px-0">
-                                    <!--<label class="post-page-add-comment-label" for="add-comment">Add comment...</label>-->
                                     <textarea class="container form-control post-page-add-comment w-100 add-comment"
                                               id="add-comment" rows="2" placeholder="Join the discussion"></textarea>
                                 </div>
@@ -225,15 +224,15 @@
                     </div>
                     @endif
                 @endauth
-                <span id="comment-section">
+                <div id="comment-section">
             @if(count($metadata['comments']) > 0)
-                        @include("partials.comments",["comments"=>$metadata['comments'],"user_id"=>$user_id])
+                        @include("partials.comments",["comments"=>$metadata['comments']])
                     @else
                         <div class="container-fluid d-flex col-10 justify-content-center mt-3">
                     <p><b id="empty-comments">There are no comments in this post. Be the first to leave your thoughts!</b></p>
                 </div>
                     @endif
-            </span>
+            </div>
 
 
                 @if($metadata['comment_count']>5)

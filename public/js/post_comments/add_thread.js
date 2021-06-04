@@ -31,7 +31,8 @@ function addThread(comment_id,content){
     request.onload = function (){
         result = "";
         if(request.status==400){
-            alert("Error adding comment");
+            show_generic_warning("Internal error when trying to add comment!","Error");
+            content.setAttribute("rows","1");
             return;
         }
         else if(request.status==200){
@@ -46,6 +47,8 @@ function addThread(comment_id,content){
                         let cont = containers[i].getElementsByClassName("comment_thread_section")[0];
                         temp_threads += cont.innerHTML;
                         cont.innerHTML = temp_threads;
+                        let threads = cont.querySelectorAll('.thread-container');
+                        if(threads != null) threads.forEach((comment) => addCommentsEventListeners(comment))
                         break;
                     }
             }
@@ -57,12 +60,12 @@ function addThread(comment_id,content){
             addEditListeners();
             addReportListeners();
             openThreads(comment_id);
+            content.setAttribute("rows","1");
         }
         
     };
     if(content.value=="" || content.value.match("^\\s+$")){
-        //alert("Empty comments are not allowed!");
-        empty_warning.show();
+        show_generic_warning("Empty comments are not allowed!");
         return;
     }
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));

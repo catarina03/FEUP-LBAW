@@ -4,7 +4,6 @@ let confirm = document.getElementById("confirm");
 let yes = confirm.getElementsByClassName("confirm-yes")[0];
 let id = document.getElementById("post_ID");
 let token = document.getElementsByName("csrf-token")[0];
-let empty_warning = new bootstrap.Modal(document.getElementById('empty_comment_warning'));
 
 if(yes)
     yes.addEventListener("click",delete_post);
