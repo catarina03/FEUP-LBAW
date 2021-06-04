@@ -15,7 +15,6 @@
     <script  src="{{ URL::asset('js/post_comments/follow_tag.js') }}" defer></script>
     <script  src="{{ URL::asset('js/votePost.js') }}" defer></script>
     <script  src="{{ URL::asset('js/voteComment.js') }}" defer></script>
-    <script  src="{{ URL::asset('js/generic_error_message.js') }}" defer></script>
     <div class="container post">
         <p hidden id="post_ID">{{$post->id}}</p>
         <p hidden id="user_ID">{{$user_id}}</p>
@@ -100,14 +99,14 @@
                             <div class="col-auto px-2 m-1">
                                 <a style="color:#0C1D1C;font-weight:400;"
                                    href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "type=" . rawurlencode(ucfirst($post->type))}}" data-toggle="tooltip" data-placement="bottom" title="Search post by type"><b>{{ucfirst($post->type)}}</b></a>
-                                
+
                             </div>
-                    
+
                             <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Category: </h2>
                             <div class="col-auto  px-2 m-1">
                                 <a style="color:#0C1D1C;font-weight:400;"
                                    href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "category=" . rawurlencode(ucfirst($post->category))}}" data-toggle="tooltip" data-placement="bottom" title="Search post by category"><b>{{ucfirst($post->category)}}</b></a>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -254,7 +253,7 @@
     </div>
 @include('pages.confirm')
 @include('partials.report_modal')
-@include('partials.empty_comment')
+@include('partials.error')
 @include('partials.postpage_toaster')
 @endsection
 

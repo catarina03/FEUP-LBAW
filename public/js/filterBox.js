@@ -191,16 +191,16 @@ function loadHandlerAdvancedSearch(status, responseText){
         pageAdv++;
         addSavePostListeners();
     }
-    else alert('Error fetching api: ' +  status)
+    else show_generic_warning("Error fetching more posts")
 
 
 }
 
 
 function addSpinner(){
-    let searchspan = document.querySelector('.search-span')
-    searchspan.classList.remove('d-inline-block')
-    searchspan.classList.add('d-none')
+    let searchSpan = document.querySelector('.search-span')
+    searchSpan.classList.remove('d-inline-block')
+    searchSpan.classList.add('d-none')
 
     let s = document.querySelector('.search-spinner')
     s.classList.remove('d-none')
@@ -208,9 +208,9 @@ function addSpinner(){
 }
 
 function removeSpinner(){
-    let searchspan = document.querySelector('.search-span')
-    searchspan.classList.remove('d-none')
-    searchspan.classList.add('d-inline-block')
+    let searchSpan = document.querySelector('.search-span')
+    searchSpan.classList.remove('d-none')
+    searchSpan.classList.add('d-inline-block')
 
     let s = document.querySelector('.search-spinner')
     s.classList.remove('d-inline-block')

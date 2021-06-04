@@ -5,7 +5,7 @@ function show_toaster(text){
     toaster_basic_obj.show();
 }
 
-// shows all pending notifications (can come right from the server)
+// shows all pending toasts
 const toastElList = [].slice.call(document.querySelectorAll('.toast-generic-php'))
 const toastList = toastElList.map(function (toastEl) {
     return new bootstrap.Toast(toastEl)

@@ -1,12 +1,12 @@
 @extends('layouts.simple')
 @section('content')
-    <div class="container  align-items-center justify-content-center m-auto">
+    <div class="container  align-items-center justify-content-center m-auto" >
         <div class = "row  login-container justify-content-center ">
-            <div class = "col-lg-5 col-md-8 col-sm-12 mt-lg-5 mt-md-4 mt-sm-2">
+            <div class = "col-lg-5 col-md-8 col-sm-12 mt-lg-5 mt-md-4 mt-sm-2" >
                 <div class = "card " style="background-color: #fffefc;">
                     <div class="card-body py-4">
-                        <div class="justify-content-center d-flex">
-                            <img class=" d-flex" src="/images/logo-sem-fundo.svg" style="width:60%;">
+                        <div class="justify-content-center d-flex pb-3">
+                            <img class=" d-flex" src="/images/logo_dark.png" style="width:60%;">
                         </div>
                         <div class="d-block">
                             <h2 class="text-center">Recover Password</h2>
