@@ -121,25 +121,25 @@
                                         <div class="row justify-content-center mt-2">
                                             <div class="col-lg-2 col-sm-4  d-flex justify-content-center">
                                                 @if($user->instagram != null)
-                                                <a href="{{ url($user->instagram) }}"
+                                                <a href="{{ url('//'.$user->instagram) }}" target="_blank"
                                                     class="btn btn-secondary btn-sm social-media d-flex justify-content-center">
                                                     <i class="bi bi-instagram"></i>
                                                 </a>
                                                 @endif
                                                 @if($user->twitter != null)
-                                                <a href="{{ url($user->twitter) }}"
+                                                <a href="{{ url('//'.$user->twitter) }}" target="_blank"
                                                     class="btn btn-secondary btn-sm  social-media d-flex justify-content-center">
                                                     <i class="bi bi-twitter"></i>
                                                 </a>
                                                 @endif
                                                 @if($user->facebook != null)
-                                                <a href="{{ url($user->facebook) }}"
+                                                <a href="{{ url('//'.$user->facebook) }}" target="_blank"
                                                     class="btn btn-secondary btn-sm  social-media d-flex justify-content-center">
                                                     <i class="bi bi-facebook"></i>
                                                 </a>
                                                 @endif
                                                 @if($user->linkedin != null)
-                                                <a href="{{ url($user->linkedin) }}"
+                                                <a href="{{ url('//'.$user->linkedin) }}" target="_blank"
                                                     class="btn btn-secondary btn-sm  social-media d-flex justify-content-center">
                                                     <i class="bi bi-linkedin"></i>
                                                 </a>
