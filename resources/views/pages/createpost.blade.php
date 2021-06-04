@@ -19,7 +19,7 @@
                         <div class="col-10 mx-0 px-0">
                             <div class="form-group post-comment-input mb-4">
                                 <label class="add-comment-label" for="title">Post title</label>
-                                <input class="container form-control w-100 px-0 mx-0 flex-grow-1" id="title" name="title" value="{{ old('title') }}" required>
+                                <input class="container form-control w-100 flex-grow-1" id="title" name="title" value="{{ old('title') }}" required>
                                 @error('title')
                                 <div class="error">{{ $message }}</div>
                                 @enderror
