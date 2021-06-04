@@ -796,16 +796,32 @@ a.footer-link:hover {
 
 /*POST DASHBOARD*/
 
-.report-row a{
+.report-row a {
     cursor: pointer;
     color: black;
 }
 
-.report-row a:hover{
+.report-row a:hover {
     color: rgb(79, 99, 96);
 }
 
+.reports-filter .filterButton {
+    background-color: #8ab5b1;
+    border: none;
+    border-radius: 2%;
+    color: #0c1d1c;
+    padding: 0.5em;
+    font-weight: bold;
+}
 
+.reports-filter .filterButton:hover {
+    color: #307371;
+}
+
+.reports-filter .form-check-input {
+    background-color: #0c1d1c;
+    border: 1px solid #307371;
+}
 
 /*******************************************/
 /*************** POST PAGE *****************/
@@ -882,13 +898,14 @@ a.footer-link:hover {
     background-color: #0C1D1C;
     color: #EFF9FA;
 }
-.post-page-post-tag:hover{
-  color: inherit;
-  background-color: transparent;
-  font-family: 'Roboto', sans-serif;
-  font-size: small;
-  font-weight:400;
-  text-decoration: underline;
+
+.post-page-post-tag:hover {
+    color: inherit;
+    background-color: transparent;
+    font-family: 'Roboto', sans-serif;
+    font-size: small;
+    font-weight: 400;
+    text-decoration: underline;
 }
 
 .post-page-tag-container:hover {
@@ -906,10 +923,12 @@ a.footer-link:hover {
     color: #0c1d1c;
     font-size: xx-large;
 }
+
 .post-page-post-thumbs-up-button .fa-thumbs-up:hover {
     color: green;
     font-size: xx-large;
 }
+
 .post-page-post-thumbs-up-button:focus {
     outline: none;
     box-shadow: none;
@@ -919,10 +938,12 @@ a.footer-link:hover {
     color: #0c1d1c;
     font-size: xx-large;
 }
+
 .post-page-post-thumbs-down-button .fa-thumbs-down:hover {
     color: darkred;
     font-size: xx-large;
 }
+
 .post-page-post-thumbs-down-button:focus {
     outline: none;
     box-shadow: none;
@@ -1271,8 +1292,8 @@ h3.post-page-comment-reply-interactions {
 }
 
 
-.report_content_select{
-    color:grey;
+.report_content_select {
+    color: grey;
     width: 70%;
 }
 
