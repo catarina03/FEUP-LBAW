@@ -24,12 +24,17 @@ function loadMore(){
         
 
         currentPage+=1;
-        comment_section.innerHTML += request.responseText;
+        comment_section.innerHTML = request.responseText;
         removeDup();
         addListeners();
         addDeleteCommentListeners();
         addEditListeners();
         addShowThreadListeners();
+        addReportListeners();
+        let comments = comment_section.querySelectorAll('.comment-container');
+        if(comments != null) comments.forEach((comment) => addCommentsEventListeners(comment));
+        let threads = comment_section.querySelectorAll('.thread-container');
+        if(comments != null) threads.forEach((comment) => addCommentsEventListeners(comment));
         let qt =document.getElementsByClassName("COMMENTID");
         if(qt.length >= parseInt(document.getElementById("post_comment_count").innerText)){
             let button = document.getElementById("load_more");

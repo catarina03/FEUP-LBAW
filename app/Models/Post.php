@@ -75,7 +75,7 @@ class Post extends Model
             or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))";
 
         if($order == "hot")
-            $query = $aux.$extra_query_1.$extra_query_2." order by n_views desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+            $query = $aux.$extra_query_1.$extra_query_2." order by n_views desc";
         else if($order == "top"){
             $query = "SELECT *, n_likes
             FROM post, (SELECT post_id, COUNT(user_id) AS n_likes
@@ -88,16 +88,21 @@ class Post extends Model
             WHERE not exists (SELECT DISTINCT post_id from vote_post WHERE vote_post.like = true AND vote_post.post_id = post.id)) AS likes_post
             WHERE likes_post.post_id = post.id and not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
-            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user)) ".$extra_query_1.$extra_query_2." order by n_likes desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+            or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user)) ".$extra_query_1.$extra_query_2." order by n_likes desc";
         }
         else if($order == "new"){
-            $query = $aux.$extra_query_1.$extra_query_2."order by created_at desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+            $query = $aux.$extra_query_1.$extra_query_2."order by created_at desc";
         }
         else{
-            $query = $aux." order by n_views desc OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;";
+            $query = $aux." order by n_views desc";
         }
+        if(Auth::check()){
+            $count = count(DB::select(DB::raw($query),['user' => $user_id]));
+        }
+        else $count = Post::count();
+        $query = $query.' OFFSET :offset ROWS FETCH NEXT 15 ROWS ONLY;';
 
-        return DB::select(DB::raw($query),['user' => $user_id, 'offset' => $offset]);
+        return array('results'=> DB::select(DB::raw($query),['user' => $user_id, 'offset' => $offset]), 'n_posts'=> $count);
     }
 
     public static function getSlideShowPosts(){
@@ -111,7 +116,7 @@ class Post extends Model
             DB::raw("select * from post where not exists
             (select * from block_user where ( block_user.blocked_user = post.user_id and block_user.blocking_user = :user)
             or (block_user.blocking_user = post.user_id and block_user.blocking_user = :user))
-            limit 3;")
+            order by n_views limit 3;")
                ,['user' => $user_id] );
     }
 

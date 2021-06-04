@@ -12,12 +12,11 @@ class PagesController extends Controller
 {
     public function home(){
         $p = Post::getPostsOrdered("top", 1);
-        $posts = $this->getPostsInfo($p);
+        $posts = $this->getPostsInfo($p['results']);
         $slideshow = $this->slideshow();
-        $n_posts = Post::count();
         $user = null;
         if(Auth::check()) $user = Auth::user();
-        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow, 'n_posts' => $n_posts, 'user'=> $user]);
+        return view('pages.homepage', ['needsFilter' => 1, 'posts'=>$posts, 'slideshow'=>$slideshow, 'n_posts' => $p['n_posts'], 'user'=> $user]);
     }
 
     public function slideshow(){
@@ -59,17 +58,19 @@ class PagesController extends Controller
 
     public function list($homepageFilters){
         $user = null;
+        if(Auth::check()) $user = Auth::user();
         $p = Post::getPostsOrdered($homepageFilters, 1);
-        $posts = $this->getPostsInfo($p);
-        $n_posts = Post::count();
-
-        return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts, 'n_posts' => $n_posts])->render(),'n_posts' => $n_posts));
+        $posts = $this->getPostsInfo($p['results']);
+        $n_posts = $p['n_posts'];
+        if(count($posts) != 0)
+            return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts, 'n_posts' => $n_posts])->render(),'n_posts' => $n_posts));
+        return response()->json(array('posts'=>view('partials.noposts', ['user'=>$user, 'homepage'=> true])->render(),'n_posts' => 0));
     }
 
     public function loadMoreHomepage($filters, $page){
         $p = Post::getPostsOrdered($filters, $page);
-        $posts = $this->getPostsInfo($p);
-        $n_posts = Post::count();
+        $posts = $this->getPostsInfo($p['results']);
+        $n_posts = $p['n_posts'];
         return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts])->render(), 'n_posts'=> $n_posts));
     }
 

@@ -49,4 +49,8 @@ class PostPolicy
       $blocking_users = DB::table("block_user")->where('blocked_user',$user->id)->where("blocking_user",$post->user_id)->count();
       return $blocked_users == 0 && $blocking_users == 0;
     }
+
+    public static function delete_post_policy(AuthenticatedUser $user, Post $post){
+      return $user->id == $post->user_id;
+  }
 }

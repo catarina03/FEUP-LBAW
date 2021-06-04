@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <script type="text/javascript" src="{{ URL::asset('js/toaster.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/utils.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/categoryPage.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
@@ -19,4 +20,8 @@
         </div>
         @include('partials.filterBox')
     </div>
+
+    @include('partials.postpage_toaster')
+    @include('partials.error')
+
 @endsection

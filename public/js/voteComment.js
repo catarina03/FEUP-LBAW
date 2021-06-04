@@ -6,10 +6,18 @@ if(thread_comments != null) thread_comments.forEach((comment) => addCommentsEven
 
 
 function addCommentsEventListeners(comment){
+    let owner_id= comment.getElementsByClassName("owner_id")[0].innerText;
+    let user_id = document.getElementById("user_ID").innerText;
     let upVoteComment = comment.querySelector('.post-page-comment-thumbs-up-button')
     let downVoteComment = comment.querySelector('.post-page-comment-thumbs-down-button')
-    if(upVoteComment != null) upVoteComment.addEventListener('click', handleUpVoteComment.bind(comment))
-    if(downVoteComment != null) downVoteComment.addEventListener('click',handleDownVoteComment.bind(comment))
+    if((owner_id != user_id) && user_id!="0"){
+        if(upVoteComment != null) upVoteComment.addEventListener('click', handleUpVoteComment.bind(comment))
+        if(downVoteComment != null) downVoteComment.addEventListener('click',handleDownVoteComment.bind(comment))
+    }
+    else{
+        if(upVoteComment != null) upVoteComment.addEventListener('click', function(){show_toaster("You cannot vote on your own comment!")});
+        if(downVoteComment != null) downVoteComment.addEventListener('click', function(){show_toaster("You cannot vote on your own comment!")})
+    }
 }
 
 function handleUpVoteComment(){
@@ -64,13 +72,13 @@ function handleDownVoteComment(){
         icon.classList.remove('fas')
         icon.classList.add('far')
         makeRequest("DELETE", '/api/comment/'+ id +'/vote', handleVoteCommentResponse, null)
-        downVotesCount.innerHTML = parseInt(downVotesCount.innerHTML) - 1
+        downVotesCountComment.innerHTML = parseInt(downVotesCountComment.innerHTML) - 1
     }
 }
 
 function handleVoteCommentResponse(status, responseText){
     if(status === 200) console.log(responseText)
-    else alert('Error in vote comment: ' +  responseText)
+    else show_generic_warning("Error in vote comment: " + responseText)
 }
 
 
