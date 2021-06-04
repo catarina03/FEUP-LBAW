@@ -58,11 +58,11 @@
                     <h1 class="post-page-post-title">{{$post->is_spoiler?"[SPOILER]":""}}{{$post->title}}</h1>
                 </div>
                 
-                <div class="row px-0 justify-content-between">
-                    <div class="container-fluid d-flex px-0 col-4 mt-1">
-                        <h2 class="post-page-post-author-date">by <a
+                <div class=" container-fluid row px-0 justify-content-center">
+                    <div class="container-fluid d-flex px-0 mt-1 px-2 col-5">
+                        <span class="post-page-post-author-date">by <a
                                 href="{{route('profile',['id'=>$metadata['author']->id])}}">{{$metadata['author']->name}}</a>, {{$metadata['date']}}
-                        </h2>
+                        </span>
                     </div>
 
                     <div class="container-fluid d-flex col-2 mt-1">

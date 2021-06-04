@@ -23,13 +23,11 @@ function addSavePostListeners(){
     let token = document.getElementsByName("csrf-token")[0];
     var getUrl = window.location;
     var request = new XMLHttpRequest();
-    console.log(getUrl.protocol + "//" + getUrl.host + "/api/post"+'/' + post_id + "/save");
     request.open(type, getUrl.protocol + "//" + getUrl.host + "/api/post"+'/' + post_id + "/save", true);
     request.onload = function (){
-      console.log(request.responseText);
         if(request.responseText!="SUCCESS"){
           if(type=="delete"){
-            show_generic_wawrning("Error removing post from favorites!");
+            show_generic_warning("Error removing post from favorites!");
           }
           else if(type=="post"){
             show_generic_warning("Error saving post!");
