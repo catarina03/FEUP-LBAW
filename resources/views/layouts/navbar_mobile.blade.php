@@ -78,7 +78,7 @@
         @endauth
         @guest
             <a id="login" type="button" class="btn button-inactive">
-                <div class="selector-holder p-2" data-bs-toggle="modal" data-bs-target="#login">
+                <div class="selector-holder p-2" data-bs-toggle="modal" data-bs-target="#loginModal">
                     <img src="{{URL::asset("./images/enter.svg")}}" height="27px" alt="login">
                 </div>
             </a>
