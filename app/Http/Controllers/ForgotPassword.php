@@ -10,32 +10,6 @@ use Illuminate\Support\Str;
 
 class ForgotPassword extends Controller
 {
-     public function index()
-        {
-            //
-        }
-
-        /**
-         * Show the form for creating a new resource.
-         *
-         * @return Response
-         */
-        public function create()
-        {
-
-        }
-
-        /**
-         * Store a newly created resource in storage.
-         *
-         * @param Request $request
-         * @return Response
-         */
-        public function store(Request $request)
-        {
-
-        }
-
         /**
          * Display the specified resource.
          *
@@ -46,39 +20,6 @@ class ForgotPassword extends Controller
             return view('auth.forgotPassword',['needsFilter'=>0]);
         }
 
-        /**
-         * Show the form for editing the specified resource.
-         *
-         * @param Report $report
-         * @return Response
-         */
-        public function edit(Report $report)
-        {
-            //
-        }
-
-        /**
-         * Update the specified resource in storage.
-         *
-         * @param Request $request
-         * @param Report $report
-         * @return Response
-         */
-        public function update(Request $request, Report $report)
-        {
-            //
-        }
-
-        /**
-         * Remove the specified resource from storage.
-         *
-         * @param Report $report
-         * @return Response
-         */
-        public function destroy(Report $report)
-        {
-            $report->delete();
-        }
 
         public function showRecover(Request $request)
         {

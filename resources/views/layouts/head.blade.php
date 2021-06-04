@@ -31,21 +31,20 @@
 <link rel="stylesheet" href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css')}}">
 
 <!--Select 2-->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
 
 <script src="{{ asset('js/ajax.js')}}" defer></script>
-<script src="{{ asset('js/script.js')}}" defer></script>
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
+<script  src="{{ URL::asset('js/generic_error_message.js') }}" defer></script>
 <script src="https://cdn.tiny.cloud/1/08t5y62wss6y2fzascz2trysrq487403jdb54o0kzk3nu9zq/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
 <script>
     tinymce.init({
         selector: '#mytextarea',
-        plugins: ["advlist autolink lists link image charmap print preview anchor"],
-        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        menubar: false,
+        toolbar: "undo redo | bold italic underline | removeformat",
         resize: false
     });
 </script>

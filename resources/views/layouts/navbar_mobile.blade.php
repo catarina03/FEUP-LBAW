@@ -1,7 +1,7 @@
 <footer class="bottomNavbar d-lg-none">
     <div id="buttonGroup" class="btn-group selectors" role="group" aria-label="Mobile bottom navbar">
 
-        <a id="home" type="button" class="btn button-active" href="homepage.php">
+        <a id="home" type="button" class="btn button-active" href="/">
             <div class="selector-holder pb-1">
                 <i class="bi bi-house fs-1"></i>
             </div>
@@ -78,7 +78,7 @@
         @endauth
         @guest
             <a id="login" type="button" class="btn button-inactive">
-                <div class="selector-holder p-2" data-bs-toggle="modal" data-bs-target="#login">
+                <div class="selector-holder p-2" data-bs-toggle="modal" data-bs-target="#loginModal">
                     <img src="{{URL::asset("./images/enter.svg")}}" height="27px" alt="login">
                 </div>
             </a>

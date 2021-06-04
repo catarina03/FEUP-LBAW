@@ -12,13 +12,21 @@
         </div>
         <div class="category-center col-12 col-lg-7">
             <div class="postsCards row">
+            @if(count($posts) > 0)
                 @each('partials.card', $posts, 'post')
-            </div>
-            @if($n_posts > 15)
-                @include('partials.pagination')
+            @else
+                @include('partials.noposts', ['user'=>$user, 'homepage' => false])
             @endif
+            </div>
+                @if($n_posts > 15)
+                    @include('partials.pagination')
+                @endif
+
         </div>
         @include('partials.filterBox')
     </div>
-@include('partials.postpage_toaster')
+
+    @include('partials.postpage_toaster')
+    @include('partials.error')
+
 @endsection

@@ -11,6 +11,9 @@ use App\Models\Report;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
@@ -81,25 +84,6 @@ class PostController extends Controller
             'user_id' => ['required', 'int'],
             'photos' => ['array'],
             'tags' => ['array', "minTags:2", "maxTags:10", "noDups"],
-        ],
-        [
-            'title.required' => 'Title can not be empty',
-            'title.string' => 'Title must be a string',
-            'title.max' => 'Title is too big, max of 120 characters',
-            'thumbnail.required' => 'A thumbnail must be uploaded',
-            'thumbnail.image' => 'A thumbnail must be a jpeg,jpg,png,gif image',
-            'content.required' => 'Content cannot be empty',
-            'content.string' => 'Content must be a string',
-            'content.max' => 'Content is too big, max of 5000 characters',
-            'is_spoiler.boolean' => 'is_spoiler must be a boolean',
-            'type.required' => 'Type must be filled',
-            'type.string' => 'Type must be a string',
-            'category.required' => 'Category must be filled',
-            'category.string' => 'Category must be string',
-            'user_id.required' => 'User ID is required',
-            'user_id.int' => 'User ID must be an integer',
-            'tags.min' => 'Must add at least 2 tags',
-            'tags.max' => 'Must add at maximum 10 tags',
         ]);
          if ($validator->fails()) {
              return redirect(url()->previous())->withErrors($validator)->withInput();
@@ -110,8 +94,8 @@ class PostController extends Controller
             $post = new Post();
             $post->title = $request->input('title');
 
-            $imageName = $request->file('thumbnail')->getClientOriginalName() . "_" . date('Y-m-d H:i:s') . rand(0,999) . "." .  $request->file('thumbnail')->getClientOriginalExtension();
-            $request->thumbnail->move(public_path('images/posts'), $imageName);
+            $imageName = $request->file('thumbnail')->store('public/images/posts');
+            $imageName = basename($imageName, "");
 
             $post->thumbnail = $imageName;
             $post->content = $request->input('content');
@@ -212,7 +196,9 @@ class PostController extends Controller
 
         //Get date and thumbnail path
         $date = date("F j, Y", strtotime($post['created_at']));
-        $thumbnail = "/images/posts/".$post->thumbnail;
+        $thumbnail = $post->thumbnail;
+       // $thumbnail = "/storage/images/posts/".$post->thumbnail;
+        //$thumbnail = Storage::get('images/posts/'.$post->thumbnail);
         $report = Report::where("user_reporting",$user_id)->where("post_reported",$post->id)->get()->count();
         $post->reported = false;
         if($report>0)
@@ -260,7 +246,9 @@ class PostController extends Controller
         WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
 
         //Get date and thumbnail path
-        $thumbnail = "/images/posts/".$post->thumbnail;
+        $thumbnail = $post->thumbnail;
+       // $thumbnail = "/storage/images/posts/".$post->thumbnail;
+       // $thumbnail = Storage::get('images/posts/'.$post->thumbnail);
 
         return view('pages.editpost', ['needsFilter' => 0, 'post'=>$post, 'tags'=>$tags, 'thumbnail'=>$thumbnail] ); //['post'=> $post]
     }
@@ -305,24 +293,6 @@ class PostController extends Controller
                 'user_id' => ['required', 'int'],
                 'photos' => ['array'],
                 'tags' => ['array', "minTags:2", "maxTags:10", "noDups"],
-            ],
-            [
-                'title.required' => 'Title can not be empty',
-                'title.string' => 'Title must be a string',
-                'title.max' => 'Title is too big, max of 120 characters',
-                'thumbnail.image' => 'A thumbnail must be a jpeg,jpg,png,gif image',
-                'content.required' => 'Content can not be empty',
-                'content.string' => 'Content must be a string',
-                'content.max' => 'Content is too big, max of 5000 characters',
-                'is_spoiler.boolean' => 'is_spoiler must be a boolean',
-                'type.required' => 'Type must be filled',
-                'type.string' => 'Type must be a string',
-                'category.required' => 'Category must be filled',
-                'category.string' => 'Category must be string',
-                'user_id.required' => 'User ID is required',
-                'user_id.int' => 'User ID must be an integer',
-                'tags.min' => 'Must add at least 2 tags',
-                'tags.max' => 'Must add at maximum 10 tags',
             ]);
         if ($validator->fails()) {
             return redirect(url()->previous())->withErrors($validator)->withInput();
@@ -336,9 +306,12 @@ class PostController extends Controller
                 $post->title = $request->input('title');
 
                 if($request->file('thumbnail') != null){
-                    $imageName = $request->file('thumbnail')->getClientOriginalName() . "_" . date('Y-m-d H:i:s') . rand(0,999) . "." .  $request->file('thumbnail')->getClientOriginalExtension();
-                    $request->thumbnail->move(public_path('images/posts'), $imageName);
-                    $post->thumbnail = $imageName;
+                    Storage::delete('public/images/posts/'. $post->thumbnail);
+                    $imageName = $request->file('thumbnail')->store('public/images/posts');
+                    $imageName = basename($imageName, "");
+                    if(Post::where('id', $post->id)->update(['thumbnail' => $imageName]) != 1){
+                        return response('Photo update error', 500);
+                    }
                 }
 
                 $post->content = $request->input('content');
@@ -373,7 +346,8 @@ class PostController extends Controller
 
             DB::commit();
 
-            return redirect()->action([PostController::class, 'show'],['id'=>$post_id]);
+           // return redirect()->action([PostController::class, 'show'],['id'=>$post_id]);
+            return redirect('post/'.$post->id);
 
         } catch(QueryException $err){
             DB::rollBack();
@@ -428,20 +402,24 @@ class PostController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator->errors())->withInput();
+            return response()->json($validator->errors())->setStatusCode(400);;
         }
         $post = Post::find($post_id);
-        if(($post != null) && Auth::check() && (Auth::user()->id != $post->user_id)){
-            $report = new Report();
-            $report->timestamps = false;
-            $report->motive = $request->input('motive');
-            $report->user_reporting = Auth::user()->id;
-            $report->post_reported = $post->id;
-            $report->save();
+        if(Auth::check()){
+            if(($post != null) && (Auth::user()->id != $post->user_id)){
+                $report = new Report();
+                $report->timestamps = false;
+                $report->motive = $request->input('motive');
+                $report->user_reporting = Auth::user()->id;
+                $report->post_reported = $post->id;
+                $report->save();
 
-            return response()->json(['status' => "Post reported!"])->setStatusCode(200);
+                return response()->json(['status' => "Post reported!"])->setStatusCode(200);
+            }
+            else
+                return response()-setStatusCode(403);
         }
-        else return response()->json(['status' => "Error encountered when trying to report post!"])->setStatusCode(404);
+        else return response()->setStatusCode(401);
 
 
     }
@@ -450,7 +428,7 @@ class PostController extends Controller
 
         $route = \Route::current();
         if(!is_numeric($route->parameter('id')))
-            return '';
+            return response()->setStatusCode(404);;
         if(Auth::check()){
             $post = Post::find($id);
             if(Auth::user()->id != $post->user_id){
@@ -462,8 +440,10 @@ class PostController extends Controller
                     return 'SUCCESS';
                 }
             }
+            else
+                return response()->setStatusCode(403);
         }
-        return '';
+        return response()->setStatusCode(401);
     }
 
     public function deleteSave($id){
@@ -479,7 +459,7 @@ class PostController extends Controller
                     return 'SUCCESS';
             }
         }
-        return 'A';
+        return response()->setStatusCode(401);
     }
 
     public function loadMore(Request $request, $post_id,$page){
@@ -551,5 +531,22 @@ class PostController extends Controller
             }
         }
         return 'error';
+    }
+
+    public function get_post_image($id){
+        $post = Post::find($id);
+        $thumbnail_path = storage_path('app/public/images/posts/'.$post->thumbnail);
+        $p = 'public/images/posts/'.$post->thumbnail;
+
+        if(!Storage::exists($p)) abort(404);
+
+        $thumbnail = File::get($thumbnail_path);
+        $type = File::mimeType($thumbnail_path);
+
+        $response = Response::make($thumbnail, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+
     }
 }

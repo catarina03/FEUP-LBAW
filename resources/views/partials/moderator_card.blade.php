@@ -1,32 +1,45 @@
-<div class="postsCards row justify-content-center">
-    @include('pages.confirm')
-    @foreach($reports as $report)
-        <div class="col-12 col-md-6 col-xl-4 mb-4 report-section" data-id="{{$report->content_id}}" data-type="{{$report->type}}">
-            <div class="card h-100"> {{-- TODO: on click--}}
-                <img src="{{ URL::asset('images/posts/'.$report->thumbnail) }}" height="200" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $report->title }}</h5>
-                    <small> by <a id="authorName" href="{{ url('user/'.$report->user_id) }}">
-                            {{$report->name}}</a>,
-                        {{date("F j, Y", strtotime($report->created_at))}} </small>
+<div class="reports-table mt-4" style="overflow-x: auto; border: solid 1px black;">
+    <table class="table roles-list align-middle table-hover pb-0 mb-0" style="background-color:#fcf3ee;">
+        <thead>
+        <tr>
+            <th class="p-3 ps-4" scope="col">Post Title</th>
+            <th scope="col" class="text-center p-3">Reported Content</th>
+            <th scope="col" class="text-center p-3">Author</th>
+            <th scope="col" class="text-center p-3">Motive</th>
+            <th scope="col" class="text-center p-3">Reports</th>
+            <th scope="col" class="text-center p-3 ps-0">Actions</th>
+        </tr>
+        </thead>
 
-                    <ul class="card-text mt-1 list-unstyled">
-                        <li class="pt-1" id="inline-pdash-p"><strong>Author:</strong> {{$report->content_author}} </li>
-                        <li class="pt-1" id="inline-pdash-p"><strong>Referenced content:</strong> {{$report->type}}</li>
-                        <li class="pt-1" id="inline-pdash-p"><strong>Motive:</strong> {{$report->motive}} </li>
-                        <li class="pt-1" id="inline-pdash-p"><strong>Reports:</strong> {{$report->n_reports}} </li>
-                    </ul>
+        <tbody class="reports-items">
+        @if(count($reports) > 0)
 
-                    @include('partials.moderator_card_actions', ['assigned' => !($report->user_assigned==null), 'type' => $report->type, 'content_id'=>$report->content_id])
-                </div>
-            </div>
-        </div>
-    @endforeach
+            @foreach($reports as $report)
+                <tr class="report-row " style="cursor:pointer;" data-href="'/post/'{{$report->post_id}}">
+                    <td class="report-item col-md-5 title ps-4 pt-2 pb-2">{{ $report->title}}</td>
+                    <td class="report-item col-md-2 text-center pt-2 pb-2"> {{$report->type}} </td>
+                    <td class="report-item text-center pt-2 pb-2"> {{$report->content_author}} </td>
+                    <td class="report-item -md-1 text-center pt-2 pb-2"> {{$report->motive}} </td>
+                    <td class="report-item text-center pt-2 pb-2"> {{$report->n_reports}} </td>
+                    <td class="text-center report-actions-section ps-0 pe-3" data-id="{{$report->content_id}}"
+                        data-type="{{$report->type}}">
+                        @include('partials.moderator_card_actions', ['assigned' => !($report->user_assigned==null)])
+
+                    </td>
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td>No results found!</td>
+            </tr>
+        @endif
+        </tbody>
+
+    </table>
 </div>
-{{--<nav class="manage_roles-pagination">
+<nav class="table-pagination">
     <div class="pagination">
-        {!! $reports->links() !!}
+        {{--        {!! $roles->links() !!}--}}
     </div>
-</nav>--}}
-
+</nav>
 

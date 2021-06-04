@@ -1,8 +1,7 @@
-<div class="text-center report-actions" data-id="{{$content_id}}" data-type="{{$type}}">
+<div class="report-actions m-0 p-0">
     @if(!$assigned)
-        <p class="assign-button" style="font-weight:bold;" >Assign to me</p>
+        <button class="assign-button btn btn-outline-dark"> Assign to me </button>
     @else
-        <p class="assign-button report-action-button" style="font-weight:bold;" data-bs-toggle="modal"
-           data-bs-target="#report_action">Action</p>
+        <button class="action-button btn btn-outline-dark"> Action </button>
     @endif
 </div>

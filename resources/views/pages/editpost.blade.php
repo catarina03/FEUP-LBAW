@@ -25,6 +25,9 @@
                                 <label class="add-comment-label" for="edit-title">Post title</label>
                                 <input class="container form-control w-100" name="title" id="title"
                                        value="{{$post['title']}}" required>
+                                @error('tags')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -37,7 +40,9 @@
                                     <label class="form-label" for="postImage">Change post image</label>
                                     <input type="file" class="form-control" name="thumbnail" id="postImage"/>
                                 </div>
-                                <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1">
+                               {{-- <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1"> --}}
+                                <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-0 pt-lg-0 p-1">
+                                    <label class="form-label" for="category" name="Category" class="pb-0">Category</label>
                                     <select class="form-select" id="category" name="category" style="cursor:pointer;">
                                         <option value="" disabled selected hidden>Category</option>
                                         @if ($post['category'] == 'music')
@@ -71,8 +76,13 @@
                                         @endif
                                         {{-- <option value="Literature" >Literature</option> --}}
                                     </select>
+                                    @error('tags')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                                <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-3 pt-lg-3 p-1">
+                                {{-- <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-3 pt-lg-3 p-1"> --}}
+                                <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-0 pt-lg-0 p-1">
+                                    <label class="form-label" for="type" name="Type">Type</label>
                                     <select class="form-select" id="topic-dropdown" name="type" style="cursor:pointer;">
                                         <option disabled selected hidden>Type</option>
                                         @if ($post['type'] == 'news')
@@ -94,6 +104,9 @@
                                         @endif
                                         {{-- <option>Review</option> --}}
                                     </select>
+                                    @error('tags')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div
                                     class="col-lg-7 col-12 form-group spoiler-checkbox p-1 mt-1 mb-0 pb-0 align-self-end">
@@ -103,54 +116,57 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="container mx-0 px-0 mt-3 create-post-editor-container">
-                        <div class="row justify-content-center">
-                            <div class="col-10">
-                                <label for="mytextarea">Post</label>
-                                <textarea id="mytextarea" class="create-post-editor col-auto"
-                                          value="{{$post['content']}}" name="content" rows="15"
-                                          style="resize:none;">
+                        <div class="container mx-0 px-0 mt-3 create-post-editor-container">
+                            <div class="row justify-content-center">
+                                <div class="col-10">
+                                    <label for="mytextarea">Post</label>
+                                    <textarea id="mytextarea" class="create-post-editor col-auto"
+                                              value="{{$post['content']}}" name="content" rows="15"
+                                              style="resize:none;">
                                      {{$post['content']}}
                                 </textarea>
+                                    @error('tags')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mt-1">
+                                <div class="col-10">
+                                    <p><i class="fas fa-exclamation-triangle"></i> Keep in mind that if your post does not
+                                        follow all website's rules, it may be reported.</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="row justify-content-center mt-1">
-                            <div class="col-10">
-                                <p><i class="fas fa-exclamation-triangle"></i> Keep in mind that if your post does not
-                                    follow all website's rules, it may be reported.</p>
-                            </div>
-                        </div>
-                    </div>
 
+                        <div class="container mx-0 px-0 mt-3 create-post-tags-container">
+                            <div class="row justify-content-center">
+                                <div class="col-10">
+                                    <label for="select2-tags" class="col-12 col-form-label">Tags</label>
+                                    <select id="select2-tags" class="form-control bg-white rounded border" multiple="multiple" name="tags[]" >
+                                        @foreach($tags as $tag)
+                                            <option value="{{$tag->name}}" selected>{{$tag->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('tags')
+                                    <div class="error">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mt-1">
+                                <div class="col-10">
+                                    <p>Min: 2 tags - Max 10 tags</p>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="container mx-0 px-0 mt-3 create-post-tags-container">
-                        <div class="row justify-content-center">
-                            <div class="col-10">
-                                <label for="select2-tags" class="col-12 col-form-label">Tags</label>
-                                <select id="select2-tags" class="form-control bg-white rounded border" multiple="multiple" name="tags[]" >
-                                    @foreach($tags as $tag)
-                                        <option value="{{$tag->id}}" selected>{{$tag->name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('tags')
-                                <div class="error">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mt-1">
-                            <div class="col-10">
-                                <p>Min: 2 tags - Max 10 tags</p>
-                            </div>
-                        </div>
                     </div>
 
                     <input type="hidden" name="user_id" value="1"/>
                     <div class="row justify-content-center mt-5">
                         <div class="col-10">
                             <div class="row d-flex flex-row">
-                                <div class="col-md-auto col-12 me-auto text-center">
+                                <div class="col-md-auto col-12 me-auto text-center ps-0">
                                     <button type="button" class="btn preview-post" data-bs-toggle="modal" data-bs-target="#preview-modal"><i class="far fa-eye"></i>
                                         Preview</button>
                                 </div>

@@ -140,7 +140,7 @@ class PagesController extends Controller
             }
         }
         if($request->has('myPosts')){
-            if($request->input('tagFollow') == "true") {
+            if($request->input('myPosts') == "true") {
                 $query->where('user_id', Auth::user()->id);
             }
         }

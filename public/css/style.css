@@ -105,6 +105,10 @@
     background-color: #0c1d1c;
 }
 
+.link-auth-hover:hover {
+    color: #ade1e5 !important;
+}
+
 /* PROFILE */
 
 @media (max-width: 1200px) {
@@ -668,10 +672,7 @@ a.footer-link:hover {
 /* FAQ */
 
 .faq-card {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5em;
-    margin-bottom: 7em;
+    margin: 5em auto 7em;
     padding-top: 2%;
     padding-bottom: 1%;
     font-size: 1.4em;
@@ -763,23 +764,6 @@ a.footer-link:hover {
 
 /* ROLE MANAGER */
 
-.manage_roles-card {
-    margin: 5em auto;
-    padding-top: 2%;
-    padding-bottom: 1%;
-    font-size: 1.4em;
-}
-
-.manage_roles-title {
-    font-weight: bolder;
-    padding-top: 2%;
-    font-size: 1.5em;
-}
-
-.roles-table i.edit-role:hover {
-    cursor: pointer;
-    font-weight: bold;
-}
 
 .roles-username a {
     cursor: pointer;
@@ -790,36 +774,30 @@ a.footer-link:hover {
     font-weight: bold;
 }
 
-.edit-roles-button {
-    background-color: transparent;
-    color: black;
-    border: none;
-    margin: 0;
-}
 
-.manage_roles-pagination {
+.table-pagination {
     margin-top: 2em;
     padding-bottom: 1em;
     justify-content: center;
 }
 
-.manage_roles-pagination .pagination {
+.table-pagination .pagination {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.manage_roles-pagination .pagination > li > a,
-.manage_roles-pagination .pagination > li > span {
+.table-pagination .pagination > li > a,
+.table-pagination .pagination > li > span {
     color: black;
 }
 
-.manage_roles-pagination .pagination > .active > a,
-.manage_roles-pagination .pagination > .active > a:focus,
-.manage_roles-pagination .pagination > .active > a:hover,
-.manage_roles-pagination .pagination > .active > span,
-.manage_roles-pagination .pagination > .active > span:focus,
-.manage_roles-pagination .pagination > .active > span:hover {
+.table-pagination .pagination > .active > a,
+.table-pagination .pagination > .active > a:focus,
+.table-pagination .pagination > .active > a:hover,
+.table-pagination .pagination > .active > span,
+.table-pagination .pagination > .active > span:focus,
+.table-pagination .pagination > .active > span:hover {
     background-color: #fcf3ee;
     color: black;
     border-color: black;
@@ -827,14 +805,44 @@ a.footer-link:hover {
 
 /*POST DASHBOARD*/
 
-.moderator-center .assign-button:hover {
-    color: #fcf3ee;
+.clear_button {
+    background-color: white;
+    border: none;
+    border-radius: 2%;
+    color: #0c1d1c;
+    padding: 0.5em;
 }
 
-#pdash-action {
-    text-decoration: underline;
+.clear_button:hover {
+    color: #8ab5b1;
 }
 
+.report-row a {
+    cursor: pointer;
+    color: black;
+}
+
+.report-row a:hover {
+    color: rgb(79, 99, 96);
+}
+
+.reports-filter .filterButton {
+    background-color: #8ab5b1;
+    border: none;
+    border-radius: 2%;
+    color: #0c1d1c;
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+.reports-filter .filterButton:hover {
+    color: #307371;
+}
+
+.reports-filter .form-check-input {
+    background-color: #0c1d1c;
+    border: 1px solid #307371;
+}
 
 /*******************************************/
 /*************** POST PAGE *****************/
@@ -911,13 +919,14 @@ a.footer-link:hover {
     background-color: #0C1D1C;
     color: #EFF9FA;
 }
-.post-page-post-tag:hover{
-  color: inherit;
-  background-color: transparent;
-  font-family: 'Roboto', sans-serif;
-  font-size: small;
-  font-weight:400;
-  text-decoration: underline;
+
+.post-page-post-tag:hover {
+    color: inherit;
+    background-color: transparent;
+    font-family: 'Roboto', sans-serif;
+    font-size: small;
+    font-weight: 400;
+    text-decoration: underline;
 }
 
 .post-page-tag-container:hover {
@@ -935,10 +944,12 @@ a.footer-link:hover {
     color: #0c1d1c;
     font-size: xx-large;
 }
+
 .post-page-post-thumbs-up-button .fa-thumbs-up:hover {
     color: green;
     font-size: xx-large;
 }
+
 .post-page-post-thumbs-up-button:focus {
     outline: none;
     box-shadow: none;
@@ -948,10 +959,12 @@ a.footer-link:hover {
     color: #0c1d1c;
     font-size: xx-large;
 }
+
 .post-page-post-thumbs-down-button .fa-thumbs-down:hover {
     color: darkred;
     font-size: xx-large;
 }
+
 .post-page-post-thumbs-down-button:focus {
     outline: none;
     box-shadow: none;
@@ -1300,8 +1313,8 @@ h3.post-page-comment-reply-interactions {
 }
 
 
-.report_content_select{
-    color:grey;
+.report_content_select {
+    color: grey;
     width: 70%;
 }
 
@@ -1313,17 +1326,20 @@ h3.post-page-comment-reply-interactions {
 #liveToast .toast-header{
     color:white;
     background-color: black;
-    
+
 }
 
 #liveToast .toast-body{
     color:black;
     background-color: white;
-    
+
 }
 
 #liveToast .toaster-button{
     background-color: white !important;
-    
+
 }
 
+.post-page-post-text p{
+    background-color:#307371;
+}

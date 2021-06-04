@@ -15,7 +15,6 @@
     <script  src="{{ URL::asset('js/post_comments/follow_tag.js') }}" defer></script>
     <script  src="{{ URL::asset('js/votePost.js') }}" defer></script>
     <script  src="{{ URL::asset('js/voteComment.js') }}" defer></script>
-    <script  src="{{ URL::asset('js/generic_error_message.js') }}" defer></script>
     <div class="container post">
         <p hidden id="post_ID">{{$post->id}}</p>
         <p hidden id="user_ID">{{$user_id}}</p>
@@ -24,7 +23,7 @@
 
                 @auth
                     @if($isOwner)
-                        <div class="my-post-page-settings btn-group dropdown">
+                        <div class="my-post-page-settings btn-group dropdown" data-toggle="tooltip" data-placement="right" title="Actions">
                             <a class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-cog" style="font-size:3em;"></i>
                             </a>
@@ -49,7 +48,7 @@
                 <div class="container-fluid d-flex justify-content-center">
                     <div class="mt-2 col-10 justify-content-center d-flex">
                         <div class="row thumbnail-image">
-                            <img src="{{URL::asset($metadata['thumbnail'])}}"
+                            <img src="{{route('retrieve_post_image', ['id'=>$post->id])}}"
                                  class="justify-content-center" alt="Post thumbnail" >
                         </div>
                     </div>
@@ -59,11 +58,11 @@
                     <h1 class="post-page-post-title">{{$post->is_spoiler?"[SPOILER]":""}}{{$post->title}}</h1>
                 </div>
 
-                <div class="row px-0 justify-content-between">
-                    <div class="container-fluid d-flex px-0 col-4 mt-1">
-                        <h2 class="post-page-post-author-date">by <a
+                <div class=" container-fluid row px-0 justify-content-center">
+                    <div class="container-fluid d-flex px-0 mt-1 px-2 col-5">
+                        <span class="post-page-post-author-date">by <a
                                 href="{{route('profile',['id'=>$metadata['author']->id])}}">{{$metadata['author']->name}}</a>, {{$metadata['date']}}
-                        </h2>
+                        </span>
                     </div>
 
                     <div class="container-fluid d-flex col-2 mt-1">
@@ -88,8 +87,8 @@
 
                 </div>
 
-                <div class="container-fluid d-flex col-10 justify-content-left mt-2">
-                    <p class="post-page-post-text">{{strip_tags($post['content'],"<div><p><b><strong><i><u>")}}
+                <div class="container-fluid col-10 justify-content-left mt-2">
+                    <p class="post-page-post-text">{!!  $post['content'] !!}
                     </p>
                 </div>
 
@@ -100,14 +99,14 @@
                             <div class="col-auto px-2 m-1">
                                 <a style="color:#0C1D1C;font-weight:400;"
                                    href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "type=" . rawurlencode(ucfirst($post->type))}}" data-toggle="tooltip" data-placement="bottom" title="Search post by type"><b>{{ucfirst($post->type)}}</b></a>
-                                
+
                             </div>
-                    
+
                             <h2 class="col-auto post-page-post-tags-indicator m-0 p-0">Category: </h2>
                             <div class="col-auto  px-2 m-1">
                                 <a style="color:#0C1D1C;font-weight:400;"
                                    href="{{route("homepage")."/search/filters?peopleFollow=false&tagFollow=false&myPosts=false&" . "category=" . rawurlencode(ucfirst($post->category))}}" data-toggle="tooltip" data-placement="bottom" title="Search post by category"><b>{{ucfirst($post->category)}}</b></a>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -143,19 +142,19 @@
                                     <div class="col-auto px-0 mx-0">
                                         <button
                                             class="post-page-post-thumbs-up-button  btn ms-0 me-4 px-0 post-up-vote"><i
-                                                title="Like post" class="fas fa-thumbs-up"></i></button>
+                                                title="Liked post" class="fas fa-thumbs-up"></i></button>
                                     </div>
                                 @else
                                     <div class="col-auto px-0 mx-0">
                                         <button class="post-page-post-thumbs-up-button btn ms-0 me-4 px-0 post-up-vote">
-                                            <i title="Dislike post" class="far fa-thumbs-up"></i></button>
+                                            <i title="Like post" class="far fa-thumbs-up"></i></button>
                                     </div>
                                 @endif
                                 @if($metadata['liked'] == 1)
                                     <div class="col-auto px-0 mx-0">
                                         <button
                                             class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0 post-down-vote">
-                                            <i title="Like post" class="fas fa-thumbs-down m-0"></i></button>
+                                            <i title="Disliked post" class="fas fa-thumbs-down m-0"></i></button>
                                     </div>
                                 @else
                                     <div class="col-auto px-0 mx-0">
@@ -185,7 +184,6 @@
                                 @endif
                             @endauth
                             @guest
-                                <p>TO DO: add links to login/register</p>
                             @endguest
                         </div>
 
@@ -207,8 +205,12 @@
                     @if(!$isOwner) {{-- User is not the owner of the post --}}
                     <div class="row justify-content-center px-4 mx-1">
                         <div class="col-10 mx-0 px-0" style="border-radius:5px;">
+
+                        <form>
                             <div class="row m-0 p-0">
+
                                 <div class="d-flex mx-0 px-0">
+                                    <label hidden for="add-comment">Enter a comment:</label>
                                     <textarea class="container form-control post-page-add-comment w-100 add-comment"
                                               id="add-comment" rows="2" placeholder="Join the discussion"></textarea>
                                 </div>
@@ -220,6 +222,7 @@
                                     </button>
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                     @endif
@@ -229,7 +232,13 @@
                         @include("partials.comments",["comments"=>$metadata['comments']])
                     @else
                         <div class="container-fluid d-flex col-10 justify-content-center mt-3">
-                    <p><b id="empty-comments">There are no comments in this post. Be the first to leave your thoughts!</b></p>
+                    <p><b id="empty-comments">
+                    @if($user_id!=$post->id)
+                    There are no comments in this post. Be the first to leave your thoughts!
+                    @else
+                    There are no comments in your post.
+                    @endif
+                    </b></p>
                 </div>
                     @endif
             </div>
@@ -254,7 +263,7 @@
     </div>
 @include('pages.confirm')
 @include('partials.report_modal')
-@include('partials.empty_comment')
+@include('partials.error')
 @include('partials.postpage_toaster')
 @endsection
 

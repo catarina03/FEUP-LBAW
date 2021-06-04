@@ -4,10 +4,20 @@ const url = new URL(window.location.href)
 let category = url.searchParams.get('category')
 if(category == null) category = "Music"
 
-if(loadMoreCategory != null) loadMoreCategory.addEventListener('click',  function(e){
+let parent = null
+let outerDiv = null
+if(loadMoreCategory != null) loadMoreCategory.addEventListener('click',  (e)=>addEventListenersLoad(e))
+
+
+function addEventListenersLoad(e){
     e.preventDefault()
+    let pag = document.querySelector('.category .pagination-loadmore')
+    parent = pag.parentNode
+    parent.removeChild(pag)
+
+    outerDiv = addLoadSpinner(parent)
     makeRequest('GET','/api/category/loadMore/'+ category + '/' + page , receiveLoadMoreCategory, null)
-})
+}
 
 let top_button = document.querySelector("#go-top")
 if(top_button != null){
@@ -15,11 +25,6 @@ if(top_button != null){
 }
 
 function receiveLoadMoreCategory(status, responseText){
-    let pag = document.querySelector('.category .pagination-loadmore')
-    let parent = pag.parentNode
-    parent.removeChild(pag)
-
-    let outerDiv = addLoadSpinner(parent)
     if(status === 200){
         parent.removeChild(outerDiv)
         const response = JSON.parse(responseText)
@@ -41,7 +46,7 @@ function receiveLoadMoreCategory(status, responseText){
         page++;
         addSavePostListeners();
     }
-    else alert('Error fetching api: ' + status)
+    else show_generic_warning("Error fetching more posts")
 }
 
 
@@ -56,9 +61,6 @@ function addLoadMoreCategory(postDiv){
     pagination.appendChild(load)
     postDiv.appendChild(pagination)
     let loadMore = document.querySelector('.category .pagination-loadmore .loadmore')
-    if(loadMore != null) loadMore.addEventListener('click', function(e){
-        e.preventDefault()
-        makeRequest('GET','/api/category/loadMore/'+ category + '/' + page , receiveLoadMoreCategory, null)
-    })
+    if(loadMore != null) loadMore.addEventListener('click', (e) => addEventListenersLoad(e))
 }
 

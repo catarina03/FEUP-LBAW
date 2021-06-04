@@ -32,7 +32,7 @@
                 <!-- Grid column -->
                 <div class="col-md-2 mb-3">
                     <h6 class="text font-weight-bold">
-                        <p class="footer-link">© AltArt</p>
+                        <span class="footer-link text-white">© AltArt</span>
                     </h6>
                 </div>
             </div>

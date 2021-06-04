@@ -52,22 +52,12 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'string|max:255',
             'email' => 'string|email|max:255|unique:authenticated_user',
-            'password' => 'string|min:5|confirmed',
+            'password' => 'string|min:6|confirmed',
             'birthdate' => 'date|before_or_equal:' . now()->subYears(13),
             'username' => 'string|max:255|unique:authenticated_user',
         ],
         [
-            'name.string' => 'Must be of type string',
-            'name.max' => 'Max of 255 characters',
-            'email.string' => 'Must be of type string',
-            'email.max' => 'Max 255 characters',
-            'email.email' => 'Must be email format',
-            'email.unique' => 'Email already used',
-            'birthdate.date' => 'Must be of type date',
             'birthdate.before_or_equal' => 'Must be older than 13 years old',
-            'username.max' =>'Max of 255 characters',
-            'username.unique' =>'Username already used',
-            'username.string' => 'Must be of type string',
         ]);
     }
 
@@ -93,7 +83,7 @@ class RegisterController extends Controller
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            return redirect()->back()
+            return redirect()->back()->with('showModal', "register")
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -104,9 +94,5 @@ class RegisterController extends Controller
 
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
-    }
-
-    public function showRegistrationForm(){
-        return view('auth.register', ['needsFilter' => 0]);
     }
 }

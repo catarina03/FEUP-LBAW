@@ -317,6 +317,7 @@
     </div>
     @include('pages.confirm')
     @include('partials.list_toasters')
+    @include('partials.error')
 @endsection
 
 

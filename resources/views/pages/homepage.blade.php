@@ -45,7 +45,9 @@
         </div>
         @include('partials.filterBox')
     </div>
+
     @include('partials.list_toasters')
-@include('partials.postpage_toaster')
+    @include('partials.postpage_toaster')
+    @include('partials.error')
 
 @endsection

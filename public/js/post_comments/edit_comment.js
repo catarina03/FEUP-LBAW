@@ -17,6 +17,7 @@ function addEditListeners(){
         }
         element.addEventListener("click",function(e){
         e.preventDefault();
+        e.stopImmediatePropagation();
         editForm(comment_id,container,type);
         });
     }
@@ -36,13 +37,11 @@ function editForm(comment_id,content_container,type){
     var getUrl = window.location;
     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
     var request = new XMLHttpRequest();
-    console.log(getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id + "/edit");
     request.open('get', getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id +"/edit", true);
     request.onload = function (){
         result = "";
         if(request.responseText != ""){
             comment_info = JSON.parse(request.responseText);
-            console.log(comment_info);
             if(type!=null){
                 let content = content_container.getElementsByClassName("comment_content")[0].innerText;
                 content_container.getElementsByClassName("comment_content_container")[0].innerHTML = `<textarea class="container form-control post-page-add-comment w-100 edit-comment-form" style="width:100%;" id="edit-comment" rows="2" placeholder=" ${content}">${content}</textarea><div class="row justify-content-end confirm_edit_button px-0 mx-0">
@@ -68,7 +67,7 @@ function editForm(comment_id,content_container,type){
         });
         }
         else{
-            alert("Something went wrong!");
+            show_generic_warning("Error fetching comment form!");
             return;
         }
         
@@ -83,7 +82,6 @@ function confirmEdit(comment_id,container,type){
     var request = new XMLHttpRequest();
     let content = container.getElementsByClassName("edit-comment-form")[0].value;
     let route =  getUrl .protocol + "//" + getUrl.host + "/user/" + userID.innerText;
-    console.log(getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id + "/edit");
     request.open('put', getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id +"/edit", true);
     request.onload = function (){
         if(request.status==200){
@@ -94,6 +92,7 @@ function confirmEdit(comment_id,container,type){
                 div.innerHTML = comment["comment_view"];
                 let child = div.firstChild;
                 container.parentNode.replaceChild(child,container);
+                addCommentsEventListeners(container);
                 let new_elements = container.getElementsByClassName("delete_comment_button");
                 for(let k = 0;k<new_elements.length;k++){
                     let temp = new_elements[k];
@@ -111,6 +110,7 @@ function confirmEdit(comment_id,container,type){
                 div.innerHTML = comment["comment_view"];
                 let child = div.firstChild;
                 container.parentNode.replaceChild(child,container);
+                addCommentsEventListeners(container);
                 let new_elements = container.getElementsByClassName("delete_comment_button");
                 for(let k = 0;k<new_elements.length;k++){
                     let temp = new_elements[k];
@@ -129,7 +129,7 @@ function confirmEdit(comment_id,container,type){
         show_toaster("Comment edited sucessfully!");
         }
         else{
-            empty_warning.show();
+            show_generic_warning("Error editing the comment!");
             return;
         }
     };

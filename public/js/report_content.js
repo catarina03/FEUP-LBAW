@@ -47,10 +47,9 @@ function report_content(type,id,value){
         route = getUrl.protocol + "//" + getUrl.host + "/" +'comment/' + id + '/report';
     else if(type=="post")
         route = getUrl.protocol + "//" + getUrl.host + "/" +'post/' + id + '/report';
-    console.log(route);
     let motive = getMotive(value);
     if(motive==null){
-        alert("Invalid motive");
+        show_generic_warning("Invalid motive");
         return;
     }
     let request = new XMLHttpRequest();
@@ -59,7 +58,6 @@ function report_content(type,id,value){
         if(request.readyState === XMLHttpRequest.DONE){
             let text = JSON.parse(request.responseText);
             if(request.status === 200){
-                console.log(text['status']);
                 if(type=="comment"){
                     hideReportButtonFromComment(id);
                     show_toaster("Comment reported successfully!");
@@ -69,8 +67,7 @@ function report_content(type,id,value){
                     show_toaster("Post reported successfully!");
             }
             else{
-                console.log(text['status']);
-                alert(text['status']);
+                show_generic_warning("Invalid motive");
             }
         }
     };

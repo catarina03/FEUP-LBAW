@@ -11,12 +11,9 @@
 |
 */
 // Authentication
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
+Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
-
+Route::post('register', 'Auth\RegisterController@register')->name('register');
 
 // Pages
 Route::get('/', 'Auth\LoginController@home');
@@ -42,7 +39,6 @@ Route::prefix('api/comment/')->group(function(){ //comment api
     Route::get('{comment_id}/edit','CommentController@editForm');
     Route::put('{comment_id}/edit','CommentController@editAction');
     Route::delete('{comment_id}','CommentController@destroyComment');
-    Route::get('{comment_id}/thread','CommentController@threads');
     Route::post('{comment_id}/add_comment','CommentController@addThread');
     Route::post('{comment_id}/vote','CommentController@addVote');
     Route::put('{comment_id}/vote', 'CommentController@editVote');
@@ -50,7 +46,7 @@ Route::prefix('api/comment/')->group(function(){ //comment api
 });
 
 
-Route::prefix('user/')->group(function(){ //user
+Route::prefix('user/')->group(function () { //user
     Route::get('{id}', 'UserController@show')->name('profile');
     Route::delete('{id}', 'UserController@destroy');
     Route::get('{id}/settings', 'UserController@edit');
@@ -60,14 +56,15 @@ Route::prefix('user/')->group(function(){ //user
     Route::put('{id}/settings/edit_preferences', 'UserController@edit_preferences')->name('edit_preferences');
 });
 
-Route::prefix('/api/user/')->group(function(){ //user api
+Route::prefix('/api/user/')->group(function () { //user api
     Route::post('{id}/follow', 'UserController@follow');
     Route::delete('{id}/follow', 'UserController@unfollow');
     Route::post('{id}/block', 'UserController@block');
     Route::delete('{id}/block', 'UserController@unblock');
-    Route::put('{id}/edit_photo', 'UserController@update_photo');
+    Route::post('{id}/edit_photo', 'UserController@update_photo');
     Route::get('{id}/edit_bio', 'UserController@show_edit_bio');
     Route::put('{id}/edit_bio', 'UserController@edit_bio');
+    Route::get('{id}/load_more/{page}', 'UserController@load_more_profile');
 });
 
 
@@ -80,30 +77,31 @@ Route::get('editpost/{id}', 'PostController@edit');
 Route::put('editpost/{id}', 'PostController@update');
 Route::post('post/{id}/report', 'PostController@report');
 
-Route::prefix('api/post/')->group(function(){ //post api
+Route::prefix('api/post/')->group(function () { //post api
     Route::post('{id}/save', 'PostController@addSave');
     Route::delete('{id}/save', 'PostController@deleteSave');
     Route::post('{id}/vote', 'PostController@addVote');
     Route::put('{id}/vote', 'PostController@editVote');
     Route::delete('{id}/vote', 'PostController@deleteVote');
-    Route::get('{post_id}/popular_comments','PostController@popularComments');
-    Route::get('{post_id}/newer_comments','PostController@newerComments');
-    Route::get('{post_id}/older_comments','PostController@olderComments');
-    Route::get('{post_id}/load_more/{page}','PostController@loadMore');
-    Route::post('{post_id}/add_comment','CommentController@store');
+    Route::get('{post_id}/popular_comments', 'PostController@popularComments');
+    Route::get('{post_id}/newer_comments', 'PostController@newerComments');
+    Route::get('{post_id}/older_comments', 'PostController@olderComments');
+    Route::get('{post_id}/load_more/{page}', 'PostController@loadMore');
+    Route::post('{post_id}/add_comment', 'CommentController@store');
 });
 
 // Report
 Route::get('moderator/reports', 'ReportController@show');
-Route::put('reports/{report_id}/close', 'ReportController@close');
-Route::put('reports/{report_id}/assign_report', 'ReportController@assign');
-Route::put('reports/{report_id}/process', 'ReportController@process');
-Route::get('api/report_filter','ReportController@reportFilter');
+Route::get('api/moderator/reports/{filters}', 'ReportController@filter');
+Route::put('api/reports/{reported_content}/close', 'ReportController@close');
+Route::put('api/reports/{reported_content}/assign_report', 'ReportController@assign');
+Route::post('api/reports/{reported_content}/motives', 'ReportController@reportMotives');
+Route::get('api/report_filter', 'ReportController@reportFilter');
 Route::post('comment/{comment_id}/report', 'CommentController@reportComment');
 
-Route::prefix('api/tag/')->group(function(){ //tag api
-    Route::post('{tag_id}/follow','TagController@followTag');
-    Route::delete('{tag_id}/follow','TagController@unfollowTag');
+Route::prefix('api/tag/')->group(function () { //tag api
+    Route::post('{tag_id}/follow', 'TagController@followTag');
+    Route::delete('{tag_id}/follow', 'TagController@unfollowTag');
 });
 
 
@@ -113,3 +111,9 @@ Route::get('forgot_password', 'ForgotPassword@show')->name('forgot_password');
 Route::post('forgot_password', 'ForgotPassword@request');
 Route::get('recover_password', 'ForgotPassword@showRecover')->name('recover_password');
 Route::post('recover_password', 'ForgotPassword@recover');
+
+
+// Storage utils
+Route::get('post/{id}/image', 'PostController@get_post_image')->name('retrieve_post_image');
+Route::get('user/{id}/image', 'UserController@get_user_image')->name('retrieve_user_image');
+
