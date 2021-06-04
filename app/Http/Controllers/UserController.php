@@ -86,12 +86,13 @@ class UserController extends Controller
         $nFollowers = DB::table("follow_user")->where("followed_user", $id)->get()->count();
         $nFollowing = DB::table("follow_user")->where("following_user", $id)->get()->count();
         $isFollowing = DB::table("follow_user")->where("followed_user", $id)->where("following_user", Auth::id())->count();
+        $isBlocked = DB::table("block_user")->where("blocked_user", $id)->where("blocking_user", Auth::id())->count();
 
         $user = AuthenticatedUser::find($id);
 
         $photo = 'storage/images/users/'.Auth::user()->profile_photo;
 
-        return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts, 'isFollowing'=>$isFollowing] );
+        return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts, 'isFollowing'=>$isFollowing, 'isBlocked' => $isBlocked] );
     }
 
     /**
@@ -264,24 +265,30 @@ class UserController extends Controller
      */
     public function block(Request $request, $id)
     {
-        $res = UserPolicy::block($id);
-        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
-        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
+        $block = $request["id"];
+        if(!is_int(intval($block))) return 'error: invalid user to block';
+
+        $res = UserPolicy::block(Auth::id(), $request->input('id'));
+        if($res == 1) return "no permissions";
+        if($res == 2) return "invalid user";
 
         $user = Auth::user();
 
-        $block = $request["id"];
-        if(!is_int($block)) return 'error: invalid user to block';
+        $blocked_user = AuthenticatedUser::find($request['id']);
+        $b = DB::table("block_user")
+            ->where('blocked_user', $blocked_user->id)
+            ->where('blocking_user', $user->id);
 
-        $blocked_user = AuthenticatedUser::find($request->blocking);
+        if($b != null) return "Already blocked this user".$b;
+
         if ($blocked_user != null){
             DB::table("block_user")->insert([
-                'blocked_user' => $blocked_user,
+                'blocked_user' => $blocked_user->id,
                 'blocking_user' => $user->id
             ]);
             return 'SUCCESS';
         }
-        return 'error';
+        return "couldn't find user in database";
     }
 
     /**
@@ -292,13 +299,16 @@ class UserController extends Controller
      */
     public function unblock(Request $request, $id)
     {
-        $res = UserPolicy::block($id);
-        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
-        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
-        $user = Auth::user();
 
         $blocked_user = $request["id"];
-        if(!is_int($blocked_user)) return 'error';
+        if(!is_int(intval($blocked_user))) return 'error: invalid user to block';
+
+        $res = UserPolicy::block(Auth::id(), $request->input('id'));
+        if($res == 1) return "no permissions";
+        if($res == 2) return "invalid user";
+
+        $user = Auth::user();
+
         if ($blocked_user != null){
             $b = DB::table("block_user")
                 ->where('blocked_user', $blocked_user)
@@ -306,7 +316,7 @@ class UserController extends Controller
             if($b != null){
                 if($b->delete()) return 'SUCCESS';
             }
-            else return "Not blocking the user with id".$blocked_user;
+            else return "Not blocking the user with id";
         }
         return 'error';
     }

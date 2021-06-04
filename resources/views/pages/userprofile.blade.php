@@ -4,10 +4,12 @@
     <script type="text/javascript" src="{{ URL::asset('js/update_bio.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/update_profile_photo.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/follow_user.js') }}" defer></script>
+    <script type="text/javascript" src="{{ URL::asset('js/block_user.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/user_profile.js') }}" defer></script>
 
     <input name="user_id" value="{{$user->id}}" class="user-id-value" hidden>
     <input name="isFollowing" value="{{$isFollowing}}" class="is-following" hidden>
+    <input name="isBlocked" value="{{$isBlocked}}" class="is-blocked" hidden>
     @if(Auth::user()->id === $user->id)
         <div class="container-fluid my-profile justify-content-center mx-auto">
             <div class="row justify-content-start profile my-profile g-0">
@@ -100,9 +102,15 @@
                                                     class="btn btn-secondary col-lg-3 col-sm-6 btn-sm profile-features unfollow"><i class="fas fa-user-check"></i>  Following
                                             </button>
                                             @endif
+                                            @if($isBlocked === 0)
                                             <button type="button"
                                                     class="btn btn-secondary col-lg-3 col-sm-6 btn-sm  profile-features block">Block
                                             </button>
+                                            @else
+                                            <button type="button"
+                                                    class="btn btn-secondary col-lg-3 col-sm-6 btn-sm  profile-features unblock">Unblock
+                                            </button>
+                                            @endif
                                         </div>
                                         @endif
 

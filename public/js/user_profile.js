@@ -1,18 +1,8 @@
-let block = document.querySelector(".userprofile .block");
 let loadMore = document.querySelector('.profile .pagination-loadmore .loadmore')
 let page = 2
 const NUMBER_OF_POSTS = 6
 
 if(loadMore != null) loadMore.addEventListener('click', loadHandlerHomepage)
-
-if (block != null){
-    block.addEventListener("click", function (e) {
-        console.log();
-        if (e.target.innerText == "Block") e.target.innerText = "Unblock";
-        else if (e.target.innerText == "Unblock") e.target.innerText = "Block";
-    });
-}
-
 
 function loadHandlerHomepage(e){
     e.preventDefault()
