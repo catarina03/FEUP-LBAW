@@ -18,10 +18,10 @@
                     <div class="row justify-content-center">
                         <div class="col-10 mx-0 px-0">
                             <div class="form-group post-comment-input mb-4">
-                                <label class="add-comment-label" for="title">Post title</label>
+                                <label class="add-comment-label" for="title">Post title *</label>
                                 <input class="container form-control w-100 flex-grow-1" id="title" name="title" value="{{ old('title') }}" required>
                                 @error('title')
-                                <div class="error">{{ $message }}</div>
+                                <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -30,15 +30,15 @@
                         <div class="col-10 px-0">
                             <div class="row px-0 mx-0">
                                 <div class="col-lg-6 col-12 form-group new-post-thumbnail p-0 m-0 me-lg-4">
-                                    <label class="form-label" for="postImage">Select post image</label>
+                                    <label class="form-label" for="postImage">Select post image *</label>
                                     <input type="file" class="form-control" name="thumbnail" id="postImage" value="{{ old('thumbnail') }}" />
                                     @error('thumbnail')
-                                    <div class="error">{{ $message }}</div>
+                                    <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                {{-- <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-3 pt-lg-3 p-1"> --}}
                                 <div class="col-lg-3 col-sm-6 col-12 form-group category-dropdown mt-lg-0 pt-lg-0 p-1">
-                                    <label class="form-label" for="category" name="Category" class="pb-0">Category</label>
+                                    <label class="form-label" for="category" name="Category" class="pb-0">Category *</label>
                                     <select class="form-select" id="category" name="category" value="{{ old('category') }}" style="cursor:pointer;" required>
                                         <option value="" disabled selected hidden>Category</option>
                                         @if (old('category') == 'music')
@@ -73,11 +73,11 @@
                                         {{-- <option value="Literature" >Literature</option> --}}
                                     </select>
                                     @error('category')
-                                    <div class="error">{{ $message }}</div>
+                                    <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-0 pt-lg-0 p-1">
-                                    <label class="form-label" for="type" name="Type">Type</label>
+                                    <label class="form-label" for="type" name="Type">Type *</label>
                                     <select class="form-select" id="topic-dropdown" name="type" style="cursor:pointer;" required>
                                         <option disabled selected hidden>Type</option>
                                         @if (old('type') == 'news')
@@ -100,7 +100,7 @@
                                         {{-- <option>Review</option> --}}
                                     </select>
                                     @error('type')
-                                    <div class="error">{{ $message }}</div>
+                                    <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-lg-7 col-12 form-group spoiler-checkbox p-1 mt-1 mb-0 pb-0 align-self-end">
@@ -113,11 +113,11 @@
                         <div class="container mx-0 px-0 mt-3 create-post-editor-container">
                             <div class="row justify-content-center">
                                 <div class="col-10">
-                                    <label for="mytextarea">Post</label>
+                                    <label for="mytextarea">Post *</label>
                                     <textarea id="mytextarea" class="create-post-editor col-auto" name="content" value="{{ old('content') }}" rows="15"
                                               style="resize:none;" required></textarea>
                                     @error('content')
-                                    <div class="error">{{ $message }}</div>
+                                    <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -132,14 +132,14 @@
                         <div class="container mx-0 px-0 mt-3 create-post-tags-container">
                             <div class="row justify-content-center">
                                 <div class="col-10">
-                                    <label for="select2-tags" class="col-12 col-form-label">Tags</label>
+                                    <label for="select2-tags" class="col-12 col-form-label">Tags *</label>
                                     <select id="select2-tags" class="form-control bg-white rounded border" multiple="multiple" name="tags[]" >
                                         @foreach($tags as $tag)
                                             <option value="{{$tag->id}}" selected>{{$tag->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('tags')
-                                    <div class="error">{{ $message }}</div>
+                                    <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>

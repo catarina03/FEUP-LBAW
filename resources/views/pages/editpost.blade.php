@@ -25,6 +25,9 @@
                                 <label class="add-comment-label" for="edit-title">Post title</label>
                                 <input class="container form-control w-100" name="title" id="title"
                                        value="{{$post['title']}}" required>
+                                @error('tags')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -73,6 +76,9 @@
                                         @endif
                                         {{-- <option value="Literature" >Literature</option> --}}
                                     </select>
+                                    @error('tags')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 {{-- <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-3 pt-lg-3 p-1"> --}}
                                 <div class="col-lg-2 col-sm-6 col-12 form-group topic-dropdown mt-lg-0 pt-lg-0 p-1">
@@ -98,6 +104,9 @@
                                         @endif
                                         {{-- <option>Review</option> --}}
                                     </select>
+                                    @error('tags')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div
                                     class="col-lg-7 col-12 form-group spoiler-checkbox p-1 mt-1 mb-0 pb-0 align-self-end">
@@ -117,6 +126,9 @@
                                               style="resize:none;">
                                      {{$post['content']}}
                                 </textarea>
+                                    @error('tags')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row justify-content-center mt-1">

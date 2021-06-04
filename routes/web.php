@@ -64,11 +64,10 @@ Route::prefix('/api/user/')->group(function () { //user api
     Route::delete('{id}/follow', 'UserController@unfollow');
     Route::post('{id}/block', 'UserController@block');
     Route::delete('{id}/block', 'UserController@unblock');
-    Route::put('{id}/edit_photo', 'UserController@update_photo');
+    Route::post('{id}/edit_photo', 'UserController@update_photo');
     Route::get('{id}/edit_bio', 'UserController@show_edit_bio');
     Route::put('{id}/edit_bio', 'UserController@edit_bio');
     Route::get('{id}/load_more/{page}', 'UserController@load_more_profile');
-  //  Route::get('{id}/saved_posts', 'UserController@saved_posts');
 });
 
 
