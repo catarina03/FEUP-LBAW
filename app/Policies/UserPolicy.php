@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\AuthenticatedUser;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,5 +37,10 @@ class UserPolicy
         if(!(Auth::check() && Auth::user()->id == $id)) return 1;
         if($id == $following_id) return 2;
         return  0;
+    }
+
+    public static function systemManager(){
+        // only system managers
+        return Auth::check() && Auth::user()->isSM();
     }
 }

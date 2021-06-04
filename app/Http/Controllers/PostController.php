@@ -194,8 +194,8 @@ class PostController extends Controller
 
         //Get date and thumbnail path
         $date = date("F j, Y", strtotime($post['created_at']));
-        //$thumbnail = "/storage/images/posts/".$post->thumbnail;
-        $thumbnail = Storage::get('images/posts/'.$post->thumbnail);
+        $thumbnail = "/storage/images/posts/".$post->thumbnail;
+        //$thumbnail = Storage::get('images/posts/'.$post->thumbnail);
         $report = Report::where("user_reporting",$user_id)->where("post_reported",$post->id)->get()->count();
         $post->reported = false;
         if($report>0)
@@ -243,8 +243,8 @@ class PostController extends Controller
         WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
 
         //Get date and thumbnail path
-        //$thumbnail = "/storage/images/posts/".$post->thumbnail;
-        $thumbnail = Storage::get('images/posts/'.$post->thumbnail);
+        $thumbnail = "/storage/images/posts/".$post->thumbnail;
+       // $thumbnail = Storage::get('images/posts/'.$post->thumbnail);
 
         return view('pages.editpost', ['needsFilter' => 0, 'post'=>$post, 'tags'=>$tags, 'thumbnail'=>$thumbnail] ); //['post'=> $post]
     }
