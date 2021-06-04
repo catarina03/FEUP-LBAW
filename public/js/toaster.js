@@ -4,3 +4,10 @@ function show_toaster(text){
     toaster_basic_node.getElementsByClassName("toast-body")[0].innerText = text;
     toaster_basic_obj.show();
 }
+
+// shows all pending notifications (can come right from the server)
+const toastElList = [].slice.call(document.querySelectorAll('.toast-generic-php'))
+const toastList = toastElList.map(function (toastEl) {
+    return new bootstrap.Toast(toastEl)
+})
+toastList.forEach((toast) => toast.show())

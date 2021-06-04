@@ -64,12 +64,14 @@ function LoadMoreVisibility(isV){
 
 function EmptyCommentsVisibility(isV){
     let j = document.getElementById("empty-comments");
+    if(j){
     if(isV)
         j.setAttribute("hidden",isV);
     else
         j.removeAttribute("hidden");
-}
 
+    }
+}
 
 function displayEditElements(container,hide){
     let drop = container.getElementsByClassName("dropdown")[0];

@@ -23,27 +23,21 @@
             @auth
                 <div class="form-check mt-4">
                     <input class="form-check-input" type="checkbox"
-                           @if($user->show_people_i_follow)
-                           checked
-                           @endif
-                            id="checkPeople"
+                            id="checkPeople"  value="" name="checkPeople"
                            style="cursor:pointer;">
                     <label class="form-check-label" style="margin-left: 10px;" for="checkPeople">
                         Only people I follow
                     </label>
                 </div>
                 <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox"
-                        @if($user->show_tags_i_follow)
-                            checked
-                        @endif
+                    <input class="form-check-input" type="checkbox" value="" name="checkTags"
                         id="checkTags" style="cursor:pointer;">
                     <label class="form-check-label" style="margin-left: 10px;" for="checkTags">
                         Only tags I follow
                     </label>
                 </div>
                 <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" value="" id="checkMyPosts" style="cursor:pointer;">
+                    <input class="form-check-input" type="checkbox" value="" id="checkMyPosts" name="checkMyPosts" style="cursor:pointer;">
                     <label class="form-check-label" style="margin-left: 10px;" for="checkMyPosts">
                         Only my posts
                     </label>
@@ -62,7 +56,7 @@
     </div>
     <div>
         <div class ="d-none go-top-scroll" style="position: fixed">
-            <button class="d-flex btn mx-auto p-0 btn-lg" style="float:right;outline:none; box-shadow: none;" id="go-top"><i
+            <button class="d-flex btn mx-auto p-0 btn-lg" style="float:right;outline:none; box-shadow: none;" id="go-top"><i title="arrow up"
                     class="fas fa-arrow-circle-up m-0 p-0 fa-lg"></i></button>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card h-100" onclick="window.location = '/post/{{$post->id}}'">
 
-            <img src="{{URL::asset($post->thumbnail)}}" height="200" class="card-img-top" alt="...">
+            <img src="{{URL::asset($post->thumbnail)}}" height="200" class="card-img-top" alt="thumbnail">
             <div>
                 @if($post->category == "tv show")
                     <a class="black-link categoryTag" href="/category/TVShow">
@@ -18,15 +18,15 @@
                     <div class="savePost" data-toggle="tooltip" data-placement="bottom" title="Save/Unsave Post">
                         <span class="save_post_id homepage" hidden>{{$post->id}}</span>
                         @if($post->saved == false)
-                            <i class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
+                            <i title="Unsave" class="bi bi-bookmark-plus-fill" style="font-size:3em;"></i>
                         @else
-                            <i class="bi bi-bookmark-check-fill" style="font-size:3em;"></i>
+                            <i title="Save" class="bi bi-bookmark-check-fill" style="font-size:3em;"></i>
                         @endif
                     </div>
                 @else
                     <div class="my-post-page-settings btn-group dropdown">
                         <a class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false" title="Options">
-                            <i class="fas fa-cog" style="font-size:3em;"></i>
+                            <i title="Settings" class="fas fa-cog" style="font-size:3em;"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <a class="dropdown-item" href="{{ url("editpost/".$post->id) }}">Edit Post</a>
@@ -40,8 +40,8 @@
                 @endif
             @endauth
             <div class="infoPosts">
-                <i class="far fa-eye"></i><span>{{$post->n_views}}</span>
-                <i class="far fa-thumbs-up"></i><span>{{$post->likes}}</span>
+                <i title="Views" class="far fa-eye"></i><span>{{$post->n_views}}</span>
+                <i title="Likes" class="far fa-thumbs-up"></i><span>{{$post->likes}}</span>
             </div>
             <div class="card-body">
                 <h5 class="card-title">{{$post->title}}

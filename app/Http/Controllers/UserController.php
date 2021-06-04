@@ -162,7 +162,7 @@ class UserController extends Controller
             if ($user->delete())
                 return response()->json('/');
         }
-
+        session()->push('toaster', 'Account deleted successfully!');
         return response()->json('user/' . $id . '/settings#delete-account', 400);
     }
 
@@ -193,35 +193,57 @@ class UserController extends Controller
     /**
      * Follow a user
      *
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param
+     * @return
      */
-    public function follow($id)
+    public function follow(Request $request,$id)
     {
+        $res = UserPolicy::follow($id);
+        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
         $user = Auth::user();
-        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
-        $followed_user = AuthenticatedUser::find($id);
-        if ($followed_user != null)
-            $user->follow_user()->create(['followed_user' => $id, 'following_user' => $user->id]);
+        $follow = $request['id'];
+        if(!is_int($follow)) return "error: invalid user to follow";
+
+        $followed_user = AuthenticatedUser::find($request['id']);
+        if ($followed_user != null){
+            DB::table("follow_user")->insert([
+                'following_user' => $followed_user,
+                'followed_user' => $user->id
+            ]);
+            return 'SUCCESS';
+        }
+        return 'error';
     }
 
 
     /**
      * Unfollow a user
      *
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param
+     * @return
      */
-    public function unfollow($id)
+    public function unfollow(Request $request, $id)
     {
+        $res = UserPolicy::follow($id);
+        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
         $user = Auth::user();
-        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
-        $followed_user = AuthenticatedUser::find($id);
-        if ($followed_user != null)
-            $user->follow_user()->delete(['followed_user' => $id, 'following_user' => $user->id]);
+        $followed_user = $request['id'];
+        if(!is_int($followed_user)) return 'error: invalid user to unfollow';
+        if ($followed_user != null){
+            $f = DB::table("follow_user")
+                ->where('following_user', $followed_user)
+                ->where('followed_user', $user->id);
 
+            if($f != null){
+                if($f->delete()) return 'SUCCESS';
+            }
+            else return "Not following the user with id".$followed_user;
+        }
+        return "error";
     }
 
     /**
@@ -232,11 +254,14 @@ class UserController extends Controller
      */
     public function block(Request $request, $id)
     {
-        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
+        $res = UserPolicy::block($id);
+        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
+
         $user = Auth::user();
 
         $block = $request["id"];
-        if(!is_int($block)) return 'error';
+        if(!is_int($block)) return 'error: invalid user to block';
 
         $blocked_user = AuthenticatedUser::find($request->blocking);
         if ($blocked_user != null){
@@ -257,7 +282,9 @@ class UserController extends Controller
      */
     public function unblock(Request $request, $id)
     {
-        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
+        $res = UserPolicy::block($id);
+        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
         $user = Auth::user();
 
         $blocked_user = $request["id"];
@@ -269,6 +296,7 @@ class UserController extends Controller
             if($b != null){
                 if($b->delete()) return 'SUCCESS';
             }
+            else return "Not blocking the user with id".$blocked_user;
         }
         return 'error';
     }
@@ -390,7 +418,7 @@ class UserController extends Controller
             $user->email = trim($request->input('email'));
 
         $user->save();
-
+        session()->push('toaster', 'Account edited successfully!');
         return redirect('user/' . $id . '/settings#edit-account')->with('success-account', 'Account updated successfully!');
 
     }
@@ -427,6 +455,7 @@ class UserController extends Controller
             $user->linkedin = trim($request->input('linkedin'));
 
         $user->save();
+        session()->push('toaster', 'Social networks edited successfully!');
         return redirect('user/' . $id . '/settings#edit-social-networks')->with('success-social-networks', 'Social networks updated successfully!');
     }
 
@@ -487,7 +516,7 @@ class UserController extends Controller
         foreach ($to_add as $t) {
             DB::table('follow_tag')->insert(['user_id' => $user->id, 'tag_id' => $t]);
         }
-
+        session()->push('toaster', 'Preferences edited successfully!');
         return redirect('user/' . $id . '/settings#edit-preferences')->with('success-preferences', 'Preferences updated successfully!');
     }
 
@@ -515,6 +544,7 @@ class UserController extends Controller
 
         AuthenticatedUser::find($user->id)->update(['password' => Hash::make($request->newPassword)]);
 
+        session()->push('toaster', 'Password changed successfully!');
         return redirect('user/' . $id . '/settings#change-password')->with('success-password', 'Password changed successfully!');
     }
 
