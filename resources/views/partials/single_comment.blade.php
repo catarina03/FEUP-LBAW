@@ -36,13 +36,13 @@
                             <div class="row">
                                 <div class="d-flex comment_interactions align-items-end">
                                      @if($comment->liked == 2)
-                                        <h3 class="post-page-comment-interactions p-0 m-0 d-flex align-items-end">
+                                        <h3 class="post-page-comment-interactions p-0 m-0 d-flex align-items-end" data-toggle="tooltip" data-placement="bottom" title="Liked comment">
                                             <span class="up  ">{{$comment->likes}}</span>
                                              <button class="post-page-comment-thumbs-up-button btn d-flex align-items-end" style="padding-bottom:0;">
                                                 <i class="fas fa-thumbs-up "></i></button>
                                         </h3>
                                     @else
-                                        <h3 class="post-page-comment-interactions p-0 m-0 d-flex align-items-end">
+                                        <h3 class="post-page-comment-interactions p-0 m-0 d-flex align-items-end" data-toggle="tooltip" data-placement="bottom" title="Like comment">
                                             <span class="up "
                                             >{{$comment->likes}}</span>
                                              <button class="post-page-comment-thumbs-up-button btn d-flex align-items-end" style="padding-bottom:0;">
@@ -50,7 +50,7 @@
                                         </h3>
                                     @endif
                                     @if($comment->liked == 1)
-                                        <h3 class="post-page-comment-interactions p-0 m-0 d-flex align-items-end"><span
+                                        <h3 class="post-page-comment-interactions p-0 m-0 d-flex align-items-end" data-toggle="tooltip" data-placement="bottom" title="Disliked comment"><span
                                                 class="down"
                                             >{{$comment->dislikes}}</span>
                                             <button class="post-page-comment-thumbs-down-button btn m-0 mr-2 d-flex align-items-end" style="padding-bottom:0;">
@@ -58,7 +58,7 @@
                                             </button>
                                         </h3>
                                     @else
-                                        <h3 class="post-page-comment-interactions p-0 m-0 d-flex align-items-end"><span
+                                        <h3 class="post-page-comment-interactions p-0 m-0 d-flex align-items-end" data-toggle="tooltip" data-placement="bottom" title="Dislike comment"><span
                                                 class="down"
                                             >{{$comment->dislikes}}</span>
                                             <button class="post-page-comment-thumbs-down-button btn m-0 mr-2 d-flex align-items-end" style="padding-bottom:0;">
@@ -103,13 +103,13 @@
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
                             <div class="row px-0 mx-0 reply_textarea_container">
-                                <div class="col-lg-11 col-md-12 col-sm-12 d-flex mx-0 px-0 reply_textarea">
+                                <div class="col-xl-11 col-lg-12 col-md-12 col-sm-12 d-flex mx-0 px-0 reply_textarea">
                                         <textarea
                                             class="container form-control post-page-add-comment-reply w-100 add-thread"
                                          rows="1"
                                             placeholder="Answer in thread"></textarea>
                                 </div>
-                                <div class="col-lg-1 col-md-12 col-sm-12 d-flex mx-0 px-0">
+                                <div class="col-xl-1 col-lg-12 col-md-12 col-sm-12 d-flex mx-0 px-0 justify-content-end">
                                     <div class="thread_comment_id" hidden>{{$comment->id}}</div>
                                     <button
                                         class="post-page-comment-button btn-sm btn-block m-0 mt-0 add_thread_button" data-toggle="tooltip" data-placement="bottom" title="Add comment">Comment</button>

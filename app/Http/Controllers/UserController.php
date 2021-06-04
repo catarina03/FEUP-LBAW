@@ -79,7 +79,7 @@ class UserController extends Controller
         foreach($posts as $post){
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
-            $post->thumbnail = "/storage/images/posts/".$post->thumbnail;
+            $post->thumbnail = "/images/posts/".$post->thumbnail;
             $nLikes += $post->likes;
         }
 
@@ -90,7 +90,7 @@ class UserController extends Controller
 
         $user = AuthenticatedUser::find($id);
 
-        $photo = 'storage/images/users/'.Auth::user()->profile_photo;
+        $photo = '/images/users/'.Auth::user()->profile_photo;
 
         return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts, 'isFollowing'=>$isFollowing, 'isBlocked' => $isBlocked] );
     }
@@ -353,7 +353,7 @@ class UserController extends Controller
         };
 
         $user = Auth::user();
-        $photo = 'storage/images/users/' . $imageName;
+        $photo = 'images/users/' . $imageName;
         return response()->json(array('profilephoto' => view('partials.profilephoto', ['photo' => $photo, 'user'=> $user])->render()));
     }
 
@@ -570,7 +570,7 @@ class UserController extends Controller
 
     public function getPostsInfo($posts){
         foreach($posts as $post){
-            $post->thumbnail = "/storage/images/posts/".$post->thumbnail;
+            $post->thumbnail = "/images/posts/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
             $post->isOwner = false;

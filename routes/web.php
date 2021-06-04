@@ -119,6 +119,5 @@ Route::post('recover_password', 'ForgotPassword@recover');
 
 
 // Storage utils
-Route::get('/foo', function () {
-    Artisan::call('storage:link');
-});
+Route::get('post/{id}/image', 'PostController@get_post_image')->name('retrieve_image');
+
