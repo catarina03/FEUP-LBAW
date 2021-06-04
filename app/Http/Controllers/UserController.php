@@ -115,25 +115,6 @@ class UserController extends Controller
     }
 
     /**
-     * Search users by username
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function searchRoles(Request $request): JsonResponse
-    {
-        $search = $request->input("query");
-
-        if (!empty($search))
-            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->where('username', 'LIKE', $search . '%')->orderBy("authenticated_user_type")->paginate(20);
-        else
-            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
-
-        $view = view('partials.roles_list', ['roles' => $roles])->render();
-        return response()->json($view);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param Request $request
@@ -166,13 +147,38 @@ class UserController extends Controller
 
     public function roles()
     {
+        if(!UserPolicy::systemManager()) return view('pages.nopermission');
+
         $roles = DB::table("authenticated_user")->select("id", "name", "username", "profile_photo", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
 
         return view('pages.manage_roles', ['needsFilter' => 0, 'roles' => $roles]);
     }
 
+    /**
+     * Search users by username
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function searchRoles(Request $request): JsonResponse
+    {
+        if(!UserPolicy::systemManager()) return response()->json(view('pages.nopermission')->render(),400);
+        $search = $request->input("query");
+
+        if (!empty($search))
+            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->where('username', 'LIKE', $search . '%')->orderBy("authenticated_user_type")->paginate(20);
+        else
+            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
+
+        $view = view('partials.roles_list', ['roles' => $roles])->render();
+        return response()->json($view);
+    }
+
+
     public function editRole(Request $request, $user_id)
     {
+        if(!UserPolicy::systemManager()) return response()->json(view('pages.nopermission')->render(),400);
+
         $validatedData = Validator::make($request->all(), [
             'new_role' => 'required'
         ]);
