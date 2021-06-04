@@ -16,7 +16,7 @@
 
             <div class="row justify-content-center pb-5 report-motives">
                 <select class="form-select report_content_select" aria-label="Select a report motive" style="width: 80%">
-                    <option selected disabled>Select a motive</option>
+                    <option selected value="">Select a motive</option>
                     <option value="fake">Fake News</option>
                     <option value="innapropriate">Innapropriate content</option>
                     <option value="abusive">Abusive content</option>
