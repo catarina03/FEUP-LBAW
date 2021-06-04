@@ -44,8 +44,8 @@
 <script>
     tinymce.init({
         selector: '#mytextarea',
-        plugins: ["advlist autolink lists link image charmap print preview anchor"],
-        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        menubar: false,
+        toolbar: "undo redo | bold italic underline | removeformat",
         resize: false
     });
 </script>

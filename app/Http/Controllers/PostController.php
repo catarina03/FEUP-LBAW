@@ -92,23 +92,8 @@ class PostController extends Controller
             $post = new Post();
             $post->title = $request->input('title');
 
-
-
-
-           // Storage::delete('public/images/posts/'. $post->thumbnail);
             $imageName = $request->file('thumbnail')->store('public/images/posts');
             $imageName = basename($imageName, "");
-
-        /*
-            if(Post::where('id', $post->id)->update(['thumbnail' => $imageName]) != 1){
-                return response('Photo update error', 500);
-            };
-
-
-
-            $imageName = $request->file('thumbnail')->getClientOriginalName() . "_" . date('Y-m-d H:i:s') . rand(0,999) . "." .  $request->file('thumbnail')->getClientOriginalExtension();
-            $request->thumbnail->move(public_path('images/posts'), $imageName);
-        */
 
             $post->thumbnail = $imageName;
             $post->content = $request->input('content');
@@ -314,26 +299,6 @@ class PostController extends Controller
             if($post != null){
                 $post->title = $request->input('title');
 
-
-/*
-
-                $authenticatedUser = AuthenticatedUser::find(Auth::user()->id);
-                Storage::delete('public/images/posts/'. $post->thumbnail);
-                $imageName = $request->file('avatar')->store('public/images/users');
-                $imageName = basename($imageName, "");
-*/
-/*
-                if(AuthenticatedUser::where('id', $authenticatedUser->id)->update(['profile_photo' => $imageName]) != 1){
-                    return response('Photo update error', 500);
-                };
-
-                $user = Auth::user();
-                $photo = 'storage/images/users/' . $imageName;
-*/
-
-
-
-
                 if($request->file('thumbnail') != null){
                     Storage::delete('public/images/posts/'. $post->thumbnail);
                     $imageName = $request->file('thumbnail')->store('public/images/posts');
@@ -341,9 +306,6 @@ class PostController extends Controller
                     if(Post::where('id', $post->id)->update(['thumbnail' => $imageName]) != 1){
                         return response('Photo update error', 500);
                     }
-                    //$imageName = $request->file('thumbnail')->getClientOriginalName() . "_" . date('Y-m-d H:i:s') . rand(0,999) . "." .  $request->file('thumbnail')->getClientOriginalExtension();
-                   // $request->thumbnail->move(public_path('images/posts'), $imageName);
-                   // $post->thumbnail = $imageName;
                 }
 
                 $post->content = $request->input('content');
