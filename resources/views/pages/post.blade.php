@@ -24,7 +24,7 @@
 
                 @auth
                     @if($isOwner)
-                        <div class="my-post-page-settings btn-group dropdown">
+                        <div class="my-post-page-settings btn-group dropdown" data-toggle="tooltip" data-placement="right" title="Actions">
                             <a class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-cog" style="font-size:3em;"></i>
                             </a>
@@ -229,7 +229,13 @@
                         @include("partials.comments",["comments"=>$metadata['comments']])
                     @else
                         <div class="container-fluid d-flex col-10 justify-content-center mt-3">
-                    <p><b id="empty-comments">There are no comments in this post. Be the first to leave your thoughts!</b></p>
+                    <p><b id="empty-comments">
+                    @if($user_id!=$post->id)
+                    There are no comments in this post. Be the first to leave your thoughts!
+                    @else
+                    There are no comments in your post.
+                    @endif
+                    </b></p>
                 </div>
                     @endif
             </div>

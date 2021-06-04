@@ -42,7 +42,6 @@ Route::prefix('api/comment/')->group(function(){ //comment api
     Route::get('{comment_id}/edit','CommentController@editForm');
     Route::put('{comment_id}/edit','CommentController@editAction');
     Route::delete('{comment_id}','CommentController@destroyComment');
-    Route::get('{comment_id}/thread','CommentController@threads');
     Route::post('{comment_id}/add_comment','CommentController@addThread');
     Route::post('{comment_id}/vote','CommentController@addVote');
     Route::put('{comment_id}/vote', 'CommentController@editVote');
