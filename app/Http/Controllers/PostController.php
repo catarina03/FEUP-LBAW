@@ -534,7 +534,6 @@ class PostController extends Controller
     }
 
     public function get_post_image($id){
-        //return "oiiiiiiii";
         $post = Post::find($id);
         $thumbnail_path = storage_path('app/public/images/posts/'.$post->thumbnail);
         $p = 'public/images/posts/'.$post->thumbnail;

@@ -158,7 +158,7 @@
                                     <div class="postsCards row justify-content-start mt-3">
                                         @each('partials.card', $posts, 'post')
                                     </div>
-                                    @include('partials.pagination')
+                                  {{--  @include('partials.pagination') --}}
 
                                 </div>
                             </div>

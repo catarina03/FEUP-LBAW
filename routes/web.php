@@ -118,5 +118,5 @@ Route::post('recover_password', 'ForgotPassword@recover');
 
 
 // Storage utils
-Route::get('post/{id}/image', 'PostController@get_post_image')->name('retrieve_image');
+Route::get('post/{id}/image', 'PostController@get_post_image')->name('retrieve_post_image');
 
