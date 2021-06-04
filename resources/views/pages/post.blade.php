@@ -23,7 +23,7 @@
 
                 @auth
                     @if($isOwner)
-                        <div class="my-post-page-settings btn-group dropdown">
+                        <div class="my-post-page-settings btn-group dropdown" data-toggle="tooltip" data-placement="right" title="Actions">
                             <a class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-cog" style="font-size:3em;"></i>
                             </a>
@@ -57,7 +57,7 @@
                 <div class="container-fluid d-flex col-10 justify-content-left mt-3">
                     <h1 class="post-page-post-title">{{$post->is_spoiler?"[SPOILER]":""}}{{$post->title}}</h1>
                 </div>
-
+                
                 <div class="row px-0 justify-content-between">
                     <div class="container-fluid d-flex px-0 col-4 mt-1">
                         <h2 class="post-page-post-author-date">by <a
@@ -184,7 +184,6 @@
                                 @endif
                             @endauth
                             @guest
-                                <p>TO DO: add links to login/register</p>
                             @endguest
                         </div>
 
@@ -206,8 +205,12 @@
                     @if(!$isOwner) {{-- User is not the owner of the post --}}
                     <div class="row justify-content-center px-4 mx-1">
                         <div class="col-10 mx-0 px-0" style="border-radius:5px;">
+                        
+                        <form>
                             <div class="row m-0 p-0">
+                            
                                 <div class="d-flex mx-0 px-0">
+                                    <label hidden for="add-comment">Enter a comment:</label>
                                     <textarea class="container form-control post-page-add-comment w-100 add-comment"
                                               id="add-comment" rows="2" placeholder="Join the discussion"></textarea>
                                 </div>
@@ -219,6 +222,7 @@
                                     </button>
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                     @endif
@@ -228,7 +232,13 @@
                         @include("partials.comments",["comments"=>$metadata['comments']])
                     @else
                         <div class="container-fluid d-flex col-10 justify-content-center mt-3">
-                    <p><b id="empty-comments">There are no comments in this post. Be the first to leave your thoughts!</b></p>
+                    <p><b id="empty-comments">
+                    @if($user_id!=$post->id)
+                    There are no comments in this post. Be the first to leave your thoughts!
+                    @else
+                    There are no comments in your post.
+                    @endif
+                    </b></p>
                 </div>
                     @endif
             </div>

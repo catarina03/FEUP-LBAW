@@ -22,7 +22,6 @@ function follow_tag(tag_id,element){
     followFlag = element.classList.contains("fas");
     var getUrl = window.location;
     var request = new XMLHttpRequest();
-    console.log( getUrl .protocol + "//" + getUrl.host + "/" + "api/tag/" + tag_id + "/follow");
     request.open(followFlag?"delete":"post", getUrl .protocol + "//" + getUrl.host + "/" + "api/tag/" + tag_id + "/follow", true);
     request.onload = function (){
         if(request.responseText == "SUCCESS"){
@@ -38,7 +37,7 @@ function follow_tag(tag_id,element){
             }
         }
         else{
-            alert("Error following or unfollowing tag");
+            show_generic_warning("An internal error happened processing yout follow tag request!");
         }
     };
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
