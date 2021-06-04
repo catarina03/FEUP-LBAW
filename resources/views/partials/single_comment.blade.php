@@ -1,5 +1,6 @@
 @if(!($comment->comment_id==null?false:true))
-    <span class="comment-container">
+    <div class="comment-container">
+                <div hidden class="owner_id">{{$comment->user_id}}</div>
                 <div class="row justify-content-center px-4 mx-1">
                     <div class="col-10 post-page-comment pt-3 pb-2 px-3 mt-2 comment_box">
                     <div class="row px-2 py-0">
@@ -7,19 +8,19 @@
                             <h3 class="post-page-comment-body m-0 comment_content">{!! nl2br(e($comment->content)) !!}</h3>
                         </div>
                         <div class="col-auto p-0 m-0 ms-auto">
-                            <span class="comment_id COMMENTID" hidden>{{$comment->id}}</span>
+                            <div class="comment_id COMMENTID" hidden>{{$comment->id}}</div>
 
                             @if($comment->isOwner)
                                 <div class="dropdown">
-                                <a class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
+                                <b class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-cog ms-auto"></i>
-                                </a>
+                                </b>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item edit_comment_button">Edit Comment</a>
+                                    <b class="dropdown-item edit_comment_button">Edit Comment</b>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <a class="dropdown-item delete_comment_button">Delete Comment</a>
+                                    <b class="dropdown-item delete_comment_button">Delete Comment</b>
                                 </ul>
                             </div>
                             @endif
@@ -34,7 +35,6 @@
                         <div class="col-lg-auto col-12 px-0 py-1 m-0 align-self-end ms-auto">
                             <div class="row">
                                 <div class="d-flex comment_interactions align-items-end">
-
                                      @if($comment->liked == 2)
                                         <h3 class="post-page-comment-interactions p-0 m-0 d-flex align-items-end">
                                             <span class="up  ">{{$comment->likes}}</span>
@@ -69,12 +69,12 @@
                                     @auth
                                         @if(!$comment->isOwner)
                                             @if(!$comment->reported)
-                                                <span hidden class="content_id comment_content">{{$comment->id}}</span>
+                                                <div hidden class="content_id comment_content">{{$comment->id}}</div>
                                                 <i title="Report comment"
                                                    class="far fa-flag my-0 post-page-report-comment pe-3 report_action"
                                                    data-bs-toggle="modal" data-bs-target="#report"></i>
                                             @else
-                                                <span hidden class="content_id comment_content">{{$comment->id}}</span>
+                                                <div hidden class="content_id comment_content">{{$comment->id}}</div>
                                                 <i title="Report comment"
                                                    class="fas fa-flag my-0 post-page-report-comment pe-3 reported report_action"
                                                     style="color:darkred;"></i>
@@ -92,11 +92,11 @@
                     </div>
                 </div>
             </div>
-            <span class="comment_thread_section d-none">
+            <div class="comment_thread_section d-none">
                 @foreach($comment->threads as $thread)
-                    @include('partials.single_comment',["comment"=>$thread,'user_id'=>$user_id])
+                    @include('partials.single_comment',["comment"=>$thread])
                 @endforeach
-            </span>
+            </div>
             @auth
             <div class="row justify-content-center px-4 mx-1 thread-reply d-none">
                 <div class="col-10 mx-0 px-0">
@@ -110,7 +110,7 @@
                                             placeholder="Answer in thread"></textarea>
                                 </div>
                                 <div class="col-lg-1 col-md-12 col-sm-12 d-flex mx-0 px-0">
-                                    <span class="thread_comment_id" hidden>{{$comment->id}}</span>
+                                    <div class="thread_comment_id" hidden>{{$comment->id}}</div>
                                     <button
                                         class="post-page-comment-button btn-sm btn-block m-0 mt-0 add_thread_button">Comment</button>
                                 </div>
@@ -121,9 +121,10 @@
                 </div>
             </div>
         @endauth
-    </span>
+    </div>
 @else
-    <span class="thread-container">
+    <div class="thread-container">
+                    <div hidden class="owner_id">{{$comment->user_id}}</div>
                     <div class="row justify-content-center px-4 mx-1 thread-section">
                         <div class="col-10 mx-0 px-0 comment_box">
                             <div class="row justify-content-end comment-replies mx-0 px-0">
@@ -134,21 +135,21 @@
                                         </div>
 
                                         <div class="col-auto p-0 m-0 ms-auto">
-                                            <span class="comment_id THREADID" hidden>{{$comment->id}}</span>
-                                            <span class="parent_id" hidden>{{$comment->comment_id}}</span>
+                                            <div class="comment_id THREADID" hidden>{{$comment->id}}</div>
+                                            <div class="parent_id" hidden>{{$comment->comment_id}}</div>
                                             @if($comment->isOwner)
 
                                                 <div class="dropdown">
-                                                <a class="btn fa-cog-icon" style="font-size:30%;"
+                                                <b class="btn fa-cog-icon" style="font-size:30%;"
                                                    data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>
-                                                </a>
+                                                </b>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item edit_comment_button">Edit Comment</a>
+                                                    <b class="dropdown-item edit_comment_button">Edit Comment</b>
                                                     <li>
                                                         <hr class="dropdown-divider">
                                                     </li>
-                                                    <a class="dropdown-item delete_comment_button">Delete Comment</a>
+                                                    <b class="dropdown-item delete_comment_button">Delete Comment</b>
                                                 </ul>
                                             </div>
                                             @endif
@@ -196,7 +197,7 @@
                                                     @auth
                                                         @if(!$comment->isOwner)
                                                         <div class="d-flex align-items-end">
-                                                            <span hidden class="content_id comment_content">{{$comment->id}}</span>
+                                                            <div hidden class="content_id comment_content">{{$comment->id}}</div>
                                                             @if(!$comment->reported)
                                                                 <i title="Report comment"
                                                                 class="far fa-flag my-0 post-page-report-comment pe-3 report_action"
@@ -205,7 +206,7 @@
 
                                                                 <i title="Reported comment"
                                                                 class="fas fa-flag my-0 post-page-report-comment pe-3 reported report_action"
-                                                                    style="color:crimson;"></i>
+                                                                    style="color:darkred;"></i>
                                                             @endif
                                                         </div>
                                                         @endif
@@ -218,5 +219,5 @@
                             </div>
                         </div>
                     </div>
-             </span>
+             </div>
 @endif

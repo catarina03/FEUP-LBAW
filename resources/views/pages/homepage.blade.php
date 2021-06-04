@@ -2,10 +2,7 @@
 
 
 @section('content')
-    @if(Session::has("deleted_post"))
     <script type="text/javascript" src="{{ URL::asset('js/toaster.js') }}" defer></script>
-    <script type="text/javascript" src="{{ URL::asset('js/deleted_post_toaster.js') }}" defer></script>
-    @endif
     <script type="text/javascript" src="{{ URL::asset('js/utils.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/homepage.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/save_post.js') }}" defer></script>
@@ -47,8 +44,9 @@
         </div>
         @include('partials.filterBox')
     </div>
-@if(Session::has("deleted_post"))
 @include('partials.postpage_toaster')
+@if(Session::has("deleted_post"))
+<script type="text/javascript" src="{{ URL::asset('js/deleted_post_toaster.js') }}" defer></script>
 {{Session::forget("deleted_post")}}
 @endif
 @endsection
