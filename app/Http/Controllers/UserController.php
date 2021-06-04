@@ -534,6 +534,47 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @return
+     */
+    public function load_more_profile($id, $page)
+    {
+        return "oiiiiiiiiiiiI";
+       // $page = $request->input('page');
+        $p = Post::where('user_id', $id)->orderBy('created_at', 'DESC')->paginate(6,'*', 'page', $page);
+
+        //$p = Post::getPostsOrdered("new", $page);
+        $posts = getPostsInfo($p['results']);
+        $n_posts = $p['n_posts'];
+        return response()->json(array('posts'=>view('partials.allcards', ['posts' => $posts])->render(), 'n_posts'=> $n_posts));
+    }
+
+
+
+
+    public function getPostsInfo($posts){
+        foreach($posts as $post){
+            $post->thumbnail = "/images/posts/".$post->thumbnail;
+            $post->author = AuthenticatedUser::find($post->user_id)->name;
+            $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
+            $post->isOwner = false;
+            if(Auth::check()){
+                $post->isOwner = Auth::user()->id == $post->user_id;
+                $save = DB::table("saves")->where("post_id",$post->id)->where("user_id", Auth::user()->id)->get()->count();
+                if($save > 0) $post->saved = true;
+                else $post->saved = false;
+            }
+            else $post->saved = false;
+        }
+        return $posts;
+    }
+
+
+
+
+
+    /**
+     * Update the specified resource in storage.
+     *
      * @param Request $request
      * @return
      */

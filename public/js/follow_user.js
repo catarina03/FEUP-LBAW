@@ -1,12 +1,17 @@
 let isFollowing = document.querySelector("input.is-following")
+
 let followButton = document.querySelector("button.follow") || document.querySelector("button.unfollow")
 
 if(parseInt(isFollowing.value) === 0){
     let followButton = document.querySelector("button.follow")
-    followButton.addEventListener("click", followRequest);
+    if(followButton != null){
+        followButton.addEventListener("click", followRequest);
+    }
 } else {
     let followButton = document.querySelector("button.unfollow")
-    followButton.addEventListener("click", unfollowRequest)
+    if(followButton != null){
+        followButton.addEventListener("click", unfollowRequest)
+    }
 }
 
 function followRequest(e){
