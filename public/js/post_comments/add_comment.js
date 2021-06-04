@@ -13,7 +13,6 @@ if(add!=null){
 function addComment(){
     var getUrl = window.location;
     var request = new XMLHttpRequest();
-    console.log( getUrl .protocol + "//" + getUrl.host + "/" + "api/post/" + id.innerText + "/add_comment");
     request.open('post', getUrl .protocol + "//" + getUrl.host + "/" + "api/post/" + id.innerText + "/add_comment", true);
     request.onload = function (){
         result = "";

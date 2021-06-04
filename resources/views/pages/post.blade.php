@@ -58,7 +58,7 @@
                 <div class="container-fluid d-flex col-10 justify-content-left mt-3">
                     <h1 class="post-page-post-title">{{$post->is_spoiler?"[SPOILER]":""}}{{$post->title}}</h1>
                 </div>
-
+                
                 <div class="row px-0 justify-content-between">
                     <div class="container-fluid d-flex px-0 col-4 mt-1">
                         <h2 class="post-page-post-author-date">by <a
@@ -185,7 +185,6 @@
                                 @endif
                             @endauth
                             @guest
-                                <p>TO DO: add links to login/register</p>
                             @endguest
                         </div>
 

@@ -31,16 +31,6 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -75,42 +65,11 @@ class CommentController extends Controller
                 ]);
                 return HelperController::single_commentAsHtml($cid, Auth::user()->id);
             }
+            else{
+                return response()->setStatusCode(403);
+            }
         }
-        return response()->json(['status' => "Error encountered when adding commment!"])->setStatusCode(400);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Comment $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\Comment $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Comment $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        //
+        return response()->json(['status' => "Error encountered when adding commment!"])->setStatusCode(401);
     }
 
     /**
@@ -156,8 +115,10 @@ class CommentController extends Controller
                     return response()->json(["comment_view" => HelperController::single_commentAsHtml($comment_id, Auth::user()->id)->render()])->setStatusCode(200);
                 return response()->setStatusCode(400);
             }
+            else
+                return response()->setStatusCode(403);
         }
-        return response()->setStatusCode(400);
+        return response()->setStatusCode(401);
     }
 
 
@@ -172,11 +133,6 @@ class CommentController extends Controller
             }
         }
         return "FAIL";
-    }
-
-    public function threads(Request $request, $comment_id)
-    {
-        $threads = DB::table('comment')->where('comment_id', $comment_id)->select('id', 'content', 'comment_date', 'user_id', 'post_id', 'comment_id')->get();
     }
 
     public function addThread(Request $request, $comment_id)
@@ -208,8 +164,10 @@ class CommentController extends Controller
                 ]);
                 return HelperController::single_commentAsHtml($cid, Auth::user()->id);
             }
+            else
+                return response()->setStatusCode(403);
         }
-        return response()->setStatusCode(400);
+        return response()->setStatusCode(401);
 
     }
 
@@ -220,15 +178,19 @@ class CommentController extends Controller
         ]);
 
         $comment = Comment::find($comment_id);
-        if ($comment != null && Auth::check() && Auth::user()->id != $comment->user_id) {
-            DB::table('report')->insert([
-                'motive' => $validatedData['motive'],
-                'user_reporting' => Auth::user()->id,
-                'comment_reported' => $comment_id
-            ]);
-            return response()->json(['status' => "Comment reported!"])->setStatusCode(200);
+        if(Auth::check()){
+            if ($comment != null && Auth::user()->id != $comment->user_id) {
+                DB::table('report')->insert([
+                    'motive' => $validatedData['motive'],
+                    'user_reporting' => Auth::user()->id,
+                    'comment_reported' => $comment_id
+                ]);
+                return response()->json(['status' => "Comment reported!"])->setStatusCode(200);
+            }
+            else
+                return response()->setStatusCode(403);
         }
-        return response()->json(['status' => "Error encountered when reporting post!"])->setStatusCode(404);
+        return response()->setStatusCode(401);
     }
 
     public function addVote(Request $request, $id)
@@ -287,10 +249,5 @@ class CommentController extends Controller
 
         return response()->json('Error', 400);
     }
-
-
-
-    /*Auxiliar functions*/
-
 
 }

@@ -428,20 +428,24 @@ class PostController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator->errors())->withInput();
+            return response()->json($validator->errors())->setStatusCode(400);;
         }
         $post = Post::find($post_id);
-        if(($post != null) && Auth::check() && (Auth::user()->id != $post->user_id)){
-            $report = new Report();
-            $report->timestamps = false;
-            $report->motive = $request->input('motive');
-            $report->user_reporting = Auth::user()->id;
-            $report->post_reported = $post->id;
-            $report->save();
+        if(Auth::check()){
+            if(($post != null) && (Auth::user()->id != $post->user_id)){
+                $report = new Report();
+                $report->timestamps = false;
+                $report->motive = $request->input('motive');
+                $report->user_reporting = Auth::user()->id;
+                $report->post_reported = $post->id;
+                $report->save();
 
-            return response()->json(['status' => "Post reported!"])->setStatusCode(200);
+                return response()->json(['status' => "Post reported!"])->setStatusCode(200);
+            }
+            else
+                return response()-setStatusCode(403);
         }
-        else return response()->json(['status' => "Error encountered when trying to report post!"])->setStatusCode(404);
+        else return response()->setStatusCode(401);
 
 
     }
@@ -450,7 +454,7 @@ class PostController extends Controller
 
         $route = \Route::current();
         if(!is_numeric($route->parameter('id')))
-            return '';
+            return response()->setStatusCode(404);;
         if(Auth::check()){
             $post = Post::find($id);
             if(Auth::user()->id != $post->user_id){
@@ -462,8 +466,10 @@ class PostController extends Controller
                     return 'SUCCESS';
                 }
             }
+            else
+                return response()->setStatusCode(403);
         }
-        return '';
+        return response()->setStatusCode(401);
     }
 
     public function deleteSave($id){
@@ -479,7 +485,7 @@ class PostController extends Controller
                     return 'SUCCESS';
             }
         }
-        return 'A';
+        return response()->setStatusCode(401);
     }
 
     public function loadMore(Request $request, $post_id,$page){

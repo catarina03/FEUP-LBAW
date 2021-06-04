@@ -26,7 +26,6 @@ function addThread(comment_id,content){
     var getUrl = window.location;
     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
     var request = new XMLHttpRequest();
-    console.log(getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id +"/add_comment");
     request.open('post', getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id +"/add_comment", true);
     request.onload = function (){
         result = "";

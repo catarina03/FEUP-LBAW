@@ -22,7 +22,6 @@ function deleteComment(comment_id,container){
     var getUrl = window.location;
     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
     var request = new XMLHttpRequest();
-    console.log(getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id.innerText);
     request.open('delete', getUrl .protocol + "//" + getUrl.host + "/api/" + "comment/"+comment_id.innerText, true);
     request.onload = function (){
         result = "";

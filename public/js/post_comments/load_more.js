@@ -13,7 +13,7 @@ function loadMore(){
     var getUrl = window.location;
     var request = new XMLHttpRequest();
     let comment_section = document.getElementById("comment-section");
-    console.log( getUrl .protocol + "//" + getUrl.host + "/" + "api/post/" + id.innerText + "/load_more/" + (currentPage+1));
+
     request.open('get', getUrl .protocol + "//" + getUrl.host + "/" + "api/post/" + id.innerText + "/load_more/" + (currentPage+1), true);
     request.onload = function (){
         result = "";
@@ -56,10 +56,8 @@ for(let i =0;i<teste.length;i++){
 function removeDup(){
     let new_comments = document.getElementsByClassName("COMMENTID");
         let seen = [];
-        console.log(new_comments.length);
         for(let i =0;i<new_comments.length;i++){
             let actual = new_comments[i];
-            console.log(":" + actual.innerText + ":");
             if(seen.includes(actual.innerText)){
                 //console.log("REMOVED");
                 actual.parentNode.parentNode.parentNode.parentNode.remove();

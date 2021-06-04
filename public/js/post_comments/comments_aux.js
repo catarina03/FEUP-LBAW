@@ -2,12 +2,8 @@ function updateThreadsNo(ammount,comment_id){
     let container = document.getElementsByClassName("comment-container");
     for(let i =0;i<container.length;i++){
         let cur_id = container[i].getElementsByClassName("thread_comment_id")[0].innerText;
-        console.log(cur_id + " " + comment_id);
-        
         if(cur_id == comment_id){
-
             let thread_count = container[i].getElementsByClassName("post-page-comment-interactions")[2];
-            console.log(thread_count.innerText);
             thread_count.innerHTML= parseInt(thread_count.innerText) + ammount + " <i class=\"far fa-comments\"></i>";
             return true;
         }
@@ -30,7 +26,6 @@ function openThreads(comment_id){
     let container = document.getElementsByClassName("comment-container");
     for(let i =0;i<container.length;i++){
         let cur_id = container[i].getElementsByClassName("thread_comment_id")[0].innerText;
-        console.log(cur_id + " " + comment_id);
         
         if(cur_id == comment_id){
             container[i].getElementsByClassName("thread-reply")[0].removeAttribute("hidden");
@@ -111,9 +106,9 @@ function remove_error_messages(){
 
 function addCommentError(target){
     var div = document.createElement('div');
-    div.innerHTML =("<span class=\"comment_error_message\" style=\"color:black\">Empty comments and lengths greater than 1000 are not accepted!</span>").trim();
+    div.innerHTML =("<span class=\"comment_error_message text-danger\">Empty comments and lengths greater than 1000 are not accepted!</span>").trim();
     errorNode = div.firstChild;
-    target.parentNode.parentNode.insertBefore(errorNode,target.parentNode);
+    target.parentNode.parentNode.insertBefore(errorNode,target.parentNode.nextSibling);
 
 
 }

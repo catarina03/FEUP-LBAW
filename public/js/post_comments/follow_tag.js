@@ -22,7 +22,6 @@ function follow_tag(tag_id,element){
     followFlag = element.classList.contains("fas");
     var getUrl = window.location;
     var request = new XMLHttpRequest();
-    console.log( getUrl .protocol + "//" + getUrl.host + "/" + "api/tag/" + tag_id + "/follow");
     request.open(followFlag?"delete":"post", getUrl .protocol + "//" + getUrl.host + "/" + "api/tag/" + tag_id + "/follow", true);
     request.onload = function (){
         if(request.responseText == "SUCCESS"){
