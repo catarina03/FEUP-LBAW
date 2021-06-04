@@ -1,7 +1,7 @@
 <div class="col-12 col-md-6 col-xl-4 mb-4">
         <div class="card h-100" onclick="window.location = '/post/{{$post->id}}'">
 
-            <img src="{{URL::asset($post->thumbnail)}}" height="200" class="card-img-top" alt="thumbnail">
+            <img src="{{route('retrieve_image', ['id'=>$post->id])}}" height="200" class="card-img-top" alt="thumbnail">
             <div>
                 @if($post->category == "tv show")
                     <a class="black-link categoryTag" href="/category/TVShow">
