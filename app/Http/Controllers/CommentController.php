@@ -139,15 +139,10 @@ class CommentController extends Controller
     }
 
     public function editAction(Request $request, $comment_id)
-    {//update?
+    {
         $validator = Validator::make($request->all(),
             [
                 'content' => ['required', 'string', 'max:1000', 'min:1']
-            ],
-            [
-                'content.required' => 'Content cannot be empty',
-                'content.max' => 'Content is too big, max of 1000 characters',
-                'content.min' => 'Content is too short, min of 1 characters'
             ]);
 
         if ($validator->fails())

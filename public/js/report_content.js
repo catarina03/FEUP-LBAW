@@ -119,7 +119,7 @@ function hideReportButtonFromPost(){
     let icon = post_button.getElementsByClassName("report_post_icon")[0];
     icon.classList.remove("far");
     icon.classList.add("fas");
-    post_button.setAttribute("style","color:crimson;");
+    post_button.setAttribute("style","color:darkred;");
     post_button.classList.add("reported");
     post_button.removeAttribute("data-bs-toggle");
     post_button.removeAttribute("data-bs-target");

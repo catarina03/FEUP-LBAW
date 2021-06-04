@@ -193,7 +193,7 @@ class PostController extends Controller
         $USER = AuthenticatedUser::find($post->user_id);
 
         //Get comment count,likes and dislikes
-        $comments = HelperController::getPostComments($id,"desc",1);
+        $comments = HelperController::getPostComments($id,"desc",0);
 
         $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
@@ -222,7 +222,7 @@ class PostController extends Controller
         $metadata = ['comment_count'=>$comment_count,'author'=>$USER,'views' => $post->n_views,
                      'likes' => $likes, 'dislikes' => $dislikes, 'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments, 'liked' => $liked,"isSaved"=>$isSaved];
 
-
+        $post->content = HelperController::remove_onclick_from_text($post->content);
         return view('pages.post', ['isOwner' => $isOwner, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id]);
 
     }
@@ -395,7 +395,8 @@ class PostController extends Controller
             $post = Post::find($post_id);
             //if(Auth::user()->id == $post->user_id){
                 if($post != null){
-                    $this->authorize("delete",$post);
+                    if(!PostPolicy::delete_post_policy(Auth::user(),$post))
+                        return 'post/' + $post_id;
                     if ($post->delete()) {
                         session()->push('toaster', 'Post deleted successfully!');
                         return ''; //dar return da view da homepage
