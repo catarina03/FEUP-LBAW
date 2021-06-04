@@ -68,7 +68,7 @@ Route::post('/api/user/{id}/follow', 'UserController@follow');
 Route::delete('/api/user/{id}/follow', 'UserController@unfollow');
 Route::post('/api/user/{id}/block', 'UserController@block');
 Route::delete('/api/user/{id}/block', 'UserController@unblock');
-Route::put('/api/user/{id}/edit_photo', 'UserController@update_photo');
+Route::post('api/user/{id}/edit_photo', 'UserController@update_photo');
 
 // Post
 Route::get('addpost', 'PostController@create');

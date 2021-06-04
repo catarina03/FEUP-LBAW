@@ -1,4 +1,4 @@
-<div class="row justify-content-center">
+<div class="row justify-content-center profile-bio-div">
     <div class="card col-lg-6 col-sm-12 d-flex justify-content-center bio">
         <div class="row position-relative" data-toggle="tooltip" data-placement="bottom"
              title="Edit Bio">
@@ -22,9 +22,10 @@
         @method('PUT')
         <div class="row position-relative d-none  justify-content-center bio-form">
             <div class="form-group row col-lg-6 justify-content-end">
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="bio-content"
-                                                          style="resize:none;"></textarea>
-                <button type="submit"
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="bio-content"
+                          style="resize:none;"></textarea>
+                <input class="current-user-id" name="current-user-id" value="{{Auth::user()->id}}" hidden>
+                <button
                         class="btn btn-sm col-2 me-2 mt-1 my-profile-features save-button save-form">Save</button>
             </div>
         </div>

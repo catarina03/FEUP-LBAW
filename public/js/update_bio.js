@@ -2,6 +2,7 @@
 
 let pencil = document.querySelector(".my-profile .pencil-icon");
 let save = document.querySelector(".my-profile .save-form");
+let userId = document.querySelector("input.current-user-id")
 /*
 let photo = document.querySelector("img.rounded-circle.profile-avatar");
 let user_id = document.querySelector("input.page-info.user_id");
@@ -29,19 +30,33 @@ if (pencil != null) {
 }
 
 if (save != null) {
-  save.addEventListener("submit", function () {
+    save.addEventListener("click", function (e) {
+        e.preventDefault();
+        var getUrl = window.location;
+        let bio_text = document.querySelector("textarea.form-control");
+        console.log("api/user/"+userId.value+"/edit_bio")
+        makeRequest("put", getUrl.protocol + "//" + getUrl.host  + "/api/user/"+userId.value+"/edit_bio", update_bio, bio_text.value)
+    });
+}
+
+function update_bio(status, requestStatus, response){
     let bio = document.querySelector(".my-profile .bio");
     let bio_form = document.querySelector(".my-profile .bio-form");
     if (bio_form.classList.contains("d-flex")) {
-      bio_form.classList.remove("d-flex");
-      bio_form.classList.add("d-none");
+        bio_form.classList.remove("d-flex");
+        bio_form.classList.add("d-none");
     }
-
     if (bio.classList.contains("d-none")) {
-      bio.classList.remove("d-none");
-      bio.classList.add("d-flex");
+        bio.classList.remove("d-none");
+        bio.classList.add("d-flex");
     }
-  });
+    let bioContent = JSON.parse(response)
+
+
+    let oldBioPartial = document.querySelector('div.profile-bio-div');
+    oldBioPartial.replaceWith(   bioContent['profilebio']);
+   // bio.value =
+    //Add event listeners
 }
 
 /*

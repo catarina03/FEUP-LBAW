@@ -10,16 +10,19 @@ use App\Rules\MatchOldPassword;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Types\Integer;
 use Illuminate\Support\Facades\Hash;
 use App\Policies\UserPolicy;
+use function MongoDB\BSON\toJSON;
 
 class UserController extends Controller
 {
@@ -87,7 +90,7 @@ class UserController extends Controller
 
         $user = AuthenticatedUser::find($id);
 
-        $photo = 'images/users/'.Auth::user()->profile_photo;
+        $photo = 'storage/images/users/'.Auth::user()->profile_photo;
 
         if($user_id == $id){
             return view('pages.myprofile', ['user' => 'visitor', 'needsFilter' => 0, 'user_id'=>$user_id, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
@@ -261,47 +264,29 @@ class UserController extends Controller
      * @param AuthenticatedUser $authenticatedUser
      * @return Response
      */
-    public function update_photo(Request $request, AuthenticatedUser $authenticatedUser)
+    //public function update_photo(Request $request, AuthenticatedUser $authenticatedUser)
+    public function update_photo(Request $request)
     {
-       // dd($request);
-
-        $user = Auth::check();
         if(!Auth::check()) return;
-
-        //
         $validator = Validator::make($request->all(),
         [
             'avatar' => ['required', 'image', 'mimes:jpeg,jpg,png,gif']
-        ],
-        [
-            'avatar.required' => 'A photo must be uploaded',
-            'avatar.image' => 'A photo must be a jpeg,jpg,png,gif image'
         ]);
         if ($validator->fails()) {
-            return redirect(url()->previous())->withErrors($validator)->withInput();
+            return response('Invalid file', 415);
         }
 
-        // function assumes that the image is valid and verification was done before
-        $date = date('Y-m-d H:i:s');
-        $imageSalt = random_bytes(5);
-        $imageName = hash("sha256", $request->file('avatar')->getFilename() . $date . $authenticatedUser->id . $imageSalt) . "." . $request->file('avatar')->getClientOriginalExtension();
+        $authenticatedUser = AuthenticatedUser::find(Auth::user()->id);
+        Storage::delete('public/images/users/'. $authenticatedUser->profile_photo);
+        $imageName = $request->file('avatar')->store('public/images/users');
+        $imageName = basename($imageName, "");
 
-        if($authenticatedUser->profile_photo != null && $authenticatedUser->profile_photo != 'abs.jpeg'){
-            unlink(public_path('images/users/'.$authenticatedUser->profile_photo));
-        } //TODO: TEST SEM O FILE ABS.JPEG
+        if(AuthenticatedUser::where('id', $authenticatedUser->id)->update(['profile_photo' => $imageName]) != 1){
+            return response('Photo update error', 500);
+        };
 
-
-        $request->avatar->move(public_path('images/users'), $imageName);
-
-        AuthenticatedUser::where('id', $authenticatedUser->id)->update(['profile_photo'=>$imageName]);
-        $authenticatedUser->profile_photo = $imageName;
-
-      //  dd(response()->json(view('partials.profilephoto', ['photo'=>$imageName]), 200));
-
-        //return $authenticatedUser->profile_photo;
-        //return $response->ok();
-        return view('partials.profilephoto', ['photo'=>$imageName]);
-        //return response()->json('ok', 200);
+        $photo = 'storage/images/users/' . $imageName;
+        return response()->json(array('profilephoto' => view('partials.profilephoto', ['photo' => $photo])->render()));
     }
 
 
@@ -338,7 +323,7 @@ class UserController extends Controller
         AuthenticatedUser::where('id', $authenticatedUser->id)->update(['bio'=>$request->input('bio-content')]);
 
         //return $authenticatedUser->profile_photo;
-        return view('partials.profilebio', ['user'=>$authenticatedUser]);
+        return response()->json(array('profilebio'=>view('partials.profilebio', ['user'=>$authenticatedUser])->render()));
     }
 
 

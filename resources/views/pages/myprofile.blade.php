@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <script type="text/javascript" src="{{ URL::asset('js/myprofile.js') }}" defer></script>
+    <script type="text/javascript" src="{{ URL::asset('js/update_bio.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/update_profile_photo.js') }}" defer></script>
     <div class="container-fluid my-profile justify-content-center mx-auto">
         <div class="row justify-content-start profile my-profile g-0">
@@ -18,7 +18,7 @@
                 <div class="row justify-content-center">
                     <div class="col-12 d-block">
                         <div class="row justify-content-center d-flex my-3 position-relative ">
-                            <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center ">
+                            <div class="col-lg-3 col-md-3 col-sm-4 mb-3 d-flex justify-content-center profile-photo-div">
                                 @include('partials.profilephoto')
                             </div>
                         </div>

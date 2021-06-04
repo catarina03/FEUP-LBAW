@@ -131,7 +131,7 @@
                                 <label for="select2-tags" class="col-12 col-form-label">Tags</label>
                                 <select id="select2-tags" class="form-control bg-white rounded border" multiple="multiple" name="tags[]" >
                                     @foreach($tags as $tag)
-                                        <option value="{{$tag->id}}" selected>{{$tag->name}}</option>
+                                        <option value="{{$tag->name}}" selected>{{$tag->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('tags')

@@ -383,7 +383,8 @@ class PostController extends Controller
 
             DB::commit();
 
-            return redirect()->action([PostController::class, 'show'],['id'=>$post_id]);
+           // return redirect()->action([PostController::class, 'show'],['id'=>$post_id]);
+            return redirect('post/'.$post->id);
 
         } catch(QueryException $err){
             DB::rollBack();
