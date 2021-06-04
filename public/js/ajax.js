@@ -5,13 +5,11 @@ function encodeForAjax(data) {
     }).join('&')
 }
 
-
-
 function makeRequest(method, url, f, params){
     const request = new XMLHttpRequest()
     request.onreadystatechange = function(){
         if(request.readyState === XMLHttpRequest.DONE){
-            f.call(request.status, request.status, request.responseText)
+            f.call(request.status, request.status, request.response)
         }
     }
     request.open(method, url, true)

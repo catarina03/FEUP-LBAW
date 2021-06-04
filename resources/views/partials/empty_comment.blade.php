@@ -1,18 +1,17 @@
-<div class="modal fade confirm-modal" id="confirm" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
+<div class="modal fade confirm-modal" id="empty_comment_warning" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered justify-content-center d-flex">
         <div class="modal-content">
             <div class="modal-header" style="background-color:#307371; color:white;">
-                <h5 class="modal-title ">Confirm</h5>
+                <h5 class="modal-title ">&nbsp</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
             <div class="modal-body ms-3">
-                <p>Are you sure you want to do this?</p>
+                <p class="modal_message">Empty comments are not allowed!</p>
             </div>
             <div class="row justify-content-end d-flex me-3 mb-3 ">
-                <button type="button" class="col-2 btn btn-secondary me-4" data-bs-dismiss="modal">No</button>
-                <button type="submit" class="col-2 btn custom-button confirm-yes" data-bs-dismiss="modal">Yes</button>
+                <button type="submit" class="col-2 btn custom-button" data-bs-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>

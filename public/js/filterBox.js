@@ -1,6 +1,9 @@
 let homepageFilter = document.querySelector('.homepage .filterButton')
 let categoryFilter = document.querySelector('.category .filterButton')
 let advancedSearchFilter = document.querySelector('.advanced_search .filterButton')
+let homepageSearch = document.querySelector('.homepage #search')
+let categorySearch = document.querySelector('.category #search')
+let advancedSearchSearch = document.querySelector('.advanced_search #search')
 let advancedSearch = document.querySelector('.advanced_search')
 let loadMoreAdv = document.querySelector('.advanced_search .pagination-loadmore .loadmore')
 let searchElem = document.querySelector('#search')
@@ -33,17 +36,43 @@ window.addEventListener('scroll', function(){
 })
 
 
+if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', (e) => addLoadMoreEventListener(e))
 
+function addLoadMoreEventListener(e){
+    e.preventDefault()
+    getFilters()
+    filters['page'] = pageAdv
+    makeRequest('GET', '/api/search?'+ encodeForAjax(filters), loadHandlerAdvancedSearch, null)
+}
 
-
-
-if(loadMoreAdv != null) loadMoreAdv.addEventListener('click', (e) => loadHandlerAdvancedSearch(e))
-
-if(homepageFilter != null) homepageFilter.addEventListener('click', (e) => redirectWithFilters(e))
+if(homepageFilter != null) homepageFilter.addEventListener('click', (e) => redirectWithFilters(e) )
+if(homepageSearch != null){
+    homepageSearch.addEventListener("keyup", (e) => {
+        if(e.keyCode === 13){
+            redirectWithFilters(e)
+        }
+    })
+}
 
 if(categoryFilter != null) categoryFilter.addEventListener('click', (e) => redirectWithFilters(e))
 
+if(categorySearch != null){
+    categorySearch.addEventListener("keyup", (e) => {
+        if(e.keyCode === 13){
+            redirectWithFilters(e)
+        }
+    })
+}
+
 if(advancedSearch != null) document.addEventListener('DOMContentLoaded', onLoad)
+
+if(advancedSearchSearch != null){
+    advancedSearchSearch.addEventListener("keyup", (e) => {
+        if(e.keyCode === 13){
+            redirectWithFilters(e)
+        }
+    })
+}
 
 if(advancedSearchFilter != null){
     advancedSearchFilter.addEventListener('click', (e) => {
@@ -78,9 +107,9 @@ function getFilters(){
     let peopleFollow = false
     let tagFollow = false
     let myPosts = false
-    if(peopleFollowCheck != null) peopleFollow = peopleFollowCheck.checked
-    if(tagFollowCheck != null) tagFollow = tagFollowCheck.checked
-    if(myPostsCheck != null) myPosts = myPostsCheck.checked
+    if(peopleFollowCheck !== null) peopleFollow = peopleFollowCheck.checked
+    if(tagFollowCheck !== null) tagFollow = tagFollowCheck.checked
+    if(myPostsCheck !== null) myPosts = myPostsCheck.checked
 
 
     if(search !== "") filters['search'] = search
@@ -102,10 +131,11 @@ function getFilters(){
 
 function redirectWithFilters(e){
     e.preventDefault()
-    addSpinner()
+    let s = addSpinner()
     startDateElem = document.querySelector('input[type="date"]#startDate1')
     endDateElem = document.querySelector('input[type="date"]#endDate1')
     if(getFilters() !== -1) window.location = ("/search/filters?" + encodeForAjax(filters))
+    removeSpinner(s)
 }
 
 function updateAdvancedSearch(adding, posts, number_res, page){
@@ -148,30 +178,22 @@ function onLoad(){
     if(myPostsCheck != null) url.searchParams.get('myPosts') === "true"? myPostsCheck.checked = true: myPostsCheck.checked = false
 }
 
-function loadHandlerAdvancedSearch(e){
-    e.preventDefault()
+function loadHandlerAdvancedSearch(status, responseText){
     let pag = document.querySelector('.advanced_search .pagination-loadmore')
     let parent = pag.parentNode
     parent.removeChild(pag)
 
     let outerDiv = addLoadSpinner(parent)
-    getFilters()
-    filters['page'] = pageAdv
-    const filterRequest = new XMLHttpRequest()
-    filterRequest.onreadystatechange = function(){
-        if(filterRequest.readyState === XMLHttpRequest.DONE){
-            if(filterRequest.status === 200){
-                parent.removeChild(outerDiv)
-                const response = JSON.parse(filterRequest.responseText)
-                updateAdvancedSearch(true, response['posts'], response['number_res'], pageAdv)
-                pageAdv++;
-                addSavePostListeners();
-            }
-            else alert('Error fetching api: ' +  filterRequest.status)
-        }
+    if(status === 200){
+        parent.removeChild(outerDiv)
+        const response = JSON.parse(responseText)
+        updateAdvancedSearch(true, response['posts'], response['number_res'], pageAdv)
+        pageAdv++;
+        addSavePostListeners();
     }
-    filterRequest.open('GET', '/api/search?'+ encodeForAjax(filters), true)
-    filterRequest.send()
+    else alert('Error fetching api: ' +  status)
+
+
 }
 
 
@@ -183,6 +205,16 @@ function addSpinner(){
     let s = document.querySelector('.search-spinner')
     s.classList.remove('d-none')
     s.classList.add('d-inline-block')
+}
+
+function removeSpinner(){
+    let searchspan = document.querySelector('.search-span')
+    searchspan.classList.remove('d-none')
+    searchspan.classList.add('d-inline-block')
+
+    let s = document.querySelector('.search-spinner')
+    s.classList.remove('d-inline-block')
+    s.classList.add('d-none')
 }
 
 function checkDates(startDate, endDate){
@@ -223,6 +255,6 @@ function addLoadMoreAdvancedSearch(postDiv){
     postDiv.appendChild(pagination)
     let loadMore = document.querySelector('.advanced_search .pagination-loadmore .loadmore')
     if(loadMore != null){
-        loadMore.addEventListener('click', loadHandlerAdvancedSearch)
+        loadMore.addEventListener('click',  (e) => addLoadMoreEventListener(e))
     }
 }

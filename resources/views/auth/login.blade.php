@@ -46,8 +46,8 @@
                             href="#"><img src="https://img.icons8.com/color/16/000000/google-logo.png"
                                           class="me-2 " style="width:10%; height:8%;"> Log in with Google</a></div>
                 </div>
-                <div class="row mb-2 justify-content-center text-white">
-                    Forgot your password?
+                <div class="row mb-2 justify-content-center">
+                    <a class="black-link" href="forgot_password"> Forgot your password? </a>
                 </div>
                 <div class="row g-0 mb-4 mt-1 d-flex justify-content-center">
                     <p class="text-center text-white ">Don't have an account yet? <a href="#"

@@ -1,10 +1,12 @@
 let currentPage = 1;
 
 let confirm = document.getElementById("confirm");
-let yes = confirm.getElementsByClassName("confirm_button")[0];
+let yes = confirm.getElementsByClassName("confirm-yes")[0];
 let id = document.getElementById("post_ID");
 let token = document.getElementsByName("csrf-token")[0];
-yes.addEventListener("click",delete_post);
+
+if(yes)
+    yes.addEventListener("click",delete_post);
 
 function delete_post(){
     const getUrl = window.location;
@@ -18,3 +20,5 @@ function delete_post(){
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
     request.send();
 }
+
+

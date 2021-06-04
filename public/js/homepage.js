@@ -20,7 +20,7 @@ if(t != null && loadT != null){
         displaySpinner(true, "top")
         setActive(t, hot, new_filter)
         disableLinks(hot, new_filter)
-        makeRequest(filtering)
+        makeRequest('GET', 'api/home/'+ filtering, receiveRequestHandler, null)
     });
 }
 
@@ -31,7 +31,7 @@ if(hot != null && loadH != null){
         displaySpinner(true, "hot")
         setActive(hot,t,new_filter)
         disableLinks(t, new_filter)
-        makeRequest(filtering)
+        makeRequest('GET', 'api/home/'+ filtering, receiveRequestHandler, null)
     });
 }
 
@@ -42,8 +42,7 @@ if(new_filter != null && loadN != null){
         displaySpinner(true, "new")
         setActive(new_filter, t, hot)
         disableLinks(t, hot)
-        makeRequest(filtering)
-
+        makeRequest('GET', 'api/home/'+ filtering, receiveRequestHandler, null)
     });
 }
 
@@ -53,24 +52,20 @@ function setActive(current, firstNotActive, secondNotActive){
     if(secondNotActive.classList.contains('active')) secondNotActive.classList.remove('active')
 }
 
-function makeRequest(type){
-    const postsRequest = new XMLHttpRequest()
-    postsRequest.onreadystatechange = function(){
-        if(postsRequest.readyState === XMLHttpRequest.DONE){
-            if(postsRequest.status === 200){
-                const response = JSON.parse(postsRequest.responseText)
-                let posts = response['posts']
-                let n_posts = response['n_posts']
-                window.scrollTo(0,0)
-                updateHomepage(posts, n_posts)
-                displaySpinner(false, type)
-                enableLinks(type)
-            }
-            else alert('Error fetching api: ' +  postsRequest.status)
-        }
+function receiveRequestHandler(status, responseText){
+    if(status === 200){
+        const response = JSON.parse(responseText)
+        let posts = response['posts']
+        let n_posts = response['n_posts']
+        window.scrollTo(0,0)
+        updateHomepage(posts, n_posts)
+        displaySpinner(false, filtering)
+        enableLinks(filtering)
     }
-    postsRequest.open('GET', 'api/home/'+ type, true)
-    postsRequest.send()
+    else if(status === 400){
+        alert('Error fetching api: ' +  status)
+        //add error page
+    }
 }
 
 function updateHomepage(posts, n_posts){

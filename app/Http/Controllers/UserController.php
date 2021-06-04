@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AuthenticatedUser;
 use App\Models\Post;
 use App\Models\Tag;
-use App\Policies\PostPolicy;
+use App\Policies\UserPolicy;
 use App\Rules\MatchOldPassword;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -21,8 +21,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Types\Integer;
 use Illuminate\Support\Facades\Hash;
-use App\Policies\UserPolicy;
-use function MongoDB\BSON\toJSON;
 
 class UserController extends Controller
 {
@@ -107,11 +105,11 @@ class UserController extends Controller
 
 
         $tag_ids = DB::table('follow_tag')->where('user_id', $id)->pluck('tag_id');
-        if(empty($tag_ids)) $tags = null;
-        else if(is_object($tag_ids)) $tags = Tag::whereIn('id', $tag_ids)->get();
+        if (empty($tag_ids)) $tags = null;
+        else if (is_object($tag_ids)) $tags = Tag::whereIn('id', $tag_ids)->get();
         else $tags = Tag::where('id', $tag_ids)->get();
 
-        return view('pages.settings', ['needsFilter' => 0, 'user'=>Auth::user(), 'tags'=>$tags]);
+        return view('pages.settings', ['needsFilter' => 0, 'user' => Auth::user(), 'tags' => $tags]);
 
     }
 
@@ -126,7 +124,7 @@ class UserController extends Controller
         $search = $request->input("query");
 
         if (!empty($search))
-            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->where('username', 'LIKE', $search.'%')->orderBy("authenticated_user_type")->paginate(20);
+            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->where('username', 'LIKE', $search . '%')->orderBy("authenticated_user_type")->paginate(20);
         else
             $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
 
@@ -152,16 +150,17 @@ class UserController extends Controller
      * @param Integer $id
      * @return
      */
-    public function destroy($id){
-        if(!UserPolicy::edit($id))  return response()->json( 'user/'.$id.'/settings#delete-account', 400);
+    public function destroy($id)
+    {
+        if (!UserPolicy::edit($id)) return response()->json('user/' . $id . '/settings#delete-account', 400);
 
         $user = AuthenticatedUser::find($id);
-        if($user != null){
+        if ($user != null) {
             if ($user->delete())
-                return response()->json( '/');
+                return response()->json('/');
         }
-
-        return response()->json( 'user/'.$id.'/settings#delete-account', 400);
+        session()->push('toaster', 'Account deleted successfully!');
+        return response()->json('user/' . $id . '/settings#delete-account', 400);
     }
 
     public function roles()
@@ -183,73 +182,121 @@ class UserController extends Controller
             $view = view('partials.roles_types', ['type' => $type])->render();
             return response()->json($view);
         }
+
+        $type = DB::table("authenticated_user")->where("id", $user_id)->pluck('authenticated_user_type');
+        return response()->json(view('partials.roles_types', ['type' => $type])->render());
     }
 
     /**
      * Follow a user
      *
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param
+     * @return
      */
-    public function follow($id)
+    public function follow(Request $request,$id)
     {
+        $res = UserPolicy::follow($id);
+        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
         $user = Auth::user();
-        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
-        $followed_user = AuthenticatedUser::find($id);
-        if ($followed_user != null)
-            $user->follow_user()->create(['followed_user' => $id, 'following_user' => $user->id]);
+        $follow = $request['id'];
+        if(!is_int($follow)) return "error: invalid user to follow";
+
+        $followed_user = AuthenticatedUser::find($request['id']);
+        if ($followed_user != null){
+            DB::table("follow_user")->insert([
+                'following_user' => $followed_user,
+                'followed_user' => $user->id
+            ]);
+            return 'SUCCESS';
+        }
+        return 'error';
     }
 
 
     /**
      * Unfollow a user
      *
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param
+     * @return
      */
-    public function unfollow($id)
+    public function unfollow(Request $request, $id)
     {
+        $res = UserPolicy::follow($id);
+        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
         $user = Auth::user();
-        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
-        $followed_user = AuthenticatedUser::find($id);
-        if ($followed_user != null)
-            $user->follow_user()->delete(['followed_user' => $id, 'following_user' => $user->id]);
 
+        $followed_user = $request['id'];
+        if(!is_int($followed_user)) return 'error: invalid user to unfollow';
+        if ($followed_user != null){
+            $f = DB::table("follow_user")
+                ->where('following_user', $followed_user)
+                ->where('followed_user', $user->id);
+
+            if($f != null){
+                if($f->delete()) return 'SUCCESS';
+            }
+            else return "Not following the user with id".$followed_user;
+        }
+        return "error";
     }
 
     /**
      * Block a user
      *
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param
+     * @return
      */
-    public function block($id)
+    public function block(Request $request, $id)
     {
-        $user = Auth::user();
-        if (!Auth::check()) return; //mandar para login ou sem permissoes
+        $res = UserPolicy::block($id);
+        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
 
-        $blocked_user = AuthenticatedUser::find($id);
-        if ($blocked_user != null)
-            $user->block_user()->create(['blocked_user' => $id, 'blocking_user' => $user->id]);
+        $user = Auth::user();
+
+        $block = $request["id"];
+        if(!is_int($block)) return 'error: invalid user to block';
+
+        $blocked_user = AuthenticatedUser::find($request->blocking);
+        if ($blocked_user != null){
+            DB::table("block_user")->insert([
+                'blocked_user' => $blocked_user,
+                'blocking_user' => $user->id
+            ]);
+            return 'SUCCESS';
+        }
+        return 'error';
     }
 
     /**
      * Unblock a user
      *
-     * @param AuthenticatedUser $authenticatedUser
-     * @return Response
+     * @param
+     * @return
      */
-    public function unblock($id)
+    public function unblock(Request $request, $id)
     {
+        $res = UserPolicy::block($id);
+        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
         $user = Auth::user();
-        if (!Auth::check()) return; //mandar para login ou sem permissoes
 
-        $blocked_user = AuthenticatedUser::find($id);
-        if ($blocked_user != null)
-            $user->block_user()->delete(['blocked_user' => $id, 'blocking_user' => $user->id]);
-            $user->block_user()->delete(['blocked_user' => $id, 'blocking_user' => $user->id]);
+        $blocked_user = $request["id"];
+        if(!is_int($blocked_user)) return 'error';
+        if ($blocked_user != null){
+            $b = DB::table("block_user")
+                ->where('blocked_user', $blocked_user)
+                ->where('blocking_user', $user->id);
+            if($b != null){
+                if($b->delete()) return 'SUCCESS';
+            }
+            else return "Not blocking the user with id".$blocked_user;
+        }
+        return 'error';
     }
 
     /**
@@ -333,22 +380,22 @@ class UserController extends Controller
         $validator = Validator::make($request->all(),
             [
                 "name" => ["max:20", "filled"],
-                "username" => ["filled", "max:20",  Rule::unique('authenticated_user')->ignore($user->id)],
+                "username" => ["filled", "max:20", Rule::unique('authenticated_user')->ignore($user->id)],
                 "email" => ["filled", "email", "max:50", Rule::unique('authenticated_user')->ignore($user->id)],
             ]);
 
-        if ($validator->fails()) return redirect('user/'.$id.'/settings#edit-account')->withErrors($validator)->withInput();
+        if ($validator->fails()) return redirect('user/' . $id . '/settings#edit-account')->withErrors($validator)->withInput();
 
-       if($request->has('name') &&  trim($request->input('name')) !== $user->name)
-           $user->name = trim($request->input('name'));
-        if($request->has('username') &&  trim($request->input('username')) !== $user->username)
+        if ($request->has('name') && trim($request->input('name')) !== $user->name)
+            $user->name = trim($request->input('name'));
+        if ($request->has('username') && trim($request->input('username')) !== $user->username)
             $user->username = trim($request->input('username'));
-        if($request->has('email') &&  trim($request->input('email')) !== $user->email)
+        if ($request->has('email') && trim($request->input('email')) !== $user->email)
             $user->email = trim($request->input('email'));
 
         $user->save();
-
-        return redirect('user/'.$id.'/settings#edit-account')->with('success-account', 'Account updated successfully!');
+        session()->push('toaster', 'Account edited successfully!');
+        return redirect('user/' . $id . '/settings#edit-account')->with('success-account', 'Account updated successfully!');
 
     }
 
@@ -372,19 +419,20 @@ class UserController extends Controller
                 "linkedin" => ["present ", "max:100"]
             ]);
 
-        if ($validator->fails()) return redirect('user/'.$id.'/settings#edit-social-networks')->withErrors($validator)->withInput();
+        if ($validator->fails()) return redirect('user/' . $id . '/settings#edit-social-networks')->withErrors($validator)->withInput();
 
-        if($request->has('twitter') &&  trim($request->input('twitter')) !== $user->twitter)
+        if ($request->has('twitter') && trim($request->input('twitter')) !== $user->twitter)
             $user->twitter = trim($request->input('twitter'));
-        if($request->has('facebook') &&  trim($request->input('facebook')) !== $user->facebook)
+        if ($request->has('facebook') && trim($request->input('facebook')) !== $user->facebook)
             $user->facebook = trim($request->input('facebook'));
-        if($request->has('instagram') &&  trim($request->input('instagram')) !== $user->instagram)
+        if ($request->has('instagram') && trim($request->input('instagram')) !== $user->instagram)
             $user->instagram = trim($request->input('instagram'));
-        if($request->has('linkedin') &&  trim($request->input('linkedin')) !== $user->linkedin)
+        if ($request->has('linkedin') && trim($request->input('linkedin')) !== $user->linkedin)
             $user->linkedin = trim($request->input('linkedin'));
 
         $user->save();
-        return redirect('user/'.$id.'/settings#edit-social-networks')->with('success-social-networks', 'Social networks updated successfully!');
+        session()->push('toaster', 'Social networks edited successfully!');
+        return redirect('user/' . $id . '/settings#edit-social-networks')->with('success-social-networks', 'Social networks updated successfully!');
     }
 
 
@@ -406,47 +454,46 @@ class UserController extends Controller
                 "show_tags_i_follow" => ["boolean"]
             ]);
 
-        if ($validator->fails()) return redirect('user/'.$id.'/settings#edit-preferences')->withErrors($validator)->withInput();
+        if ($validator->fails()) return redirect('user/' . $id . '/settings#edit-preferences')->withErrors($validator)->withInput();
 
 
-        if($request->has('peopleFollow')) $user->show_people_i_follow = true;
+        if ($request->has('peopleFollow')) $user->show_people_i_follow = true;
         else $user->show_people_i_follow = false;
-        if($request->has('tagsFollow')) $user->show_tags_i_follow = true;
+        if ($request->has('tagsFollow')) $user->show_tags_i_follow = true;
         else $user->show_tags_i_follow = false;
 
         $user->save();
 
         $tags = [];
-        if($request->has('tags')){
-            foreach ($request->input('tags') as $a){
+        if ($request->has('tags')) {
+            foreach ($request->input('tags') as $a) {
                 array_push($tags, $a);
             }
         }
 
-        $to_delete = DB::table('follow_tag')->where('user_id',$user->id)->whereNotIn('tag_id', $tags)->pluck('tag_id');
-        if(!is_object($to_delete))  DB::table('follow_tag')->where('tag_id', $to_delete)->delete();
-        else{
-            foreach ($to_delete as $t){
+        $to_delete = DB::table('follow_tag')->where('user_id', $user->id)->whereNotIn('tag_id', $tags)->pluck('tag_id');
+        if (!is_object($to_delete)) DB::table('follow_tag')->where('tag_id', $to_delete)->delete();
+        else {
+            foreach ($to_delete as $t) {
                 DB::table('follow_tag')->where('tag_id', $t)->delete();
             }
         }
 
-        $existing = DB::table('follow_tag')->where('user_id',$user->id)->whereIn('tag_id', $tags)->pluck('tag_id');
+        $existing = DB::table('follow_tag')->where('user_id', $user->id)->whereIn('tag_id', $tags)->pluck('tag_id');
 
-        if(($existing != null) && is_array($existing->all())) $to_add = array_diff($tags, $existing->all());
-        else if ($existing){
+        if (($existing != null) && is_array($existing->all())) $to_add = array_diff($tags, $existing->all());
+        else if ($existing) {
             if (($key = array_search($existing, $tags)) !== false) {
                 unset($tags[$key]);
             }
             $to_add = $tags;
-        }
-        else $to_add = $tags;
+        } else $to_add = $tags;
 
-        foreach($to_add as $t){
+        foreach ($to_add as $t) {
             DB::table('follow_tag')->insert(['user_id' => $user->id, 'tag_id' => $t]);
         }
-
-        return redirect('user/'.$id.'/settings#edit-preferences')->with('success-preferences', 'Preferences updated successfully!');
+        session()->push('toaster', 'Preferences edited successfully!');
+        return redirect('user/' . $id . '/settings#edit-preferences')->with('success-preferences', 'Preferences updated successfully!');
     }
 
 
@@ -464,16 +511,17 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(),
             [
-                'currentPassword' => ['required', 'min:5', new MatchOldPassword],
-                'newPassword' => 'required|min:5',
+                'currentPassword' => ['required', 'min:6', new MatchOldPassword],
+                'newPassword' => 'required|min:6',
                 'confirmPassword' => 'required|same:newPassword',
             ]);
 
-        if ($validator->fails()) return redirect('user/'.$id.'/settings#change-password')->withErrors($validator);
+        if ($validator->fails()) return redirect('user/' . $id . '/settings#change-password')->withErrors($validator);
 
-        AuthenticatedUser::find($user->id)->update(['password'=> Hash::make($request->newPassword)]);
+        AuthenticatedUser::find($user->id)->update(['password' => Hash::make($request->newPassword)]);
 
-        return redirect('user/'.$id.'/settings#change-password')->with('success-password', 'Password changed successfully!');
+        session()->push('toaster', 'Password changed successfully!');
+        return redirect('user/' . $id . '/settings#change-password')->with('success-password', 'Password changed successfully!');
     }
 
 

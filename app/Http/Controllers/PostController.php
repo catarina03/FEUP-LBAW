@@ -182,7 +182,6 @@ class PostController extends Controller
             if($like === true) $liked = 2;
             else if($like === false) $liked = 1;
             else $liked = 0;
-
         }
         else
             $isOwner = false;
@@ -194,15 +193,7 @@ class PostController extends Controller
         $USER = AuthenticatedUser::find($post->user_id);
 
         //Get comment count,likes and dislikes
-        $comments = Comment::getPostComments($id,"desc",1);
-        $comments = Comment::checkReported($comments,$user_id);
-        foreach ($comments as $c){
-            $like = DB::table("vote_comment")->where("comment_id",$c->id)->where('user_id', $user_id)->value('like');
-            if($like === true) $liked = 2;
-            else if($like === false) $liked = 1;
-            else $liked = 0;
-            $c->liked = $liked;
-        }
+        $comments = HelperController::getPostComments($id,"desc",0);
 
         $comment_count = Comment::where('post_id',$id)->get()->count();
         $votes = DB::table("vote_post")->where("post_id",$id);
@@ -227,12 +218,11 @@ class PostController extends Controller
         if($report>0)
             $post->reported = true;
 
-
         //Generate metadata to send to view
         $metadata = ['comment_count'=>$comment_count,'author'=>$USER,'views' => $post->n_views,
                      'likes' => $likes, 'dislikes' => $dislikes, 'tags' => $tags,'date'=>$date,'thumbnail' => $thumbnail,'comments'=>$comments, 'liked' => $liked,"isSaved"=>$isSaved];
 
-
+        $post->content = HelperController::remove_onclick_from_text($post->content);
         return view('pages.post', ['isOwner' => $isOwner, 'needsFilter' => 0,'post' => $post,"metadata"=> $metadata,"user_id" => $user_id]);
 
     }
@@ -406,8 +396,10 @@ class PostController extends Controller
             $post = Post::find($post_id);
             //if(Auth::user()->id == $post->user_id){
                 if($post != null){
-                    $this->authorize("delete",$post);
+                    if(!PostPolicy::delete_post_policy(Auth::user(),$post))
+                        return 'post/' + $post_id;
                     if ($post->delete()) {
+                        session()->push('toaster', 'Post deleted successfully!');
                         return ''; //dar return da view da homepage
                     } else {
                         return 'post/' + $post_id; // dar return da view do post
@@ -491,50 +483,6 @@ class PostController extends Controller
         return 'A';
     }
 
-    public function popularComments(Request $request, $post_id){
-        $route = \Route::current();
-        if(!is_numeric($route->parameter('post_id')))
-            return "";
-        $post = Post::find($post_id);
-        if(!$post )
-            return "";
-        $user_id = 0;
-        if(Auth::check())
-            $user_id = Auth::user()->id;
-        $comments = Comment::getPostPopularComments($post_id);
-        return Comment::commentsAsHtml($comments,$user_id);
-
-
-    }
-
-    public function newerComments(Request $request, $post_id){
-        $route = \Route::current();
-        if(!is_numeric($route->parameter('post_id')))
-            return "";
-        $post = Post::find($post_id);
-        if(!$post )
-            return "";
-        $user_id = 0;
-        if(Auth::check())
-            $user_id = Auth::user()->id;
-        $comments = Comment::getPostComments($post_id,"desc",1);
-        return Comment::commentsAsHtml($comments,$user_id);
-    }
-
-    public function olderComments(Request $request, $post_id){
-        $route = \Route::current();
-        if(!is_numeric($route->parameter('post_id')))
-            return "";
-        $post = Post::find($post_id);
-        if(!$post )
-            return "";
-        $user_id = 0;
-        if(Auth::check())
-            $user_id = Auth::user()->id;
-        $comments = Comment::getPostComments($post_id,"asc",1);
-        return Comment::commentsAsHtml($comments,$user_id);
-    }
-
     public function loadMore(Request $request, $post_id,$page){
         $route = \Route::current();
         if(!is_numeric($route->parameter('post_id')) || !is_numeric($route->parameter('page')))
@@ -545,8 +493,8 @@ class PostController extends Controller
         $user_id = 0;
         if(Auth::check())
             $user_id = Auth::user()->id;
-        $comments = Comment::getPostComments($post_id,"desc",$page);
-        return Comment::commentsAsHtml($comments,$user_id);
+        $comments = HelperController::getPostComments($post_id,"desc",$page);
+        return HelperController::commentsAsHtml($comments,$user_id);
     }
 
 

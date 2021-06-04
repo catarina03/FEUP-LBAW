@@ -14,6 +14,8 @@ DROP TABLE IF EXISTS block_user CASCADE;
 DROP TABLE IF EXISTS follow_user CASCADE;
 DROP TABLE IF EXISTS report CASCADE;
 DROP TABLE IF EXISTS notification CASCADE;
+DROP TABLE IF EXISTS password_resets CASCADE;
+
 
 DROP TYPE IF EXISTS category_types;
 DROP TYPE IF EXISTS post_types;
@@ -43,6 +45,7 @@ DROP FUNCTION IF EXISTS generate_vote_comment_notification() CASCADE;
 DROP FUNCTION IF EXISTS generate_vote_post_notification() CASCADE;
 DROP FUNCTION IF EXISTS delete_unused_tag() CASCADE;
 DROP FUNCTION IF EXISTS post_search() CASCADE;
+DROP FUNCTION IF EXISTS tags_search() CASCADE;
 
 DROP TRIGGER IF EXISTS block_user ON block_user;
 DROP TRIGGER IF EXISTS check_vote_post ON vote_post;
@@ -64,6 +67,7 @@ DROP TRIGGER IF EXISTS generate_thread_comment_notification ON comment;
 DROP TRIGGER IF EXISTS generate_publish_notification ON post;
 DROP TRIGGER IF EXISTS delete_unused_tag ON post_tag;
 DROP TRIGGER IF EXISTS post_search ON post;
+DROP TRIGGER IF EXISTS tags_search ON post_tag;
 
 CREATE TYPE category_types AS ENUM ('music', 'tv show', 'cinema', 'theatre', 'literature');
 CREATE TYPE post_types AS ENUM ('news', 'article','review');
@@ -235,15 +239,25 @@ CREATE TABLE notification(
 
 );
 
+CREATE TABLE password_resets(
+    email      VARCHAR NOT NULL,
+    token      VARCHAR NOT NULL,
+    created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL
+);
+
+
+
 
 ---------------> INDEXES
 CREATE INDEX author_post ON post USING HASH(user_id);
 CREATE INDEX post_date ON post USING BTREE(created_at);
 CREATE INDEX user_tags ON follow_tag USING HASH(user_id);
 CREATE INDEX post_comments ON comment USING HASH(post_id);
-CREATE INDEX search_post ON post USING GIN(
-    (setweight(to_tsvector('english',title),'A') ||  setweight(to_tsvector('english',content),'B')));
-
+CREATE INDEX search_post ON post USING GIN((setweight(to_tsvector('english',title),'A') ||  setweight(to_tsvector('english',content),'B')));
+DROP INDEX IF EXISTS password_resets_email_index;
+DROP INDEX IF EXISTS password_resets_token_index;
+CREATE INDEX password_resets_email_index ON password_resets (email);
+create index password_resets_token_index ON password_resets (token);
 
 ---------------> TRIGGERS
 
@@ -742,42 +756,58 @@ CREATE OR REPLACE FUNCTION post_search() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF TG_OP = 'INSERT' THEN
-        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));-- || setweight(to_tsvector('english', (SELECT STRING_AGG(name, ' ')FROM tag JOIN post_tag ON tag.id = post_tag.tag_id WHERE  post_id = New.id)), 'D'));
+        NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));
     ELSEIF TG_OP = 'UPDATE' AND (New.title <> OLD.title OR NEW.content <> OLD.content) THEN
         NEW.search = (SELECT setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english',NEW.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = New.user_id)), 'C'));
-    END IF;
-    RETURN NEW;
+END IF;
+RETURN NEW;
 END;
 $BODY$
-    LANGUAGE 'plpgsql';
-
+LANGUAGE 'plpgsql';
 CREATE TRIGGER post_search
     BEFORE INSERT OR UPDATE ON post
-    FOR EACH ROW
-    EXECUTE PROCEDURE post_search();
+                         FOR EACH ROW
+                         EXECUTE PROCEDURE post_search();
+
+
+
+CREATE OR REPLACE FUNCTION tags_search() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE post  set search = (SELECT setweight(to_tsvector('english', post.title), 'A') || setweight(to_tsvector('english',post.content), 'B') || setweight(to_tsvector('english', (SELECT name FROM authenticated_user WHERE  id = post.user_id)), 'C')|| (SELECT setweight( to_tsvector('english',(SELECT STRING_AGG(name, ' ')FROM tag JOIN post_tag ON tag.id = post_tag.tag_id WHERE  post_id = post.id)),'D'))) where id = new.post_id;
+RETURN NEW;
+END;
+
+$BODY$
+LANGUAGE 'plpgsql';
+CREATE TRIGGER tags_search
+     AFTER INSERT OR UPDATE ON post_tag
+     FOR EACH ROW
+     EXECUTE PROCEDURE tags_search();
+
 
 CREATE OR REPLACE FUNCTION duplicate_reports() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF EXISTS(
-        SELECT * FROM report 
+        SELECT * FROM report
         WHERE user_reporting=NEW.user_reporting AND post_reported=NEW.post_reported)
     THEN
         RAISE EXCEPTION 'This user has already reported this post!';
     END IF;
-    
+
     IF EXISTS(
-        SELECT * FROM report 
+        SELECT * FROM report
         WHERE user_reporting=NEW.user_reporting AND comment_reported=NEW.comment_reported)
     THEN
         RAISE EXCEPTION 'This user has already reported this comment!';
     END IF;
-    
+
     RETURN NEW;
 END;
 $BODY$
     LANGUAGE 'plpgsql';
-    
+
 CREATE TRIGGER duplicate_reports
     BEFORE INSERT ON report
     FOR EACH ROW
@@ -887,7 +917,7 @@ insert into tag (name) values ('Persistent');
 
 
 --USER
-insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('vpaulazzi0', 'Veronike', 'vcowburn0@virginia.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/19/1990', 'Hello!', null, 'twitter.com/vpaulazzi0', null, null, true, false, 'Regular', null);
+    insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('vpaulazzi0', 'Veronike', 'vcowburn0@virginia.edu','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '4/19/1990', 'Hello!', null, 'twitter.com/vpaulazzi0', null, null, true, false, 'Regular', null);
 insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('ssmoote1', 'Stevana', 'sfrean1@mail.ru','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '1/11/1988', 'Hello!', 'www.instagram.com/ssmoote1/', null, 'www.facebook.com/ssmoote1', null, true, true, 'Regular', 'abs.jpeg');
 insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('abaldi2', 'Alene', 'alequeux2@zdnet.com','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '12/7/1988', 'Welcome to my profile', null, null, null, null, true, false, 'Regular', null);
 insert into authenticated_user (username, name, email, password, birthdate, bio, instagram, twitter, facebook, linkedin, show_people_i_follow, show_tags_i_follow, authenticated_user_type, profile_photo) values ('scleator3', 'Say', 'shutchason3@soup.io','$2a$10$UOp0VuqFRc6nJeWehKXccO9N61vdMC91n.YHHJWoovp0y3Hg9KgWW', '7/28/1980', 'Welcome to my profile', null, 'twitter.com/scleator3', null, null, false, false, 'Regular', null);
@@ -2728,6 +2758,189 @@ insert into post_tag (post_id, tag_id) values (99, 44);
 insert into post_tag (post_id, tag_id) values (99, 62);
 insert into post_tag (post_id, tag_id) values (100, 13);
 insert into post_tag (post_id, tag_id) values (100, 84);
+insert into post_tag (post_id, tag_id) values (101, 3);
+insert into post_tag (post_id, tag_id) values (102, 19);
+insert into post_tag (post_id, tag_id) values (103, 36);
+insert into post_tag (post_id, tag_id) values (104, 17);
+insert into post_tag (post_id, tag_id) values (105, 38);
+insert into post_tag (post_id, tag_id) values (106, 72);
+insert into post_tag (post_id, tag_id) values (107, 45);
+insert into post_tag (post_id, tag_id) values (108, 50);
+insert into post_tag (post_id, tag_id) values (103, 32);
+insert into post_tag (post_id, tag_id) values (104, 79);
+insert into post_tag (post_id, tag_id) values (105, 25);
+insert into post_tag (post_id, tag_id) values (106, 36);
+insert into post_tag (post_id, tag_id) values (107, 100);
+insert into post_tag (post_id, tag_id) values (108, 77);
+insert into post_tag (post_id, tag_id) values (109, 10);
+insert into post_tag (post_id, tag_id) values (110, 6);
+insert into post_tag (post_id, tag_id) values (111, 7);
+insert into post_tag (post_id, tag_id) values (112, 94);
+insert into post_tag (post_id, tag_id) values (113, 8);
+insert into post_tag (post_id, tag_id) values (114, 32);
+insert into post_tag (post_id, tag_id) values (115, 23);
+insert into post_tag (post_id, tag_id) values (116, 19);
+insert into post_tag (post_id, tag_id) values (117, 48);
+insert into post_tag (post_id, tag_id) values (118, 96);
+insert into post_tag (post_id, tag_id) values (119, 89);
+insert into post_tag (post_id, tag_id) values (120, 8);
+insert into post_tag (post_id, tag_id) values (121, 4);
+insert into post_tag (post_id, tag_id) values (122, 6);
+insert into post_tag (post_id, tag_id) values (123, 42);
+insert into post_tag (post_id, tag_id) values (124, 35);
+insert into post_tag (post_id, tag_id) values (125, 9);
+insert into post_tag (post_id, tag_id) values (126, 20);
+insert into post_tag (post_id, tag_id) values (127, 4);
+insert into post_tag (post_id, tag_id) values (128, 25);
+insert into post_tag (post_id, tag_id) values (129, 63);
+insert into post_tag (post_id, tag_id) values (130, 62);
+insert into post_tag (post_id, tag_id) values (131, 3);
+insert into post_tag (post_id, tag_id) values (132, 69);
+insert into post_tag (post_id, tag_id) values (133, 98);
+insert into post_tag (post_id, tag_id) values (134, 63);
+insert into post_tag (post_id, tag_id) values (134, 100);
+insert into post_tag (post_id, tag_id) values (135, 2);
+insert into post_tag (post_id, tag_id) values (135, 3);
+insert into post_tag (post_id, tag_id) values (135, 46);
+insert into post_tag (post_id, tag_id) values (136, 26);
+insert into post_tag (post_id, tag_id) values (137, 43);
+insert into post_tag (post_id, tag_id) values (137, 79);
+insert into post_tag (post_id, tag_id) values (137, 85);
+insert into post_tag (post_id, tag_id) values (137, 91);
+insert into post_tag (post_id, tag_id) values (138, 47);
+insert into post_tag (post_id, tag_id) values (139, 45);
+insert into post_tag (post_id, tag_id) values (140, 41);
+insert into post_tag (post_id, tag_id) values (140, 90);
+insert into post_tag (post_id, tag_id) values (141, 99);
+insert into post_tag (post_id, tag_id) values (142, 78);
+insert into post_tag (post_id, tag_id) values (143, 3);
+insert into post_tag (post_id, tag_id) values (143, 74);
+insert into post_tag (post_id, tag_id) values (143, 76);
+insert into post_tag (post_id, tag_id) values (143, 83);
+insert into post_tag (post_id, tag_id) values (143, 85);
+insert into post_tag (post_id, tag_id) values (144, 47);
+insert into post_tag (post_id, tag_id) values (145, 18);
+insert into post_tag (post_id, tag_id) values (146, 38);
+insert into post_tag (post_id, tag_id) values (146, 48);
+insert into post_tag (post_id, tag_id) values (146, 93);
+insert into post_tag (post_id, tag_id) values (147, 51);
+insert into post_tag (post_id, tag_id) values (147, 85);
+insert into post_tag (post_id, tag_id) values (148, 79);
+insert into post_tag (post_id, tag_id) values (149, 100);
+insert into post_tag (post_id, tag_id) values (150, 32);
+insert into post_tag (post_id, tag_id) values (151, 95);
+insert into post_tag (post_id, tag_id) values (152, 50);
+insert into post_tag (post_id, tag_id) values (152, 54);
+insert into post_tag (post_id, tag_id) values (152, 66);
+insert into post_tag (post_id, tag_id) values (153, 48);
+insert into post_tag (post_id, tag_id) values (153, 74);
+insert into post_tag (post_id, tag_id) values (154, 3);
+insert into post_tag (post_id, tag_id) values (154, 7);
+insert into post_tag (post_id, tag_id) values (154, 16);
+insert into post_tag (post_id, tag_id) values (154, 44);
+insert into post_tag (post_id, tag_id) values (154, 87);
+insert into post_tag (post_id, tag_id) values (155, 80);
+insert into post_tag (post_id, tag_id) values (156, 4);
+insert into post_tag (post_id, tag_id) values (156, 40);
+insert into post_tag (post_id, tag_id) values (156, 80);
+insert into post_tag (post_id, tag_id) values (157, 7);
+insert into post_tag (post_id, tag_id) values (157, 19);
+insert into post_tag (post_id, tag_id) values (158, 71);
+insert into post_tag (post_id, tag_id) values (158, 75);
+insert into post_tag (post_id, tag_id) values (158, 80);
+insert into post_tag (post_id, tag_id) values (159, 12);
+insert into post_tag (post_id, tag_id) values (159, 19);
+insert into post_tag (post_id, tag_id) values (159, 79);
+insert into post_tag (post_id, tag_id) values (160, 7);
+insert into post_tag (post_id, tag_id) values (160, 48);
+insert into post_tag (post_id, tag_id) values (161, 80);
+insert into post_tag (post_id, tag_id) values (162, 48);
+insert into post_tag (post_id, tag_id) values (163, 9);
+insert into post_tag (post_id, tag_id) values (164, 60);
+insert into post_tag (post_id, tag_id) values (165, 19);
+insert into post_tag (post_id, tag_id) values (165, 31);
+insert into post_tag (post_id, tag_id) values (165, 92);
+insert into post_tag (post_id, tag_id) values (165, 93);
+insert into post_tag (post_id, tag_id) values (166, 36);
+insert into post_tag (post_id, tag_id) values (166, 57);
+insert into post_tag (post_id, tag_id) values (167, 22);
+insert into post_tag (post_id, tag_id) values (167, 88);
+insert into post_tag (post_id, tag_id) values (167, 90);
+insert into post_tag (post_id, tag_id) values (168, 44);
+insert into post_tag (post_id, tag_id) values (169, 11);
+insert into post_tag (post_id, tag_id) values (169, 38);
+insert into post_tag (post_id, tag_id) values (170, 43);
+insert into post_tag (post_id, tag_id) values (170, 65);
+insert into post_tag (post_id, tag_id) values (171, 38);
+insert into post_tag (post_id, tag_id) values (172, 89);
+insert into post_tag (post_id, tag_id) values (173, 37);
+insert into post_tag (post_id, tag_id) values (173, 43);
+insert into post_tag (post_id, tag_id) values (173, 52);
+insert into post_tag (post_id, tag_id) values (173, 91);
+insert into post_tag (post_id, tag_id) values (174, 61);
+insert into post_tag (post_id, tag_id) values (174, 82);
+insert into post_tag (post_id, tag_id) values (175, 85);
+insert into post_tag (post_id, tag_id) values (176, 53);
+insert into post_tag (post_id, tag_id) values (176, 61);
+insert into post_tag (post_id, tag_id) values (176, 98);
+insert into post_tag (post_id, tag_id) values (177, 22);
+insert into post_tag (post_id, tag_id) values (177, 59);
+insert into post_tag (post_id, tag_id) values (177, 64);
+insert into post_tag (post_id, tag_id) values (178, 75);
+insert into post_tag (post_id, tag_id) values (178, 78);
+insert into post_tag (post_id, tag_id) values (179, 26);
+insert into post_tag (post_id, tag_id) values (179, 32);
+insert into post_tag (post_id, tag_id) values (179, 88);
+insert into post_tag (post_id, tag_id) values (179, 97);
+insert into post_tag (post_id, tag_id) values (179, 100);
+insert into post_tag (post_id, tag_id) values (180, 9);
+insert into post_tag (post_id, tag_id) values (180, 41);
+insert into post_tag (post_id, tag_id) values (181, 31);
+insert into post_tag (post_id, tag_id) values (180, 44);
+insert into post_tag (post_id, tag_id) values (182, 82);
+insert into post_tag (post_id, tag_id) values (183, 68);
+insert into post_tag (post_id, tag_id) values (184, 44);
+insert into post_tag (post_id, tag_id) values (184, 94);
+insert into post_tag (post_id, tag_id) values (185, 32);
+insert into post_tag (post_id, tag_id) values (185, 85);
+insert into post_tag (post_id, tag_id) values (186, 4);
+insert into post_tag (post_id, tag_id) values (186, 41);
+insert into post_tag (post_id, tag_id) values (186, 46);
+insert into post_tag (post_id, tag_id) values (187, 10);
+insert into post_tag (post_id, tag_id) values (187, 67);
+insert into post_tag (post_id, tag_id) values (188, 59);
+insert into post_tag (post_id, tag_id) values (189, 70);
+insert into post_tag (post_id, tag_id) values (189, 78);
+insert into post_tag (post_id, tag_id) values (190, 50);
+insert into post_tag (post_id, tag_id) values (190, 55);
+insert into post_tag (post_id, tag_id) values (191, 71);
+insert into post_tag (post_id, tag_id) values (191, 88);
+insert into post_tag (post_id, tag_id) values (192, 1);
+insert into post_tag (post_id, tag_id) values (193, 36);
+insert into post_tag (post_id, tag_id) values (193, 90);
+insert into post_tag (post_id, tag_id) values (193, 84);
+insert into post_tag (post_id, tag_id) values (194, 4);
+insert into post_tag (post_id, tag_id) values (194, 17);
+insert into post_tag (post_id, tag_id) values (194, 30);
+insert into post_tag (post_id, tag_id) values (195, 50);
+insert into post_tag (post_id, tag_id) values (195, 75);
+insert into post_tag (post_id, tag_id) values (196, 33);
+insert into post_tag (post_id, tag_id) values (196, 76);
+insert into post_tag (post_id, tag_id) values (197, 88);
+insert into post_tag (post_id, tag_id) values (198, 23);
+insert into post_tag (post_id, tag_id) values (198, 50);
+insert into post_tag (post_id, tag_id) values (199, 42);
+insert into post_tag (post_id, tag_id) values (199, 44);
+insert into post_tag (post_id, tag_id) values (199, 62);
+insert into post_tag (post_id, tag_id) values (200, 13);
+insert into post_tag (post_id, tag_id) values (200, 84);
+
+
+
+
+
+
+
 
 --COMMENT
 insert into comment (content, comment_date, user_id, post_id, comment_id) values ('Agreed!', TIMESTAMP '2020-05-12 18:15:43', 44, 19, null);
