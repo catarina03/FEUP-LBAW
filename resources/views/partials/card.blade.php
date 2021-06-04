@@ -23,20 +23,6 @@
                             <i title="Save" class="bi bi-bookmark-check-fill" style="font-size:3em;"></i>
                         @endif
                     </div>
-                @else
-                    <div class="my-post-page-settings btn-group dropdown">
-                        <a class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false" title="Options">
-                            <i title="Settings" class="fas fa-cog" style="font-size:3em;"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="{{ url("editpost/".$post->id) }}">Edit Post</a>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <a class="dropdown-item" data-bs-toggle="modal"
-                               data-bs-target="#confirm">Delete Post</a>
-                        </ul>
-                    </div>
                 @endif
             @endauth
             <div class="infoPosts">

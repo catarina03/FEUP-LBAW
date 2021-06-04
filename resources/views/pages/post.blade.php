@@ -57,12 +57,12 @@
                 <div class="container-fluid d-flex col-10 justify-content-left mt-3">
                     <h1 class="post-page-post-title">{{$post->is_spoiler?"[SPOILER]":""}}{{$post->title}}</h1>
                 </div>
-
-                <div class="row px-0 justify-content-between">
-                    <div class="container-fluid d-flex px-0 col-4 mt-1">
-                        <h2 class="post-page-post-author-date">by <a
+                
+                <div class=" container-fluid row px-0 justify-content-center">
+                    <div class="container-fluid d-flex px-0 mt-1 px-2 col-5">
+                        <span class="post-page-post-author-date">by <a
                                 href="{{route('profile',['id'=>$metadata['author']->id])}}">{{$metadata['author']->name}}</a>, {{$metadata['date']}}
-                        </h2>
+                        </span>
                     </div>
 
                     <div class="container-fluid d-flex col-2 mt-1">
@@ -87,8 +87,8 @@
 
                 </div>
 
-                <div class="container-fluid d-flex col-10 justify-content-left mt-2">
-                    <p class="post-page-post-text">{{strip_tags($post['content'],"<div><p><b><strong><i><u>")}}
+                <div class="container-fluid col-10 justify-content-left mt-2">
+                    <p class="post-page-post-text">{!!  $post['content'] !!}
                     </p>
                 </div>
 
@@ -142,19 +142,19 @@
                                     <div class="col-auto px-0 mx-0">
                                         <button
                                             class="post-page-post-thumbs-up-button  btn ms-0 me-4 px-0 post-up-vote"><i
-                                                title="Like post" class="fas fa-thumbs-up"></i></button>
+                                                title="Liked post" class="fas fa-thumbs-up"></i></button>
                                     </div>
                                 @else
                                     <div class="col-auto px-0 mx-0">
                                         <button class="post-page-post-thumbs-up-button btn ms-0 me-4 px-0 post-up-vote">
-                                            <i title="Dislike post" class="far fa-thumbs-up"></i></button>
+                                            <i title="Like post" class="far fa-thumbs-up"></i></button>
                                     </div>
                                 @endif
                                 @if($metadata['liked'] == 1)
                                     <div class="col-auto px-0 mx-0">
                                         <button
                                             class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0 post-down-vote">
-                                            <i title="Like post" class="fas fa-thumbs-down m-0"></i></button>
+                                            <i title="Disliked post" class="fas fa-thumbs-down m-0"></i></button>
                                     </div>
                                 @else
                                     <div class="col-auto px-0 mx-0">
