@@ -168,7 +168,7 @@ class UserController extends Controller
 
     public function roles()
     {
-        $roles = DB::table("authenticated_user")->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
+        $roles = DB::table("authenticated_user")->select("id", "name", "username", "profile_photo", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
 
         return view('pages.manage_roles', ['needsFilter' => 0, 'roles' => $roles]);
     }
@@ -183,11 +183,12 @@ class UserController extends Controller
             $type = $request["new_role"];
             DB::table("authenticated_user")->where("id", $user_id)->update(["authenticated_user_type" => $type]);
             $view = view('partials.roles_types', ['type' => $type])->render();
-            return response()->json($view);
+            return response()->json(array('view' => $view, 'id' => $user_id, 'new_role' => $type));
         }
 
         $type = DB::table("authenticated_user")->where("id", $user_id)->pluck('authenticated_user_type');
-        return response()->json(view('partials.roles_types', ['type' => $type])->render());
+        $view = view('partials.roles_types', ['type' => $type])->render();
+        return response()->json(array('view' => $view, 'id' => $user_id))->setStatusCode(404);
     }
 
     /**

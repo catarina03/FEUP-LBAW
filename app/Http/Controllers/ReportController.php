@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Http\Response;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -47,32 +46,30 @@ class ReportController extends Controller
 
     }
 
+
     /**
      * Display the specified resource.
      *
      * @param Report $report
      * @return Application|Factory|View|Response
      */
-    public function show(Report $report)
+    public function show()
     {
         if (!Auth::check() || (Auth::check() && !Auth::user()->isAdmin())) {
             return view('pages.nopermission', ['needsFilter' => 0]);
         }
-
         $user_id = Auth::user()->id;
-
-        $reports = DB::select(DB::raw("(SELECT post.id AS post_id, thumbnail, title, created_at, name, post.user_id, user_id AS content_author, post.id AS content_id, 'Post' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
+        $reports = DB::select(DB::raw("(SELECT post.id AS post_id, title, post.user_id, name AS content_author, post.id AS content_id, 'Post' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
                 FROM report, post, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive
                 WHERE authenticated_user.id = post.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.post_reported = post.id AND user_reporting <> " . $user_id . " AND (user_assigned = " . $user_id . " OR user_assigned is null)
-                GROUP BY post.id, title, user_id, most_frequent_motive.motive, user_assigned, name, thumbnail, content_id)
+                GROUP BY post.id, title, name, most_frequent_motive.motive, user_assigned, content_id)
                 union
-                (SELECT post.id AS post_id, thumbnail, title, created_at, name, post.user_id, comment.user_id AS content_author, comment.id AS content_id, 'Comment' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
+                (SELECT post.id AS post_id, title, post.user_id, name AS content_author, comment.id AS content_id, 'Comment' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
                 FROM report, post, comment, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive
-                WHERE authenticated_user.id = post.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.comment_reported = comment.id AND post.id = comment.post_id AND user_reporting <> " . $user_id . " AND (user_assigned = " . $user_id . " OR user_assigned is null)
-                GROUP BY post.id, title, comment.user_id, most_frequent_motive.motive, user_assigned, name, thumbnail, content_id)
+                WHERE authenticated_user.id = comment.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.comment_reported = comment.id AND post.id = comment.post_id AND user_reporting <> " . $user_id . " AND (user_assigned = " . $user_id . " OR user_assigned is null)
+                GROUP BY post.id, title, name, most_frequent_motive.motive, user_assigned, content_id)
                 ORDER BY n_reports DESC"));
 
-        //print_r($reports);
         return view('pages.moderator_dashboard', ['needsFilter' => 0, 'reports' => $reports]);
     }
 
@@ -111,37 +108,137 @@ class ReportController extends Controller
     }
 
 
-    public function close(Request $request, $report_id)
-    {
-        $validatedData = $request->validate([
-            'moderator_id' => 'required|numeric'
-        ]);
-        $date = Carbon::now();
-        $closed_date = $date->toDateString();
-        DB::table('report')->where('id', $report_id)->where('user_assigned', $validatedData->moderator_id)->update(["closed_date" => $closed_date]);
-
-    }
-
-    public function assign(Request $request, $report_id)
+    public function close(Request $request, $reported_content)
     {
         $validatedData = Validator::make($request->all(), [
-            'moderator_id' => 'required|numeric'
+            'content_type' => 'required',
+            'accepted' => 'required'
         ]);
 
         if (!$validatedData->fails()) {
-            DB::table('report')->where('id', $report_id)->update(array('user_assigned' => $request['moderator_id']));
-            $view = view('partials.moderator_card_actions', ['assigned' => true])->render();
-            return response()->json($view);
+            $type = $request['content_type'];
+            $accepted = $request['accepted'];
+
+            $date = Carbon::now();
+            $closed_date = $date->toDateString();
+
+            if ($type == "Post") {
+                DB::table('report')->where('post_reported', $reported_content)->update(['closed_date' => $closed_date, 'accepted' => $accepted]);
+                if($accepted){
+                    $post = DB::table('post')->where('id', $reported_content);
+                    if($post != null) $post->delete();
+                }
+            }
+            else {
+                DB::table('report')->where('comment_reported', $reported_content)->update(['closed_date' => $closed_date, 'accepted' => $accepted]);
+                if($accepted){
+                    $comment = DB::table('comment')->where('id', $reported_content);
+                    if($comment != null) $comment->delete();
+                }
+            }
+            return response()->json(array('id' => $reported_content, 'type' => $type));
         }
-        return response()->json();
+
+        $view = view('partials.moderator_card_actions', ['assigned' => true])->render();
+        return response()->json(array('view' => $view, 'id' => $reported_content, 'type' => $request['content_type']), 400);
+    }
+
+    public function assign(Request $request, $reported_content)
+    {
+        $validatedData = Validator::make($request->all(), [
+            'content_type' => 'required'
+        ]);
+
+        if (!$validatedData->fails()) {
+            $type = $request['content_type'];
+
+            if ($type == "Post")
+                DB::table('report')->where('post_reported', $reported_content)->update(array('user_assigned' => Auth::user()->id));
+            else
+                DB::table('report')->where('comment_reported', $reported_content)->update(array('user_assigned' => Auth::user()->id));
+
+            $view = view('partials.moderator_card_actions', ['assigned' => true])->render();
+            return response()->json(array('view' => $view, 'id' => $reported_content, 'type' => $type));
+        }
+        return response()->json()->setStatusCode(400);
+    }
+
+    public function reportMotives(Request $request, $reported_content)
+    {
+        //select distinct motive from report where post_reported = 188 and closed_date is null
+        $validatedData = Validator::make($request->all(), [
+            'content_type' => 'required'
+        ]);
+
+        if (!$validatedData->fails()) {
+            $type = $request['content_type'];
+
+            if ($type == "Post")
+                $motives = DB::table('report')->select('motive')->where('post_reported', $reported_content)->whereNull('closed_date')->distinct()->get();
+            else
+                $motives = DB::table('report')->select('motive')->where('comment_reported', $reported_content)->whereNull('closed_date')->distinct()->get();
+
+            $view = view('partials.report_motives', ['motives' => $motives])->render();
+            return response()->json(array('view' => $view, 'id' => $reported_content, 'type' => $type));
+        }
+        return response()->json()->setStatusCode(400);
+    }
+
+    public function filter(Request $request) {
+
+        $user_id = Auth::user()->id;
+
+        $posts = "SELECT post.id AS post_id, title, type as post_type, category, post.user_id, name AS content_author, post.id AS content_id, 'Post' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned";
+        $posts .= " FROM report, post, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive";
+        $posts .= " WHERE authenticated_user.id = post.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.post_reported = post.id AND user_reporting ".htmlspecialchars_decode('<>').$user_id." AND (user_assigned = ".$user_id." OR user_assigned is null)";
+
+        $comments = "SELECT post.id AS post_id, title, type as post_type, category, post.user_id, name AS content_author, comment.id AS content_id, 'Comment' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned";
+        $comments .= " FROM report, post, comment, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive";
+        $comments .= " WHERE authenticated_user.id = comment.user_id AND closed_date is null AND most_frequent_motive.post_reported = post.id AND most_frequent_motive.motive in (SELECT motive FROM report WHERE post_reported = post.id AND closed_date is null GROUP BY motive, post_reported ORDER BY COUNT(motive) DESC LIMIT 1) AND report.comment_reported = comment.id AND post.id = comment.post_id AND user_reporting ".htmlspecialchars_decode('<>').$user_id." AND (user_assigned = ".$user_id." OR user_assigned is null)";
+
+        if($request->has('category')) {
+            if($request->input('category') == "TvShow") $category = "tv show";
+            else $category = strtolower($request->input('category'));
+            $posts .= " AND category = '".$category."'";
+            $comments .= " AND category = '".$category."'";
+        }
+
+        if($request->has('type')) {
+            $posts .= " AND type = '".strtolower($request->input('type'))."'";
+            $comments .= " AND type = '".strtolower($request->input('type'))."'";
+        }
+
+        if($request->has('assign')) {
+            if($request->input('assign') == "assign") $id = " = ".$user_id;
+            else $id = " is null";
+            $posts .= " AND user_assigned".$id;
+            $comments .= " AND user_assigned".$id;
+        }
+
+        $posts .= " GROUP BY post.id, title, name, post_type, category, most_frequent_motive.motive, user_assigned, content_id";
+        $comments .= " GROUP BY post.id, title, name, post_type, category, most_frequent_motive.motive, user_assigned, content_id";
+
+        $posts = "(".$posts.")";
+        $comments = "(".$comments.")";
+        $total = $posts ." union ".$comments;
+
+        if($request->has('content_type')) {
+            if($request->input('content_type') == "Post") $total = $posts;
+            else $total = $comments;
+        }
+
+        $reports =  DB::select(DB::raw($total." ORDER BY n_reports DESC"));
+        $view = view('partials.moderator_card', ['reports' => $reports])->render();
+        return response()->json($view);
     }
 
     public function process(Request $request, $report_id)
-    {//update?
+    {
         $validatedData = $request->validate([
             'moderator_id' => 'required|numeric',
             'action' => 'required'
         ]);
+
         $action = $validatedData->action == "DELETE" ? true : false;
         DB::table('report')->where('id', $report_id)->where('user_assigned', $validatedData->moderator_id)->update(["accepted" => $action]);
         $date = Carbon::now();
