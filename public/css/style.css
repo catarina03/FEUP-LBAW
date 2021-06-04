@@ -796,6 +796,18 @@ a.footer-link:hover {
 
 /*POST DASHBOARD*/
 
+.clear_button {
+    background-color: white;
+    border: none;
+    border-radius: 2%;
+    color: #0c1d1c;
+    padding: 0.5em;
+}
+
+.clear_button:hover {
+    color: #8ab5b1;
+}
+
 .report-row a {
     cursor: pointer;
     color: black;

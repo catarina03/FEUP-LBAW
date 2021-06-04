@@ -1,26 +1,36 @@
-let confirm = document.querySelectorAll(".assign-button")
-if (confirm != null) {
-    for (let i = 0; i < confirm.length; i++)
-        confirm[i].addEventListener("click", assign_to_me_modal)
-}
+allListeners()
 
-let action = document.querySelectorAll(".action-button")
-if (action != null) {
-    for (let i = 0; i < action.length; i++)
-        action[i].addEventListener("click", showReportAction)
-}
+function allListeners() {
+    let confirm = document.querySelectorAll(".assign-button")
+    if (confirm != null) {
+        for (let i = 0; i < confirm.length; i++)
+            confirm[i].addEventListener("click", assign_to_me_modal)
+    }
 
-let rows = document.querySelectorAll(".report-item");
-if (rows != null) {
-    for (let i = 0; i < rows.length; i++)
-        rows[i].addEventListener("click", function(event) {
-            event.preventDefault()
-            let ev = event.target.closest(".report-row")
-            if(ev != null) {
-                let h = ev.dataset.href.replaceAll("'", "")
-                window.location.href = window.location.protocol + "//" + window.location.host + h
-            }
-        })
+    let action = document.querySelectorAll(".action-button")
+    if (action != null) {
+        for (let i = 0; i < action.length; i++)
+            action[i].addEventListener("click", showReportAction)
+    }
+
+    let rows = document.querySelectorAll(".report-item");
+    if (rows != null) {
+        for (let i = 0; i < rows.length; i++)
+            rows[i].addEventListener("click", function(event) {
+                event.preventDefault()
+                let ev = event.target.closest(".report-row")
+                if(ev != null) {
+                    let h = ev.dataset.href.replaceAll("'", "")
+                    window.location.href = window.location.protocol + "//" + window.location.host + h
+                }
+            })
+    }
+
+    let filter = document.querySelector(".filter_reports")
+    if(filter != null) filter.addEventListener("click", getReports)
+
+    let clear_button = document.querySelector(".clear_button")
+    if(clear_button != null) clear_button.addEventListener("click", getReports)
 }
 
 let modalConfirm = document.querySelector('.confirm-modal')
@@ -141,7 +151,7 @@ function askReport(event) {
         let el = document.querySelector(`.report-actions-section[data-id="${id}"][data-type="${type}"]`)
         el.innerHTML = "Pending..."
 
-        const url = window.location.protocol + "//" + window.location.host + '/reports/' + id + '/close'
+        const url = window.location.protocol + "//" + window.location.host + '/api/reports/' + id + '/close'
         makeRequest("PUT", url, handleReportActionResponse, encodeForAjax({content_type: type, accepted: accepted}))
     }
 }
@@ -164,16 +174,32 @@ function handleReportActionResponse(status, responseText) {
     }
 }
 
-let filter = document.querySelector(".filter_reports")
-if(filter != null) filter.addEventListener("click", getReports)
+function clear_fields() {
+    const a = document.querySelector('input[name="assignReport"]:checked')
+    if(a != null) {
+        let assignButton = document.querySelector('input[name="assignReport"][value="assign"]')
+        let unassignedButton = document.querySelector('input[name="assignReport"][value="unassigned"]')
+        assignButton.checked = false
+        unassignedButton.checked = false
+    }
 
-let clear_button = document.querySelector(".clear_button")
-if(clear_button != null) clear_button.addEventListener("click", getReports)
+    let element = document.getElementById("select-category")
+    const category = element.options[element.selectedIndex].value
+    if(category !== "") element.selectedIndex = 0
+
+    element = document.getElementById("select-type")
+    const type = element.options[element.selectedIndex].value
+    if(type !== "") element.selectedIndex = 0
+
+    element = document.getElementById("select-report-content")
+    const content_type = element.options[element.selectedIndex].value
+    if(content_type !== "") element.selectedIndex = 0
+}
 
 function getReports(event) {
     event.preventDefault()
-    console.log()
     let clear = event.target.classList.contains("clear_button")
+    if(clear) clear_fields()
 
     let filters = {}
     const a = document.querySelector('input[name="assignReport"]:checked')
@@ -201,7 +227,7 @@ function getReports(event) {
         spinner.classList.remove("d-none")
         spinner.classList.add("d-flex")
 
-        const url = window.location.protocol + "//" + window.location.host + '/moderator/reports/filters?' + encodeForAjax(filters)
+        const url = window.location.protocol + "//" + window.location.host + '/api/moderator/reports/filters?' + encodeForAjax(filters)
 
         makeRequest("get", url, handleFiltersResponse, null)
     }
@@ -212,6 +238,8 @@ function handleFiltersResponse(status, response_text) {
 
     let element = document.querySelector(".roles-list")
     element.innerHTML = res
+    allListeners()
+
 
     let spinner = document.querySelector(".spinner")
     spinner.classList.add("d-none")

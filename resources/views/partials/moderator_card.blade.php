@@ -13,8 +13,7 @@
 
         <tbody class="reports-items">
         @if(count($reports) > 0)
-            @include('pages.confirm')
-            @include('pages.report_action')
+
             @foreach($reports as $report)
                 <tr class="report-row " style="cursor:pointer;" data-href="'/post/'{{$report->post_id}}">
                     <td class="report-item col-md-5 title ps-4 pt-2 pb-2">{{ $report->title}}</td>

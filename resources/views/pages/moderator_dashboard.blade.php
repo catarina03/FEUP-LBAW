@@ -63,10 +63,10 @@
                                         </div>
                                     </div>
                                     <div class="row pt-4">
-                                        <div class="col-5 d-flex justify-content-end">
-                                            <button class="clear_button">Clear all</button>
+                                        <div class="col-8 d-flex">
+                                            <button class="clear_button">Clear All Filters</button>
                                         </div>
-                                        <div class=" d-flex justify-content-end">
+                                        <div class="col-4 d-flex justify-content-end">
                                             <button class="filterButton filter_reports">Filter Reports</button>
                                         </div>
                                     </div>
@@ -75,6 +75,8 @@
                         </div>
                     </div>
                 </div>
+                @include('pages.confirm')
+                @include('pages.report_action')
                 <div class="roles-list">
                     @include('partials.moderator_card', ['reports' => $reports])
                 </div>
