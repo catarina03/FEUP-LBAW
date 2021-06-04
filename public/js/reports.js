@@ -20,7 +20,6 @@ if (rows != null) {
                 let h = ev.dataset.href.replaceAll("'", "")
                 window.location.href = window.location.protocol + "//" + window.location.host + h
             }
-
         })
 }
 
@@ -81,6 +80,7 @@ function handleAssignReportResponse(status, responseText) {
 
 function showReportAction(event) {
     event.preventDefault();
+
 
     let section = event.target.closest(".report-actions-section")
     let id = section.dataset.id
@@ -163,3 +163,59 @@ function handleReportActionResponse(status, responseText) {
         row.parentNode.removeChild(row)
     }
 }
+
+let filter = document.querySelector(".filter_reports")
+if(filter != null) filter.addEventListener("click", getReports)
+
+let clear_button = document.querySelector(".clear_button")
+if(clear_button != null) clear_button.addEventListener("click", getReports)
+
+function getReports(event) {
+    event.preventDefault()
+    console.log()
+    let clear = event.target.classList.contains("clear_button")
+
+    let filters = {}
+    const a = document.querySelector('input[name="assignReport"]:checked')
+    if(a != null) filters['assign'] = a.value
+
+    let element = document.getElementById("select-category")
+    const category = element.options[element.selectedIndex].value
+    if(category !== "") filters['category'] = category
+
+    element = document.getElementById("select-type")
+    const type = element.options[element.selectedIndex].value
+    if(type !== "") filters['type'] = type
+
+    element = document.getElementById("select-report-content")
+    const content_type = element.options[element.selectedIndex].value
+    if(content_type !== "") filters['content_type'] = content_type
+
+    if(!clear && Object.entries(filters).length <= 0) {
+        alert("you need to choose something!")
+    }
+    else {
+        let element = document.querySelector(".roles-list")
+        element.innerHTML = ""
+        let spinner = document.querySelector(".spinner")
+        spinner.classList.remove("d-none")
+        spinner.classList.add("d-flex")
+
+        const url = window.location.protocol + "//" + window.location.host + '/moderator/reports/filters?' + encodeForAjax(filters)
+
+        makeRequest("get", url, handleFiltersResponse, null)
+    }
+}
+
+function handleFiltersResponse(status, response_text) {
+    const res = JSON.parse(response_text)
+
+    let element = document.querySelector(".roles-list")
+    element.innerHTML = res
+
+    let spinner = document.querySelector(".spinner")
+    spinner.classList.add("d-none")
+    spinner.classList.remove("d-flex")
+}
+
+

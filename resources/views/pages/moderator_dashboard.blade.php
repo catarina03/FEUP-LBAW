@@ -19,7 +19,7 @@
                                 <div class="card card-body mt-1 p-4" style="background-color:#0c1d1c;">
                                     <div class="row">
                                         <div class="col-lg-4 col-md-6 col-12">
-                                            <select class="form-select select-category" aria-label="Select a category">
+                                            <select class="form-select" id="select-category" aria-label="Select a category">
                                                 <option value="" selected>Select a category</option>
                                                 <option value="Music">Music</option>
                                                 <option value="Cinema">Cinema</option>
@@ -29,45 +29,46 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-4 col-md-6 col-12 pt-md-0 pt-3">
-                                            <select class="form-select" aria-label="Select a type">
-                                                <option selected value="">Select a type</option>
+                                            <select class="form-select" id="select-type" aria-label="Select a type">
+                                                <option value="" selected>Select a type</option>
                                                 <option value="News">News</option>
                                                 <option value="Article">Article</option>
                                                 <option value="Review">Review</option>
                                             </select>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 col-12 pt-lg-0 pt-4">
-                                            <select class="form-select" aria-label="Select a type">
-                                                <option selected value="">Select a reported content type</option>
+                                        <div class="col-lg-4 col-md-6 col-12 pt-lg-0 pt-3">
+                                            <select class="form-select" id="select-report-content" aria-label="Select a reported content type">
+                                                <option value="" selected>Select a reported content type</option>
                                                 <option value="Post">Post</option>
                                                 <option value="Comment">Comment</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row pt-3">
-                                        <div class="col-lg-4 col-6 pt-lg-0 pt-4">
+                                        <div class="col-lg-4 col-6 pt-lg-0 pt-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                       id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1"
-                                                       style="color:white;">
+                                                <input class="form-check-input" type="radio" value="assign" name="assignReport" id="assignReport">
+                                                <label class="form-check-label" for="assignReport" style="color:white;">
                                                     Assign To Me
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-6 pt-lg-0 pt-4">
+                                        <div class="col-lg-4 col-6 pt-lg-0 pt-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                       id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1"
-                                                       style="color:white;">
+                                                <input class="form-check-input" type="radio" value="unassigned" name="assignReport" id="unassignedReport">
+                                                <label class="form-check-label"  for="unassignedReport" style="color:white;">
                                                     Unassigned
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-end pt-4">
-                                        <button class="filterButton filter_reports">Filter</button>
+                                    <div class="row pt-4">
+                                        <div class="col-5 d-flex justify-content-end">
+                                            <button class="clear_button">Clear all</button>
+                                        </div>
+                                        <div class=" d-flex justify-content-end">
+                                            <button class="filterButton filter_reports">Filter Reports</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -76,6 +77,11 @@
                 </div>
                 <div class="roles-list">
                     @include('partials.moderator_card', ['reports' => $reports])
+                </div>
+                <div class="spinner d-none justify-content-center text-center pt-3">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             </div>
         </div>

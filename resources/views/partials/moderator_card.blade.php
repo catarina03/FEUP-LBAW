@@ -1,5 +1,5 @@
-<div class="reports-table mt-4" style="overflow-x: scroll; border: solid 1px black;">
-    <table class="table  roles-list align-middle table-hover" style="background-color:#fcf3ee;">
+<div class="reports-table mt-4" style="overflow-x: auto; border: solid 1px black;">
+    <table class="table roles-list align-middle table-hover pb-0 mb-0" style="background-color:#fcf3ee;">
         <thead>
         <tr>
             <th class="p-3 ps-4" scope="col">Post Title</th>
@@ -10,6 +10,7 @@
             <th scope="col" class="text-center p-3 ps-0">Actions</th>
         </tr>
         </thead>
+
         <tbody class="reports-items">
         @if(count($reports) > 0)
             @include('pages.confirm')

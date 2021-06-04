@@ -1,5 +1,5 @@
-<div class="roles-table" style="overflow-x: scroll">
-    <table class="table mt-4 roles-list align-middle table-hover" style="background-color:#fcf3ee;">
+<div class="roles-table mt-4" style="overflow-x: auto; border: solid 1px black;">
+    <table class="table roles-list align-middle table-hover mb-0 pb-0" style="background-color:#fcf3ee;">
         <thead>
         <tr>
             <th class="p-3" scope="col"></th>
