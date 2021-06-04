@@ -69,8 +69,7 @@ function report_content(type,id,value){
                     show_toaster("Post reported successfully!");
             }
             else{
-                console.log(text['status']);
-                alert(text['status']);
+                show_generic_warning(text['status']);
             }
         }
     };

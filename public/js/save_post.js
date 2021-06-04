@@ -29,10 +29,10 @@ function addSavePostListeners(){
       console.log(request.responseText);
         if(request.responseText!="SUCCESS"){
           if(type=="delete"){
-            alert("Error removing post from favorites!");
+            show_generic_wawrning("Error removing post from favorites!");
           }
           else if(type=="post"){
-            alert("Error saving post!");
+            show_generic_warning("Error saving post!");
           }  
         }
         else{

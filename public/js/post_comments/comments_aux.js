@@ -16,12 +16,6 @@ function updateThreadsNo(ammount,comment_id){
     return false;
 }
 
-function updateSortedBy(text){
-    let sorted = document.getElementsByClassName("comment-sort-by-button p-0 m-0")[0];
-    sorted.innerText = text;
-}
-
-
 function updateCommentCount(amount){
     let container = document.getElementById("post_comment_count");
     container.parentNode.innerHTML= `<h3 class="post-page-post-interactions" id="post_comment_count">` + (parseInt(container.innerText) + amount) + " <i class=\"far fa-comments\"></i></h3>";
@@ -66,7 +60,7 @@ function EmptyCommentsVisibility(isV){
     let j = document.getElementById("empty-comments");
     if(j){
     if(isV)
-        j.setAttribute("hidden",isV);
+        j.setAttribute("hidden","");
     else
         j.removeAttribute("hidden");
 
@@ -103,5 +97,23 @@ function displayEditElements(container,hide){
             int.classList.remove("d-none");
         }
     }
+
+}
+
+function remove_error_messages(){
+    let errors = document.getElementsByClassName("comment_error_message");
+    if(errors && errors.length>0){
+        for(let i=0;i<errors.length;i++){
+            errors[i].remove();
+        }
+    }
+}
+
+function addCommentError(target){
+    var div = document.createElement('div');
+    div.innerHTML =("<span class=\"comment_error_message\" style=\"color:black\">Empty comments and lengths greater than 1000 are not accepted!</span>").trim();
+    errorNode = div.firstChild;
+    target.parentNode.parentNode.insertBefore(errorNode,target.parentNode);
+
 
 }

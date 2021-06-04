@@ -18,7 +18,7 @@ function loadMore(){
     request.onload = function (){
         result = "";
         if(request.responseText==""){
-            alert("Error sorting comments!");
+            show_generic_warning("Error fetching comments!");
             return;
         }
         

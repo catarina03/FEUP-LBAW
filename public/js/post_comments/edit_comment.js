@@ -68,7 +68,7 @@ function editForm(comment_id,content_container,type){
         });
         }
         else{
-            alert("Something went wrong!");
+            show_generic_warning("Error fetching comment form!");
             return;
         }
         
@@ -129,7 +129,7 @@ function confirmEdit(comment_id,container,type){
         show_toaster("Comment edited sucessfully!");
         }
         else{
-            empty_warning.show();
+            show_generic_warning("Error editing the comment!");
             return;
         }
     };

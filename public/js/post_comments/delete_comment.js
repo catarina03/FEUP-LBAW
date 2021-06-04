@@ -39,7 +39,7 @@ function deleteComment(comment_id,container){
             show_toaster("Comment deleted succesfully!")
         }
         else{
-            alert("Failed to delete comment!");
+            show_generic_warning("Internal error when trying to delete this comment!");
             return;
         }
         

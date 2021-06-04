@@ -207,8 +207,12 @@
                     @if(!$isOwner) {{-- User is not the owner of the post --}}
                     <div class="row justify-content-center px-4 mx-1">
                         <div class="col-10 mx-0 px-0" style="border-radius:5px;">
+                        
+                        <form>
                             <div class="row m-0 p-0">
+                            
                                 <div class="d-flex mx-0 px-0">
+                                    <label hidden for="add-comment">Enter a comment:</label>
                                     <textarea class="container form-control post-page-add-comment w-100 add-comment"
                                               id="add-comment" rows="2" placeholder="Join the discussion"></textarea>
                                 </div>
@@ -220,6 +224,7 @@
                                     </button>
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                     @endif

@@ -38,7 +38,7 @@ function follow_tag(tag_id,element){
             }
         }
         else{
-            alert("Error following or unfollowing tag");
+            show_generic_warning("An internal error happened processing yout follow tag request!");
         }
     };
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));
