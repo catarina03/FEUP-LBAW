@@ -103,13 +103,13 @@
                     <div class="row justify-content-end comment-replies mx-0 px-0">
                         <div class="col-11 post-page-comment-reply-editor px-0 mx-0 mt-1">
                             <div class="row px-0 mx-0 reply_textarea_container">
-                                <div class="col-lg-11 col-md-12 col-sm-12 d-flex mx-0 px-0 reply_textarea">
+                                <div class="col-xl-11 col-lg-12 col-md-12 col-sm-12 d-flex mx-0 px-0 reply_textarea">
                                         <textarea
                                             class="container form-control post-page-add-comment-reply w-100 add-thread"
                                          rows="1"
                                             placeholder="Answer in thread"></textarea>
                                 </div>
-                                <div class="col-lg-1 col-md-12 col-sm-12 d-flex mx-0 px-0">
+                                <div class="col-xl-1 col-lg-12 col-md-12 col-sm-12 d-flex mx-0 px-0 justify-content-end">
                                     <div class="thread_comment_id" hidden>{{$comment->id}}</div>
                                     <button
                                         class="post-page-comment-button btn-sm btn-block m-0 mt-0 add_thread_button" data-toggle="tooltip" data-placement="bottom" title="Add comment">Comment</button>
