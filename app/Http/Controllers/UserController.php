@@ -13,9 +13,10 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -90,7 +91,8 @@ class UserController extends Controller
 
         $user = AuthenticatedUser::find($id);
 
-        $photo = '/images/users/'.Auth::user()->profile_photo;
+       // $photo = '/images/users/'.Auth::user()->profile_photo;
+        $photo = Auth::user()->profile_photo;
 
         return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts, 'isFollowing'=>$isFollowing, 'isBlocked' => $isBlocked] );
     }
@@ -353,7 +355,7 @@ class UserController extends Controller
         };
 
         $user = Auth::user();
-        $photo = 'images/users/' . $imageName;
+        $photo = $imageName;
         return response()->json(array('profilephoto' => view('partials.profilephoto', ['photo' => $photo, 'user'=> $user])->render()));
     }
 
@@ -555,7 +557,6 @@ class UserController extends Controller
      */
     public function load_more_profile($id, $page)
     {
-        return "oiiiiiiiiiiiI";
        // $page = $request->input('page');
         $p = Post::where('user_id', $id)->orderBy('created_at', 'DESC')->paginate(6,'*', 'page', $page);
 
@@ -610,6 +611,25 @@ class UserController extends Controller
         session()->push('toaster', 'Password changed successfully!');
         return redirect('user/' . $id . '/settings#change-password')->with('success-password', 'Password changed successfully!');
         */
+    }
+
+
+    public function get_user_image($id){
+        $user = AuthenticatedUser::find($id);
+        //return Storage::get('public/images/users/'.$user->thumbnail);
+
+
+
+        $path = storage_path('app/public/images/users/'.$user->profile_photo);
+        $u = 'public/images/users/'.$user->profile_photo;
+        if(!Storage::exists($u)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
     }
 
 

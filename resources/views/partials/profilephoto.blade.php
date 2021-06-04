@@ -1,6 +1,6 @@
 @if($user->profile_photo != null)
     <img class="rounded-circle profile-avatar"
-         src="{{ URL::asset($photo) }}"
+         src="{{route('retrieve_post_image',['id'=>$user->id])}}"
          width="200" height="200" alt="avatar">
 @else
     <img class="rounded-circle profile-avatar"

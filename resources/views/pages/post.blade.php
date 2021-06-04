@@ -48,7 +48,7 @@
                 <div class="container-fluid d-flex justify-content-center">
                     <div class="mt-2 col-10 justify-content-center d-flex">
                         <div class="row thumbnail-image">
-                            <img src="{{route('retrieve_post_image', ['id'=>$post->id])}}" 
+                            <img src="{{route('retrieve_post_image', ['id'=>$post->id])}}"
                                  class="justify-content-center" alt="Post thumbnail" >
                         </div>
                     </div>
