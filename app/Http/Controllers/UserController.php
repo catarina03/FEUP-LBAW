@@ -355,8 +355,8 @@ class UserController extends Controller
         };
 
         $user = Auth::user();
-        $photo = $imageName;
-        return response()->json(array('profilephoto' => view('partials.profilephoto', ['photo' => $photo, 'user'=> $user])->render()));
+
+        return response()->json(array('profilephoto' => view('partials.profilephoto', ['user'=> $user])->render()));
     }
 
 
@@ -598,19 +598,7 @@ class UserController extends Controller
      */
     public function saved_posts(Request $request)
     {
-        /*
-        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
-        $user = Auth::user();
 
-
-
-
-
-        AuthenticatedUser::find($user->id)->update(['password' => Hash::make($request->newPassword)]);
-
-        session()->push('toaster', 'Password changed successfully!');
-        return redirect('user/' . $id . '/settings#change-password')->with('success-password', 'Password changed successfully!');
-        */
     }
 
 
@@ -629,15 +617,29 @@ class UserController extends Controller
         else{
             $user = AuthenticatedUser::find($id);
 
-            $path = storage_path('app/public/images/users/'.$user->profile_photo);
-            $u = 'public/images/users/'.$user->profile_photo;
-            if(!Storage::exists($u)) abort(404);
+            if($user->profile_photo !== null){
 
-            $file = File::get($path);
-            $type = File::mimeType($path);
+                $path = storage_path('app/public/images/users/'.$user->profile_photo);
+                $u = 'public/images/users/'.$user->profile_photo;
+                if(!Storage::exists($u)) abort(404);
 
-            $response = Response::make($file, 200);
-            $response->header("Content-Type", $type);
+                $file = File::get($path);
+                $type = File::mimeType($path);
+
+                $response = Response::make($file, 200);
+                $response->header("Content-Type", $type);
+            }
+            else{
+                $path = storage_path('app/public/images/users/default.png');
+                $u = 'public/images/users/default.png';
+                if(!Storage::exists($u)) abort(404);
+
+                $file = File::get($path);
+                $type = File::mimeType($path);
+
+                $response = Response::make($file, 200);
+                $response->header("Content-Type", $type);
+            }
         }
 
         return $response;
