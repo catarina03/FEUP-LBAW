@@ -27,8 +27,8 @@ class UserPolicy
 
     public static function block($id, $blocking_id){
         //a user can not block themself
-        if(!(Auth::check() && Auth::user()->id == $id)) return 1;
-        if($id != $blocking_id) return 2;
+        if(!Auth::check() || !(Auth::user()->id == $id)) return 1;
+        if($id === $blocking_id) return 2;
         return  0;
     }
 
