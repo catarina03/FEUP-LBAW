@@ -105,6 +105,10 @@
     background-color: #0c1d1c;
 }
 
+.link-auth-hover:hover {
+    color: #ade1e5 !important;
+}
+
 /* PROFILE */
 
 @media (max-width: 1200px) {
@@ -1322,18 +1326,18 @@ h3.post-page-comment-reply-interactions {
 #liveToast .toast-header{
     color:white;
     background-color: black;
-    
+
 }
 
 #liveToast .toast-body{
     color:black;
     background-color: white;
-    
+
 }
 
 #liveToast .toaster-button{
     background-color: white !important;
-    
+
 }
 
 .post-page-post-text p{

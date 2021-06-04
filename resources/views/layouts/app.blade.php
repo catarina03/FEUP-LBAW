@@ -10,5 +10,21 @@
 @yield('content')
 @include('layouts.footer')
 @include('layouts.navbar_mobile')
+@include('auth.login')
+@include('auth.register')
+
+@if(!empty(Session::get('showModal')) && Session::get('showModal') == "login")
+    <script>
+        $(function () {
+            $('#loginModal').modal('show');
+        });
+    </script>
+@elseif(!empty(Session::get('showModal')) && Session::get('showModal') == "register")
+    <script>
+        $(function () {
+            $('#registerModal').modal('show');
+        });
+    </script>
+@endif
 </body>
 </html>

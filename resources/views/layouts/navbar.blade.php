@@ -108,11 +108,12 @@
                     </li>
                 @endauth
                 @guest
-                    <li class="nav-item me-3 d-lg-block d-none"><a href="{{ route('register') }}"
+                    <li class="nav-item me-3 d-lg-block d-none" data-bs-toggle="modal" data-bs-target="#registerModal"><a
                                                                    style="text-decoration:none;cursor:pointer;"><i
                                 class="fa fa-user pe-2"
-                                aria-hidden="true"></i>Sign Up</li>
-                    <li class="nav-item me-3 d-lg-block d-none"><a href="{{ route('login') }}"
+                                aria-hidden="true"></i>Sign Up</a>
+                    </li>
+                    <li class="nav-item me-3 d-lg-block d-none show-login" data-bs-toggle="modal" data-bs-target="#loginModal"><a
                                                                    style="text-decoration:none;cursor:pointer;"><i
                                 class="fa fa-sign-in pe-2"
                                 aria-hidden="true"></i>Login</a>
