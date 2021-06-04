@@ -116,3 +116,9 @@ Route::get('forgot_password', 'ForgotPassword@show')->name('forgot_password');
 Route::post('forgot_password', 'ForgotPassword@request');
 Route::get('recover_password', 'ForgotPassword@showRecover')->name('recover_password');
 Route::post('recover_password', 'ForgotPassword@recover');
+
+
+// Storage utils
+Route::get('/foo', function () {
+    Artisan::call('storage:link');
+});
