@@ -17,6 +17,7 @@ function addEditListeners(){
         }
         element.addEventListener("click",function(e){
         e.preventDefault();
+        e.stopImmediatePropagation();
         editForm(comment_id,container,type);
         });
     }

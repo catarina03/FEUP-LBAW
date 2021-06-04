@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <script  src="{{ asset('js/toaster.js') }}" defer></script>
     <script src="{{ asset('js/edit_roles.js')}}" defer></script>
     <div class="manageRoles row g-0 pt-lg-5 pt-3 d-flex justify-content-center" style="margin-top: 4em; margin-bottom: 7em;">
         <h1 class="text-center p-2 pb-3" style="font-weight:bold;color:#307371;">Manage Roles</h1>
@@ -27,6 +28,7 @@
         </div>
 
     </div>
-
+    @include('partials.list_toasters')
+    @include('partials.error')
 
 @endsection

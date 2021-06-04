@@ -3,6 +3,8 @@ let user_id = document.querySelector("input.page-info.user_id");
 let form_photo = document.querySelector("input.form-control-file");
 let token = document.getElementsByName("csrf-token")[0];
 
+
+
 if (form_photo != null){
     form_photo.addEventListener("change", preparePhotoRequest)
 }
@@ -35,7 +37,11 @@ function makePhotoRequest(id, formData) {
 
 function updateProfilePhoto(photoResponse) {
     let photoDiv = document.querySelector('.profile-photo-div')
-    photoDiv.innerHTML = photoResponse
-    form_photo = document.querySelector("input.form-control-file");
+    let newDiv = document.createElement('div')
+    photoDiv.innerHTML = ""
+    newDiv.innerHTML= photoResponse
+
+    photoDiv.append(newDiv.firstChild)
+    form_photo = document.querySelector(".camera");
     form_photo.addEventListener("change", preparePhotoRequest)
 }

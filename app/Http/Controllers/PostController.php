@@ -11,6 +11,8 @@ use App\Models\Report;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
@@ -194,7 +196,9 @@ class PostController extends Controller
 
         //Get date and thumbnail path
         $date = date("F j, Y", strtotime($post['created_at']));
-        $thumbnail = "/storage/images/posts/".$post->thumbnail;
+        $thumbnail = $post->thumbnail;
+       // $thumbnail = "/storage/images/posts/".$post->thumbnail;
+        //$thumbnail = Storage::get('images/posts/'.$post->thumbnail);
         $report = Report::where("user_reporting",$user_id)->where("post_reported",$post->id)->get()->count();
         $post->reported = false;
         if($report>0)
@@ -242,7 +246,9 @@ class PostController extends Controller
         WHERE post_tag.post_id=$id AND t.id = post_tag.tag_id;"));
 
         //Get date and thumbnail path
-        $thumbnail = "/storage/images/posts/".$post->thumbnail;
+        $thumbnail = $post->thumbnail;
+       // $thumbnail = "/storage/images/posts/".$post->thumbnail;
+       // $thumbnail = Storage::get('images/posts/'.$post->thumbnail);
 
         return view('pages.editpost', ['needsFilter' => 0, 'post'=>$post, 'tags'=>$tags, 'thumbnail'=>$thumbnail] ); //['post'=> $post]
     }
@@ -525,5 +531,22 @@ class PostController extends Controller
             }
         }
         return 'error';
+    }
+
+    public function get_post_image($id){
+        $post = Post::find($id);
+        $thumbnail_path = storage_path('app/public/images/posts/'.$post->thumbnail);
+        $p = 'public/images/posts/'.$post->thumbnail;
+
+        if(!Storage::exists($p)) abort(404);
+
+        $thumbnail = File::get($thumbnail_path);
+        $type = File::mimeType($thumbnail_path);
+
+        $response = Response::make($thumbnail, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+
     }
 }

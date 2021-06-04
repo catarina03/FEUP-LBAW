@@ -14,7 +14,6 @@ function delete_post(){
     let request = new XMLHttpRequest();
     request.open('delete', baseUrl+'/' + id.innerText, true);
     request.onload = function (){
-        console.log(baseUrl+"/" + request.responseText);
         window.location.href = getUrl .protocol + "//" + getUrl.host + "/"+ request.responseText;
     }
     request.setRequestHeader('X-CSRF-TOKEN',token.getAttribute("content"));

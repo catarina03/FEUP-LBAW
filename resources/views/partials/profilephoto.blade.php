@@ -1,10 +1,10 @@
 @if($user->profile_photo != null)
     <img class="rounded-circle profile-avatar"
-         src="{{ URL::asset($photo) }}"
+         src="{{route('retrieve_user_image',['id'=>$user->id])}}"
          width="200" height="200" alt="avatar">
 @else
     <img class="rounded-circle profile-avatar"
-         src="{{ URL::asset('storage/images/users/default.png') }}"
+         src="{{route('retrieve_user_image',['id'=>0])}}"
          width="200" height="200" alt="avatar">
 @endif
 @if(Auth::user()->id === $user->id)

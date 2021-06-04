@@ -13,9 +13,10 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -79,19 +80,21 @@ class UserController extends Controller
         foreach($posts as $post){
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
-            $post->thumbnail = "/storage/images/posts/".$post->thumbnail;
+            $post->thumbnail = "/images/posts/".$post->thumbnail;
             $nLikes += $post->likes;
         }
 
         $nFollowers = DB::table("follow_user")->where("followed_user", $id)->get()->count();
         $nFollowing = DB::table("follow_user")->where("following_user", $id)->get()->count();
         $isFollowing = DB::table("follow_user")->where("followed_user", $id)->where("following_user", Auth::id())->count();
+        $isBlocked = DB::table("block_user")->where("blocked_user", $id)->where("blocking_user", Auth::id())->count();
 
         $user = AuthenticatedUser::find($id);
 
-        $photo = 'storage/images/users/'.Auth::user()->profile_photo;
+       // $photo = '/images/users/'.Auth::user()->profile_photo;
+        $photo = Auth::user()->profile_photo;
 
-        return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts, 'isFollowing'=>$isFollowing] );
+        return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts, 'isFollowing'=>$isFollowing, 'isBlocked' => $isBlocked] );
     }
 
     /**
@@ -112,25 +115,6 @@ class UserController extends Controller
 
         return view('pages.settings', ['needsFilter' => 0, 'user' => Auth::user(), 'tags' => $tags]);
 
-    }
-
-    /**
-     * Search users by username
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function searchRoles(Request $request): JsonResponse
-    {
-        $search = $request->input("query");
-
-        if (!empty($search))
-            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->where('username', 'LIKE', $search . '%')->orderBy("authenticated_user_type")->paginate(20);
-        else
-            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
-
-        $view = view('partials.roles_list', ['roles' => $roles])->render();
-        return response()->json($view);
     }
 
     /**
@@ -166,13 +150,38 @@ class UserController extends Controller
 
     public function roles()
     {
+        if(!UserPolicy::systemManager()) return view('pages.nopermission');
+
         $roles = DB::table("authenticated_user")->select("id", "name", "username", "profile_photo", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
 
         return view('pages.manage_roles', ['needsFilter' => 0, 'roles' => $roles]);
     }
 
+    /**
+     * Search users by username
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function searchRoles(Request $request): JsonResponse
+    {
+        if(!UserPolicy::systemManager()) return response()->json(view('pages.nopermission')->render(),400);
+        $search = $request->input("query");
+
+        if (!empty($search))
+            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->where('username', 'LIKE', $search . '%')->orderBy("authenticated_user_type")->paginate(20);
+        else
+            $roles = AuthenticatedUser::query()->select("id", "name", "username", "birthdate", "authenticated_user_type")->orderBy("authenticated_user_type")->paginate(20);
+
+        $view = view('partials.roles_list', ['roles' => $roles])->render();
+        return response()->json($view);
+    }
+
+
     public function editRole(Request $request, $user_id)
     {
+        if(!UserPolicy::systemManager()) return response()->json(view('pages.nopermission')->render(),400);
+
         $validatedData = Validator::make($request->all(), [
             'new_role' => 'required'
         ]);
@@ -258,24 +267,30 @@ class UserController extends Controller
      */
     public function block(Request $request, $id)
     {
-        $res = UserPolicy::block($id);
-        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
-        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
+        $block = $request["id"];
+        if(!is_int(intval($block))) return 'error: invalid user to block';
+
+        $res = UserPolicy::block(Auth::id(), $request->input('id'));
+        if($res == 1) return "no permissions";
+        if($res == 2) return "invalid user";
 
         $user = Auth::user();
 
-        $block = $request["id"];
-        if(!is_int($block)) return 'error: invalid user to block';
+        $blocked_user = AuthenticatedUser::find($request['id']);
+        $b = DB::table("block_user")
+            ->where('blocked_user', $blocked_user->id)
+            ->where('blocking_user', $user->id);
 
-        $blocked_user = AuthenticatedUser::find($request->blocking);
+        if($b != null) return "Already blocked this user".$b;
+
         if ($blocked_user != null){
             DB::table("block_user")->insert([
-                'blocked_user' => $blocked_user,
+                'blocked_user' => $blocked_user->id,
                 'blocking_user' => $user->id
             ]);
             return 'SUCCESS';
         }
-        return 'error';
+        return "couldn't find user in database";
     }
 
     /**
@@ -286,13 +301,16 @@ class UserController extends Controller
      */
     public function unblock(Request $request, $id)
     {
-        $res = UserPolicy::block($id);
-        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
-        if($res == 2) return view('pages.error', ['needsFilter' => 0]);
-        $user = Auth::user();
 
         $blocked_user = $request["id"];
-        if(!is_int($blocked_user)) return 'error';
+        if(!is_int(intval($blocked_user))) return 'error: invalid user to block';
+
+        $res = UserPolicy::block(Auth::id(), $request->input('id'));
+        if($res == 1) return "no permissions";
+        if($res == 2) return "invalid user";
+
+        $user = Auth::user();
+
         if ($blocked_user != null){
             $b = DB::table("block_user")
                 ->where('blocked_user', $blocked_user)
@@ -300,7 +318,7 @@ class UserController extends Controller
             if($b != null){
                 if($b->delete()) return 'SUCCESS';
             }
-            else return "Not blocking the user with id".$blocked_user;
+            else return "Not blocking the user with id";
         }
         return 'error';
     }
@@ -337,8 +355,8 @@ class UserController extends Controller
         };
 
         $user = Auth::user();
-        $photo = 'storage/images/users/' . $imageName;
-        return response()->json(array('profilephoto' => view('partials.profilephoto', ['photo' => $photo, 'user'=> $user])->render()));
+
+        return response()->json(array('profilephoto' => view('partials.profilephoto', ['user'=> $user])->render()));
     }
 
 
@@ -539,7 +557,6 @@ class UserController extends Controller
      */
     public function load_more_profile($id, $page)
     {
-        return "oiiiiiiiiiiiI";
        // $page = $request->input('page');
         $p = Post::where('user_id', $id)->orderBy('created_at', 'DESC')->paginate(6,'*', 'page', $page);
 
@@ -554,7 +571,7 @@ class UserController extends Controller
 
     public function getPostsInfo($posts){
         foreach($posts as $post){
-            $post->thumbnail = "/storage/images/posts/".$post->thumbnail;
+            $post->thumbnail = "/images/posts/".$post->thumbnail;
             $post->author = AuthenticatedUser::find($post->user_id)->name;
             $post->likes = DB::table("vote_post")->where("post_id",$post->id)->where("like",true)->get()->count();
             $post->isOwner = false;
@@ -581,19 +598,51 @@ class UserController extends Controller
      */
     public function saved_posts(Request $request)
     {
-        /*
-        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
-        $user = Auth::user();
+
+    }
 
 
+    public function get_user_image($id){
+        if(intval($id) === 0){
+            $path = storage_path('app/public/images/users/default.png');
+            $u = 'public/images/users/default.png';
+            if(!Storage::exists($u)) abort(404);
 
+            $file = File::get($path);
+            $type = File::mimeType($path);
 
+            $response = Response::make($file, 200);
+            $response->header("Content-Type", $type);
+        }
+        else{
+            $user = AuthenticatedUser::find($id);
 
-        AuthenticatedUser::find($user->id)->update(['password' => Hash::make($request->newPassword)]);
+            if($user->profile_photo !== null){
 
-        session()->push('toaster', 'Password changed successfully!');
-        return redirect('user/' . $id . '/settings#change-password')->with('success-password', 'Password changed successfully!');
-        */
+                $path = storage_path('app/public/images/users/'.$user->profile_photo);
+                $u = 'public/images/users/'.$user->profile_photo;
+                if(!Storage::exists($u)) abort(404);
+
+                $file = File::get($path);
+                $type = File::mimeType($path);
+
+                $response = Response::make($file, 200);
+                $response->header("Content-Type", $type);
+            }
+            else{
+                $path = storage_path('app/public/images/users/default.png');
+                $u = 'public/images/users/default.png';
+                if(!Storage::exists($u)) abort(404);
+
+                $file = File::get($path);
+                $type = File::mimeType($path);
+
+                $response = Response::make($file, 200);
+                $response->header("Content-Type", $type);
+            }
+        }
+
+        return $response;
     }
 
 

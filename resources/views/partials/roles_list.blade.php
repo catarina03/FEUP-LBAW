@@ -13,8 +13,9 @@
             @foreach($roles as $role)
                 <tr class="role-user" data-id="{{$role->id}}" data-role="{{ $role->authenticated_user_type}}"
                     style="cursor:pointer;">
-                    <td class="role-item col-md-3 p-3 ps-4"><img src="{{URL::asset($role->profile_photo)}}"
-                                                                 class="img-thumbnail" alt="..."></td>
+                    <td class="role-item col-md-3 p-3 ps-4"><img src="{{route('retrieve_user_image',['id'=>$role->id])}}"
+                                                                 class="img-thumbnail" alt="profile photo" style="max-width: 50%;
+  height: auto;"></td>
                     <td class="role-item col-md-3 p-3">{{$role->name}}</td>
                     <td class="role-item col-md-3 roles-username p-3">{{$role->username}}</td>
                     <td class="col-md-3 p-3 roles">

@@ -5,6 +5,12 @@ function encodeForAjax(data) {
     }).join('&')
 }
 
+var perfEntries = performance.getEntriesByType("navigation");
+
+if (perfEntries[0].type === "back_forward") {
+    location.reload(true);
+}
+
 function makeRequest(method, url, f, params){
     const request = new XMLHttpRequest()
     request.onreadystatechange = function(){

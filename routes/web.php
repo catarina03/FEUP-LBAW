@@ -61,11 +61,10 @@ Route::prefix('/api/user/')->group(function () { //user api
     Route::delete('{id}/follow', 'UserController@unfollow');
     Route::post('{id}/block', 'UserController@block');
     Route::delete('{id}/block', 'UserController@unblock');
-    Route::put('{id}/edit_photo', 'UserController@update_photo');
+    Route::post('{id}/edit_photo', 'UserController@update_photo');
     Route::get('{id}/edit_bio', 'UserController@show_edit_bio');
     Route::put('{id}/edit_bio', 'UserController@edit_bio');
     Route::get('{id}/load_more/{page}', 'UserController@load_more_profile');
-  //  Route::get('{id}/saved_posts', 'UserController@saved_posts');
 });
 
 
@@ -97,7 +96,6 @@ Route::get('api/moderator/reports/{filters}', 'ReportController@filter');
 Route::put('api/reports/{reported_content}/close', 'ReportController@close');
 Route::put('api/reports/{reported_content}/assign_report', 'ReportController@assign');
 Route::post('api/reports/{reported_content}/motives', 'ReportController@reportMotives');
-Route::put('reports/{reported_content}/process', 'ReportController@process');
 Route::get('api/report_filter', 'ReportController@reportFilter');
 Route::post('comment/{comment_id}/report', 'CommentController@reportComment');
 
@@ -116,6 +114,6 @@ Route::post('recover_password', 'ForgotPassword@recover');
 
 
 // Storage utils
-Route::get('/foo', function () {
-    Artisan::call('storage:link');
-});
+Route::get('post/{id}/image', 'PostController@get_post_image')->name('retrieve_post_image');
+Route::get('user/{id}/image', 'UserController@get_user_image')->name('retrieve_user_image');
+
