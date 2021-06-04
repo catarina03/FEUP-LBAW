@@ -48,7 +48,7 @@
                 <div class="container-fluid d-flex justify-content-center">
                     <div class="mt-2 col-10 justify-content-center d-flex">
                         <div class="row thumbnail-image">
-                            <img src="{{URL::asset($metadata['thumbnail'])}}"
+                            <img src="{{route('retrieve_image', ['id'=>$post->id])}}" {{--  URL::asset($metadata['thumbnail'])}}"--}}
                                  class="justify-content-center" alt="Post thumbnail" >
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                 <div class="container-fluid d-flex col-10 justify-content-left mt-3">
                     <h1 class="post-page-post-title">{{$post->is_spoiler?"[SPOILER]":""}}{{$post->title}}</h1>
                 </div>
-                
+
                 <div class="row px-0 justify-content-between">
                     <div class="container-fluid d-flex px-0 col-4 mt-1">
                         <h2 class="post-page-post-author-date">by <a
@@ -205,10 +205,10 @@
                     @if(!$isOwner) {{-- User is not the owner of the post --}}
                     <div class="row justify-content-center px-4 mx-1">
                         <div class="col-10 mx-0 px-0" style="border-radius:5px;">
-                        
+
                         <form>
                             <div class="row m-0 p-0">
-                            
+
                                 <div class="d-flex mx-0 px-0">
                                     <label hidden for="add-comment">Enter a comment:</label>
                                     <textarea class="container form-control post-page-add-comment w-100 add-comment"
