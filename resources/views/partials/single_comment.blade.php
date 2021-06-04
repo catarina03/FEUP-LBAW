@@ -12,15 +12,15 @@
 
                             @if($comment->isOwner)
                                 <div class="dropdown" data-toggle="tooltip" data-placement="bottom" title="Actions">
-                                <b class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div role="button" class="btn fa-cog-icon" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-cog ms-auto"></i>
-                                </b>
+                                </div>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <b class="dropdown-item edit_comment_button">Edit Comment</b>
+                                    <li class="dropdown-item edit_comment_button">Edit Comment</li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <b class="dropdown-item delete_comment_button">Delete Comment</b>
+                                    <li class="dropdown-item delete_comment_button">Delete Comment</li>
                                 </ul>
                             </div>
                             @endif
@@ -140,16 +140,16 @@
                                             @if($comment->isOwner)
 
                                                 <div class="dropdown" data-toggle="tooltip" data-placement="bottom" title="Actions">
-                                                <b class="btn fa-cog-icon" style="font-size:30%;"
+                                                <div role="button" class="btn fa-cog-icon" style="font-size:30%;"
                                                    data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="fas fa-cog ms-auto" style="font-size:3em;"></i>
-                                                </b>
+                                                </div>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <b class="dropdown-item edit_comment_button">Edit Comment</b>
+                                                    <li class="dropdown-item edit_comment_button">Edit Comment</li>
                                                     <li>
                                                         <hr class="dropdown-divider">
                                                     </li>
-                                                    <b class="dropdown-item delete_comment_button">Delete Comment</b>
+                                                    <li class="dropdown-item delete_comment_button">Delete Comment</li>
                                                 </ul>
                                             </div>
                                             @endif
