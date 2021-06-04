@@ -755,23 +755,6 @@ a.footer-link:hover {
 
 /* ROLE MANAGER */
 
-.manage_roles-card {
-    margin: 5em auto;
-    padding-top: 2%;
-    padding-bottom: 1%;
-    font-size: 1.4em;
-}
-
-.manage_roles-title {
-    font-weight: bolder;
-    padding-top: 2%;
-    font-size: 1.5em;
-}
-
-.roles-table i.edit-role:hover {
-    cursor: pointer;
-    font-weight: bold;
-}
 
 .roles-username a {
     cursor: pointer;
@@ -782,12 +765,6 @@ a.footer-link:hover {
     font-weight: bold;
 }
 
-.edit-roles-button {
-    background-color: transparent;
-    color: black;
-    border: none;
-    margin: 0;
-}
 
 .table-pagination {
     margin-top: 2em;

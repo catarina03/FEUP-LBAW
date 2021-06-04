@@ -1,22 +1,23 @@
 <div class="roles-table" style="overflow-x: scroll">
-    <table class="table mt-4 roles-list  align-middle">
+    <table class="table mt-4 roles-list align-middle table-hover" style="background-color:#fcf3ee;">
         <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Username</th>
-            <th scope="col">Date of Birth</th>
-            <th scope="col">Role</th>
+            <th class="p-3" scope="col"></th>
+            <th class="p-3" scope="col">Name</th>
+            <th class="p-3" scope="col">Username</th>
+            <th class="p-3" scope="col">Role</th>
         </tr>
         </thead>
         <tbody>
         @if(count($roles) > 0)
             @foreach($roles as $role)
-                <tr class="role-user" data-id="{{$role->id}}">
-                    <td class="col-md-3 ps-3">{{$role->name}}</td>
-                    <td class="col-md-3 roles-username ps-3"><a
-                            href="{{ url('user/'.$role->id) }}">{{$role->username}}</a></td>
-                    <td class="col-md-3 ps-3">{{$role->birthdate}}</td>
-                    <td class="col-md-3">
+                <tr class="role-user" data-id="{{$role->id}}" data-role="{{ $role->authenticated_user_type}}"
+                    style="cursor:pointer;">
+                    <td class="role-item col-md-3 p-3 ps-4"><img src="{{URL::asset($role->profile_photo)}}"
+                                                                 class="img-thumbnail" alt="..."></td>
+                    <td class="role-item col-md-3 p-3">{{$role->name}}</td>
+                    <td class="role-item col-md-3 roles-username p-3">{{$role->username}}</td>
+                    <td class="col-md-3 p-3 roles">
                         @include('partials.roles_types', ['type' => $role->authenticated_user_type])
                     </td>
                 </tr>

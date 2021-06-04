@@ -10,6 +10,20 @@ if (action != null) {
         action[i].addEventListener("click", showReportAction)
 }
 
+let rows = document.querySelectorAll(".report-item");
+if (rows != null) {
+    for (let i = 0; i < rows.length; i++)
+        rows[i].addEventListener("click", function(event) {
+            event.preventDefault()
+            let ev = event.target.closest(".report-row")
+            if(ev != null) {
+                let h = ev.dataset.href.replaceAll("'", "")
+                window.location.href = window.location.protocol + "//" + window.location.host + h
+            }
+
+        })
+}
+
 let modalConfirm = document.querySelector('.confirm-modal')
 let nmodalConfirm = new bootstrap.Modal(modalConfirm, {})
 
@@ -48,7 +62,9 @@ function assign_to_me(event) {
 
 function handleAssignReportResponse(status, responseText) {
 
-    if (status !== 200) alert("Error assigning report")
+    if (status !== 200) {
+        alert("Error assigning report")
+    }
     else {
         let res = JSON.parse(responseText)
         let view = res['view']
@@ -84,7 +100,7 @@ function showReportAction(event) {
 }
 
 function answerReport(status, responseText) {
-    console.log()
+    console.log("oi -> " + status + ", " + responseText)
     if (status !== 200) alert("Error getting all report motives")
     else {
         let res = JSON.parse(responseText)

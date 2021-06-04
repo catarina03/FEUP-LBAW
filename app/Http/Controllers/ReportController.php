@@ -122,11 +122,20 @@ class ReportController extends Controller
             $date = Carbon::now();
             $closed_date = $date->toDateString();
 
-            if ($type == "Post")
+            if ($type == "Post") {
                 DB::table('report')->where('post_reported', $reported_content)->update(['closed_date' => $closed_date, 'accepted' => $accepted]);
-            else
+                if($accepted){
+                    $post = DB::table('post')->where('id', $reported_content);
+                    if($post != null) $post->delete();
+                }
+            }
+            else {
                 DB::table('report')->where('comment_reported', $reported_content)->update(['closed_date' => $closed_date, 'accepted' => $accepted]);
-
+                if($accepted){
+                    $comment = DB::table('comment')->where('id', $reported_content);
+                    if($comment != null) $comment->delete();
+                }
+            }
             return response()->json(array('id' => $reported_content, 'type' => $type));
         }
 
