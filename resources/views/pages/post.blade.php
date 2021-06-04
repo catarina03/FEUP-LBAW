@@ -87,8 +87,8 @@
 
                 </div>
 
-                <div class="container-fluid d-flex col-10 justify-content-left mt-2">
-                    <p class="post-page-post-text">{{strip_tags($post['content'],"<div><p><b><strong><i><u>")}}
+                <div class="container-fluid col-10 justify-content-left mt-2">
+                    <p class="post-page-post-text">{!!  $post['content'] !!}
                     </p>
                 </div>
 
@@ -142,19 +142,19 @@
                                     <div class="col-auto px-0 mx-0">
                                         <button
                                             class="post-page-post-thumbs-up-button  btn ms-0 me-4 px-0 post-up-vote"><i
-                                                title="Like post" class="fas fa-thumbs-up"></i></button>
+                                                title="Liked post" class="fas fa-thumbs-up"></i></button>
                                     </div>
                                 @else
                                     <div class="col-auto px-0 mx-0">
                                         <button class="post-page-post-thumbs-up-button btn ms-0 me-4 px-0 post-up-vote">
-                                            <i title="Dislike post" class="far fa-thumbs-up"></i></button>
+                                            <i title="Like post" class="far fa-thumbs-up"></i></button>
                                     </div>
                                 @endif
                                 @if($metadata['liked'] == 1)
                                     <div class="col-auto px-0 mx-0">
                                         <button
                                             class="post-page-post-thumbs-down-button btn ms-0 me-4 px-0 post-down-vote">
-                                            <i title="Like post" class="fas fa-thumbs-down m-0"></i></button>
+                                            <i title="Disliked post" class="fas fa-thumbs-down m-0"></i></button>
                                     </div>
                                 @else
                                     <div class="col-auto px-0 mx-0">
