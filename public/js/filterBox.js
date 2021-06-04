@@ -107,9 +107,9 @@ function getFilters(){
     let peopleFollow = false
     let tagFollow = false
     let myPosts = false
-    if(peopleFollowCheck != null) peopleFollow = peopleFollowCheck.checked
-    if(tagFollowCheck != null) tagFollow = tagFollowCheck.checked
-    if(myPostsCheck != null) myPosts = myPostsCheck.checked
+    if(peopleFollowCheck !== null) peopleFollow = peopleFollowCheck.checked
+    if(tagFollowCheck !== null) tagFollow = tagFollowCheck.checked
+    if(myPostsCheck !== null) myPosts = myPostsCheck.checked
 
 
     if(search !== "") filters['search'] = search

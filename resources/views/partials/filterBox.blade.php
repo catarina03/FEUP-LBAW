@@ -23,21 +23,21 @@
             @auth
                 <div class="form-check mt-4">
                     <input class="form-check-input" type="checkbox"
-                            id="checkPeople"
+                            id="checkPeople"  value="" name="checkPeople"
                            style="cursor:pointer;">
                     <label class="form-check-label" style="margin-left: 10px;" for="checkPeople">
                         Only people I follow
                     </label>
                 </div>
                 <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox"
+                    <input class="form-check-input" type="checkbox" value="" name="checkTags"
                         id="checkTags" style="cursor:pointer;">
                     <label class="form-check-label" style="margin-left: 10px;" for="checkTags">
                         Only tags I follow
                     </label>
                 </div>
                 <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" value="" id="checkMyPosts" style="cursor:pointer;">
+                    <input class="form-check-input" type="checkbox" value="" id="checkMyPosts" name="checkMyPosts" style="cursor:pointer;">
                     <label class="form-check-label" style="margin-left: 10px;" for="checkMyPosts">
                         Only my posts
                     </label>
