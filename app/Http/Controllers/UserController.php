@@ -615,20 +615,31 @@ class UserController extends Controller
 
 
     public function get_user_image($id){
-        $user = AuthenticatedUser::find($id);
-        //return Storage::get('public/images/users/'.$user->thumbnail);
+        if(intval($id) === 0){
+            $path = storage_path('app/public/images/users/default.png');
+            $u = 'public/images/users/default.png';
+            if(!Storage::exists($u)) abort(404);
 
+            $file = File::get($path);
+            $type = File::mimeType($path);
 
+            $response = Response::make($file, 200);
+            $response->header("Content-Type", $type);
+        }
+        else{
+            $user = AuthenticatedUser::find($id);
 
-        $path = storage_path('app/public/images/users/'.$user->profile_photo);
-        $u = 'public/images/users/'.$user->profile_photo;
-        if(!Storage::exists($u)) abort(404);
+            $path = storage_path('app/public/images/users/'.$user->profile_photo);
+            $u = 'public/images/users/'.$user->profile_photo;
+            if(!Storage::exists($u)) abort(404);
 
-        $file = File::get($path);
-        $type = File::mimeType($path);
+            $file = File::get($path);
+            $type = File::mimeType($path);
 
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
+            $response = Response::make($file, 200);
+            $response->header("Content-Type", $type);
+        }
+
         return $response;
     }
 
