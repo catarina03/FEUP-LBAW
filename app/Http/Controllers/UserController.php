@@ -267,7 +267,10 @@ class UserController extends Controller
     //public function update_photo(Request $request, AuthenticatedUser $authenticatedUser)
     public function update_photo(Request $request)
     {
-        if(!Auth::check()) return;
+        if(!Auth::check()){
+            return response('No permission', 403);
+        }
+
         $validator = Validator::make($request->all(),
         [
             'avatar' => ['required', 'image', 'mimes:jpeg,jpg,png,gif']
@@ -298,32 +301,25 @@ class UserController extends Controller
      * @param  \App\Models\AuthenticatedUser  $authenticatedUser
      * @return \Illuminate\Http\Response
      */
-    public function edit_bio(Request $request, AuthenticatedUser $authenticatedUser)
+    public function edit_bio(Request $request)
     {
-        $user = Auth::check();
-        if(!Auth::check()) return;
-
-        //
+        if(!Auth::check()){
+            return response('No permission', 403);
+        }
         $validator = Validator::make($request->all(),
         [
-            'bio-content' => ['required', 'string', 'max:120']
-        ],
-        [
-            'bio-content.required' => 'The bio must be present',
-            'bio-content.string' => 'The bio must be a string',
-            'bio-content.max' => 'The bio must have 120 characters at max'
-
+            'bio' => ['required', 'string', 'max:120']
         ]);
         if ($validator->fails()) {
-            return redirect(url()->previous())->withErrors($validator)->withInput();
+            return response($validator->errors(), 400);
         }
 
-      //  dd($request);
+        if(AuthenticatedUser::where('id', Auth::user()->id)->update(['bio'=>$request->input('bio')]) != 1){
+            return response('Bio update error', 500);
+        }
 
-        AuthenticatedUser::where('id', $authenticatedUser->id)->update(['bio'=>$request->input('bio-content')]);
-
-        //return $authenticatedUser->profile_photo;
-        return response()->json(array('profilebio'=>view('partials.profilebio', ['user'=>$authenticatedUser])->render()));
+        $authenticatedUser = AuthenticatedUser::find(Auth::user()->id);
+        return response()->json(array('profilebio'=>view('partials.profilebio', ['user'=> $authenticatedUser])->render()));
     }
 
 

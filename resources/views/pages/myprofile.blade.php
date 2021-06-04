@@ -60,7 +60,9 @@
                                         </div>
                                     </div>
 
-                                    @include('partials.profilebio')
+                                    <div class="row justify-content-center profile-bio-div">
+                                        @include('partials.profilebio')
+                                    </div>
 
                                     <div class="row justify-content-center mt-2">
                                         <div class="col-lg-2 col-sm-4  d-flex justify-content-center">
