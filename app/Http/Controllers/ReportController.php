@@ -16,48 +16,17 @@ use Illuminate\Support\Facades\Validator;
 class ReportController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-
-    }
-
-
-    /**
      * Display the specified resource.
      *
-     * @param Report $report
-     * @return Application|Factory|View|Response
+     * @param
+     * @return
      */
     public function show()
     {
-        if (!Auth::check() || (Auth::check() && !Auth::user()->isAdmin())) {
+        if(!ReportPolicy::show()){
             return view('pages.nopermission', ['needsFilter' => 0]);
         }
+
         $user_id = Auth::user()->id;
         $reports = DB::select(DB::raw("(SELECT post.id AS post_id, title, post.user_id, name AS content_author, post.id AS content_id, 'Post' AS type, count(user_reporting) AS n_reports, most_frequent_motive.motive, user_assigned
                 FROM report, post, authenticated_user, (SELECT post_reported, motive, count(motive) AS motive_freq FROM report WHERE comment_reported is null AND closed_date is null GROUP BY post_reported, motive) AS most_frequent_motive
@@ -73,43 +42,13 @@ class ReportController extends Controller
         return view('pages.moderator_dashboard', ['needsFilter' => 0, 'reports' => $reports]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Report $report
-     * @return Response
-     */
-    public function edit(Report $report)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Report $report
-     * @return Response
-     */
-    public function update(Request $request, Report $report)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Report $report
-     * @return Response
-     */
-    public function destroy(Report $report)
-    {
-        $report->delete();
-    }
-
 
     public function close(Request $request, $reported_content)
     {
+        if(!ReportPolicy::show()){
+            return view('pages.nopermission', ['needsFilter' => 0])->render();
+        }
+
         $validatedData = Validator::make($request->all(), [
             'content_type' => 'required',
             'accepted' => 'required'
@@ -145,6 +84,10 @@ class ReportController extends Controller
 
     public function assign(Request $request, $reported_content)
     {
+        if(!ReportPolicy::show()){
+            return view('pages.nopermission', ['needsFilter' => 0])->render();
+        }
+
         $validatedData = Validator::make($request->all(), [
             'content_type' => 'required'
         ]);
@@ -165,6 +108,9 @@ class ReportController extends Controller
 
     public function reportMotives(Request $request, $reported_content)
     {
+        if(!ReportPolicy::show()){
+            return view('pages.nopermission', ['needsFilter' => 0])->render();
+        }
         //select distinct motive from report where post_reported = 188 and closed_date is null
         $validatedData = Validator::make($request->all(), [
             'content_type' => 'required'
@@ -185,6 +131,10 @@ class ReportController extends Controller
     }
 
     public function filter(Request $request) {
+
+        if(!ReportPolicy::show()){
+            return view('pages.nopermission', ['needsFilter' => 0])->render();
+        }
 
         $user_id = Auth::user()->id;
 
@@ -232,17 +182,5 @@ class ReportController extends Controller
         return response()->json($view);
     }
 
-    public function process(Request $request, $report_id)
-    {
-        $validatedData = $request->validate([
-            'moderator_id' => 'required|numeric',
-            'action' => 'required'
-        ]);
 
-        $action = $validatedData->action == "DELETE" ? true : false;
-        DB::table('report')->where('id', $report_id)->where('user_assigned', $validatedData->moderator_id)->update(["accepted" => $action]);
-        $date = Carbon::now();
-        $closed_date = $date->toDateString();
-        DB::table('report')->where('id', $report_id)->where('user_assigned', $validatedData->moderator_id)->update(["closed_date" => $closed_date]);
-    }
 }
