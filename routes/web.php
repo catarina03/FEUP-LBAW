@@ -68,6 +68,7 @@ Route::prefix('/api/user/')->group(function(){ //user api
     Route::put('{id}/edit_photo', 'UserController@update_photo');
     Route::get('{id}/edit_bio', 'UserController@show_edit_bio');
     Route::put('{id}/edit_bio', 'UserController@edit_bio');
+  //  Route::get('{id}/saved_posts', 'UserController@saved_posts');
 });
 
 

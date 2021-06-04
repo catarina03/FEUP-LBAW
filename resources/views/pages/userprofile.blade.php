@@ -3,8 +3,10 @@
 @section('content')
     <script type="text/javascript" src="{{ URL::asset('js/update_bio.js') }}" defer></script>
     <script type="text/javascript" src="{{ URL::asset('js/update_profile_photo.js') }}" defer></script>
+    <script type="text/javascript" src="{{ URL::asset('js/follow_user.js') }}" defer></script>
 
-
+    <input name="user_id" value="{{$user->id}}" class="user-id-value" hidden>
+    <input name="isFollowing" value="{{$isFollowing}}" class="is-following" hidden>
     @if(Auth::user()->id === $user->id)
         <div class="container-fluid my-profile justify-content-center mx-auto">
             <div class="row justify-content-start profile my-profile g-0">
@@ -54,16 +56,6 @@
                                         </div>
                                     </div>
 
-{{--
-                            <div class="row justify-content-center d-flex mb-5 userprofile mx-2">
-                                <div class="card card-profile col-lg-7 col-xl-9 col-sm-9" style="border-radius:2%;">
-                                    <div class="row justify-content-center mt-1">
-
-                                        <div class="col-lg-2 col-sm-3 d-flex justify-content-center">
-                                            <h5 class="card-title mt-5 profile-name">Ana Sousa</h5>
-                                        </div>
-                                    </div>
-                                    --}}
                                     <div class="row justify-content-center">
                                         @if(Auth::user()->id !== $user->id)
                                         <div class="col-2 d-flex justify-content-center">
@@ -75,22 +67,11 @@
                                         </div>
                                     </div>
 
-
-
-{{--
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-2 col-10 d-flex justify-content-center">
-                                            <p class="profile-username">@</p>
-                                            <p class="profile-username">{{$user->username}}</p>
-                                        </div>
-                                    </div>
-                                    --}}
-
                                     <div class="card-body">
                                         <div class="row justify-content-center ">
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="row justify-content-around statistics-profile">
-                                                    <div class="col-4 d-flex justify-content-center text-center">
+                                                    <div class="col-4 d-flex justify-content-center text-center number-followers">
                                                         <p>{{$nFollowers}} Followers</p>
                                                     </div>
                                                     <div class="col-4 d-flex justify-content-center text-center">
@@ -109,9 +90,15 @@
 
                                         @if(Auth::user()->id !== $user->id)
                                         <div class="row justify-content-center mt-3 ">
+                                            @if($isFollowing === 0)
                                             <button type="button"
                                                     class="btn btn-secondary col-lg-3 col-sm-6 btn-sm profile-features follow">Follow
                                             </button>
+                                            @else
+                                            <button type="button"
+                                                    class="btn btn-secondary col-lg-3 col-sm-6 btn-sm profile-features unfollow"><i class="fas fa-user-check"></i>  Following
+                                            </button>
+                                            @endif
                                             <button type="button"
                                                     class="btn btn-secondary col-lg-3 col-sm-6 btn-sm  profile-features block">Block
                                             </button>

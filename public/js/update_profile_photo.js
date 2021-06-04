@@ -3,7 +3,9 @@ let user_id = document.querySelector("input.page-info.user_id");
 let form_photo = document.querySelector("input.form-control-file");
 let token = document.getElementsByName("csrf-token")[0];
 
-form_photo.addEventListener("change", preparePhotoRequest)
+if (form_photo != null){
+    form_photo.addEventListener("change", preparePhotoRequest)
+}
 
 function preparePhotoRequest(){
     let formData = new FormData();

@@ -85,12 +85,13 @@ class UserController extends Controller
 
         $nFollowers = DB::table("follow_user")->where("followed_user", $id)->get()->count();
         $nFollowing = DB::table("follow_user")->where("following_user", $id)->get()->count();
+        $isFollowing = DB::table("follow_user")->where("followed_user", $id)->where("following_user", Auth::id())->count();
 
         $user = AuthenticatedUser::find($id);
 
         $photo = 'storage/images/users/'.Auth::user()->profile_photo;
 
-        return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts] );
+        return view('pages.userprofile', ['needsFilter' => 0, 'photo'=>$photo, 'nFollowers'=>$nFollowers, 'nFollowing'=>$nFollowing, 'nLikes'=>$nLikes, 'user'=>$user, 'posts' => $posts, 'isFollowing'=>$isFollowing] );
     }
 
     /**
@@ -193,25 +194,31 @@ class UserController extends Controller
      * @param
      * @return
      */
-    public function follow(Request $request,$id)
+    public function follow(Request $request)
     {
-        $res = UserPolicy::follow($id);
-        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        $follow = $request->input('id');
+        if(!is_int(intval($follow))) return response('Invalid user to follow: '.$follow, 400);
+
+        $res = UserPolicy::follow(Auth::id(), $request->input('id'));
+        if($res == 1) return response(view('pages.nopermission', ['needsFilter' => 0]), 403);
         if($res == 2) return view('pages.error', ['needsFilter' => 0]);
         $user = Auth::user();
 
-        $follow = $request['id'];
-        if(!is_int($follow)) return "error: invalid user to follow";
+        $followed_user = AuthenticatedUser::find($follow);
+        $count = 0;
+        if ($followed_user != null) {
+            $count = DB::table('follow_user')->where('following_user', $user->id)->where('followed_user', $followed_user->id)->count();
+        }
 
-        $followed_user = AuthenticatedUser::find($request['id']);
-        if ($followed_user != null){
+        if ($count == 0){
             DB::table("follow_user")->insert([
-                'following_user' => $followed_user,
-                'followed_user' => $user->id
+                'following_user' => $user->id,
+                'followed_user' => $followed_user->id,
             ]);
             return 'SUCCESS';
         }
-        return 'error';
+
+        return  response('Invalid user to follow', 404);
     }
 
 
@@ -221,27 +228,25 @@ class UserController extends Controller
      * @param
      * @return
      */
-    public function unfollow(Request $request, $id)
+    public function unfollow(Request $request)
     {
-        $res = UserPolicy::follow($id);
-        if($res == 1) return view('pages.nopermission', ['needsFilter' => 0]);
+        $unfollowed_user_id = $request->input('id');
+        if(!is_int(intval($unfollowed_user_id))) return response('Invalid user to unfollow: '.$unfollowed_user_id, 400);
+
+        $res = UserPolicy::follow(Auth::id(), $request->input('id'));
+        if($res == 1) return response(view('pages.nopermission', ['needsFilter' => 0]), 403);
         if($res == 2) return view('pages.error', ['needsFilter' => 0]);
         $user = Auth::user();
 
-
-        $followed_user = $request['id'];
-        if(!is_int($followed_user)) return 'error: invalid user to unfollow';
-        if ($followed_user != null){
-            $f = DB::table("follow_user")
-                ->where('following_user', $followed_user)
-                ->where('followed_user', $user->id);
-
-            if($f != null){
-                if($f->delete()) return 'SUCCESS';
-            }
-            else return "Not following the user with id".$followed_user;
+        if ($unfollowed_user_id != null){
+            DB::table("follow_user")
+                ->where('following_user', $user->id)
+                ->where('followed_user', $unfollowed_user_id)->delete();
+            return "Unfollowed user ".$unfollowed_user_id;
         }
-        return "error";
+        else{
+            return "error: ".$unfollowed_user_id;
+        }
     }
 
     /**
@@ -522,6 +527,30 @@ class UserController extends Controller
 
         session()->push('toaster', 'Password changed successfully!');
         return redirect('user/' . $id . '/settings#change-password')->with('success-password', 'Password changed successfully!');
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @return
+     */
+    public function saved_posts(Request $request)
+    {
+        /*
+        if(!UserPolicy::edit($id)) return view('pages.nopermission', ['needsFilter' => 0]);
+        $user = Auth::user();
+
+
+
+
+
+        AuthenticatedUser::find($user->id)->update(['password' => Hash::make($request->newPassword)]);
+
+        session()->push('toaster', 'Password changed successfully!');
+        return redirect('user/' . $id . '/settings#change-password')->with('success-password', 'Password changed successfully!');
+        */
     }
 
 

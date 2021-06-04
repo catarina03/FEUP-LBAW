@@ -34,7 +34,7 @@ class UserPolicy
     public static function follow($id, $following_id){
         //a user can not follow themself
         if(!(Auth::check() && Auth::user()->id == $id)) return 1;
-        if($id != $following_id) return 2;
+        if($id == $following_id) return 2;
         return  0;
     }
 }
