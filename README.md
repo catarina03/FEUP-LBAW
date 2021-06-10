@@ -6,7 +6,7 @@ Link to the release with the final version of the source code in the group's git
 
 
 To run the project image locally, must run the following command:
-```docker run -it -p 8000:80 lbaw2123/lbaw2123```
+```docker run -it -p 8000:80 -e DB_DATABASE="lbaw2123" -e DB_USERNAME="lbaw2123" -e DB_PASSWORD="PASSWORD" lbaw2123/lbaw2123```
 
 
 **Run Database** : ```php artisan db::seed```
