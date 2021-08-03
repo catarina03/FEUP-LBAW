@@ -30,14 +30,20 @@ Moderation URL: ```http://lbaw2123.lbaw-prod.fe.up.pt/moderator/reports```
 | regular | ssmoote1      | 123456 |
 
 
-
-
 ## Team 
 
-* Allan Sousa, up201800149@fe.up.pt
-* Catarina Fernandes, up201806610@fe.up.pt
-* Mariana Truta, up201806543@fe.up.pt
-* Rita Peixoto, up201806257@fe.up.pt
+* [Allan Sousa](https://github.com/allanbbs), up201800149@fe.up.pt
+* [Catarina Fernandes](https://github.com/catarina03), up201806610@fe.up.pt
+* [Mariana Truta](https://github.com/mariana1412), up201806543@fe.up.pt
+* [Rita Peixoto](https://github.com/RitaPeixoto), up201806257@fe.up.pt
+
+
+## Evaluation
+* **ER:** 98%
+* **EBD:** 96%
+* **EAP:** 93% 
+* **PA:** 87%
+* **Global:** 92%
 
 
 GROUP2123, 05/06/2021
